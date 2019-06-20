@@ -28,4 +28,20 @@ public class InstrumentoServicio {
     public Optional<Instrumento> obtenerPorNombre(String ni){
         return instrumentoRepositorio.findByNombreInstrumento(ni);
     }
+
+    public void guardar(Instrumento instrumento){
+        instrumentoRepositorio.save(instrumento);
+    }
+
+    public void borrar(Long id){
+        instrumentoRepositorio.deleteById(id);
+    }
+
+    public boolean existePorNombre(String ni){
+        return instrumentoRepositorio.existsByNombreInstrumento(ni);
+    }
+
+    public boolean existePorId(Long id){
+        return instrumentoRepositorio.existsById(id);
+    }
 }
