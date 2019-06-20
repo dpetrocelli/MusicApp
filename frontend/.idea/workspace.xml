@@ -2,6 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c2ed670-2efa-49a9-9f3c-36f469f061ee" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/backend/servicio/InstrumentoServicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/backend/servicio/InstrumentoServicio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frontend.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,15 +65,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1561063693196</updated>
-      <workItem from="1561063694534" duration="898000" />
+      <workItem from="1561063694534" duration="1197000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="898000" />
+    <option name="totallyTimeSpent" value="1197000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="978" y="27" width="942" height="1053" extended-state="4" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
       <window_info id="Designer" />
