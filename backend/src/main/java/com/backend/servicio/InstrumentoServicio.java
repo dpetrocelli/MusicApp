@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class InstrumentoService {
+public class InstrumentoServicio {
 
     @Autowired
     InstrumentoRepositorio instrumentoRepositorio;
