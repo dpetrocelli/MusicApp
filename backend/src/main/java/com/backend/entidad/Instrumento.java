@@ -47,7 +47,7 @@ public class Instrumento {
         return tipoInstrumento;
     }
 
-    public void setTipoInstrumento(int precio) {
-        this.precio = precio;
+    public void setTipoInstrumento(String tipoInstrumento) {
+        this.tipoInstrumento = tipoInstrumento;
     }
 }
