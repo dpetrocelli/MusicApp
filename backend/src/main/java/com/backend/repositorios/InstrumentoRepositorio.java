@@ -1,6 +1,6 @@
-package com.backend.repositorio;
+package com.backend.repositorios;
 
-import com.backend.entidad.Instrumento;
+import com.backend.entidades.Instrumento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.backend.entidad;
+package com.backend.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

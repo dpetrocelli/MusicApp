@@ -1,7 +1,7 @@
-package com.backend.controlador;
+package com.backend.controladores;
 import com.backend.dto.Mensaje;
-import com.backend.entidad.Instrumento;
-import com.backend.servicio.InstrumentoServicio;
+import com.backend.entidades.Instrumento;
+import com.backend.servicios.InstrumentoServicio;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

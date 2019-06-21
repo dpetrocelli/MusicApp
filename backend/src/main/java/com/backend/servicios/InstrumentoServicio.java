@@ -1,7 +1,7 @@
-package com.backend.servicio;
+package com.backend.servicios;
 
-import com.backend.entidad.Instrumento;
-import com.backend.repositorio.InstrumentoRepositorio;
+import com.backend.entidades.Instrumento;
+import com.backend.repositorios.InstrumentoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
