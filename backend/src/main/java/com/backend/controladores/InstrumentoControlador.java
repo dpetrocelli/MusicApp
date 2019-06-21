@@ -50,7 +50,7 @@ public class InstrumentoControlador {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 
         if(instrumentoServicio.existePorNombre(instrumento.getNombreInstrumento()) &&
-                instrumentoServicio.obtenerPorNombre(instrumento.getNombreInstrumento()).get().getId() != id)
+                (instrumento.getId() != id))
             return new ResponseEntity(new Mensaje("ese nombre de instrumento ya existe"), HttpStatus.BAD_REQUEST);
         Instrumento baseInstrumento = instrumentoServicio.obtenerPorId(id).get();
         baseInstrumento.setNombreProducto(instrumento.getNombreInstrumento());
