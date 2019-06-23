@@ -10,12 +10,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.component';
 import { HomeComponent } from './home/home.component';
+import { DetalleInstrumentoComponent } from './instrumentos/detalle-instrumento.component';
+import { NuevoInstrumentoComponent } from './instrumentos/nuevo-instrumento.component';
+import { EditarInstrumentoComponent } from './instrumentos/editar-instrumento.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaInstrumentoComponent,
-    HomeComponent
+    HomeComponent,
+    DetalleInstrumentoComponent,
+    NuevoInstrumentoComponent,
+    EditarInstrumentoComponent
   ],
   imports: [
     BrowserModule,

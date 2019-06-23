@@ -5,6 +5,9 @@
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>
       <th scope="col">Tipo</th>
+      <th scope="col">Ver</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Borrar</th>
     </tr>
     </thead>
     <tbody>
@@ -12,6 +15,9 @@
       <td>{{instrumento.id}}</td>
       <td>{{instrumento.nombreInstrumento}}</td>
       <td>{{instrumento.tipoInstrumento}}</td>
+      <td><button class="btn btn-primary" routerLink="/detalle/{{instrumento.id}}">Ver</button></td>
+      <td><button class="btn btn-warning" routerLink="/editar/{{instrumento.id}}">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="onDelete(instrumento.id)">Borrar</button></td>
     </tr>
     </tbody>
   </table>
