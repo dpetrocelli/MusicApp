@@ -1,0 +1,39 @@
+<div class="container">
+  <h5>Nuevo Instrumento</h5>
+  <form name="form" (ngSubmit)="onCreate()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="nombreInstrumento">Nombre: </label>
+      <input type="text"
+             class="form-control"
+             name="nombreInstrumento"
+             id="nombreInstrumento"
+             [(ngModel)]="form.nombreInstrumento"
+             required
+             autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="tipoInstrumento">Tipo: </label>
+      <input type="text"
+             class="form-control"
+             name="tipoInstrumento"
+             id="tipoInstrumento"
+             [(ngModel)]="form.tipoInstrumento"
+             required
+             autocomplete="off">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
+    </div>
+  </form>
+  <div>
+    <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>
+  </div>
+  <br>
+  <br>
+  <div *ngIf="falloCreacion" class="float-left">
+    <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+  </div>
+  <div *ngIf="creado" class="float-left">
+    <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+  </div>
+</div>
