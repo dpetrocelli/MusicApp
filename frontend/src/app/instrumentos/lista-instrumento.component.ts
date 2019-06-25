@@ -26,4 +26,11 @@ export class ListaInstrumentoComponent implements OnInit {
       });
   }
 
+  onDelete(id: number): void {
+    if (confirm('¿Estás seguro?')) {
+      this.instrumentoService.borrar(id).subscribe(data => {
+        this.cargarInstrumentos();
+      });
+    }
+  }
 }
