@@ -38,6 +38,8 @@ public class InstrumentoControlador {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(instrumento.getTipoInstrumento()))
             return new ResponseEntity(new Mensaje("el tipo de instrumento es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(instrumentoServicio.existePorNombre(instrumento.getNombreInstrumento()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         instrumentoServicio.guardar(instrumento);
         return new ResponseEntity(new Mensaje("instrumento guardado"), HttpStatus.CREATED);
     }
@@ -48,7 +50,6 @@ public class InstrumentoControlador {
             return new ResponseEntity(new Mensaje("no existe el instrumento "+instrumentoServicio.obtenerPorId(id)), HttpStatus.NOT_FOUND);
         if(StringUtils.isBlank(instrumento.getNombreInstrumento()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-
         if(instrumentoServicio.existePorNombre(instrumento.getNombreInstrumento()) &&
                 (instrumento.getId() != id))
             return new ResponseEntity(new Mensaje("ese nombre de instrumento ya existe"), HttpStatus.BAD_REQUEST);
