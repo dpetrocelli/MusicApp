@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8427a4fd-081d-431c-8ada-89547a32aff3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/instrumentos/lista-instrumento.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/instrumentos/lista-instrumento.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/node_modules/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -40,13 +39,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/instrumentos/lista-instrumento.component.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
               <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/servicios/instrumento.service.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,7 +129,6 @@
         <option value="$PROJECT_DIR$/src/app/app.component.html" />
         <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/app/app-routing.module.ts" />
-        <option value="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" />
         <option value="$PROJECT_DIR$/src/app/instrumentos/detalle-instrumento.component.ts" />
         <option value="$PROJECT_DIR$/src/app/instrumentos/detalle-instrumento.component.html" />
         <option value="$PROJECT_DIR$/src/app/instrumentos/lista-instrumento.component.html" />
@@ -127,6 +137,7 @@
         <option value="$PROJECT_DIR$/src/app/instrumentos/nuevo-instrumento.component.html" />
         <option value="$PROJECT_DIR$/src/app/instrumentos/editar-instrumento.component.html" />
         <option value="$PROJECT_DIR$/src/app/instrumentos/lista-instrumento.component.ts" />
+        <option value="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" />
       </list>
     </option>
   </component>
@@ -245,7 +256,7 @@
       <workItem from="1561229805693" duration="7947000" />
       <workItem from="1561304368764" duration="1772000" />
       <workItem from="1561307276124" duration="6299000" />
-      <workItem from="1561432244379" duration="1909000" />
+      <workItem from="1561432244379" duration="4907000" />
     </task>
     <task id="LOCAL-00001" summary="actualizacion proyecto frontend">
       <created>1561073881921</created>
@@ -254,11 +265,18 @@
       <option name="project" value="LOCAL" />
       <updated>1561073881922</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="actualizacion proyecto frontend">
+      <created>1561434547870</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1561434547870</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23099000" />
+    <option name="totallyTimeSpent" value="26097000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -273,7 +291,7 @@
     <frame x="978" y="27" width="942" height="1053" extended-state="4" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23325893" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23325893" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -282,7 +300,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49888393" weight="0.32721382" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49888393" visible="true" weight="0.32683983" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -362,16 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/servicios/instrumento.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/app-routing.module.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -446,6 +454,16 @@
           <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/servicios/instrumento.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
