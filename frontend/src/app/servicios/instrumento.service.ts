@@ -10,8 +10,8 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 })
 export class InstrumentoService {
 
-// instrumentoURL = 'http://localhost:8080/api/instrumento/';
-  instrumentoURL = 'http://ec2-54-224-216-200.compute-1.amazonaws.com:9000/api/instrumento/';
+ instrumentoURL = 'http://localhost:9000/api/instrumento/';
+//  instrumentoURL = 'http://ec2-54-224-216-200.compute-1.amazonaws.com:9000/api/instrumento/';
 
   constructor(private httpClient: HttpClient) { }
 
