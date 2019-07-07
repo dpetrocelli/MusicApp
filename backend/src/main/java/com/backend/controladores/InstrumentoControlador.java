@@ -56,6 +56,7 @@ public class InstrumentoControlador {
         Instrumento baseInstrumento = instrumentoServicio.obtenerPorId(id).get();
         baseInstrumento.setNombreProducto(instrumento.getNombreInstrumento());
         baseInstrumento.setTipoInstrumento(instrumento.getTipoInstrumento());
+
         instrumentoServicio.guardar(baseInstrumento);
         return new ResponseEntity(new Mensaje("Instrumento actualizado"), HttpStatus.CREATED);
     }
