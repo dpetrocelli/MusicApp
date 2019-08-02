@@ -28,4 +28,8 @@ export class VerConfiguracionComponent implements OnInit {
     });
 
   }
+
+  onDelete(id: number) {
+    return null;
+  }
 }

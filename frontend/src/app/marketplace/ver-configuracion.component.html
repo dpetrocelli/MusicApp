@@ -1,3 +1,23 @@
-<p>
-  ver-configuracion works!
-</p>
+<div class="container">
+  <table class="table table-dark">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">APP ID</th>
+      <th scope="col">CLIENT SECRET</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Borrar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{marketPlace.id}}</td>
+      <td>{{marketPlace.appID}}</td>
+      <td>{{marketPlace.clientSecret}}</td>
+      <td><button class="btn btn-warning" routerLink="/editar/{{marketPlace.id}}">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="onDelete(marketPlace.id)">Borrar</button></td>
+    </tr>
+    </tbody>
+  </table>
+  <div><button class="btn btn-success btn-lg" routerLink="/nuevo">Alta Configuración</button></div>
+</div>

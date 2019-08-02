@@ -2,25 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8427a4fd-081d-431c-8ada-89547a32aff3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/eliminar-configuracion.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/eliminar-configuracion.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/eliminar-configuracion.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/backend/controladores/MarketPlaceControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/backend/controladores/MarketPlaceControlador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/modelos/marketplace.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/modelos/marketplace.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/servicios/marketplace.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/servicios/marketplace.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/modelos/instrumento.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/modelos/instrumento.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/servicios/instrumento.service.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +101,7 @@
       <workItem from="1561307276124" duration="6299000" />
       <workItem from="1561432244379" duration="5212000" />
       <workItem from="1561489509142" duration="2679000" />
-      <workItem from="1564745885566" duration="9889000" />
+      <workItem from="1564745885566" duration="10262000" />
     </task>
     <task id="LOCAL-00001" summary="actualizacion proyecto frontend">
       <created>1561073881921</created>
@@ -152,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564754346449</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Agregando MarketPlace basics">
+      <created>1564769575076</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1564769575076</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
