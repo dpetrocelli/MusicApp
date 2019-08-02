@@ -40,7 +40,10 @@ public class MarketPlaceControlador {
             return  new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
         }
     }
+    @PutMapping ("/actualizar")
+    public ResponseEntity<?> actualizarConfiguracion (@RequestBody MarketPlace marketPlace){
 
+    }
     @DeleteMapping("/borrar")
     public ResponseEntity <?> borrarConfiguracion (){
         if (marketPlaceServicio.obtener() == null){
