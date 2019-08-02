@@ -42,7 +42,13 @@ public class MarketPlaceControlador {
     }
     @PutMapping ("/actualizar")
     public ResponseEntity<?> actualizarConfiguracion (@RequestBody MarketPlace marketPlace){
+        if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())){
+            return  new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
+        }else{
+            marketPlaceServicio.guardar(marketPlace);
+                return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
 
+        }
     }
     @DeleteMapping("/borrar")
     public ResponseEntity <?> borrarConfiguracion (){

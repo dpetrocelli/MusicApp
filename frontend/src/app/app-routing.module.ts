@@ -5,11 +5,13 @@ import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.comp
 import {DetalleInstrumentoComponent} from './instrumentos/detalle-instrumento.component';
 import {NuevoInstrumentoComponent} from './instrumentos/nuevo-instrumento.component';
 import {EditarInstrumentoComponent} from './instrumentos/editar-instrumento.component';
+import {VerConfiguracionComponent} from './marketplace/ver-configuracion.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'lista', component: ListaInstrumentoComponent},
+  {path: 'marketplace', component: VerConfiguracionComponent},
   {path: 'detalle/:id', component: DetalleInstrumentoComponent},
   {path: 'nuevo', component: NuevoInstrumentoComponent},
   {path: 'editar/:id', component: EditarInstrumentoComponent},

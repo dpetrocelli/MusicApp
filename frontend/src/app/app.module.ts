@@ -14,6 +14,9 @@ import { DetalleInstrumentoComponent } from './instrumentos/detalle-instrumento.
 import { NuevoInstrumentoComponent } from './instrumentos/nuevo-instrumento.component';
 import { EditarInstrumentoComponent } from './instrumentos/editar-instrumento.component';
 import { NuevaConfiguracionComponent } from './marketplace/nueva-configuracion.component';
+import { VerConfiguracionComponent } from './marketplace/ver-configuracion.component';
+import { ModificarConfiguracionComponent } from './marketplace/modificar-configuracion.component';
+import { EliminarConfiguracionComponent } from './marketplace/eliminar-configuracion.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { NuevaConfiguracionComponent } from './marketplace/nueva-configuracion.c
     DetalleInstrumentoComponent,
     NuevoInstrumentoComponent,
     EditarInstrumentoComponent,
-    NuevaConfiguracionComponent
+    NuevaConfiguracionComponent,
+    VerConfiguracionComponent,
+    ModificarConfiguracionComponent,
+    EliminarConfiguracionComponent
   ],
   imports: [
     BrowserModule,
