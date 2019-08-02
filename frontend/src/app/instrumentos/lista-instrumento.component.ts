@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Instrumento} from '../modelos/instrumento';
-import {InstrumentoService} from '../servicios/instrumento.service';
+import { Component, OnInit } from '@angular/core';
+import { Instrumento } from '../modelos/instrumento';
+import { InstrumentoService } from '../servicios/instrumento.service';
 
 @Component({
   selector: 'app-lista-instrumento',
@@ -11,8 +11,7 @@ export class ListaInstrumentoComponent implements OnInit {
 
   instrumentos: Instrumento[] = [];
 
-  constructor(private instrumentoService: InstrumentoService) {
-  }
+  constructor(private instrumentoService: InstrumentoService) { }
 
   ngOnInit() {
     this.cargarInstrumentos();

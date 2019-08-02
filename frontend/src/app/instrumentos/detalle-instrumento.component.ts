@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Instrumento} from '../modelos/instrumento';
 import {InstrumentoService} from '../servicios/instrumento.service';
 import {ActivatedRoute, Router} from '@angular/router';

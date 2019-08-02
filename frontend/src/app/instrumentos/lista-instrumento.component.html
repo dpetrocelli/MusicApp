@@ -15,19 +15,11 @@
       <td>{{instrumento.id}}</td>
       <td>{{instrumento.nombreInstrumento}}</td>
       <td>{{instrumento.tipoInstrumento}}</td>
-      <td>
-        <button class="btn btn-primary" routerLink="/detalle/{{instrumento.id}}">Ver</button>
-      </td>
-      <td>
-        <button class="btn btn-warning" routerLink="/editar/{{instrumento.id}}">Editar</button>
-      </td>
-      <td>
-        <button class="btn btn-danger" (click)="onDelete(instrumento.id)">Borrar</button>
-      </td>
+      <td><button class="btn btn-primary" routerLink="/detalle/{{instrumento.id}}">Ver</button></td>
+      <td><button class="btn btn-warning" routerLink="/editar/{{instrumento.id}}">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="onDelete(instrumento.id)">Borrar</button></td>
     </tr>
     </tbody>
   </table>
-  <div>
-    <button class="btn btn-success btn-lg" routerLink="/nuevo">Nuevo Instrumento</button>
-  </div>
+  <div><button class="btn btn-success btn-lg" routerLink="/nuevo">Nuevo Instrumento</button></div>
 </div>
