@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { DetalleInstrumentoComponent } from './instrumentos/detalle-instrumento.component';
 import { NuevoInstrumentoComponent } from './instrumentos/nuevo-instrumento.component';
 import { EditarInstrumentoComponent } from './instrumentos/editar-instrumento.component';
+import { NuevaConfiguracionComponent } from './marketplace/nueva-configuracion.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { EditarInstrumentoComponent } from './instrumentos/editar-instrumento.co
     HomeComponent,
     DetalleInstrumentoComponent,
     NuevoInstrumentoComponent,
-    EditarInstrumentoComponent
+    EditarInstrumentoComponent,
+    NuevaConfiguracionComponent
   ],
   imports: [
     BrowserModule,

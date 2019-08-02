@@ -20,10 +20,10 @@ public class MarketPlaceControlador {
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
 
-    @GetMapping("/obtener/")
+    @GetMapping("/obtener")
     public ResponseEntity<MarketPlace> obtenerConfiguracion(){
         MarketPlace marketPlace = marketPlaceServicio.obtener();
-        if (marketPlace.equals(null)){
+        if (marketPlace == null){
             return new ResponseEntity(new Mensaje(" No existe ningún APP_ID y CLIENT_SECRET configurado"), HttpStatus.BAD_REQUEST);
         }else{
             return new ResponseEntity<MarketPlace>(marketPlace, HttpStatus.OK);
@@ -33,7 +33,7 @@ public class MarketPlaceControlador {
 
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevaConfiguracion (@RequestBody MarketPlace marketPlace){
-        if (marketPlaceServicio.obtener().equals(null)){
+        if (marketPlaceServicio.obtener() == null){
             marketPlaceServicio.guardar(marketPlace);
             return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
         }else{
@@ -43,10 +43,8 @@ public class MarketPlaceControlador {
 
     @DeleteMapping("/borrar")
     public ResponseEntity <?> borrarConfiguracion (){
-        if (marketPlaceServicio.obtener().equals(null)){
-
+        if (marketPlaceServicio.obtener() == null){
             return  new ResponseEntity(new Mensaje("No existe configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
-
         }else{
             marketPlaceServicio.borrar();
             return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET eliminados "), HttpStatus.CREATED);

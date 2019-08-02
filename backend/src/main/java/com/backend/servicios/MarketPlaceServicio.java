@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 @Service
@@ -17,8 +18,12 @@ public class MarketPlaceServicio {
     MarketPlaceRepositorio marketPlaceRepositorio;
 
     public MarketPlace obtener(){
-        MarketPlace marketPlace = (MarketPlace) marketPlaceRepositorio.findAll();
-        return marketPlace;
+        List<MarketPlace> marketPlace = marketPlaceRepositorio.findAll();
+        if (marketPlace.size()>0){
+            return marketPlace.get(0);
+        }else{
+            return null;
+        }
     }
 
     public void guardar(MarketPlace marketPlace){
