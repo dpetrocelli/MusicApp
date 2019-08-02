@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {HomeComponent} from './home/home.component';
+import {ListaInstrumentoComponent} from './instrumentos/lista-instrumento.component';
 import {DetalleInstrumentoComponent} from './instrumentos/detalle-instrumento.component';
 import {NuevoInstrumentoComponent} from './instrumentos/nuevo-instrumento.component';
 import {EditarInstrumentoComponent} from './instrumentos/editar-instrumento.component';
@@ -20,4 +20,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Instrumento } from '../modelos/instrumento';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Instrumento} from '../modelos/instrumento';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -10,10 +10,12 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 })
 export class InstrumentoService {
 
- instrumentoURL = 'http://ec2-18-212-146-234.compute-1.amazonaws.com:9000/api/instrumento/';
+  instrumentoURL = 'http://ec2-18-212-146-234.compute-1.amazonaws.com:9000/api/instrumento/';
+
 //  instrumentoURL = 'http://ec2-54-224-216-200.compute-1.amazonaws.com:9000/api/instrumento/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   public lista(): Observable<Instrumento[]> {
     return this.httpClient.get<Instrumento[]>(this.instrumentoURL + 'listar', cabecera);

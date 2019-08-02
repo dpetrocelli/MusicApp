@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Instrumento} from '../modelos/instrumento';
 import {InstrumentoService} from '../servicios/instrumento.service';
 
@@ -15,7 +15,8 @@ export class NuevoInstrumentoComponent implements OnInit {
   msjFallo = '';
   msjOK = '';
 
-  constructor(private instrumentoService: InstrumentoService) { }
+  constructor(private instrumentoService: InstrumentoService) {
+  }
 
   ngOnInit() {
   }

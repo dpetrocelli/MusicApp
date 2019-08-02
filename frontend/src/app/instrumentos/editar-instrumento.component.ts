@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InstrumentoService} from '../servicios/instrumento.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -18,7 +18,8 @@ export class EditarInstrumentoComponent implements OnInit {
 
   constructor(private instrumentoService: InstrumentoService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
