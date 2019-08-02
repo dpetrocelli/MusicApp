@@ -10,8 +10,8 @@
     </parent>
     <groupId>backend</groupId>
     <artifactId>musicapp</artifactId>
-    <version>preproduction</version>
-    <name>musicapp</name>
+    <version>musicapp-preproduction</version>
+    <name>backend</name>
     <description>MusicApp UADE</description>
 
     <properties>
