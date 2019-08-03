@@ -13,11 +13,25 @@ export class MarketplaceService {
   /* Tengo que tener la URL de la aplicación a la cual le voy a pegar
     En este caso recordar que va a ser /api/marketplace
    */
-  baseURL = 'localhost:8080/api/marketplace/';
+  baseURL = 'http://localhost:8080/api/marketplace/';
 
   constructor(private httpClient: HttpClient) { }
 
   public obtener(): Observable <Marketplace> {
-    return this.httpClient.get<Marketplace>(this.baseURL + '/obtener', cabecera);
+    return this.httpClient.get<Marketplace>(this.baseURL + 'obtener', cabecera);
   }
+
+  public nuevo(marketPlace: Marketplace): Observable <Marketplace> {
+    return this.httpClient.post<Marketplace>(this.baseURL + 'nuevo', marketPlace, cabecera);
+  }
+
+  public borrar(): Observable <Marketplace> {
+    return this.httpClient.delete<any>(this.baseURL + 'borrar', cabecera);
+  }
+
+  public editar(marketPlace: Marketplace): Observable <Marketplace> {
+    return this.httpClient.put<any>(this.baseURL + 'actualizar', marketPlace, cabecera);
+  }
+
+
 }

@@ -9,7 +9,7 @@ import {MarketplaceService} from '../servicios/marketplace.service';
 })
 export class VerConfiguracionComponent implements OnInit {
 
-  marketPlace: Marketplace;
+  marketPlace: Marketplace = null;
 
   constructor(private marketPlaceService: MarketplaceService) {
 
@@ -29,7 +29,11 @@ export class VerConfiguracionComponent implements OnInit {
 
   }
 
-  onDelete(id: number) {
-    return null;
+  onDelete() {
+    if (confirm('¿Estás seguro?')) {
+      this.marketPlaceService.borrar().subscribe(data => {
+        this.obtenerConfiguracion();
+      });
+    }
   }
 }
