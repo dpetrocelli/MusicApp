@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8427a4fd-081d-431c-8ada-89547a32aff3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/com/backend/controladores/MarketPlaceControlador.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/com/backend/controladores/MarketPlaceControlador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/modificar-configuracion.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/nueva-configuracion.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/marketplace/ver-configuracion.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/servicios/marketplace.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/servicios/marketplace.service.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +107,7 @@
       <workItem from="1564745885566" duration="10262000" />
       <workItem from="1564844956171" duration="17000" />
       <workItem from="1564844989617" duration="72000" />
-      <workItem from="1564845068593" duration="9256000" />
+      <workItem from="1564845068593" duration="12102000" />
     </task>
     <task id="LOCAL-00001" summary="actualizacion proyecto frontend">
       <created>1561073881921</created>

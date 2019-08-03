@@ -22,7 +22,8 @@ export class ModificarConfiguracionComponent implements OnInit {
   ngOnInit() {
 
     this.marketplaceService.obtener().subscribe(data => {
-        this.form.appID = data.appID;
+
+      this.form.appID = data.appID;
         this.form.clientSecret = data.clientSecret;
       },
       (err: any) => {

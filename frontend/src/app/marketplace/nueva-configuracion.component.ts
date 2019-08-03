@@ -24,7 +24,7 @@ export class NuevaConfiguracionComponent implements OnInit {
 
   onCreate(): void {
     this.marketplaceService.nuevo(this.form).subscribe(data => {
-        this.msjOK = "Configuración OK";
+        this.msjOK = 'Configuración OK';
         this.creado = true;
         this.falloCreacion = false;
       },

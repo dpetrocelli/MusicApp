@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Marketplace} from '../modelos/marketplace';
 import {MarketplaceService} from '../servicios/marketplace.service';
+import {Observable} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-ver-configuracion',
@@ -11,7 +13,8 @@ export class VerConfiguracionComponent implements OnInit {
 
   marketPlace: Marketplace = null;
 
-  constructor(private marketPlaceService: MarketplaceService) {
+  constructor(private marketPlaceService: MarketplaceService, private activatedRoute: ActivatedRoute,
+              private router: Router) {
 
   }
 
@@ -22,6 +25,7 @@ export class VerConfiguracionComponent implements OnInit {
   private obtenerConfiguracion(): void {
     this.marketPlaceService.obtener().subscribe(data => {
       this.marketPlace = data;
+
       },
        (err: any) => {
           console.log (err);
@@ -31,9 +35,10 @@ export class VerConfiguracionComponent implements OnInit {
 
   onDelete() {
     if (confirm('¿Estás seguro?')) {
-      this.marketPlaceService.borrar().subscribe(data => {
-        this.obtenerConfiguracion();
-      });
+
+       this.marketPlaceService.borrar().subscribe();
+       location.reload();
+
     }
   }
 }
