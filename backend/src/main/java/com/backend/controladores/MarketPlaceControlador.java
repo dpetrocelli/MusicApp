@@ -96,16 +96,16 @@ public class MarketPlaceControlador {
     }
 
     @RequestMapping(value="/vueltamp/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> vueltamp(@RequestParam("code") String code, @PathVariable String id) throws MalformedURLException {
+    public void vueltamp(@RequestParam("code") String code, @PathVariable String id) throws MalformedURLException {
 
         System.out.println("CODE:" +code.toString());
         System.err.println("ID COMERCIO:" +id.toString());
 
         try{
             this.marketPlaceServicio.vincular(code,id);
-            return  new ResponseEntity<Mensaje>(new Mensaje("ESTA TODO OK"), HttpStatus.OK);
+
         }catch (Exception e){
-            return  new ResponseEntity<Mensaje>(new Mensaje ("ERROR SE MURIO"), HttpStatus.BAD_REQUEST);
+            
         }
 
     }

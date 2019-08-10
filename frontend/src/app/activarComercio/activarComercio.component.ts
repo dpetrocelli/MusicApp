@@ -24,7 +24,14 @@ export class ActivarComercioComponent implements OnInit {
     this.marketplaceService.armarLink(this.usuario.id).subscribe(data => {
         
         this.msg = data;
-        window.open(this.msg.mensaje, '_blank');
+        
+        var win = window.open(this.msg.mensaje, '_blank');
+        win.focus();
+        setTimeout(function() {
+            win.close();
+            window.location.href= "";
+          }, 5000);
+          
         
       },
       (err: any) => {
