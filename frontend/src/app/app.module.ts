@@ -17,27 +17,31 @@ import { NuevaConfiguracionComponent } from './marketplace/nueva-configuracion.c
 import { VerConfiguracionComponent } from './marketplace/ver-configuracion.component';
 import { ModificarConfiguracionComponent } from './marketplace/modificar-configuracion.component';
 import { EliminarConfiguracionComponent } from './marketplace/eliminar-configuracion.component';
+import { ActivarComercioComponent } from './activarComercio/activarComercio.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ListaInstrumentoComponent,
-    HomeComponent,
-    DetalleInstrumentoComponent,
-    NuevoInstrumentoComponent,
-    EditarInstrumentoComponent,
-    NuevaConfiguracionComponent,
-    VerConfiguracionComponent,
-    ModificarConfiguracionComponent,
-    EliminarConfiguracionComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      ListaInstrumentoComponent,
+      HomeComponent,
+      DetalleInstrumentoComponent,
+      NuevoInstrumentoComponent,
+      EditarInstrumentoComponent,
+      NuevaConfiguracionComponent,
+      VerConfiguracionComponent,
+      ModificarConfiguracionComponent,
+      EliminarConfiguracionComponent,
+      ActivarComercioComponent
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      FormsModule,
+      AppRoutingModule
+   ],
+   providers: [],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

@@ -1,0 +1,20 @@
+
+<div class="container">
+  <h1>Activar comercio</h1>
+  <p>Para vincular su cuenta de vendedor a nuestro sistema Music APP se requiere:</p>
+  <ul>
+    <li>Tener una cuenta activa de MercadoPago</li>
+    <li>Estar logueado en MercadoPago a momento de realizar este proceso</li>
+
+    
+    
+  </ul>
+  <p> Si no estás logueado, hacelo
+    <a href="https://www.mercadolibre.com/jms/mla/lgz/msl/login/H4sIAAAAAAAEAy2NQQ7DIAwE_-JzlNw59iPIAkNQoUbGEa2i_L1O1eOOd8cnVM7l5fXTCRzQu9cSisICvaImluZLtEPrhkZR-seKdwUFGynJAHfeokzxQTa6VQnrICvhobtPlaex3y9jmS3sqn24bZtzro0kYOSOmdfAbUXZ4FrMMdSrYHiCUzno-gJN4lfHrwAAAA/user" target="_blank">  aquí </a> 
+</p>
+  <input name="deacuerdo" type="checkbox" onchange="document.getElementById('continuar').disabled = !this.checked;" />
+  <label for="deacuerdo">Leí atentamente las condiciones y estoy logueado en MercadoPago</label><br>
+
+
+  <button type="submit" id="continuar" class="btn btn-success" (click)="armarenlace()" disabled>CONTINUAR</button>
+</div>

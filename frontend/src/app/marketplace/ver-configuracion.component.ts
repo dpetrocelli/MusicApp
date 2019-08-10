@@ -3,6 +3,7 @@ import { Marketplace} from '../modelos/marketplace';
 import {MarketplaceService} from '../servicios/marketplace.service';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-ver-configuracion',
@@ -36,9 +37,10 @@ export class VerConfiguracionComponent implements OnInit {
   onDelete() {
     if (confirm('¿Estás seguro?')) {
 
-       this.marketPlaceService.borrar().subscribe();
-       location.reload();
+       this.marketPlaceService.borrar().subscribe(data => {
+        this.obtenerConfiguracion();
+      });
 
-    }
+   }
   }
 }

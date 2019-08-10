@@ -1,3 +1,169 @@
-<p>
-  home works!
-</p>
+<div class="container">
+  <h1> Bienvenido a MiusicApp! </h1>
+  <!-- Voy a definir 2 secciones
+    Seccion 1 - Form INGRESAR USUARIO
+    Seccion 2 - (oculta) Form alta de datos 
+  -->
+
+<!-- Variables:
+    - Login Dialog  -> Mostrar login
+    - LogOff  -> Mostrar Cerrar sesion
+    - Registry Dialog -> Mostrar Datos Registro 
+-->
+  <div *ngIf="logOff">
+    <h5>Hola, {{userLogged.username}}</h5>
+    <button (click)="cerrarsesion()" class="btn btn-danger">Cerrar sesion</button>
+  </div>
+
+  <section *ngIf="loginDialog">
+    <!-- Con #f defino el nombre del form para luego hacer el valid
+      en TS escucha -> ingresar()
+    -->
+    <form name="userForm" (ngSubmit)="ingresar()" #f="ngForm">
+      <div class="form-user">
+        <label for="username"> Username :</label>
+        <input class="form-control"
+              type="text"
+              name="username"
+              id="username"
+              [(ngModel)]="form.username"
+              required
+              autocomplete="off">
+     
+        <label for="pass">Contraseña:</label>
+        <input class="form-control"
+              type="password"
+              name="pwd"
+              id="pwd"
+              [(ngModel)]="form.pwd"
+              required
+              autocomplete="off">
+      </div>
+      <br> <!-- metí un salto de linea-->
+      <div class="botones">
+        <button type="submit" class="btn btn-success" [disabled]="!f.valid">Ingresar</button>
+        
+      </div>
+      <div *ngIf="(!conectado) && (errorConexion)" class="float-left">
+        <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+      </div>
+      <div *ngIf="conectado" class="float-left">
+        <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+      </div>
+    </form>
+    
+   
+    <br>
+    <br>
+    <br>
+    <button class="btn btn-success" (click)="habilitarRegistrar()">Registre un nuevo usuario ahora</button>
+    <br>
+  </section>
+  
+  <!-- Segunda sección - > FORM REGISTRO -->
+  <section *ngIf="registryDialog">
+     <!-- escucha fin guardarUsuario -->
+    <form name="registrar" (ngSubmit)="guardarUsuario()" #f="ngForm" validate>
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input class="form-control"
+              type="text"
+              name="username"
+              id="username"
+              [(ngModel)]="form.username"
+              required
+              autocomplete="off">
+              
+        <label for="pwd">Contraseña:</label>
+        <input class="form-control"
+              type="password"
+              name="pwd"
+              id="pwd"
+              [(ngModel)]="form.pwd"
+              required
+              autocomplete="off">
+      
+        <label for="email">Email</label>
+        <input class="form-control"
+              type="text"
+              name="email"
+              id="email"
+              [(ngModel)]="form.email"
+              required
+              autocomplete="off">
+        
+        <label for="tipousuario">Tipo de usuario:</label>
+        <div class="form-tipodeusuario">
+          <input name="artista" id="artista" [(ngModel)]="isArtista" type="radio" [value]="true" [checked]="isArtista"/>
+          <label for="artista">Artista</label>
+          <input name="comercio" id="comercio" [(ngModel)]="isArtista" type="radio" [value]="false" [checked]="!isArtista"/>
+          <label for="comercio">Comercio</label>
+        </div>
+        
+        <!-- Dependiendo de lo que elija, surgen 2 subsecciones
+              1) De artista
+              2) De Comercio
+        -->
+
+              <!-- Sección artista-->
+              <div *ngIf="isArtista">
+                <div class="form-artista">
+                  <label for="instrumento">Instrumento:</label>
+                  <input class="form-control"
+                        type="text"
+                        name="instrumento"
+                        id="instrumento"
+                        [(ngModel)]="form.instrumento"
+                        required
+                        autocomplete="off">
+                  <label for="genero">Genero Musical:</label>
+                  <input class="form-control"
+                        type="text"
+                        name="genero"
+                        id="genero"
+                        [(ngModel)]="form.genero"
+                        required
+                        autocomplete="off">
+                </div>
+              </div>
+
+              <!-- Sección comercio-->
+              <div *ngIf="!isArtista">
+                  <div class="form-group">
+                    
+                    <label for="razonsocial">Razon social:</label>
+                    <input class="form-control"
+                          type="text"
+                          name="razonsocial"
+                          id="razonsocial"
+                          [(ngModel)]="form.razonsocial"
+                          required
+                          autocomplete="off">
+                    
+                    <label for="genero">Direccion:</label>
+                    <input class="form-control"
+                          type="text"
+                          name="direccion"
+                          id="direccion"
+                          [(ngModel)]="form.direccion"
+                          required
+                          autocomplete="off">
+                  </div>
+                </div>
+            </div>
+      <div class="form-group">
+          
+        <button type="submit" class="btn btn-success" [disabled]="!f.valid"> Registrar Usuario</button>
+      </div>
+    </form>
+      
+    <br>
+  </section>
+  <br>
+  <div *ngIf="falloCreacion" class="float-left">
+    <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+  </div>
+  <div *ngIf="creado" class="float-left">
+    <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+  </div>
+</div>

@@ -1,12 +1,14 @@
-<div class="container">
-  <div><button class="btn btn-success btn-lg" routerLink="/nuevaConfiguracionMarketplace">Alta Configuración</button></div>
+
+<div class="container" id ="container">
+  
+  <div><button class="btn btn-success btn-lg" *ngIf="equals({}, marketPlace.appID)" routerLink="/nuevaConfiguracionMarketplace">Alta Configuración</button></div>
 
   <div class="partes" *ngIf="marketPlace.appID">
     <table class="table table-dark">
       <thead>
 
       <tr>
-
+ 
         <th scope="col">APP ID</th>
         <th scope="col">CLIENT SECRET</th>
         <th scope="col">Editar</th>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { ActivarComercioComponent } from './activarComercio/activarComercio.component';
 import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.component';
 import {DetalleInstrumentoComponent} from './instrumentos/detalle-instrumento.component';
 import {NuevoInstrumentoComponent} from './instrumentos/nuevo-instrumento.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'lista', component: ListaInstrumentoComponent},
   {path: 'marketplace', component: VerConfiguracionComponent},
+  {path: 'activarComercio', component: ActivarComercioComponent},
   {path: 'nuevaConfiguracionMarketplace', component: NuevaConfiguracionComponent},
   {path: 'editarConfiguracionMarketplace', component: ModificarConfiguracionComponent},
 
