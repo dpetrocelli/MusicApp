@@ -39,4 +39,9 @@ export class MarketplaceService {
   public armarLink(id: number): Observable <Mensaje> {
     return this.httpClient.get<Mensaje>(this.baseURL + `armarurlvinculacion/${id}`, cabecera);
   }
+
+  public vincular(msg, id: number): Observable <Mensaje> {
+    return this.httpClient.get<Mensaje>(this.baseURL + `armarurlvinculacion/${id}?msg=${msg}`, cabecera);
+  }
+  
 }
