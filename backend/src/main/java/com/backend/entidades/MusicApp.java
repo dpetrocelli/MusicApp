@@ -4,8 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "ganancia")
-public class Ganancia {
+@Table(name = "musicapp")
+public class MusicApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +14,19 @@ public class Ganancia {
     private Double ganancia;
 
 
-    public Ganancia() {
+
+    public MusicApp() {
     }
 
-    public Ganancia(Double ganancia) {
+    public MusicApp(Double ganancia) {
         this.ganancia = ganancia;
     }
 
+    public Double getGanancia() {
+        return ganancia;
+    }
 
+    public void setGanancia(Double ganancia) {
+        this.ganancia = ganancia;
+    }
 }

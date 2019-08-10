@@ -33,6 +33,7 @@ public class MarketPlaceControlador {
     @Autowired
     ComercioRepositorio comercioDatosRepositorio;
 
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/obtener")
@@ -81,19 +82,9 @@ public class MarketPlaceControlador {
     public ResponseEntity<?> armarurl( @PathVariable String id) {
     	System.out.println("Entrando ArmarURLVinculacion id="+id);
 
-        if (!(comercioDatosRepositorio.existsByIdComercio(Long.parseLong(id)))){
-            log.info("No hay registros, guardo");
-            Comercio cd = new Comercio(Long.parseLong(id), "", "", null);
-            comercioDatosRepositorio.save(cd);
-            log.info("GUARDE EL ID DE COMERCIO DE DATOS");
+    	String url = this.marketPlaceServicio.armarurl(id);
+        if (url != null ){
 
-            String appid = String.valueOf((this.marketPlaceServicio.obtener().getAppID()));
-            log.info("obtuve app id"+appid);
-            // PROD URL
-            // String urlServicio = "http://localhost:8080/api/marketplace/vueltamp/"+id;
-            // DESA URL
-            String urlServicio = "http://localhost:8081/api/marketplace/vueltamp/"+id;
-            String url = new String("https://auth.mercadopago.com.ar/authorization?client_id="+appid+"&response_type=code&platform_id=mp&redirect_uri="+urlServicio);
             log.info("arme url: "+url);
             return  new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
         }else {
@@ -107,108 +98,16 @@ public class MarketPlaceControlador {
     @RequestMapping(value="/vueltamp/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> vueltamp(@RequestParam("code") String code, @PathVariable String id) throws MalformedURLException {
 
-
         System.out.println("CODE:" +code.toString());
-        System.err.println("ID COMERCIO PIJUDO:" +id.toString());
+        System.err.println("ID COMERCIO:" +id.toString());
 
-        // UNA VEZ QUE ME LLEGO EL CODE TENGO QUE HACER QUE ?
-        System.out.println("HOLA");
-        try {
-
-
-            MarketPlace mp = marketPlaceServicio.obtener();
-
-            System.out.println("VAMOS A PEDIR URL POR POST DE JAVA");
-            URL url = new URL("https://api.mercadopago.com/oauth/token");
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            con.setRequestProperty("Accept", "application/json");
-            con.setDoOutput(true);
-
-
-            String urlRegreso = "http://localhost:8081/api/marketplace/vueltamp/" + id;
-            //AccessTokenMP atmp = new AccessTokenMP(mp.getAppID(), mp.getClientSecret(), "authorization_code", code, urlRegreso);
-            JSONObject obj = new JSONObject();
-
-            obj.put("client_id", mp.getAppID());
-            obj.put("client_secret", mp.getClientSecret());
-            obj.put("grant_type", "authorization_code");
-            obj.put("code", code);
-            obj.put("redirect_uri", urlRegreso);
-
-            log.info(" EL OBJ ES: "+obj.toString());
-
-            log.info(" VAMOS PARA EL CURL : ");
-
-           try(OutputStream os = con.getOutputStream()) {
-               log.info(" en el try send: ");
-                byte[] input = obj.toString().getBytes("utf-8");
-               log.info(" arme le byte: ");
-                os.write(input, 0, input.length);
-               log.info(" escribi: ");
-
-                os.flush();
-               log.info(" escribitodo: ");
-               String stringResponse = null;
-               try(BufferedReader br = new BufferedReader(
-                       new InputStreamReader(con.getInputStream(), "utf-8"))) {
-                   StringBuilder response = new StringBuilder();
-                   String responseLine = null;
-                   while ((responseLine = br.readLine()) != null) {
-                       response.append(responseLine.trim());
-                   }
-                   stringResponse = response.toString();
-               }
-               JSONObject jsonObject = new JSONObject(stringResponse);
-               String accessToken = (String) jsonObject.get("access_token");
-               log.info(" LLEGAMOS AL TOKEN");
-               int expDate = (int) jsonObject.get("expires_in");
-               long expDateLong = expDate;
-               expDateLong = expDateLong*1000;
-               log.info(" LONG MILIS: "+expDateLong);
-
-               Date date = new Date();
-               log.info(" DATE TODAY: "+date);
-               long timeMilli = date.getTime();
-
-               timeMilli = timeMilli + expDateLong;
-               Date currentDate = new Date(timeMilli);
-
-               log.info("ACC TOK: "+accessToken);
-               log.info(" CURR DAT: "+currentDate);
-
-               Comercio cd = comercioDatosRepositorio.findByIdComercio(Long.parseLong(id)).get();
-               comercioDatosRepositorio.delete(cd);
-               cd.setCode(code);
-               cd.setAccessToken(accessToken);
-               cd.setFechaExpiracion(currentDate);
-               comercioDatosRepositorio.save(cd);
-
-
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-
+        try{
+            this.marketPlaceServicio.vincular(code,id);
             return  new ResponseEntity<Mensaje>(new Mensaje("ESTA TODO OK"), HttpStatus.OK);
-
-
         }catch (Exception e){
             return  new ResponseEntity<Mensaje>(new Mensaje ("ERROR SE MURIO"), HttpStatus.BAD_REQUEST);
         }
 
-
-
-
-
-
-
     }
 
-    @RequestMapping(value="/vueltaaccesstoken/{id}", method = RequestMethod.GET)
-    public String vueltaaccesstoken (@PathVariable String id) throws MalformedURLException {
-        System.out.println ("VOLVIMOS MAGIA");
-
-        return "OK";
-    }
 }
