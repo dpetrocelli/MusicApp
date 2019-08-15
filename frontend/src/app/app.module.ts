@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './usuarios/home.component';
 import { DetalleInstrumentoComponent } from './instrumentos/detalle-instrumento.component';
 import { NuevoInstrumentoComponent } from './instrumentos/nuevo-instrumento.component';
 import { EditarInstrumentoComponent } from './instrumentos/editar-instrumento.component';
@@ -18,6 +18,11 @@ import { VerConfiguracionComponent } from './marketplace/ver-configuracion.compo
 import { ModificarConfiguracionComponent } from './marketplace/modificar-configuracion.component';
 import { EliminarConfiguracionComponent } from './marketplace/eliminar-configuracion.component';
 import { ActivarComercioComponent } from './activarComercio/activarComercio.component';
+import { NuevousuarioComponent } from './usuarios/nuevousuario.component';
+import { ListarpromocionesComponent } from './promociones/listarpromociones.component';
+import { AltapromocionComponent } from './promociones/altapromocion.component';
+import { EditarpromocionComponent } from './promociones/editarpromocion.component';
+import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 
 @NgModule({
    declarations: [
@@ -31,7 +36,13 @@ import { ActivarComercioComponent } from './activarComercio/activarComercio.comp
       VerConfiguracionComponent,
       ModificarConfiguracionComponent,
       EliminarConfiguracionComponent,
-      ActivarComercioComponent
+      ActivarComercioComponent,
+      NuevousuarioComponent,
+      NuevousuarioComponent,
+      AltapromocionComponent,
+      ListarpromocionesComponent,
+      EditarpromocionComponent,
+      DetallepromocionComponent
    ],
    imports: [
       BrowserModule,

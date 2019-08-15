@@ -24,19 +24,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/api/marketplace")
+@RequestMapping("/api/marketplace/")
 @CrossOrigin(origins = "*")
 public class MarketPlaceControlador {
     ArrayList<Long> enEspera = new ArrayList<Long>();
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
-    @Autowired
-    ComercioRepositorio comercioDatosRepositorio;
 
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping("/obtener")
+    @GetMapping("obtener")
     public ResponseEntity<MarketPlace> obtenerConfiguracion(){
         MarketPlace marketPlace = marketPlaceServicio.obtener();
         if (marketPlace == null){
@@ -48,7 +46,7 @@ public class MarketPlaceControlador {
     }
 
 
-    @PostMapping("/nuevo")
+    @PostMapping("nuevo")
     public ResponseEntity<?> nuevaConfiguracion (@RequestBody MarketPlace marketPlace){
         if (marketPlaceServicio.obtener() == null){
             marketPlaceServicio.guardar(marketPlace);
@@ -57,7 +55,7 @@ public class MarketPlaceControlador {
             return  new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping ("/actualizar")
+    @PutMapping ("actualizar")
     public ResponseEntity<?> actualizarConfiguracion (@RequestBody MarketPlace marketPlace){
         if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())){
             return  new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
@@ -68,7 +66,7 @@ public class MarketPlaceControlador {
 
         }
     }
-    @DeleteMapping("/borrar")
+    @DeleteMapping("borrar")
     public ResponseEntity <?> borrarConfiguracion (){
         if (marketPlaceServicio.obtener() == null){
             return  new ResponseEntity(new Mensaje("No existe configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
@@ -78,31 +76,32 @@ public class MarketPlaceControlador {
         }
     }
 
-    @GetMapping("/armarurlvinculacion/{id}")
+    @GetMapping("armarurlvinculacion/{id}")
     public ResponseEntity<?> armarurl( @PathVariable String id) {
     	System.out.println("Entrando ArmarURLVinculacion id="+id);
 
     	String url = this.marketPlaceServicio.armarurl(id);
         if (url != null ){
 
-            log.info("arme url: "+url);
+            //log.info("arme url: "+url);
             return  new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
         }else {
-            log.info("ESE USUARIO YA ESTA VINCULADO");
+            log.info("ESE USUARIO YA ESTA VINCULADO en MusicAPP");
             return  new ResponseEntity<Mensaje>(new Mensaje ("USUARIO YA EXISTIA"), HttpStatus.BAD_REQUEST);
         }
 
 
     }
 
-    @RequestMapping(value="/vueltamp/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="vueltamp/{id}", method = RequestMethod.GET)
     public void vueltamp(@RequestParam("code") String code, @PathVariable String id) throws MalformedURLException {
+        log.info(" MPAGO devuelve código por URL publicada (paso armar url)");
+        log.info ("ID COMERCIO" + id + "CODE: "+ code);
 
-        System.out.println("CODE:" +code.toString());
-        System.err.println("ID COMERCIO:" +id.toString());
 
         try{
             this.marketPlaceServicio.vincular(code,id);
+            log.info("Hice el proceso desde el Backend, al FEND lo redireccioné al home");
 
         }catch (Exception e){
             

@@ -60,6 +60,11 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
+		<dependency>
+			<groupId> com.mercadopago </groupId>
+			<artifactId> dx-java </artifactId>
+			<version> 1.0.33 </version>
+		</dependency>
 	</dependencies>
 
 	<build>

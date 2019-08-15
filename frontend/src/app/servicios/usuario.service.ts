@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../modelos/usuario';
+import { LoginDatos } from '../modelos/logindatos';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -11,8 +12,8 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
 export class UsuarioService {
 
   private isUserLoggedIn = false;
-  
   usuarioFrontEnd: Usuario = new Usuario();
+  loginDatos: LoginDatos = new LoginDatos();
   valueByGet : String;
   // DESARROLLO URL
   baseURL = 'http://localhost:8081/api/usuario/';
@@ -22,10 +23,10 @@ export class UsuarioService {
   constructor(private httpClient: HttpClient) { }
 
 
-  setUserLoggedIn(user:Usuario) {
+  setUserLoggedIn(loginDat: LoginDatos) {
     this.isUserLoggedIn = true;
-    this.usuarioFrontEnd = user;
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.loginDatos = loginDat;
+    localStorage.setItem('currentUser', JSON.stringify(this.loginDatos));
   }
 
   getUserLoggedIn() {
@@ -33,13 +34,18 @@ export class UsuarioService {
   }
 
 
- 
+  public validar(loginDatos: LoginDatos): Observable<boolean> {
+    //public ingresar(usuario: Usuario): Observable<any> {
+      
+      //alert (JSON.stringify(loginDatos));
+      return this.httpClient.post<any>(this.baseURL + 'validar', loginDatos, cabecera);
+    }
+
   public ingresar(usuarioForm: Usuario): Observable<any> {
   //public ingresar(usuario: Usuario): Observable<any> {
     
     this.usuarioFrontEnd.username = usuarioForm.username;
     this.usuarioFrontEnd.pwd = usuarioForm.pwd;
-    console.log (JSON.stringify(this.usuarioFrontEnd));
     return this.httpClient.post<any>(this.baseURL + 'ingresar', this.usuarioFrontEnd, cabecera);
   }
 

@@ -1,10 +1,8 @@
 package com.backend;
 
-import com.backend.entidades.MusicApp;
 import com.backend.entidades.MarketPlace;
 import com.backend.entidades.Rol;
 import com.backend.entidades.Usuario;
-import com.backend.repositorios.GananciaRepositorio;
 import com.backend.repositorios.MarketPlaceRepositorio;
 import com.backend.repositorios.RolRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
@@ -32,8 +30,7 @@ public class Inicializador implements CommandLineRunner {
     @Autowired
     private MarketPlaceRepositorio marketPlaceRepositorio;
 
-    @Autowired
-    private GananciaRepositorio gananciaRepositorio;
+
 
 
     @Override
@@ -70,14 +67,10 @@ public class Inicializador implements CommandLineRunner {
 
         if (marketPlaceRepositorio.count()==0){
             // INSERTO LA CONF (Temporal) - MERCADOLIBRE
-            MarketPlace mp = new MarketPlace("5801276810386206", "3KLt51OEOUQHfzG9p2QlKnrkRa1VZ98Y");
+            MarketPlace mp = new MarketPlace("5801276810386206", "3KLt51OEOUQHfzG9p2QlKnrkRa1VZ98Y",2.69, (long) 1000000);
             marketPlaceRepositorio.save(mp);
         }
 
-        if (gananciaRepositorio.count()==0){
-            MusicApp musicApp = new MusicApp(2.69);
-            gananciaRepositorio.save(musicApp);
-        }
 
     }
 }

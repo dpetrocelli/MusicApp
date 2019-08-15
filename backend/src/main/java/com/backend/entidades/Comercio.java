@@ -12,7 +12,10 @@ public class Comercio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long idComercio;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
 
     @Column(unique = true)
     private String code;
@@ -26,8 +29,8 @@ public class Comercio {
     public Comercio() {
     }
 
-    public Comercio(Long idComercio, String code, String accessToken, Date fechaExpiracion) {
-        this.idComercio = idComercio;
+    public Comercio(Usuario usuario, String code, String accessToken, Date fechaExpiracion) {
+        this.usuario = usuario;
         this.code = code;
         this.accessToken = accessToken;
         this.fechaExpiracion = fechaExpiracion;
@@ -41,12 +44,12 @@ public class Comercio {
         this.id = id;
     }
 
-    public Long getIdComercio() {
-        return idComercio;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdComercio(Long idComercio) {
-        this.idComercio = idComercio;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getCode() {

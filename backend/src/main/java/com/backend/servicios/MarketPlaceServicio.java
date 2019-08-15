@@ -5,6 +5,7 @@ import com.backend.entidades.Comercio;
 import com.backend.entidades.MarketPlace;
 import com.backend.repositorios.ComercioRepositorio;
 import com.backend.repositorios.MarketPlaceRepositorio;
+
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,13 @@ public class MarketPlaceServicio {
     @Autowired
     MarketPlaceRepositorio marketPlaceRepositorio;
 
+    @Autowired
+    UsuarioServicio usuarioServicio;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public MarketPlace obtener() {
+        log.info(" TOME LOS DATOS DE TOKEN MARKETPLACE POR DEFECTO");
         List<MarketPlace> marketPlace = marketPlaceRepositorio.findAll();
         if (marketPlace.size() > 0) {
             return marketPlace.get(0);
@@ -42,36 +47,43 @@ public class MarketPlaceServicio {
 
     public void guardar(MarketPlace marketPlace) {
         marketPlaceRepositorio.save(marketPlace);
+        log.info("Guarde información de marketplace: "+marketPlace.getAppID());
     }
 
     public void borrar() {
         marketPlaceRepositorio.deleteAll();
+        log.info(" Vacié información de configuración básica");
     }
 
     public String armarurl(String id) {
-        if (!(comercioRepositorio.existsByIdComercio(Long.parseLong(id)))) {
-            log.info("No hay registros, guardo");
-            Comercio cd = new Comercio(Long.parseLong(id), "", "", null);
-            comercioRepositorio.save(cd);
-            log.info("GUARDE EL ID DE COMERCIO DE DATOS");
-
-            String appid = String.valueOf((this.obtener().getAppID()));
-            log.info("obtuve app id" + appid);
-            // PROD URL
-            // String urlServicio = "http://localhost:8080/api/marketplace/vueltamp/"+id;
-            // DESA URL
-            String urlServicio = "http://localhost:8081/api/marketplace/vueltamp/" + id;
-            String url = new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid + "&response_type=code&platform_id=mp&redirect_uri=" + urlServicio);
-            return url;
-        } else {
+        log.info(" Comercio inició vinculación con MPAGO");
+        log.info(" OBJ: armado de URL y redirección del FEND hacia MPAGO");
+        try{
+            Comercio c = comercioRepositorio.findByUsuario(this.usuarioServicio.obtener(Long.parseLong(id))).get() ;
+            if (c.getCode()== null){
+                String appid = String.valueOf((this.obtener().getAppID()));
+                log.info("obtuve app id" + appid);
+                // PROD URL
+                // String urlServicio = "http://localhost:8080/api/marketplace/vueltamp/"+id;
+                // DESA URL
+                String urlServicio = "http://localhost:8081/api/marketplace/vueltamp/" + id;
+                String url = new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid + "&response_type=code&platform_id=mp&redirect_uri=" + urlServicio);
+                log.warn(" URL HACIA MPG: "+ url);
+                return url;
+            }else return null;
+        }catch (Exception e){
             return null;
         }
+
     }
 
     public void vincular(String code, String id) {
         MarketPlace mp = this.obtener();
         try {
-            System.out.println("VAMOS A PEDIR URL POR POST DE JAVA");
+            log.info(" Para obtener Access Token que permita a MarketPlace (MusicAPP) vender/cobrar en nombre del comercio");
+            log.info(" Necesito armar (con el code que llegó, armar una URL con el método POST desde BACKEND");
+
+            log.info( " Comenzamos petición POST ");
             URL url = new URL("https://api.mercadopago.com/oauth/token");
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("POST");
@@ -90,20 +102,26 @@ public class MarketPlaceServicio {
             obj.put("code", code);
             obj.put("redirect_uri", urlRegreso);
 
-            log.info(" EL OBJ ES: "+obj.toString());
+            log.info(" Para eso definimos la url a donde enviar");
+            log.info("https://api.mercadopago.com/oauth/token" );
+            log.info(" Y le pasamos cabeceras: POST - Content Type ");
+            log.info( " Y creamos un objeto JSON con los datos del MarketPlace + Vendedor para obtenerlo");
+            log.info ( " client_id (Market) - client_secret (Market) - code (Comercio de paso anterior");
+            log.info(" siendo el objeto" + obj.toString());
 
-            log.info(" VAMOS PARA EL CURL : ");
+
+            log.info(" Enviamos la petición : ");
 
             try(OutputStream os = con.getOutputStream()) {
-                log.info(" en el try send: ");
-                byte[] input = obj.toString().getBytes("utf-8");
-                log.info(" arme le byte: ");
-                os.write(input, 0, input.length);
-                log.info(" escribi: ");
 
+                byte[] input = obj.toString().getBytes("utf-8");
+                log.info(" Más allá que arme el objeto JSON, lo tengo que pasar a String y luego enviarlo como bytes en el body de POST ");
+                os.write(input, 0, input.length);
                 os.flush();
-                log.info(" escribitodo: ");
+                log.info(" Request Enviado: ");
+
                 String stringResponse = null;
+                log.info(" Leyendo Response de MercadoPago: ");
                 try(BufferedReader br = new BufferedReader(
                         new InputStreamReader(con.getInputStream(), "utf-8"))) {
                     StringBuilder response = new StringBuilder();
@@ -113,16 +131,17 @@ public class MarketPlaceServicio {
                     }
                     stringResponse = response.toString();
                 }
+                log.info( " Finalicé de leer el objeto JSON de Mercadopago, ahora voy a buscar obtener ACC TOKEN");
                 JSONObject jsonObject = new JSONObject(stringResponse);
                 String accessToken = (String) jsonObject.get("access_token");
-                log.info(" LLEGAMOS AL TOKEN");
+                log.info(" Token Obtenido ");
                 int expDate = (int) jsonObject.get("expires_in");
                 long expDateLong = expDate;
                 expDateLong = expDateLong*1000;
-                log.info(" LONG MILIS: "+expDateLong);
+                log.info(" Tomo tiempo de MercadoPago (6 meses) y se lo sumo a la fecha de hoy : "+expDateLong);
 
                 Date date = new Date();
-                log.info(" DATE TODAY: "+date);
+                //log.info(" DATE TODAY: "+date);
                 long timeMilli = date.getTime();
 
                 timeMilli = timeMilli + expDateLong;
@@ -131,17 +150,26 @@ public class MarketPlaceServicio {
                 log.info("ACC TOK: "+accessToken);
                 log.info(" CURR DAT: "+currentDate);
 
-                Comercio c = comercioRepositorio.findByIdComercio(Long.parseLong(id)).get();
-                comercioRepositorio.delete(c);
-                Comercio cd = new Comercio();
-                cd.setIdComercio(Long.parseLong(id));
-                cd.setCode(code);
-                cd.setAccessToken(accessToken);
-                cd.setFechaExpiracion(currentDate);
-                comercioRepositorio.save(cd);
+                Comercio c = comercioRepositorio.findByUsuario(this.usuarioServicio.obtener(Long.parseLong(id))).get();
+                if (c!= null){
+                    log.info("ENCONTRE COMERCIO"+ c.getUsuario().getUsername());
+                }else{
+                    log.info("No lo pude encontrar");
+
+                }
+
+
+
+                log.info ("Registrando Datos (ACC TOKEN) en el COMERCIO ");
+                c.setUsuario(this.usuarioServicio.obtener(Long.parseLong(id)));
+                c.setCode(code);
+                c.setAccessToken(accessToken);
+                c.setFechaExpiracion(currentDate);
+                comercioRepositorio.save(c);
+                log.info( "GUARDE " );
             }
         } catch (Exception e){
-                System.err.println(e.getMessage());
+                System.err.println(e.getStackTrace());
        }
 
     }

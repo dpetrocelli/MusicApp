@@ -1,15 +1,19 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
-@Table(name = "promociones")
-public class Promociones {
-
+@Table(name = "promocion")
+public class Promocion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long comercio;
 
     private String titulo;
 
@@ -25,10 +29,13 @@ public class Promociones {
 
     private String init_point_mercadopago;
 
-    public Promociones(){
+    private String idPublicacionMP;
 
+    public Promocion() {
     }
-    public Promociones(String titulo, String descripcion, String tipomoneda, double valorpromocion, double importe, Date vigencia, String init_point_mercadopago) {
+
+    public Promocion(Long comercio, String titulo, String descripcion, String tipomoneda, double valorpromocion, double importe, Date vigencia, String init_point_mercadopago, String idPublicacionMP) {
+        this.comercio = comercio;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.tipomoneda = tipomoneda;
@@ -36,6 +43,15 @@ public class Promociones {
         this.importe = importe;
         this.vigencia = vigencia;
         this.init_point_mercadopago = init_point_mercadopago;
+        this.idPublicacionMP = idPublicacionMP;
+    }
+
+    public String getIdPublicacionMP() {
+        return idPublicacionMP;
+    }
+
+    public void setIdPublicacionMP(String idPublicacionMP) {
+        this.idPublicacionMP = idPublicacionMP;
     }
 
     public Long getId() {
@@ -44,6 +60,14 @@ public class Promociones {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId_comercio() {
+        return comercio;
+    }
+
+    public void setId_comercio(Long id_comercio) {
+        this.comercio = id_comercio;
     }
 
     public String getTitulo() {

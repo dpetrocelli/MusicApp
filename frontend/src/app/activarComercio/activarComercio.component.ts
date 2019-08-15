@@ -3,6 +3,7 @@ import { UsuarioService } from '../servicios/usuario.service';
 import { Usuario } from '../modelos/usuario';
 import { MarketplaceService } from '../servicios/marketplace.service';
 import { Mensaje } from '../modelos/mensaje';
+import { LoginDatos } from '../modelos/logindatos';
 
 @Component({
   selector: 'app-activarComercio',
@@ -10,18 +11,18 @@ import { Mensaje } from '../modelos/mensaje';
   styleUrls: ['./activarComercio.component.css']
 })
 export class ActivarComercioComponent implements OnInit {
-  usuario: Usuario = new Usuario();
+  loginDatos: LoginDatos = new LoginDatos();
   msg: Mensaje;
 
   constructor(private usuarioService: UsuarioService, private marketplaceService: MarketplaceService) { }
 
   ngOnInit() {
-    this.usuario = this.usuarioService.getUserLoggedIn();
+    this.loginDatos = this.usuarioService.getUserLoggedIn();
   }
 
   armarenlace(): void {
     
-    this.marketplaceService.armarLink(this.usuario.id).subscribe(data => {
+    this.marketplaceService.armarLink(this.loginDatos.idUsuario).subscribe(data => {
         
         this.msg = data;
         

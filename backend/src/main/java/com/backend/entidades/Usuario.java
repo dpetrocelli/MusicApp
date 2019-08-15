@@ -37,6 +37,9 @@ public class Usuario {
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "usuario")
+    private Comercio comercio;
+
     public Set<Rol> getRoles() {
         return roles;
     }
@@ -101,6 +104,14 @@ public class Usuario {
         this.pwd = passwordEncoder.encode(this.pwd);
     }
 
+    public Comercio getComercio() {
+        return comercio;
+    }
+
+    public void setComercio(Comercio comercio) {
+        this.comercio = comercio;
+    }
+
     public String getpwd() {
         return pwd;
     }
@@ -116,6 +127,6 @@ public class Usuario {
 
     @Override
     public String toString (){
-        return "Usuario: "+this.getUsername()+"\nPass: "+this.getpwd()+"\nMail: "+this.getEmail();
+        return "Usuario: "+this.getUsername()+"Mail: "+this.getEmail();
     }
 }

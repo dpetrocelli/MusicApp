@@ -19,14 +19,27 @@ public class MarketPlace {
     @Column(unique = true)
     private String clientSecret;
 
+    private Double ganancia;
+
+    private Long tiempoSesion;
+
 
     public MarketPlace() {
     }
 
-    public MarketPlace(String appID, String clientSecret) {
+    public MarketPlace(@NotBlank String appID, @NotBlank String clientSecret, @NotBlank Double ganancia, @NotBlank Long tiempoSesion) {
         this.appID = appID;
         this.clientSecret = clientSecret;
+        this.ganancia = ganancia;
+        this.tiempoSesion = tiempoSesion;
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAppID() {
@@ -43,5 +56,21 @@ public class MarketPlace {
 
     public void setClientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+    }
+
+    public Double getGanancia() {
+        return ganancia;
+    }
+
+    public void setGanancia(Double ganancia) {
+        this.ganancia = ganancia;
+    }
+
+    public Long getTiempoSesion() {
+        return tiempoSesion;
+    }
+
+    public void setTiempoSesion(Long tiempoSesion) {
+        this.tiempoSesion = tiempoSesion;
     }
 }

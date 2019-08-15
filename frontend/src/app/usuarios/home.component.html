@@ -1,0 +1,53 @@
+<div class="container">
+  <h1> Bienvenido a MiusicApp! </h1>
+
+  <div *ngIf="logOff">
+    <h5>Hola, {{userLogged.username}}</h5>
+    <button (click)="cerrarsesion()" class="btn btn-danger">Cerrar sesion</button>
+  </div>
+
+  <div *ngIf="loginDialog">
+    <!-- Con #f defino el nombre del form para luego hacer el valid
+      en TS escucha -> ingresar()
+    -->
+    <form name="userForm" (ngSubmit)="ingresar()" #f="ngForm">
+      <div class="form-user">
+        <label for="username"> Username :</label>
+        <input class="form-control"
+              type="text"
+              name="username"
+              id="username"
+              [(ngModel)]="form.username"
+              required
+              autocomplete="off">
+     
+        <label for="pass">Contraseña:</label>
+        <input class="form-control"
+              type="password"
+              name="pwd"
+              id="pwd"
+              [(ngModel)]="form.pwd"
+              required
+              autocomplete="off">
+      </div>
+      <br><!-- metí un salto de linea-->
+      <div class="botones">
+        <button type="submit" class="btn btn-success" [disabled]="!f.valid">Ingresar</button>
+      </div>
+      <div *ngIf="(!conectado) && (errorConexion)" class="float-left">
+        <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+      </div>
+      <br> 
+      <div *ngIf="conectado" class="float-left">
+        <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+      </div>
+      </form>
+ 
+      <br><br>
+     <div>
+      <button class="btn btn-success" routerLink="/crearusuario">Registre nuevo usuario </button>
+     </div>
+     
+  <br>
+  
+</div>
