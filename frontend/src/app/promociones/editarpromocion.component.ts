@@ -31,21 +31,21 @@ export class EditarpromocionComponent implements OnInit {
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
     this.userLogged = this.usuarioService.getUserLoggedIn();
-    this.promocionService.detalle(id, this.userLogged).subscribe(data => {//tengo que pasar el logindata
+    this.promocionService.detalle(id, this.userLogged).subscribe(data => {
         this.promocion = data;
+        this.promocion.vigenciaStr = new Date(data.vigencia).toLocaleDateString("zh-Hans-CN",{year:"numeric",month:"2-digit", day:"2-digit"}).replace('/', '-').replace('/', '-');
         this.form.titulo = this.promocion.titulo;
         this.form.descripcion = this.promocion.descripcion;
         this.form.tipomoneda = this.promocion.tipomoneda;
         this.form.valorpromocion = this.promocion.valorpromocion;
         this.form.importe = this.promocion.importe;
-        this.form.vigencia = this.promocion.vigencia;
+        this.form.vigencia= this.promocion.vigenciaStr;
         this.idPromo = this.promocion.id;
         this.init_point_mercadopago = this.promocion.init_point_mercadopago;
         this.idPublicacionMP = this.promocion.idPublicacionMP;
-
       },
       (err: any) => {
-        console.log("Ocurrio un error",err)
+        this.msjFallo = "Ocurrio un error: "+err;
       }
     );
   }
@@ -56,12 +56,14 @@ export class EditarpromocionComponent implements OnInit {
     this.promocion.id = this.idPromo;
     this.promocion.init_point_mercadopago = this.init_point_mercadopago;
     this.promocion.idPublicacionMP = this.idPublicacionMP;
+
     this.promocionService.editar(this.promocion, this.userLogged).subscribe(data => {
         this.actualizado = true;
         this.falloActualizacion = false;
         this.msjOK = data.mensaje;
-        this.router.navigate(['promociones']);
-
+        setTimeout(() => {
+          this.router.navigate(['/promociones']);
+        },3000);
       },
       (err: any) => {
         this.actualizado = false;

@@ -23,6 +23,7 @@ import { ListarpromocionesComponent } from './promociones/listarpromociones.comp
 import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
+import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 
 @NgModule({
    declarations: [
@@ -42,7 +43,8 @@ import { DetallepromocionComponent } from './promociones/detallepromocion.compon
       AltapromocionComponent,
       ListarpromocionesComponent,
       EditarpromocionComponent,
-      DetallepromocionComponent
+      DetallepromocionComponent,
+      AccesodenegadoComponent
    ],
    imports: [
       BrowserModule,

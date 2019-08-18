@@ -39,7 +39,9 @@ public class ComercioServicio {
     }
 
 
-
-
-
+    public boolean existe (Usuario tipoUsuario) {
+        boolean result =this.comercioRepositorio.existsByUsuario(tipoUsuario);
+        log.info(" RESULTADO:" +result);
+        return result;
+    }
 }

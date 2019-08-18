@@ -19,8 +19,8 @@
         <td>{{promocion.tipomoneda}}</td>
         <td>{{promocion.valorpromocion}}</td>
         <td>{{promocion.importe}}</td>
-        <td>{{promocion.vigente}}</td>
-        <td><button class="btn btn-warning" routerLink="/editar/{{promocion.id}}">Editar</button></td>
+        <td>{{promocion.vigenciaStr}}</td>
+        <td><button class="btn btn-warning" routerLink="/promociones/editar/{{promocion.id}}">Editar</button></td>
         <td><button class="btn btn-danger" (click)="onDelete(promocion.id)">Borrar</button></td>
       </tr>
       </tbody>

@@ -79,10 +79,8 @@ public class MarketPlaceControlador {
     @GetMapping("armarurlvinculacion/{id}")
     public ResponseEntity<?> armarurl( @PathVariable String id) {
     	System.out.println("Entrando ArmarURLVinculacion id="+id);
-
     	String url = this.marketPlaceServicio.armarurl(id);
         if (url != null ){
-
             //log.info("arme url: "+url);
             return  new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
         }else {

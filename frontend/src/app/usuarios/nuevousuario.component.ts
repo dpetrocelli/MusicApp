@@ -24,6 +24,8 @@ export class NuevousuarioComponent implements OnInit {
   }
 
   guardarUsuario() {
+    this.form.isArtista = this.isArtista;
+    console.log(this.form);
     this.usuarioService.registrar(this.form, this.isArtista).subscribe(data => {
       this.msjOK = data.msg ;
       this.creado = true;

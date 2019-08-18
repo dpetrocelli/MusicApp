@@ -3,7 +3,7 @@ import { Promocion } from '../modelos/promocion';
 import { PromocionService } from '../servicios/promocion.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { LoginDatos } from '../modelos/logindatos';
-import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listarpromociones',
@@ -13,11 +13,10 @@ import { DatePipe } from '@angular/common';
 export class ListarpromocionesComponent implements OnInit {
   promociones : Promocion[] = [];
   userLogged : LoginDatos;
-  formattedData : Date;
-  datePipe : DatePipe;
   
   constructor(private promocionService: PromocionService, 
-              private usuarioService: UsuarioService) { }
+              private usuarioService: UsuarioService,
+              private router: Router) { }
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
@@ -26,12 +25,14 @@ export class ListarpromocionesComponent implements OnInit {
 
   cargarpromociones(): void {
     this.promocionService.lista(this.userLogged).subscribe(data => {
+        data.forEach(element => {
+          element.vigenciaStr = new Date(element.vigencia).toLocaleDateString('es-AR');
+        });
         this.promociones = data;
-
-        
       },
       (err: any) => {
-        console.log(err);
+        console.log(err.error.mensaje);
+        this.router.navigate(['/accesodenegado']);
       });
   }
 

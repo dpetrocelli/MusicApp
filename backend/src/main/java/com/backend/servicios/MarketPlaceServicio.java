@@ -60,6 +60,7 @@ public class MarketPlaceServicio {
         log.info(" OBJ: armado de URL y redirección del FEND hacia MPAGO");
         try{
             Comercio c = comercioRepositorio.findByUsuario(this.usuarioServicio.obtener(Long.parseLong(id))).get() ;
+            log.info("Armarurl() para: "+c.getUsuario().getUsername());
             if (c.getCode()== null){
                 String appid = String.valueOf((this.obtener().getAppID()));
                 log.info("obtuve app id" + appid);

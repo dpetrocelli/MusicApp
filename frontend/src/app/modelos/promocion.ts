@@ -9,4 +9,5 @@ export class Promocion {
   vigencia: Date;
   init_point_mercadopago: String;
   idPublicacionMP: String;
+  vigenciaStr: String;
 }

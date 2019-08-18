@@ -28,6 +28,8 @@ public class PromocionServicio {
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final String COMERCIO = "comercio";
+    private final String ARTISTA = "artista";
 
     public ArrayList<Promocion> obtenerPromociones(Long idComercio){
         //ArrayList<Promocion> lp = new ArrayList<Promocion>();
@@ -36,7 +38,7 @@ public class PromocionServicio {
         return lp;
     }
 
-    public Boolean nuevaPromocion(Promocion promocion, LoginDatos loginDatos){
+    public String nuevaPromocion(Promocion promocion, LoginDatos loginDatos){
         //ArrayList<Promocion> lp = new ArrayList<Promocion>();
         try{
             // Llegan todos los datos de la promoción del comercio, falta que yo agregue la ganancia y la pub
@@ -49,31 +51,38 @@ public class PromocionServicio {
 
             Comercio c = this.comercioServicio.obtener(this.usuarioServicio.obtener(loginDatos.getIdUsuario()));
             log.info(" Obtengo comercio y datos + "+c.getId());
+            // hay que ver como validar bien el tema que haya token
+            if (c.getAccessToken()!= null){
 
-            log.info(" CREO OBJETO MP " );
-            PublicacionMercadoPago publicacionMP = new PublicacionMercadoPago(c.getAccessToken());
-            // ahora creo el objeto de Mpago
-            log.info(" Publico Objeto " );
+                log.info(" CREO OBJETO MP " );
+                PublicacionMercadoPago publicacionMP = new PublicacionMercadoPago(c.getAccessToken());
+                // ahora creo el objeto de Mpago
+                log.info(" Publico Objeto " );
 
-            String mpResult = publicacionMP.publicar(promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
-            if (mpResult!=null){
-                log.info(" Propiedades del Objeto MP: "+ publicacionMP.obtenerPreferencia().getInitPoint());
+                String mpResult = publicacionMP.publicar(promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
+                if (mpResult!=null){
+                    log.info(" Propiedades del Objeto MP: "+ publicacionMP.obtenerPreferencia().getInitPoint());
 
-                promocion.setInit_point_mercadopago(publicacionMP.obtenerPreferencia().getInitPoint());
-                promocion.setIdPublicacionMP(publicacionMP.obtenerPreferencia().getId());
+                    promocion.setInit_point_mercadopago(publicacionMP.obtenerPreferencia().getInitPoint());
+                    promocion.setIdPublicacionMP(publicacionMP.obtenerPreferencia().getId());
 
-                promocion.setId_comercio(c.getId());
-                this.promocionRepositorio.save(promocion);
-                return true;
+                    promocion.setId_comercio(c.getId());
+                    this.promocionRepositorio.save(promocion);
+                    return "ok";
+                }else{
+                    log.info(" Por error en MP no puedo guardar la promocion");
+                    return "No se pudo publicar en MP la promocion";
+                }
             }else{
-                log.info(" Por error en MP no puedo guardar la promocion");
-                return false;
+                // ESTO SIgNIFICA QUE NO TIENE ACCESS TOKEN
+                return "sin ACCESS_TOKEN de MP de Vendedor CONFIGURADO";
             }
 
 
 
+
         }catch (Exception e){
-            return false;
+            return e.getMessage();
         }
     }
 
@@ -115,5 +124,9 @@ public class PromocionServicio {
     public boolean existePromocion (Long id){
         return this.promocionRepositorio.existsById(id);
     }
+
+	public boolean permisos(LoginDatos ld) {
+		return this.usuarioServicio.disponePermisos(ld, this.COMERCIO);
+	}
 
 }

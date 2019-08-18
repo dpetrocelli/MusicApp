@@ -14,6 +14,7 @@ import { ListarpromocionesComponent } from './promociones/listarpromociones.comp
 import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
+import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -33,6 +34,8 @@ const routes: Routes = [
   {path: 'promociones/detalle/:id', component: DetallepromocionComponent},
   {path: 'promociones/nuevo', component: AltapromocionComponent},
   {path: 'promociones/editar/:id', component: EditarpromocionComponent},
+
+  {path: 'accesodenegado', component: AccesodenegadoComponent},
 
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

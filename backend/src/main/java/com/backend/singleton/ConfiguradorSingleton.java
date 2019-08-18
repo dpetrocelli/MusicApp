@@ -1,4 +1,4 @@
-package com.backend;
+package com.backend.singleton;
 
 import com.backend.entidades.MarketPlace;
 import com.backend.entidades.Rol;
@@ -6,6 +6,7 @@ import com.backend.entidades.Usuario;
 import com.backend.repositorios.MarketPlaceRepositorio;
 import com.backend.repositorios.RolRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
+import com.backend.servicios.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +21,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 @Component
-public class Inicializador implements CommandLineRunner {
-    private static final Logger log = LoggerFactory.getLogger(Inicializador.class);
+public class ConfiguradorSingleton implements CommandLineRunner {
+    private static final Logger log = LoggerFactory.getLogger(ConfiguradorSingleton.class);
     @Autowired
     private RolRepositorio rolRepositorio;
     @Autowired
@@ -30,7 +34,11 @@ public class Inicializador implements CommandLineRunner {
     @Autowired
     private MarketPlaceRepositorio marketPlaceRepositorio;
 
+    @Autowired
+    RolServicio rolServicio;
 
+    public ArrayList<String> permisosDelComercio;
+    public ArrayList<String> permisosDelArtista;
 
 
     @Override
@@ -41,9 +49,9 @@ public class Inicializador implements CommandLineRunner {
             Rol rol = new Rol("admin", "adminfull", "allsites");
             rolRepositorio.save(rol);
 
-            rol = new Rol("comercio", "listadeaccesocomercio", "todas");
+            rol = new Rol("comercio", "listadeaccesocomercio", "activarcomercio,promociones,login");
             rolRepositorio.save(rol);
-            rol = new Rol("artista", "listadeaccesocomercio", "todas");
+            rol = new Rol("artista", "listadeaccesocomercio", "comprar,login,calificarbanda,calificarusuario,bandas,perfil");
             rolRepositorio.save(rol);
 
         }else{
@@ -70,6 +78,14 @@ public class Inicializador implements CommandLineRunner {
             MarketPlace mp = new MarketPlace("5801276810386206", "3KLt51OEOUQHfzG9p2QlKnrkRa1VZ98Y",2.69, (long) 1000000);
             marketPlaceRepositorio.save(mp);
         }
+
+        Rol r = this.rolServicio.obtener("comercio");
+        this.permisosDelComercio = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
+
+
+        // luego cargo los ROLES de ARTISTA
+        r = this.rolServicio.obtener("artista");
+        this.permisosDelArtista = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 
 
     }

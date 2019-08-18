@@ -26,6 +26,11 @@ public class Comercio {
     @Column(unique = true)
     private Date fechaExpiracion;
 
+
+    private String direccion;
+
+    private String razonsocial;
+    
     public Comercio() {
     }
 
@@ -36,7 +41,13 @@ public class Comercio {
         this.fechaExpiracion = fechaExpiracion;
     }
 
-    public Long getId() {
+    public Comercio(Usuario usuario, String direccion, String razonsocial) {
+    	this.usuario = usuario;
+		this.razonsocial = razonsocial;
+		this.direccion = direccion;
+	}
+
+	public Long getId() {
         return id;
     }
 

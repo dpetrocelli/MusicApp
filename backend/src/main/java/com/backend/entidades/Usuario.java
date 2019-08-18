@@ -129,4 +129,12 @@ public class Usuario {
     public String toString (){
         return "Usuario: "+this.getUsername()+"Mail: "+this.getEmail();
     }
+
+	public String rolesToString() {
+		String roles = "";
+		for(Rol r : this.getRoles()) {
+			roles +=r.getNombre()+' ';
+		}
+		return roles;
+	}
 }

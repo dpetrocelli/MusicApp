@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
+import { Mensaje } from '../modelos/mensaje';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -33,6 +34,11 @@ export class UsuarioService {
   	return JSON.parse(localStorage.getItem('currentUser'));
   }
 
+  
+  public chequearPermisosPorSubsite(ld : LoginDatos,sitio : String): Observable <Mensaje> {
+    
+    return this.httpClient.post<Mensaje>(this.baseURL + `chequear_permisos_por_subsite`,{ld,sitio}, cabecera);
+  }
 
   public validar(loginDatos: LoginDatos): Observable<boolean> {
     //public ingresar(usuario: Usuario): Observable<any> {
@@ -49,14 +55,18 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.baseURL + 'ingresar', this.usuarioFrontEnd, cabecera);
   }
 
-  public registrar(usuarioForm: Usuario, isArtista: boolean): Observable<any> {
+  public registrar(form: any, isArtista: boolean): Observable<any> {
     
-    this.usuarioFrontEnd.username = usuarioForm.username;
-    this.usuarioFrontEnd.pwd = usuarioForm.pwd;
-    this.usuarioFrontEnd.email = usuarioForm.email;
-    (isArtista)? this.valueByGet = "1" : this.valueByGet = "2";
-    
-    return this.httpClient.post<any>(this.baseURL + `registrar/${this.valueByGet}`, this.usuarioFrontEnd, cabecera);
+    this.usuarioFrontEnd.username = form.username;
+    this.usuarioFrontEnd.pwd = form.pwd;
+    this.usuarioFrontEnd.email = form.email;
+
+    if(isArtista){
+      console.log({usuario : this.usuarioFrontEnd, String: JSON.stringify(form)});
+      return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: JSON.stringify(form)}, cabecera); 
+    }else{
+      return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: JSON.stringify(form)}, cabecera); 
+    }
   }
 }
 
