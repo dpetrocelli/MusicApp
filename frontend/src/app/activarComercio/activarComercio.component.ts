@@ -24,6 +24,7 @@ export class ActivarComercioComponent implements OnInit {
     this.loginDatos = this.usuarioService.getUserLoggedIn();
     //this.unauthorized = 
     this.chequearPermisos();
+    
     //if(!this.unauthorized){
     //  this.router.navigate(['/accesodenegado']);
     //}
@@ -48,7 +49,7 @@ export class ActivarComercioComponent implements OnInit {
   }
 
   chequearPermisos() {
-    this.usuarioService.chequearPermisosPorSubsite(this.loginDatos, 'activarcomercios').subscribe(
+    this.usuarioService.chequearPermisosPorSubsite(this.loginDatos, 'activarcomercio').subscribe(
       data =>{
         console.log("Sali todo bien: ",data.mensaje);
         return false;

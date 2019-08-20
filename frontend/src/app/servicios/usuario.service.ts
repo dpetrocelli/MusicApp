@@ -34,7 +34,9 @@ export class UsuarioService {
   	return JSON.parse(localStorage.getItem('currentUser'));
   }
 
-  
+  public chequearPermisosPorRol(ld : LoginDatos): Observable <Mensaje> {
+    return this.httpClient.post<Mensaje>(this.baseURL + `chequear_permisos_por_rol`,ld, cabecera);
+  }
   public chequearPermisosPorSubsite(ld : LoginDatos,sitio : String): Observable <Mensaje> {
     
     return this.httpClient.post<Mensaje>(this.baseURL + `chequear_permisos_por_subsite`,{ld,sitio}, cabecera);
@@ -47,6 +49,7 @@ export class UsuarioService {
       return this.httpClient.post<any>(this.baseURL + 'validar', loginDatos, cabecera);
     }
 
+    
   public ingresar(usuarioForm: Usuario): Observable<any> {
   //public ingresar(usuario: Usuario): Observable<any> {
     
@@ -67,6 +70,11 @@ export class UsuarioService {
     }else{
       return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: JSON.stringify(form)}, cabecera); 
     }
+  }
+
+  public verificarComercioActivado(ld : LoginDatos): Observable<any>{
+    
+    return this.httpClient.post<any>(this.baseURL + `comercio_esta_activado`, ld, cabecera); 
   }
 }
 

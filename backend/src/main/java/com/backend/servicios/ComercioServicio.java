@@ -41,7 +41,7 @@ public class ComercioServicio {
 
     public boolean existe (Usuario tipoUsuario) {
         boolean result =this.comercioRepositorio.existsByUsuario(tipoUsuario);
-        log.info(" RESULTADO:" +result);
+        //log.info(" EXISTE RRESULTADO:" +result);
         return result;
     }
 }

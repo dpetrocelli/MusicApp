@@ -120,7 +120,8 @@ public class UsuarioServicio {
         try{
             if (this.comercioServicio.existe(tipoUsuario)){
                 log.info(" EL USUARIO ES COMERCIO, entonces..");
-
+                //log.error(" LISTA DE PERMISOS: "+this.configuradorSingleton.permisosDelComercio.toString());
+                //log.error(" Y EL USUARIO pregunta por "+site);
                 if (this.configuradorSingleton.permisosDelComercio.contains(site)){
                     log.info(" OK -> Singleton: "+this.configuradorSingleton.permisosDelComercio.toString()+ " Subsite: "+site);
                     return true;

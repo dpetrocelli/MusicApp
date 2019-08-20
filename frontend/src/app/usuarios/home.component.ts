@@ -4,6 +4,7 @@ import {UsuarioService} from '../servicios/usuario.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { userInfo } from 'os';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
   msjFallo = '';
   msjOK = '';
   constructor(private usuarioService: UsuarioService,
+              private appComponent: AppComponent,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
@@ -109,6 +111,7 @@ export class HomeComponent implements OnInit {
       this.logOff = true;
       this.loginDialog = false;
       this.userLogged.nombreUsuario = this.userLogged.nombreUsuario;
+      this.appComponent.reloadInfo();
     },
       (err: any) => {
         console.log(err.error);

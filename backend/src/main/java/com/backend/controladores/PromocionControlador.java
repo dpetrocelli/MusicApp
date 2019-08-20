@@ -40,6 +40,7 @@ public class PromocionControlador {
         log.info(" POST -> /listar/ \n User Logged: "+ld.getNombreUsuario());
         try{
             if (promocionServicio.validarTokenUsuario(ld)){
+                log.info (" TOKEN VALIDADO OK ! ");
             	if(promocionServicio.permisos(ld)){
 	                log.info("Buscando promociones");
 	                Usuario user = this.usuarioServicio.obtener(ld.getIdUsuario());

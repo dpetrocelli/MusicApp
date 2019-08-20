@@ -10,6 +10,7 @@ import com.backend.entidades.Usuario;
 import com.backend.recursos.LoginDatos;
 
 
+import com.backend.servicios.ComercioServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.backend.singleton.ConfiguradorSingleton;
 import com.backend.wrappers.RegistrarUsuarioRequest;
@@ -32,6 +33,8 @@ public class UsuarioControlador {
 
     @Autowired
     UsuarioServicio usuarioServicio;
+    @Autowired
+    ComercioServicio comercioServicio;
 
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -96,7 +99,26 @@ public class UsuarioControlador {
         }
     }
 
+    @PostMapping("comercio_esta_activado")
+    public ResponseEntity<Boolean> comercio_esta_activado (@RequestBody LoginDatos loginDatos){
+        log.info(" LLEGO A COMERCIO:ESTA:ACTIVADO");
 
+        log.info ( " USUARIO: "+loginDatos.getIdUsuario());
+        Usuario u = this.usuarioServicio.obtenerPorNombre(loginDatos.getNombreUsuario());
+        Comercio c = this.comercioServicio.obtener(u);
+        log.info(" Obtuve el comercio");
+        if (c.getAccessToken()!= null) {
+            log.info(" hay vinculación a MP ");
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        else {
+            log.info(" no hay vinculación a mp");
+            return new ResponseEntity(false, HttpStatus.UNAUTHORIZED);
+        }
+
+
+
+    }
     @PostMapping("validar")
     public ResponseEntity<Boolean> validar (@RequestBody LoginDatos loginDatos){
 
@@ -121,20 +143,25 @@ public class UsuarioControlador {
     }
 
     @PostMapping("chequear_permisos_por_rol")
-    public ResponseEntity<?> permisosgeneral(@RequestBody String payload){
-        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
-        try {
-            log.info("Pude crear el objeto básico JSON ");
-            log.info("siendo: " + payload.toString());
-            log.info(" Como yo se los objetos que vienen, puedo castear los wrappers por parte");
-            log.info("Objeto 1: LoginDatos, Objeto 2: String -> será luego roles");
-            LoginDatos ld = new Gson().fromJson(json.get("ld"), LoginDatos.class);
-            String funcionSistema = json.get("sitio").getAsString();
-            log.info("/Check Permisos/ -> User:" + ld.getNombreUsuario() + " Sitio: " + funcionSistema);
-            return null;
+    public ResponseEntity<?> permisosgeneral(@RequestBody LoginDatos loginDatos){
+        log.info(" Chequear -> permisos -> ROL");
+        try{
+            Usuario u = this.usuarioServicio.obtener(loginDatos.getIdUsuario());
+            String rolResponse = "";
+            for(Rol rol: u.getRoles()) {
+                rolResponse = rol.getNombre();
+                break;
+            }
+            log.info(" ROL de USER: "+rolResponse);
+            return new ResponseEntity<Mensaje>(new Mensaje(rolResponse), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<Mensaje>(new Mensaje("No tiene permisos su usuario"), HttpStatus.FORBIDDEN);
+            log.info(" ESPLOTE");
+            return new ResponseEntity<Mensaje>(new Mensaje(" NOOK "), HttpStatus.UNAUTHORIZED);
         }
+
+
+
+
     }
 
     @PostMapping("chequear_permisos_por_subsite")

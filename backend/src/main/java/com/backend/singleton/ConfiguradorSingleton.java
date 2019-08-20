@@ -79,11 +79,11 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             marketPlaceRepositorio.save(mp);
         }
 
+        // CARGO LOS PERMISOS DEL ROL DEL COMERCIO
         Rol r = this.rolServicio.obtener("comercio");
         this.permisosDelComercio = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 
-
-        // luego cargo los ROLES de ARTISTA
+        // CARGO LOS PERMISOS DEL ROL DEL ARTISTA
         r = this.rolServicio.obtener("artista");
         this.permisosDelArtista = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 

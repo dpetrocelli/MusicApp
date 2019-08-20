@@ -15,29 +15,38 @@ import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
-
+import { SeguridadService as seguridad } from './servicios/seguridad.service';
 const routes: Routes = [
+  
+  // Lista de acceso base para todos 
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
-  {path: 'lista', component: ListaInstrumentoComponent},
-  {path: 'promociones', component: ListarpromocionesComponent},
-  {path: 'marketplace', component: VerConfiguracionComponent},
-  {path: 'activarComercio', component: ActivarComercioComponent},
-  {path: 'nuevaConfiguracionMarketplace', component: NuevaConfiguracionComponent},
-  {path: 'editarConfiguracionMarketplace', component: ModificarConfiguracionComponent},
-
-  {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent},
-  {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent},
-  {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent},
-
-  {path: 'promociones/detalle/:id', component: DetallepromocionComponent},
-  {path: 'promociones/nuevo', component: AltapromocionComponent},
-  {path: 'promociones/editar/:id', component: EditarpromocionComponent},
-
   {path: 'accesodenegado', component: AccesodenegadoComponent},
+  
+
+  // Opciones de Artista 
+    // Instrumento
+  {path: 'lista', component: ListaInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+  {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+  {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+  {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+
+  // Opciones de Comercio
+    // Promociones
+  {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  {path: 'promociones/detalle/:id', component: DetallepromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  {path: 'marketplace', component: VerConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+
+  // Opciones de Admin
+  {path: 'nuevaConfiguracionMarketplace', component: NuevaConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+  {path: 'editarConfiguracionMarketplace', component: ModificarConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
 
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
+  
 ];
 
 @NgModule({
