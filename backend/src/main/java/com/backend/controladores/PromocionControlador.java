@@ -79,8 +79,12 @@ public class PromocionControlador {
         log.info(" TU -> /nuevo/ -> User: "+ld.getNombreUsuario());
         log.info(" Articulo -> /nuevo/ -> Titulo: "+promocion.getTitulo());
         try{
+
+            // [STEP 0] - Validar Token Usuario
             if (promocionServicio.validarTokenUsuario(ld)) {
-            	if(promocionServicio.permisos(ld)) {
+                // [STEP 1] - Validar que tenga los permisos necesarios para realizar la operacion
+
+
                     String resultadoNuevaPromocion = this.promocionServicio.nuevaPromocion(promocion, ld);
                     if (resultadoNuevaPromocion.equals("ok")){
                         log.info(" GUARDE CON EXITO, respondo");
@@ -95,9 +99,7 @@ public class PromocionControlador {
                             return new ResponseEntity<String>(resultadoNuevaPromocion, HttpStatus.BAD_REQUEST);
                         }
                     }
-            	}else {
-            		return new ResponseEntity<Mensaje>(new Mensaje("Acceso no autorizado"), HttpStatus.UNAUTHORIZED);
-            	}
+
             }	
             return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -113,7 +115,7 @@ public class PromocionControlador {
 
         try{
             if (promocionServicio.validarTokenUsuario(ld)){
-	        	if(promocionServicio.permisos(ld)) {
+
 	                log.info(" Vamos a buscar los detalles de la promocion ");
 	                if (this.promocionServicio.existePromocion(id)) {
 	                    log.info(" La promoción existe");
@@ -123,9 +125,7 @@ public class PromocionControlador {
 	                }else{
 	                    return new ResponseEntity<String>(" Id de promoción inexistente ", HttpStatus.OK);
 	                }
-	            }else {
-            		return new ResponseEntity<Mensaje>(new Mensaje("Acceso no autorizado"), HttpStatus.UNAUTHORIZED);
-	            }
+
             }
             return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -141,15 +141,13 @@ public class PromocionControlador {
         log.info(" POST -> /editar/ \n User Logged: "+ld.getNombreUsuario());
         try{
             if (promocionServicio.validarTokenUsuario(ld)){
-	        	if(promocionServicio.permisos(ld)) {
+
 	                log.info(" Vamos a editar la promocion con ID "+promocion.getId());
 	                // los datos de promocion ya están editados, lo que hay que hacer es actualizar las propiedades de MPAGO
 	                this.promocionServicio.editarPromocion(promocion, ld);
 	                log.info(" TERMINE DE EDITAR y GUARDE");
 	                return new ResponseEntity<Mensaje>(new Mensaje("Editado correctamente"), HttpStatus.OK);
-	        	}else {
-            		return new ResponseEntity<Mensaje>(new Mensaje("Acceso no autorizado"), HttpStatus.UNAUTHORIZED);
-	        	}
+
             }
             return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
         }catch (Exception e){

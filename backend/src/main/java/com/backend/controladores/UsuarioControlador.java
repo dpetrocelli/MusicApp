@@ -163,7 +163,7 @@ public class UsuarioControlador {
 
 
     }
-
+/*
     @PostMapping("chequear_permisos_por_subsite")
     public ResponseEntity<?> permisos(@RequestBody String payload){
 		// Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -206,4 +206,6 @@ public class UsuarioControlador {
 
 
     }
+    */
+
 }

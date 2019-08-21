@@ -28,7 +28,7 @@ export class SeguridadService implements CanActivate {
           this.expectedRol.forEach(element => {
             if (element.trim() == data.mensaje){
               this.encontrado = true;
-              console.log (" SON IGUALES NOS CONOCEMOS")
+              console.log (" EXPECTED ROL = ROL DADO")
               resolve(true);
             }
           });
@@ -60,83 +60,7 @@ export class SeguridadService implements CanActivate {
 });
 
 
-    /*return new Promise((resolve) => {
-      this.usuarioService.validar(this.loginDatos).subscribe( data =>{
-          if (data) {
-            // es validar token
-            resolve(true);
-            /*
-            this.usuarioService.chequearPermisosPorRol(this.loginDatos).subscribe(
-              data =>{
-                console.log (data.mensaje);
-               
-                this.expectedRol.forEach(element => {
-                  if (element.trim() == data.mensaje){
-                    console.log (" SON IGUALES NOS CONOCEMOS")
-                    resolve(true);
-                  }
-                });
-                
-              
-                
-              },
-              (err: any) => {
-                console.log("Sali por error: ",err.mensaje);
-                
-                //resolve(false);
-                this.router.navigate(['/accesodenegado']);
-              }
-            );
-              
-              
-          } else {
-             
-             console.log ("salimos por false");
-              resolve(false);
-              this.router.navigate(['/accesodenegado']);
-          }
-      });
-  });
-
-  */
-    // 1ro valido si los datos del token están activos y no fueron falseados
-    /*
-  
-    this.usuarioService.validar(this.loginDatos).subscribe(
-      data =>{
-        
-        // 2do , voy a validar permisos del login datos (por si lo falsean)
-        this.usuarioService.chequearPermisosPorRol(this.loginDatos).subscribe(
-          data =>{
-            console.log (data.mensaje);
-           
-            this.expectedRol.forEach(element => {
-              if (element.trim() == data.mensaje){
-                this.result = true;
-                return this.result;
-              }
-            });
-            console.log ( " HAY O NO "+this.result);
-            
-          },
-          (err: any) => {
-            console.log("Sali por error: ",err.mensaje);
-            this.router.navigate(['/accesodenegado']);
-            return this.result;
-          }
-        );
     
-        
-      },
-      (err: any) => {
-        console.log("Sali por error: ",err.mensaje);
-        this.router.navigate(['/accesodenegado']);
-        return this.result;
-      }
-    );
-    
-    
-      */
     
     
   }

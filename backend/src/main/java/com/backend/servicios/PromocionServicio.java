@@ -125,8 +125,8 @@ public class PromocionServicio {
         return this.promocionRepositorio.existsById(id);
     }
 
-	public boolean permisos(LoginDatos ld) {
-		return this.usuarioServicio.disponePermisos(ld, this.COMERCIO);
+	public boolean disponePermisos(LoginDatos ld, String subsite) {
+		return this.usuarioServicio.disponePermisos(ld, subsite);
 	}
 
 }

@@ -112,18 +112,20 @@ public class UsuarioServicio {
     public boolean existe(Usuario usuarioFrontEnd) {
     	return this.usuarioRepositorio.existsByUsername((usuarioFrontEnd.getUsername()));
     }
-
-	public boolean disponePermisos(LoginDatos ld, String site) {
+    // Ahora no lo uso, solo uso a nivel general por el can activate del frontend
+    // no hago chequeo a nivel de permisos locales
+	public boolean disponePermisos(LoginDatos ld, String subsite) {
         Usuario tipoUsuario = this.usuarioRepositorio.findById(ld.getIdUsuario()).get();
-        log.info("encontre el usuario completo, valide su token, ahora");
-        log.info(" me encargo de ver si sus permisos están en la lista");
+        //log.info("encontre el usuario completo, valide su token, ahora");
+        //log.info(" me encargo de ver si sus permisos están en la lista");
         try{
             if (this.comercioServicio.existe(tipoUsuario)){
                 log.info(" EL USUARIO ES COMERCIO, entonces..");
                 //log.error(" LISTA DE PERMISOS: "+this.configuradorSingleton.permisosDelComercio.toString());
                 //log.error(" Y EL USUARIO pregunta por "+site);
-                if (this.configuradorSingleton.permisosDelComercio.contains(site)){
-                    log.info(" OK -> Singleton: "+this.configuradorSingleton.permisosDelComercio.toString()+ " Subsite: "+site);
+                log.info(" OK -> Singleton: "+this.configuradorSingleton.permisosDelComercio.toString()+ " Subsite pedido: "+subsite);
+                if (this.configuradorSingleton.permisosDelComercio.contains(subsite)){
+                    log.info(" OK -> Singleton: "+this.configuradorSingleton.permisosDelComercio.toString()+ " Subsite: "+subsite);
                     return true;
                 }else{
                     log.info(" No OK -> CHE NO ESTABAN");
