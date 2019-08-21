@@ -113,7 +113,7 @@ public class UsuarioControlador {
         }
         else {
             log.info(" no hay vinculación a mp");
-            return new ResponseEntity(false, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(false, HttpStatus.OK);
         }
 
 

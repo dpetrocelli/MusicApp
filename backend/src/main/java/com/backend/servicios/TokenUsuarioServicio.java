@@ -57,11 +57,11 @@ public class TokenUsuarioServicio {
     public boolean validarToken(TokenUsuario tokenUsuario) {
         try {
             log.info(" TOKEN USER (validar) "+tokenUsuario.getIdUsuario());
-            log.info(" ENTRE A VALIDAR ");
+            //log.info(" ENTRE A VALIDAR ");
             Date date = new Date();
             long tiempoActual = date.getTime();
             long expiracionTokenUsuario = tokenUsuario.getExpiracion();
-            log.info(" VALIDO FECHAS");
+            //log.info(" VALIDO FECHAS");
             if (tiempoActual <= expiracionTokenUsuario + this.marketPlaceServicio.obtener().getTiempoSesion()) {
                 tokenUsuario.setExpiracion(tiempoActual);
                 log.info(" RENOVE LAS FECHAS DEL TOKEN ");

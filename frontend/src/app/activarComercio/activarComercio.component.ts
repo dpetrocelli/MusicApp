@@ -23,7 +23,7 @@ export class ActivarComercioComponent implements OnInit {
   ngOnInit() {
     this.loginDatos = this.usuarioService.getUserLoggedIn();
     //this.unauthorized = 
-    this.chequearPermisos();
+    //this.chequearPermisos();
     
     //if(!this.unauthorized){
     //  this.router.navigate(['/accesodenegado']);

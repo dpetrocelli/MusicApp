@@ -88,7 +88,7 @@ public class UsuarioServicio {
     public boolean validarTokenUsuario (LoginDatos loginDatos){
         Long idUsuarioFE = loginDatos.getIdUsuario();
         String tokenFE = loginDatos.getTokenUsuario();
-        log.info("validarTokenUsuario (LoginDatos loginDatos) ");
+
         TokenUsuario tuBE = tokenUsuarioServicio.obtenerTokenUsuario(idUsuarioFE);
         log.info(" OBTUVIMOS TOKEN USUARIO CON ID USUARIO FE ");
         if ((tuBE != null) && (tokenFE.equals(tuBE.getToken()))){

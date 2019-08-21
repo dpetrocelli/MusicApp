@@ -25,13 +25,22 @@ export class ListarpromocionesComponent implements OnInit {
 
   cargarpromociones(): void {
     this.promocionService.lista(this.userLogged).subscribe(data => {
-        data.forEach(element => {
-          element.vigenciaStr = new Date(element.vigencia).toLocaleDateString('es-AR');
-        });
-        this.promociones = data;
+      
+      
+         data.forEach(element => {
+            element.vigenciaStr = new Date(element.vigencia).toLocaleDateString('es-AR');
+          });
+          this.promociones = data;
+          
+         
+      
+         
+      
+            
+       
       },
       (err: any) => {
-        console.log(err.error.mensaje);
+        console.log(err);
         this.router.navigate(['/accesodenegado']);
       });
   }

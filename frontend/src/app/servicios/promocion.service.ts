@@ -19,7 +19,7 @@ export class PromocionService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public lista(login : LoginDatos): Observable<Promocion[]> {
+  public lista(login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'listar',login, cabecera);
   }
 

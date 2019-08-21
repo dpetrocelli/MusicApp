@@ -41,23 +41,26 @@ public class PromocionControlador {
         try{
             if (promocionServicio.validarTokenUsuario(ld)){
                 log.info (" TOKEN VALIDADO OK ! ");
-            	if(promocionServicio.permisos(ld)){
+
 	                log.info("Buscando promociones");
 	                Usuario user = this.usuarioServicio.obtener(ld.getIdUsuario());
 	                Comercio comercio = this.comercioServicio.obtener(user);
+                     ArrayList<Promocion> promociones = new ArrayList<Promocion>();
 	                if (this.promocionServicio.existe(comercio.getId())){
-	                    ArrayList<Promocion> promociones = this.promocionServicio.obtenerPromociones(comercio.getId());
+
+	                   promociones = this.promocionServicio.obtenerPromociones(comercio.getId());
 	                    log.info ("Cantidad de promociones: "+promociones.size());
 	                    return new ResponseEntity<ArrayList<Promocion>>(promociones, HttpStatus.OK);
 	                }else{
 	                    log.info (" No hay promociones" );
-	                    return new ResponseEntity<String>("no hay promociones", HttpStatus.OK);
+
+	                    return new ResponseEntity<ArrayList<Promocion>>(promociones, HttpStatus.OK);
 	                }
-            	}else {
-            		return new ResponseEntity<Mensaje>(new Mensaje("Acceso no autorizado"), HttpStatus.UNAUTHORIZED);
-            	}
+
+            }else{
+                return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
+
 
         }catch (Exception e){
             log.info("Estamos saliendo por except "+e.getMessage());

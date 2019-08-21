@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   verificarComercioActivado() {
     
     this.usuarioService.verificarComercioActivado(this.userLogged).subscribe(data => {
-      this.isComercioVinculadoMP = true;
+      this.isComercioVinculadoMP = data;
     },
     (err: any) => {
       console.log(err.error.mensaje);
