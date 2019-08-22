@@ -7,6 +7,7 @@ import com.backend.entidades.Usuario;
 import com.backend.recursos.LoginDatos;
 import com.backend.recursos.PublicacionMercadoPago;
 import com.backend.repositorios.PromocionRepositorio;
+import com.backend.singleton.ConfiguradorSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class PromocionServicio {
     ComercioServicio comercioServicio;
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
+
+    @Autowired
+    ConfiguradorSingleton configuradorSingleton;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final String COMERCIO = "comercio";
     private final String ARTISTA = "artista";
@@ -43,7 +47,7 @@ public class PromocionServicio {
         try{
             // Llegan todos los datos de la promoción del comercio, falta que yo agregue la ganancia y la pub
             // en mpago
-
+            String baseURL = this.configuradorSingleton.baseURLSistema.toString();
             float ganancia = (float) ((double) this.marketPlaceServicio.obtener().getGanancia());
             log.info(" Obtengo ganancia " +ganancia);
 
@@ -59,7 +63,7 @@ public class PromocionServicio {
                 // ahora creo el objeto de Mpago
                 log.info(" Publico Objeto " );
 
-                String mpResult = publicacionMP.publicar(promocion.getId(), promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
+                String mpResult = publicacionMP.publicar(baseURL, promocion.getTitulo(), promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
                 if (mpResult!=null){
                     log.info(" Propiedades del Objeto MP: "+ publicacionMP.obtenerPreferencia().getInitPoint());
 

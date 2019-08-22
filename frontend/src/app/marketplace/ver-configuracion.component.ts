@@ -13,7 +13,7 @@ import { $ } from 'protractor';
 export class VerConfiguracionComponent implements OnInit {
 
   marketPlace: Marketplace = null;
-
+  
   constructor(private marketPlaceService: MarketplaceService, private activatedRoute: ActivatedRoute,
               private router: Router) {
 
@@ -26,6 +26,7 @@ export class VerConfiguracionComponent implements OnInit {
   private obtenerConfiguracion(): void {
     this.marketPlaceService.obtener().subscribe(data => {
       this.marketPlace = data;
+      console.log (JSON.stringify(this.marketPlace));
 
       },
        (err: any) => {

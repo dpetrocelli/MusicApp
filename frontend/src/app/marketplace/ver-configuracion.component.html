@@ -1,12 +1,6 @@
-
-<div class="container" id ="container">
-  
-  <div><button class="btn btn-success btn-lg" *ngIf="equals({}, marketPlace.appID)" routerLink="/nuevaConfiguracionMarketplace">Alta Configuración</button></div>
-
-  <div class="partes" *ngIf="marketPlace.appID">
-    <table class="table table-dark">
-      <thead>
-
+<div class="container">
+  <table class="table table-dark">
+    <thead>
       <tr>
  
         <th scope="col">APP ID</th>
@@ -14,19 +8,18 @@
         <th scope="col">Editar</th>
         <th scope="col">Borrar</th>
       </tr>
-      </thead>
-      <tbody>
-      <tr>
-
-        <td>{{marketPlace.appID}}</td>
-        <td>{{marketPlace.clientSecret}}</td>
-        <td><button class="btn btn-warning" routerLink="/editarConfiguracionMarketplace">Editar</button></td>
-        <td><button class="btn btn-danger" (click)="onDelete()">Borrar</button></td>
-
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-
+    </thead>
+    <tbody>
+      <td>{{marketPlace.appID}}</td>
+      <td>{{marketPlace.clientSecret}}</td>
+      <td><button class="btn btn-warning" routerLink="/marketplace/editar">Editar</button></td>
+      <td><button class="btn btn-danger" (click)="onDelete()">Borrar</button></td>
+    </tbody>
+  </table>
+  <div><button class="btn btn-success btn-lg" routerLink="/marketplace/nuevo">Setear Configuracion</button></div>
 </div>
+
+  
+  
+
+

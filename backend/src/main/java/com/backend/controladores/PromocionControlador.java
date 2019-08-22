@@ -72,11 +72,10 @@ public class PromocionControlador {
 
     @PostMapping("nuevo")
     public ResponseEntity<?> nuevo(@RequestBody PromocionRequest request){
-        log.info(" POST -> /nuevo/ ");
+
         LoginDatos ld = request.getLoginDatos();
         Promocion promocion = request.getPromocion();
-
-        log.info(" TU -> /nuevo/ -> User: "+ld.getNombreUsuario());
+        log.info(" POST -> /nuevo/ -> User: "+ld.getNombreUsuario());
         log.info(" Articulo -> /nuevo/ -> Titulo: "+promocion.getTitulo());
         try{
 

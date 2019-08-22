@@ -39,7 +39,6 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
     public ArrayList<String> permisosDelComercio;
     public ArrayList<String> permisosDelArtista;
-
     public String baseURLSistema;
 
     @Override
@@ -90,16 +89,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
         r = this.rolServicio.obtener("artista");
         this.permisosDelArtista = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 
-        // Tipo Movimiento
-        /*
-        TipoMovimiento tm = new TipoMovimiento("venta", "laventa");
-        this.tipoMovimientoServicio.guardar(tm);
-        tm = new TipoMovimiento("notaDeCredito", "notaDeCredito");
-        this.tipoMovimientoServicio.guardar(tm);
-        tm = new TipoMovimiento("notaDeDebito", "notaDeDebito");
-        this.tipoMovimientoServicio.guardar(tm);
 
-         */
 
 
     }

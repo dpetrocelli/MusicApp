@@ -26,9 +26,11 @@ public class PublicacionMercadoPago {
     String accessToken;
     Item item;
     Payer payer;
-    String baseURLForBackPaymentResult;
+
     @Autowired
     ConfiguradorSingleton configuradorSingleton;
+
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     public PublicacionMercadoPago(String accessToken) {
@@ -92,9 +94,9 @@ public class PublicacionMercadoPago {
 
 
     }
-    public String publicar (Long id, String titulo, String descripcion, String moneda, float precio, float ganancia, Date vigencia){
+    public String publicar (String baseurl, String title, String titulo, String descripcion, String moneda, float precio, float ganancia, Date vigencia){
         try{
-            baseURLForBackPaymentResult = "/api/pago/";
+            String VueltaPagoURL = "/api/pago/";
             this.preference = new Preference();
             log.info("Entramos a publicar una Promocion en MP ");
             log.info("DATOS PUB"+titulo+"/"+descripcion+"/"+moneda+"/"+precio+"/"+ganancia);
@@ -112,16 +114,16 @@ public class PublicacionMercadoPago {
             this.preference.setPayer(payer);
 
             // Para la vuelta de MP cuando paga (ID de promoción)
-            this.preference.setAdditionalInfo(Long.toString(id));
+            this.preference.setAdditionalInfo(title);
 
             // Backs urls para el tema de registrar la venta
-            BackUrls backUrls = new BackUrls();
-            backUrls.setSuccess(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_exitoso");
-            backUrls.setFailure(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_erroneo");
-            backUrls.setPending(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_pendiente");
+
+
+
+            BackUrls backUrls = new BackUrls(baseurl+VueltaPagoURL+"pago_exitoso", baseurl+VueltaPagoURL+"pago_erroneo", baseurl+VueltaPagoURL+"pago_pendiente");
             this.preference.setBackUrls(backUrls);
 
-            this.preference.setNotificationUrl(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"notificacion_de_pago");
+            this.preference.setNotificationUrl(baseurl+VueltaPagoURL+"notificacion_de_pago");
 
             this.preference.setExpirationDateTo(vigencia);
             this.preference.appendItem(this.item);
