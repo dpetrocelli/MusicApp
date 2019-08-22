@@ -121,11 +121,11 @@ public class MarketPlaceControlador {
             if (notificacionRegistrada) {
                 return new ResponseEntity<Mensaje>(new Mensaje("Notificacion Registrada"),HttpStatus.CREATED);
             } else {
-                return new ResponseEntity<Mensaje>(new Mensaje("Error en el registro de la notificacion"),HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<Mensaje>(new Mensaje("Ocurrio un error"),HttpStatus.BAD_REQUEST);
             }
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Mensaje>(new Mensaje("Ocurrio un error"),HttpStatus.BAD_REQUEST);
         }
 
     }
