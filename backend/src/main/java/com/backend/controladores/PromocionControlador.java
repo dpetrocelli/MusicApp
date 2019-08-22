@@ -138,15 +138,37 @@ public class PromocionControlador {
     public ResponseEntity<?> editar (@RequestBody PromocionRequest request){
         LoginDatos ld = request.getLoginDatos();
         Promocion promocion = request.getPromocion();
-        log.info(" POST -> /editar/ \n User Logged: "+ld.getNombreUsuario());
+        log.info(" POST -> /editar/ User Logged: "+ld.getNombreUsuario() + " - PROM: " +promocion.getTitulo() );
         try{
             if (promocionServicio.validarTokenUsuario(ld)){
 
-	                log.info(" Vamos a editar la promocion con ID "+promocion.getId());
+	                //log.info(" Vamos a editar la promocion con ID "+promocion.getId());
 	                // los datos de promocion ya están editados, lo que hay que hacer es actualizar las propiedades de MPAGO
 	                this.promocionServicio.editarPromocion(promocion, ld);
 	                log.info(" TERMINE DE EDITAR y GUARDE");
 	                return new ResponseEntity<Mensaje>(new Mensaje("Editado correctamente"), HttpStatus.OK);
+
+            }
+            return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            log.info("Estamos saliendo por except "+e.getMessage());
+            return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+    @PostMapping("borrar")
+    public ResponseEntity<?> borrar (@RequestBody PromocionRequest request){
+        LoginDatos ld = request.getLoginDatos();
+        Promocion promocion = request.getPromocion();
+        log.info(" POST -> /borrar/ User Logged: "+ld.getNombreUsuario() + " - PROM: " +promocion.getTitulo() );
+        try{
+            if (promocionServicio.validarTokenUsuario(ld)){
+
+                this.promocionServicio.borrarPromocion(promocion, ld);
+                log.info(" TERMINE DE BORRAR MP y ELIMINE BD");
+                return new ResponseEntity<Mensaje>(new Mensaje("Borrado correctamente"), HttpStatus.OK);
 
             }
             return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);

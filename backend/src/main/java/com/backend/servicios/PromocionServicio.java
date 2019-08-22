@@ -94,7 +94,7 @@ public class PromocionServicio {
         Comercio c = this.comercioServicio.obtener(u);
 
         PublicacionMercadoPago publicacionMP = new PublicacionMercadoPago(c.getAccessToken());
-        log.info(" CREE EL OBJETO MP , ahora lo seteo para editar");
+        log.info(" RECUPERE , ahora lo seteo para editar");
         String init_point = publicacionMP.editar(idPublicacionMP, promocion);
         log.info(" El nuevo init point es: "+init_point);
 
@@ -103,6 +103,26 @@ public class PromocionServicio {
 
         promocion.setId_comercio(c.getId());
         this.promocionRepositorio.save(promocion);
+        return true;
+
+
+
+
+
+    }
+
+    public Boolean borrarPromocion (Promocion promocion, LoginDatos ld){
+
+        String idPublicacionMP = promocion.getIdPublicacionMP();
+        log.info(" Entramos a BORRAR  promocion METODO - idPubMP "+idPublicacionMP);
+        Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+        Comercio c = this.comercioServicio.obtener(u);
+
+        PublicacionMercadoPago publicacionMP = new PublicacionMercadoPago(c.getAccessToken());
+        log.info(" Recupere MP para eliminar (setear en 0) ");
+        String init_point = publicacionMP.borrar(idPublicacionMP, promocion);
+
+        this.promocionRepositorio.delete(promocion);
         return true;
 
 

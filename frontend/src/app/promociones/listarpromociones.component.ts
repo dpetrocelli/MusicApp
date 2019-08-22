@@ -45,9 +45,9 @@ export class ListarpromocionesComponent implements OnInit {
       });
   }
 
-  onDelete(id: number): void {
+  onDelete(promocion: Promocion): void {
     if (confirm('¿Estás seguro?')) {
-      this.promocionService.borrar(id).subscribe(data => {
+      this.promocionService.borrar(promocion, this.userLogged).subscribe(data => {
         this.cargarpromociones();
       });
     }

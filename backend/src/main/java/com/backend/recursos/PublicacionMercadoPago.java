@@ -12,7 +12,10 @@ import com.mercadopago.resources.datastructures.preference.Payer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class PublicacionMercadoPago {
@@ -48,7 +51,8 @@ public class PublicacionMercadoPago {
 
             this.preference = Preference.findById(preferenceId);
 
-
+            log.info("Entramos a EDITAR una Promocion en MP ");
+            log.info("DATOS PUB"+promocion.getTitulo()+"/"+promocion.getDescripcion()+"/"+promocion.getTipomoneda()+"/"+promocion.getImporte());
             //this.item = (this.preference.getItems()).get(0);
             //String titulo, String descripcion, String moneda, float precio, float ganancia, Date vigencia){
             this.item = new Item();this.item.setId("1234");this.item.setCurrencyId("ARS");
@@ -57,7 +61,7 @@ public class PublicacionMercadoPago {
             this.item.setDescription(promocion.getDescripcion());
             this.item.setUnitPrice((float) promocion.getImporte());
             Payer payer = new Payer();
-            log.info("Creamos payer vacio");
+
             this.preference.setPayer(payer);
 
             this.preference.setExpirationDateTo(promocion.getVigencia());
@@ -66,11 +70,11 @@ public class PublicacionMercadoPago {
             listItems.add(this.item);
             this.preference.setItems(listItems);
 
-            log.info("adjuntamos a la preferencia el item y la cant de items es:" +this.preference.getItems().size());
 
-            log.info("seteamos la ganancia");
+
+
             // Guardar y postear la preferencia
-            this.preference.save();
+            this.preference.update();
 
             return this.preference.getInitPoint();
 
@@ -119,16 +123,28 @@ public class PublicacionMercadoPago {
 
 
     }
-    /*
-        log.info("ITem: "+item.getTitle());
-        Thread.sleep(10);
-        log.info("PRICE: "+item.getUnitPrice());
-        System.err.println(" QUANT: "+item.getQuantity());
-        Thread.sleep(10);
-        log.info("init_point: "+prefSearch.getInitPoint());
 
+    public String borrar(String idPublicacionMP, Promocion promocion) {
+        try{
+
+            this.preference = Preference.findById(idPublicacionMP);
+
+            log.info("Entramos a ELIMINAR una Promocion en MP ");
+
+            Date expirado = new Date(System.currentTimeMillis()-24*60*60*1000);
+
+            this.preference.setExpirationDateTo(expirado);
+            // borrar el item actual
+
+           // Guardar y postear la preferencia
+            this.preference.update();
+
+            log.info ( " INIT_ POINT ELIM: "+this.preference.getInitPoint());
+            return this.preference.getInitPoint();
+
+        }catch (Exception e){
+            log.info ("ESE Pref ID no anda "+idPublicacionMP);
+            return null;
+        }
     }
-
-     */
-
 }

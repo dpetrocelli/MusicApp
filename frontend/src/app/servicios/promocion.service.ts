@@ -35,7 +35,7 @@ export class PromocionService {
     return this.httpClient.post<any>(this.baseURL + 'editar', {promocion, login}, cabecera);
   }
 
-  public borrar(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.baseURL + 'borrar/${id}', cabecera);
+  public borrar(promocion: Promocion, login :LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'borrar/', {promocion, login}, cabecera);
   }
 }
