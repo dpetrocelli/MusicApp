@@ -79,7 +79,7 @@ public class UsuarioServicio {
     }
 
     public TokenUsuario generarTokenUsuario(Usuario usuario) {
-        log.info( "Generar Token Usuario  -> "+usuario.getUsername());
+        //log.info( "Generar Token Usuario  -> "+usuario.getUsername());
         TokenUsuario tu = tokenUsuarioServicio.crearTokenUsuario(usuario);
         this.tokenUsuarioServicio.guardarTokenUsuario(tu);
         return tu;
@@ -90,7 +90,7 @@ public class UsuarioServicio {
         String tokenFE = loginDatos.getTokenUsuario();
 
         TokenUsuario tuBE = tokenUsuarioServicio.obtenerTokenUsuario(idUsuarioFE);
-        log.info(" OBTUVIMOS TOKEN USUARIO CON ID USUARIO FE ");
+        //log.info(" OBTUVIMOS TOKEN USUARIO CON ID USUARIO FE ");
         if ((tuBE != null) && (tokenFE.equals(tuBE.getToken()))){
 
             return tokenUsuarioServicio.validarToken(tuBE);

@@ -27,20 +27,20 @@ public class TokenUsuarioServicio {
 
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
-    private static final Logger log = LoggerFactory.getLogger(UsuarioServicio.class);
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public TokenUsuario crearTokenUsuario(Usuario usuario) {
         log.info (" Crear Token Usuario "+usuario.getId());
         TokenUsuario tu = null;
         if (this.tokenUsuarioRepositorio.existsByIdUsuario(usuario.getId())) {
-            log.info(" EXISTE TOKEN ");
+            //log.info(" EXISTE TOKEN ");
             tu = this.tokenUsuarioRepositorio.findByIdUsuario(usuario.getId()).get();
-            log.info(" ENTONCES LO RENUEVO");
+            //log.info(" ENTONCES LO RENUEVO");
             tu = this.renovarToken(tu);
 
 
         } else {
-            log.info(" NO EXISTE TOKEN LO CREO");
+            //log.info(" NO EXISTE TOKEN LO CREO");
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             Long time = new Date().getTime();
             passwordEncoder.encode(String.valueOf(time));
@@ -56,7 +56,7 @@ public class TokenUsuarioServicio {
     }
     public boolean validarToken(TokenUsuario tokenUsuario) {
         try {
-            log.info(" TOKEN USER (validar) "+tokenUsuario.getIdUsuario());
+            //log.info(" TOKEN USER (validar) "+tokenUsuario.getIdUsuario());
             //log.info(" ENTRE A VALIDAR ");
             Date date = new Date();
             long tiempoActual = date.getTime();
@@ -64,11 +64,11 @@ public class TokenUsuarioServicio {
             //log.info(" VALIDO FECHAS");
             if (tiempoActual <= expiracionTokenUsuario + this.marketPlaceServicio.obtener().getTiempoSesion()) {
                 tokenUsuario.setExpiracion(tiempoActual);
-                log.info(" RENOVE LAS FECHAS DEL TOKEN ");
+                //log.info(" RENOVE LAS FECHAS DEL TOKEN ");
                 tokenUsuarioRepositorio.save(tokenUsuario);
                 return true;
             }else{
-                log.info(" SE VENCIERON LAS CREDENCIALES ");
+                //log.info(" SE VENCIERON LAS CREDENCIALES ");
                 return false;
             }
         } catch (Exception e) {

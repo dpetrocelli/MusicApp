@@ -26,26 +26,26 @@ const routes: Routes = [
   
 
   // Opciones de Artista 
-    // Instrumento
-  {path: 'instrumento', component: ListaInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-  {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-  {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-  {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-
+  
   // Opciones de Comercio
     // Promociones
   {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
   {path: 'promociones/detalle/:id', component: DetallepromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
   {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
   {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
-  
   {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
 
   // Opciones de Admin
-  {path: 'marketplace', component: VerConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
-  {path: 'marketplace/nuevo', component: NuevaConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
-  {path: 'marketplace/editar', component: ModificarConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    // DATOS MarketPlace
+    {path: 'marketplace', component: VerConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'marketplace/nuevo', component: NuevaConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'marketplace/editar', component: ModificarConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
 
+    // Instrumento
+    {path: 'instrumento', component: ListaInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
   
 ];

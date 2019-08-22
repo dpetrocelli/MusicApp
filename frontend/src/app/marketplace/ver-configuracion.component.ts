@@ -12,20 +12,29 @@ import { $ } from 'protractor';
 })
 export class VerConfiguracionComponent implements OnInit {
 
-  marketPlace: Marketplace = null;
-  
+  marketPlace: Marketplace;
+  datosRegistrados: boolean;
+
   constructor(private marketPlaceService: MarketplaceService, private activatedRoute: ActivatedRoute,
               private router: Router) {
 
   }
 
   ngOnInit() {
+    this.marketPlace = null;
+    this.datosRegistrados = false;
     this.obtenerConfiguracion();
   }
 
   private obtenerConfiguracion(): void {
     this.marketPlaceService.obtener().subscribe(data => {
       this.marketPlace = data;
+      if ((this.marketPlace.clientSecret != null) && (this.marketPlace.appID != null)){
+        this.datosRegistrados = true;
+      }else{
+        this.datosRegistrados = false;
+      }
+      
       console.log (JSON.stringify(this.marketPlace));
 
       },

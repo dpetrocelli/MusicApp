@@ -54,8 +54,12 @@ public class MarketPlaceServicio {
         log.info("Guarde información de marketplace: " + marketPlace.getAppID());
     }
 
-    public void borrar() {
-        marketPlaceRepositorio.deleteAll();
+    public void borrar(MarketPlace mp) {
+
+        mp.setClientSecret(null);
+        mp.setAppID(null);
+        //marketPlaceRepositorio.deleteAll();
+        marketPlaceRepositorio.save(mp);
         log.info(" Vacié información de configuración básica");
     }
 

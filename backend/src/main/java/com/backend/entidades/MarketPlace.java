@@ -12,10 +12,10 @@ public class MarketPlace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+
     @Column(unique = true)
     private String appID;
-    @NotBlank
+
     @Column(unique = true)
     private String clientSecret;
 
@@ -27,7 +27,7 @@ public class MarketPlace {
     public MarketPlace() {
     }
 
-    public MarketPlace(@NotBlank String appID, @NotBlank String clientSecret, @NotBlank Double ganancia, @NotBlank Long tiempoSesion) {
+    public MarketPlace(@NotBlank String appID, String clientSecret, Double ganancia, Long tiempoSesion) {
         this.appID = appID;
         this.clientSecret = clientSecret;
         this.ganancia = ganancia;

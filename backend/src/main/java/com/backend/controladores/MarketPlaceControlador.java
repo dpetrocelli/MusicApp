@@ -49,11 +49,21 @@ public class MarketPlaceControlador {
 
     @PostMapping("nuevo")
     public ResponseEntity<?> nuevaConfiguracion(@RequestBody MarketPlace marketPlace) {
-        if (marketPlaceServicio.obtener() == null) {
-            marketPlaceServicio.guardar(marketPlace);
-            return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
+        try{
+            if (marketPlaceServicio.obtener() == null) {
+                marketPlaceServicio.guardar(marketPlace);
+                return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
+            } else {
+                // Actualizar el que ya esta
+                MarketPlace mp = this.marketPlaceServicio.obtener();
+                mp.setAppID(marketPlace.getAppID());
+                mp.setClientSecret(marketPlace.getClientSecret());
+                this.marketPlaceServicio.guardar(mp);
+                return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
+                // return new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
+            }
+        }catch ( Exception e){
+            return new ResponseEntity(new Mensaje("Error Except "), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -62,7 +72,7 @@ public class MarketPlaceControlador {
         if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())) {
             return new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
         } else {
-            marketPlaceServicio.borrar();
+
             marketPlaceServicio.guardar(marketPlace);
             return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
 
@@ -74,7 +84,8 @@ public class MarketPlaceControlador {
         if (marketPlaceServicio.obtener() == null) {
             return new ResponseEntity(new Mensaje("No existe configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
         } else {
-            marketPlaceServicio.borrar();
+            MarketPlace mp = this.marketPlaceServicio.obtener();
+            marketPlaceServicio.borrar(mp);
             return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET eliminados "), HttpStatus.CREATED);
         }
     }

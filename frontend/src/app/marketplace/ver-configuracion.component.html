@@ -1,22 +1,28 @@
 <div class="container">
-  <table class="table table-dark">
-    <thead>
-      <tr>
- 
-        <th scope="col">APP ID</th>
-        <th scope="col">CLIENT SECRET</th>
-        <th scope="col">Editar</th>
-        <th scope="col">Borrar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <td>{{marketPlace.appID}}</td>
-      <td>{{marketPlace.clientSecret}}</td>
-      <td><button class="btn btn-warning" routerLink="/marketplace/editar">Editar</button></td>
-      <td><button class="btn btn-danger" (click)="onDelete()">Borrar</button></td>
-    </tbody>
-  </table>
-  <div><button class="btn btn-success btn-lg" routerLink="/marketplace/nuevo">Setear Configuracion</button></div>
+    <div *ngIf="datosRegistrados">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+      
+              <th scope="col">APP ID</th>
+              <th scope="col">CLIENT SECRET</th>
+              <th scope="col">Editar</th>
+             <th scope="col">Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+              <td>{{marketPlace.appID}}</td>
+                 <td>{{marketPlace.clientSecret}}</td>
+            <td><button class="btn btn-warning" routerLink="/marketplace/editar">Editar</button></td>
+            <td><button class="btn btn-danger" (click)="onDelete()">Borrar</button></td>
+          </tbody>
+        </table>
+      </div>    
+    <div *ngIf="!datosRegistrados">
+      <p>No hay definida una configuracion de MercadoPago para MusicAPP</p>
+      <p>Por favor defínala a continuación </p> 
+      <button class="btn btn-success btn-lg" routerLink="/marketplace/nuevo">Setear Configuracion</button></div>
+  
 </div>
 
   

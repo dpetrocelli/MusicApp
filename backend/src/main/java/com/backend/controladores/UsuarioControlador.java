@@ -79,7 +79,7 @@ public class UsuarioControlador {
 
                 // [STEP 1] - Cómo es el ingreso del usuario - Vamos a GENERAR Token (1st) ingreso
                 //           o ACTUALIZAR EL TOKEN de algún login
-                log.info("---\n VAMOS A GENERAR/REGENERAR TOKEN:\n"+usuarioBackend.toString()+"\n---");
+                //log.info("---\n VAMOS A GENERAR/REGENERAR TOKEN:\n"+usuarioBackend.toString()+"\n---");
                 TokenUsuario tu = usuarioServicio.generarTokenUsuario(usuarioBackend);
                 LoginDatos ld = new LoginDatos();
                 ld.setIdUsuario(tu.getIdUsuario());
@@ -123,7 +123,7 @@ public class UsuarioControlador {
     public ResponseEntity<Boolean> validar (@RequestBody LoginDatos loginDatos){
 
         try{
-            log.info(" VALIDANDO TOKEN USUARIO "+loginDatos.getNombreUsuario());
+            //log.info(" VALIDANDO TOKEN USUARIO "+loginDatos.getNombreUsuario());
 
             boolean result = this.usuarioServicio.validarTokenUsuario(loginDatos);
 
@@ -144,7 +144,7 @@ public class UsuarioControlador {
 
     @PostMapping("chequear_permisos_por_rol")
     public ResponseEntity<?> permisosgeneral(@RequestBody LoginDatos loginDatos){
-        log.info(" Chequear -> permisos -> ROL");
+        //log.info(" Chequear -> permisos -> ROL");
         try{
             Usuario u = this.usuarioServicio.obtener(loginDatos.getIdUsuario());
             String rolResponse = "";
@@ -152,7 +152,7 @@ public class UsuarioControlador {
                 rolResponse = rol.getNombre();
                 break;
             }
-            log.info(" ROL de USER: "+rolResponse);
+            //log.info(" ROL de USER: "+rolResponse);
             return new ResponseEntity<Mensaje>(new Mensaje(rolResponse), HttpStatus.OK);
         }catch (Exception e){
             log.info(" ESPLOTE");
