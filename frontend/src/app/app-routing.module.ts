@@ -27,7 +27,7 @@ const routes: Routes = [
 
   // Opciones de Artista 
     // Instrumento
-  {path: 'lista', component: ListaInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+  {path: 'instrumento', component: ListaInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
   {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
   {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
   {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
@@ -38,12 +38,13 @@ const routes: Routes = [
   {path: 'promociones/detalle/:id', component: DetallepromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
   {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
   {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
-  {path: 'marketplace', component: VerConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+  
   {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
 
   // Opciones de Admin
-  {path: 'nuevaConfiguracionMarketplace', component: NuevaConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
-  {path: 'editarConfiguracionMarketplace', component: ModificarConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+  {path: 'marketplace', component: VerConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+  {path: 'marketplace/nuevo', component: NuevaConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+  {path: 'marketplace/editar', component: ModificarConfiguracionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
 
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
   

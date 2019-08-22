@@ -59,7 +59,7 @@ public class PromocionServicio {
                 // ahora creo el objeto de Mpago
                 log.info(" Publico Objeto " );
 
-                String mpResult = publicacionMP.publicar(promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
+                String mpResult = publicacionMP.publicar(promocion.getId(), promocion.getTitulo(),promocion.getDescripcion(),promocion.getTipomoneda(),(float) promocion.getImporte(),ganancia, promocion.getVigencia());
                 if (mpResult!=null){
                     log.info(" Propiedades del Objeto MP: "+ publicacionMP.obtenerPreferencia().getInitPoint());
 

@@ -1,5 +1,6 @@
 package com.backend.recursos;
 import com.backend.entidades.Promocion;
+import com.backend.singleton.ConfiguradorSingleton;
 import com.mercadopago.*;
 import com.mercadopago.core.MPApiResponse;
 import com.mercadopago.exceptions.MPRestException;
@@ -7,10 +8,12 @@ import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.Payment;
 import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,6 +26,9 @@ public class PublicacionMercadoPago {
     String accessToken;
     Item item;
     Payer payer;
+    String baseURLForBackPaymentResult;
+    @Autowired
+    ConfiguradorSingleton configuradorSingleton;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     
     public PublicacionMercadoPago(String accessToken) {
@@ -86,8 +92,9 @@ public class PublicacionMercadoPago {
 
 
     }
-    public String publicar (String titulo, String descripcion, String moneda, float precio, float ganancia, Date vigencia){
+    public String publicar (Long id, String titulo, String descripcion, String moneda, float precio, float ganancia, Date vigencia){
         try{
+            baseURLForBackPaymentResult = "/api/pago/";
             this.preference = new Preference();
             log.info("Entramos a publicar una Promocion en MP ");
             log.info("DATOS PUB"+titulo+"/"+descripcion+"/"+moneda+"/"+precio+"/"+ganancia);
@@ -103,6 +110,19 @@ public class PublicacionMercadoPago {
             Payer payer = new Payer();
             log.info("Creamos payer vacio");
             this.preference.setPayer(payer);
+
+            // Para la vuelta de MP cuando paga (ID de promoción)
+            this.preference.setAdditionalInfo(Long.toString(id));
+
+            // Backs urls para el tema de registrar la venta
+            BackUrls backUrls = new BackUrls();
+            backUrls.setSuccess(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_exitoso");
+            backUrls.setFailure(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_erroneo");
+            backUrls.setPending(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"pago_pendiente");
+            this.preference.setBackUrls(backUrls);
+
+            this.preference.setNotificationUrl(this.configuradorSingleton.baseURLSistema+baseURLForBackPaymentResult+"notificacion_de_pago");
+
             this.preference.setExpirationDateTo(vigencia);
             this.preference.appendItem(this.item);
             log.info("adjuntamos a la preferencia el item");
