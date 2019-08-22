@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -35,11 +36,11 @@ public class MarketPlaceControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("obtener")
-    public ResponseEntity<MarketPlace> obtenerConfiguracion(){
+    public ResponseEntity<MarketPlace> obtenerConfiguracion() {
         MarketPlace marketPlace = marketPlaceServicio.obtener();
-        if (marketPlace == null){
+        if (marketPlace == null) {
             return new ResponseEntity(new Mensaje(" No existe ningún APP_ID y CLIENT_SECRET configurado"), HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             return new ResponseEntity<MarketPlace>(marketPlace, HttpStatus.OK);
         }
 
@@ -47,62 +48,84 @@ public class MarketPlaceControlador {
 
 
     @PostMapping("nuevo")
-    public ResponseEntity<?> nuevaConfiguracion (@RequestBody MarketPlace marketPlace){
-        if (marketPlaceServicio.obtener() == null){
+    public ResponseEntity<?> nuevaConfiguracion(@RequestBody MarketPlace marketPlace) {
+        if (marketPlaceServicio.obtener() == null) {
             marketPlaceServicio.guardar(marketPlace);
-            return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
-        }else{
-            return  new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity(new Mensaje("Ya existe una configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
         }
     }
-    @PutMapping ("actualizar")
-    public ResponseEntity<?> actualizarConfiguracion (@RequestBody MarketPlace marketPlace){
-        if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())){
-            return  new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
-        }else{
+
+    @PutMapping("actualizar")
+    public ResponseEntity<?> actualizarConfiguracion(@RequestBody MarketPlace marketPlace) {
+        if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())) {
+            return new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
+        } else {
             marketPlaceServicio.borrar();
             marketPlaceServicio.guardar(marketPlace);
-                return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
+            return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
 
         }
     }
+
     @DeleteMapping("borrar")
-    public ResponseEntity <?> borrarConfiguracion (){
-        if (marketPlaceServicio.obtener() == null){
-            return  new ResponseEntity(new Mensaje("No existe configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
-        }else{
+    public ResponseEntity<?> borrarConfiguracion() {
+        if (marketPlaceServicio.obtener() == null) {
+            return new ResponseEntity(new Mensaje("No existe configuración de MarketPlace"), HttpStatus.BAD_REQUEST);
+        } else {
             marketPlaceServicio.borrar();
-            return  new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET eliminados "), HttpStatus.CREATED);
+            return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET eliminados "), HttpStatus.CREATED);
         }
     }
 
     @GetMapping("armarurlvinculacion/{id}")
-    public ResponseEntity<?> armarurl( @PathVariable String id) {
-    	System.out.println("Entrando ArmarURLVinculacion id="+id);
-    	String url = this.marketPlaceServicio.armarurl(id);
-        if (url != null ){
+    public ResponseEntity<?> armarurl(@PathVariable String id) {
+        System.out.println("Entrando ArmarURLVinculacion id=" + id);
+        String url = this.marketPlaceServicio.armarurl(id);
+        if (url != null) {
             //log.info("arme url: "+url);
-            return  new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
-        }else {
+            return new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
+        } else {
             log.info("ESE USUARIO YA ESTA VINCULADO en MusicAPP");
-            return  new ResponseEntity<Mensaje>(new Mensaje ("USUARIO YA EXISTIA"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Mensaje>(new Mensaje("USUARIO YA EXISTIA"), HttpStatus.BAD_REQUEST);
         }
 
 
     }
 
-    @RequestMapping(value="vueltamp/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "vueltamp/{id}", method = RequestMethod.GET)
     public void vueltamp(@RequestParam("code") String code, @PathVariable String id) throws MalformedURLException {
         log.info(" MPAGO devuelve código por URL publicada (paso armar url)");
-        log.info ("ID COMERCIO" + id + "CODE: "+ code);
+        log.info("ID COMERCIO" + id + "CODE: " + code);
 
 
-        try{
-            this.marketPlaceServicio.vincular(code,id);
+        try {
+            this.marketPlaceServicio.vincular(code, id);
             log.info("Hice el proceso desde el Backend, al FEND lo redireccioné al home");
 
-        }catch (Exception e){
-            
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    @RequestMapping(value = "notificacion", method = RequestMethod.GET)
+    public ResponseEntity<?> notificacion(@RequestParam("id") Long id, @RequestParam("topic") String topic) throws MalformedURLException {
+
+        try {
+            log.info("MPAGO envio una notification topic:" + topic + " id:" + id.toString());
+
+            Boolean notificacionRegistrada = this.marketPlaceServicio.registrarNotificacion(id, topic);
+
+            if (notificacionRegistrada) {
+                return new ResponseEntity<Mensaje>(new Mensaje("Notificacion Registrada"),HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<Mensaje>(new Mensaje("Error en el registro de la notificacion"),HttpStatus.BAD_REQUEST);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }
