@@ -25,7 +25,8 @@ public class RegistrarUsuarioRequest {
 			if(form.get("isArtista").getAsBoolean()) {
 				String instrumento = form.get("instrumento").getAsString();
 				String genero = form.get("genero").getAsString();
-				this.artista = new Artista(usuario, instrumento, genero);
+				this.artista = new Artista();
+				//usuario, instrumento, genero);
 			}else {
 				String direccion = form.get("direccion").getAsString();
 				String razonsocial = form.get("razonsocial").getAsString();

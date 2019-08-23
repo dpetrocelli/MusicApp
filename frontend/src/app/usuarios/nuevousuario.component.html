@@ -45,23 +45,66 @@
                  <!-- Sección artista-->
                  <div *ngIf="isArtista">
                    <div class="form-artista">
-                     <label for="instrumento">Instrumento:</label>
+                     
+                     <label for="nombre"> Nombre:</label>
                      <input class="form-control"
                            type="text"
-                           name="instrumento"
-                           id="instrumento"
-                           [(ngModel)]="form.instrumento"
+                           name="nombre"
+                           id="nombre"
+                           [(ngModel)]="form.nombre"
                            required
                            autocomplete="off">
-                     <label for="genero">Genero Musical:</label>
+                    <label for="apellido"> Apellido:</label>
                      <input class="form-control"
+                           type="text"
+                           name="apellido"
+                           id="apellido"
+                           [(ngModel)]="form.apellido"
+                           required
+                           autocomplete="off">
+                    <label for="nickname"> NickName:</label>
+                    <input class="form-control"
+                           type="text"
+                           name="nickname"
+                           id="nickname"
+                           [(ngModel)]="form.nickname"
+                           required
+                           autocomplete="off">  
+                    <label for="genero"> Género:</label>
+                    <input class="form-control"
                            type="text"
                            name="genero"
                            id="genero"
                            [(ngModel)]="form.genero"
                            required
-                           autocomplete="off">
+                           autocomplete="off">     
+
+                    <label for="documento">  Nro Documento:</label>
+                    <input class="form-control"
+                                 type="text"
+                                 name="documento"
+                                 id="documento"
+                                 [(ngModel)]="form.documento"
+                                 required
+                                 autocomplete="off">
+                    <label for="fechanacimiento"> Fecha Nacimiento: </label>
+                    <input type="date"
+                            class="form-control"
+                            name="fechanacimiento"
+                            id="fechanacimiento"
+                            [(ngModel)]="form.fechanacimiento"
+                            required
+                            autocomplete="off">
+
+                    <!-- USING HTML 5 DATALIST-->
+                    <label for="instrumento"> Instrumento que toca: </label>
+                    <input type="text" (keyup)="obtenerListaInstrumentos($event)" id="instrumento" list="dinamicInstrumento" />
+                    <datalist id="dinamicInstrumento">
+                      <option *ngFor="let instrumento of instrumentoList" [value]="instrumentoFor">{{instrumento}}</option>
+                    </datalist>
+                   
                    </div>
+
                  </div>
    
                  <!-- Sección comercio-->

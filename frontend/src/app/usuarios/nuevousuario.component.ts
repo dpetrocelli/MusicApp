@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
+import { InstrumentoService } from '../servicios/instrumento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -17,6 +18,7 @@ export class NuevousuarioComponent implements OnInit {
   falloCreacion = false;
   isArtista = true;
   constructor(private usuarioService: UsuarioService,
+              private instrumentoService: InstrumentoService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
@@ -31,6 +33,19 @@ export class NuevousuarioComponent implements OnInit {
       this.creado = true;
       this.falloCreacion = false;
       this.router.navigate(['']);
+    },
+      (err: any) => {
+        this.msjFallo = err.error.mensaje;
+        this.creado = false;
+        this.falloCreacion = true;
+      }
+
+    );
+  }
+
+  buscarInstrumentos() {
+    this.instrumentoService.lista().subscribe(data => {
+      
     },
       (err: any) => {
         this.msjFallo = err.error.mensaje;

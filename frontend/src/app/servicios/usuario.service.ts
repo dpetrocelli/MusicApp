@@ -11,6 +11,9 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
   providedIn: 'root'
 })
 export class UsuarioService {
+  buscarInstrumentos() {
+    throw new Error("Method not implemented.");
+  }
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();
@@ -75,6 +78,10 @@ export class UsuarioService {
   public verificarComercioActivado(ld : LoginDatos): Observable<any>{
     
     return this.httpClient.post<any>(this.baseURL + `comercio_esta_activado`, ld, cabecera); 
+  }
+
+  public buscarInstrumentos (): Observable<Instrumento[]>{
+    
   }
 }
 

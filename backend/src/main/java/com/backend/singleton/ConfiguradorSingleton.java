@@ -1,11 +1,13 @@
 package com.backend.singleton;
 
+import com.backend.entidades.Instrumento;
 import com.backend.entidades.MarketPlace;
 import com.backend.entidades.Rol;
 import com.backend.entidades.Usuario;
 import com.backend.repositorios.MarketPlaceRepositorio;
 import com.backend.repositorios.RolRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
+import com.backend.servicios.InstrumentoServicio;
 import com.backend.servicios.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,8 +36,12 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     @Autowired
     private MarketPlaceRepositorio marketPlaceRepositorio;
 
+
     @Autowired
     RolServicio rolServicio;
+
+    @Autowired
+    InstrumentoServicio instrumentoServicio;
 
     public ArrayList<String> permisosDelComercio;
     public ArrayList<String> permisosDelArtista;
@@ -89,7 +95,12 @@ public class ConfiguradorSingleton implements CommandLineRunner {
         r = this.rolServicio.obtener("artista");
         this.permisosDelArtista = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 
-
+        if ((this.instrumentoServicio.obtenerTodos()).size()==0){
+            this.instrumentoServicio.guardar(new Instrumento("guitarra", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("bajo", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
+            this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
+        }
 
 
     }
