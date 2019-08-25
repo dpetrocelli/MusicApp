@@ -97,6 +97,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
         if ((this.instrumentoServicio.obtenerTodos()).size()==0){
             this.instrumentoServicio.guardar(new Instrumento("guitarra", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("guitapoca", "cuerdas"));
             this.instrumentoServicio.guardar(new Instrumento("bajo", "cuerdas"));
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));

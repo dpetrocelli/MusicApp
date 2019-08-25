@@ -17,6 +17,7 @@ import com.backend.wrappers.RegistrarUsuarioRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -40,6 +44,37 @@ public class UsuarioControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("registrar")
+    public ResponseEntity<?> registrar(@RequestBody String payload) {
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try {
+            log.info("Pude crear el objeto básico JSON ");
+            log.info("siendo: " + payload.toString());
+            //log.info( " Como yo se los objetos que vienen, puedo castear los wrappers por parte");
+            //log.info( "Objeto 1: LoginDatos, Objeto 2: Formulario (String), 3: String[+ ");
+            Usuario usuario = new Gson().fromJson(json.get("usuario"), Usuario.class);
+            JsonObject formulario = new Gson().fromJson(json.get("formulario"), JsonObject.class);
+            log.info ("FORM: "+formulario.toString());
+            boolean artista = formulario.get("isArtista").getAsBoolean();
+
+            if (artista){
+                String instrumentos = new Gson().fromJson(json.get("instrumentos"), String.class);
+                this.usuarioServicio.guardarArtista(usuario, formulario, instrumentos);
+                return new ResponseEntity(new Mensaje(" El usuario ARTISTA se creó correctamente"), HttpStatus.OK);
+            }else{
+                this.usuarioServicio.guardarComercio(usuario, formulario);
+                return new ResponseEntity(new Mensaje(" El usuario COMERCIO se creó correctamente"), HttpStatus.OK);
+
+            }
+
+
+        } catch (Exception e) {
+            return new ResponseEntity(new Mensaje(" El uNOOOOOOOOOOOOOOOOOOOO se creó correctamente"), HttpStatus.BAD_REQUEST);
+        }
+    }
+    /*
     public ResponseEntity<?> registrar(@RequestBody RegistrarUsuarioRequest request){
     	Usuario usuarioFE = request.getUsuario();
     	if(request.getArtista() != null) {
@@ -59,7 +94,7 @@ public class UsuarioControlador {
                 return new ResponseEntity(new Mensaje(" Error al persistir"), HttpStatus.BAD_REQUEST);
     	}
     }
-
+    */
     @PostMapping("ingresar")
     public ResponseEntity<?> ingresar(@RequestBody Usuario usuarioFrontEnd){
         // [STEP 0] - Validar usuario y contraseña

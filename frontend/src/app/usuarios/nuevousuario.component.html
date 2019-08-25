@@ -1,140 +1,149 @@
 <div class="container">
         <!-- escucha fin guardarUsuario -->
        <form name="registrar" (ngSubmit)="guardarUsuario()" #f="ngForm" validate>
-         <div class="form-group">
-           <label for="username">Usuario</label>
-           <input class="form-control"
-                 type="text"
-                 name="username"
-                 id="username"
-                 [(ngModel)]="form.username"
-                 required
-                 autocomplete="off">
-                 
-           <label for="pwd">Contraseña:</label>
-           <input class="form-control"
-                 type="password"
-                 name="pwd"
-                 id="pwd"
-                 [(ngModel)]="form.pwd"
-                 required
-                 autocomplete="off">
-         
-           <label for="email">Email</label>
-           <input class="form-control"
-                 type="text"
-                 name="email"
-                 id="email"
-                 [(ngModel)]="form.email"
-                 required
-                 autocomplete="off">
+          <div class="form-group">
+            <label for="username">Usuario</label>
+            <input class="form-control"
+                  type="text"
+                  name="username"
+                  id="username"
+                  [(ngModel)]="form.username"
+                  required
+                  autocomplete="off">
+                  
+            <label for="pwd">Contraseña:</label>
+            <input class="form-control"
+                  type="password"
+                  name="pwd"
+                  id="pwd"
+                  [(ngModel)]="form.pwd"
+                  required
+                  autocomplete="off">
+          
+            <label for="email">Email</label>
+            <input class="form-control"
+                  type="text"
+                  name="email"
+                  id="email"
+                  [(ngModel)]="form.email"
+                  required
+                  autocomplete="off">
+            
+            <label for="tipousuario">Tipo de usuario:</label>
+            <div>
+                <div>
+                  <input id="artista" type="radio" value="artista" name="tipousuario" (change)="cambioRadioButton($event)">
+                  <label for="artista">Artista</label>
+                  </div>
+                  <div>
+                  <input id="comercio" type="radio" value="comercio" name="tipousuario" (change)="cambioRadioButton($event)">
+                  <label for="comercio"> Comercio </label>
+                  </div>
+                
+            </div>
            
-           <label for="tipousuario">Tipo de usuario:</label>
-           <div class="form-tipodeusuario">
-             <input name="artista" id="artista" [(ngModel)]="isArtista" type="radio" [value]="true" [checked]="isArtista"/>
-             <label for="artista">Artista</label>
-             <input name="comercio" id="comercio" [(ngModel)]="isArtista" type="radio" [value]="false" [checked]="!isArtista"/>
-             <label for="comercio">Comercio</label>
-           </div>
-           
-           <!-- Dependiendo de lo que elija, surgen 2 subsecciones
-                 1) De artista
-                 2) De Comercio
-           -->
-   
-                 <!-- Sección artista-->
-                 <div *ngIf="isArtista">
-                   <div class="form-artista">
-                     
-                     <label for="nombre"> Nombre:</label>
-                     <input class="form-control"
-                           type="text"
-                           name="nombre"
-                           id="nombre"
-                           [(ngModel)]="form.nombre"
-                           required
-                           autocomplete="off">
-                    <label for="apellido"> Apellido:</label>
-                     <input class="form-control"
-                           type="text"
-                           name="apellido"
-                           id="apellido"
-                           [(ngModel)]="form.apellido"
-                           required
-                           autocomplete="off">
-                    <label for="nickname"> NickName:</label>
-                    <input class="form-control"
-                           type="text"
-                           name="nickname"
-                           id="nickname"
-                           [(ngModel)]="form.nickname"
-                           required
-                           autocomplete="off">  
-                    <label for="genero"> Género:</label>
-                    <input class="form-control"
-                           type="text"
-                           name="genero"
-                           id="genero"
-                           [(ngModel)]="form.genero"
-                           required
-                           autocomplete="off">     
+            <!-- Sección artista-->
+            <div *ngIf="isArtista">
+              <div class="form-artista">
+                
+                <label for="nombre"> Nombre:</label>
+                <input class="form-control"
+                      type="text"
+                      name="nombre"
+                      id="nombre"
+                      [(ngModel)]="form.nombre"
+                      required
+                      autocomplete="off">
+               <label for="apellido"> Apellido:</label>
+                <input class="form-control"
+                      type="text"
+                      name="apellido"
+                      id="apellido"
+                      [(ngModel)]="form.apellido"
+                      required
+                      autocomplete="off">
+               <label for="nickname"> NickName:</label>
+               <input class="form-control"
+                      type="text"
+                      name="nickname"
+                      id="nickname"
+                      [(ngModel)]="form.nickname"
+                      required
+                      autocomplete="off">  
+               <label for="genero"> Género:</label>
+               <input class="form-control"
+                      type="text"
+                      name="genero"
+                      id="genero"
+                      [(ngModel)]="form.genero"
+                      required
+                      autocomplete="off">     
 
-                    <label for="documento">  Nro Documento:</label>
-                    <input class="form-control"
-                                 type="text"
-                                 name="documento"
-                                 id="documento"
-                                 [(ngModel)]="form.documento"
-                                 required
-                                 autocomplete="off">
-                    <label for="fechanacimiento"> Fecha Nacimiento: </label>
-                    <input type="date"
-                            class="form-control"
-                            name="fechanacimiento"
-                            id="fechanacimiento"
-                            [(ngModel)]="form.fechanacimiento"
+               <label for="documento">  Nro Documento:</label>
+               <input class="form-control"
+                            type="text"
+                            name="documento"
+                            id="documento"
+                            [(ngModel)]="form.documento"
                             required
                             autocomplete="off">
+               <label for="fechanacimiento"> Fecha Nacimiento: </label>
+               <input type="date"
+                       class="form-control"
+                       name="fechanacimiento"
+                       id="fechanacimiento"
+                       [(ngModel)]="form.fechanacimiento"
+                       required
+                       autocomplete="off">
 
-                    <!-- USING HTML 5 DATALIST-->
-                    <label for="instrumento"> Instrumento que toca: </label>
-                    <input type="text" (keyup)="obtenerListaInstrumentos($event)" id="instrumento" list="dinamicInstrumento" />
-                    <datalist id="dinamicInstrumento">
-                      <option *ngFor="let instrumento of instrumentoList" [value]="instrumentoFor">{{instrumento}}</option>
-                    </datalist>
-                   
-                   </div>
-
-                 </div>
-   
-                 <!-- Sección comercio-->
-                 <div *ngIf="!isArtista">
-                     <div class="form-group">
-                       
-                       <label for="razonsocial">Razon social:</label>
-                       <input class="form-control"
-                             type="text"
-                             name="razonsocial"
-                             id="razonsocial"
-                             [(ngModel)]="form.razonsocial"
-                             required
-                             autocomplete="off">
-                       
-                       <label for="genero">Direccion:</label>
-                       <input class="form-control"
-                             type="text"
-                             name="direccion"
-                             id="direccion"
-                             [(ngModel)]="form.direccion"
-                             required
-                             autocomplete="off">
-                     </div>
-                   </div>
+               <!-- USING HTML 5 DATALIST-->
+               <label for="instrumento"> Instrumento que toca: </label>
+               
+               <!--  -->
+               <input type="text" (keyup)="predictivo($event)" autocomplete= "off" id="instrumento" list="dinamicInstrumento" />
+               <datalist id="dinamicInstrumento" >
+                 <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
+               </datalist>
+              
+               <div *ngFor="let seleccionado of instrumentosSeleccionados">
+                  <span>{{seleccionado}}</span>
+                  <span (click)="borrarLinea($event)" > X </span>
+                  
                </div>
-         <div class="form-group">
-             
-           <button type="submit" class="btn btn-success" [disabled]="!f.valid"> Registrar Usuario</button>
-         </div>
+              </div>
+
+              <input type="text" id="instrumentosSeteados" value = "" readonly  />
+
+            </div>
+
+            <div *ngIf="isComercio">
+              <div class="form-group">
+                
+                <label for="razonsocial">Razon social:</label>
+                <input class="form-control"
+                      type="text"
+                      name="razonsocial"
+                      id="razonsocial"
+                      [(ngModel)]="form.razonsocial"
+                      required
+                      autocomplete="off">
+                
+                <label for="genero">Direccion:</label>
+                <input class="form-control"
+                      type="text"
+                      name="direccion"
+                      id="direccion"
+                      [(ngModel)]="form.direccion"
+                      required
+                      autocomplete="off">
+              </div>
+            </div>
+        </div>
+            
+            <div class="form-group">
+              <button type="submit" class="btn btn-success" [disabled]="!f.valid"> Registrar Usuario</button>
+            </div>
+        
        </form>
          
        <br>

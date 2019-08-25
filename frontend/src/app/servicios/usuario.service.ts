@@ -11,9 +11,7 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
   providedIn: 'root'
 })
 export class UsuarioService {
-  buscarInstrumentos() {
-    throw new Error("Method not implemented.");
-  }
+ 
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();
@@ -61,18 +59,14 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.baseURL + 'ingresar', this.usuarioFrontEnd, cabecera);
   }
 
-  public registrar(form: any, isArtista: boolean): Observable<any> {
+  public registrar(form: any, isArtista: boolean, instrumentosSeleccionados : string[]): Observable<any> {
     
     this.usuarioFrontEnd.username = form.username;
     this.usuarioFrontEnd.pwd = form.pwd;
     this.usuarioFrontEnd.email = form.email;
 
-    if(isArtista){
-      console.log({usuario : this.usuarioFrontEnd, String: JSON.stringify(form)});
-      return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: JSON.stringify(form)}, cabecera); 
-    }else{
-      return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: JSON.stringify(form)}, cabecera); 
-    }
+    return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: form, instrumentos: instrumentosSeleccionados.toString()}, cabecera); 
+    
   }
 
   public verificarComercioActivado(ld : LoginDatos): Observable<any>{
@@ -80,8 +74,6 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.baseURL + `comercio_esta_activado`, ld, cabecera); 
   }
 
-  public buscarInstrumentos (): Observable<Instrumento[]>{
-    
-  }
+  
 }
 

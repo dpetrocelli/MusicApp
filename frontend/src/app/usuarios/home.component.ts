@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
   }
 
   
-
+/*
   guardarUsuario() {
     this.usuarioService.registrar(this.form, this.isArtista).subscribe(data => {
       this.msjOK = data.msg ;
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
 
     );
   }
-
+*/
   // función login
   ingresar() {
       

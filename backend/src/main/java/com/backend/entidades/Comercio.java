@@ -86,4 +86,20 @@ public class Comercio {
     public void setFechaExpiracion(Date fechaExpiracion) {
         this.fechaExpiracion = fechaExpiracion;
     }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getRazonsocial() {
+        return razonsocial;
+    }
+
+    public void setRazonsocial(String razonsocial) {
+        this.razonsocial = razonsocial;
+    }
 }

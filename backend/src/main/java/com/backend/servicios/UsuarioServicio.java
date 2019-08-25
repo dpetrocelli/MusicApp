@@ -1,10 +1,6 @@
 package com.backend.servicios;
 
-import com.backend.entidades.Artista;
-import com.backend.entidades.Comercio;
-import com.backend.entidades.Rol;
-import com.backend.entidades.TokenUsuario;
-import com.backend.entidades.Usuario;
+import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
 import com.backend.repositorios.ArtistaRepositorio;
 import com.backend.repositorios.ComercioRepositorio;
@@ -13,14 +9,15 @@ import com.backend.repositorios.TokenUsuarioRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
 
 import com.backend.singleton.ConfiguradorSingleton;
+import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Pattern;
 
 
 @Service
@@ -35,6 +32,7 @@ public class UsuarioServicio {
     @Autowired TokenUsuarioServicio tokenUsuarioServicio;
     @Autowired ComercioServicio comercioServicio;
     @Autowired ComercioServicio artistaServicio;
+    @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired ConfiguradorSingleton configuradorSingleton;
     public boolean validarCredenciales(Usuario usuarioFrontend){
         try{
@@ -49,21 +47,77 @@ public class UsuarioServicio {
         }
     }
 
-    public boolean guardar(Usuario usuarioFrontEnd, Artista artista) {
+    public boolean guardarArtista (Usuario usuarioFrontEnd, JsonObject formulario, String instrumentos){
+        log.info( " ENTRAMOS ");
         if (this.usuarioRepositorio.existsByUsername(usuarioFrontEnd.getUsername())) return false; else {
+            // PARTE DE USUARIO BASICO, OK
             // Obtengo el rol que me dice
             Rol rol = rolRepositorio.findByNombre("Artista");
             usuarioFrontEnd.addRol(rol);
-            
+
             // Luego encodeo la pass
             usuarioFrontEnd.encodePassword();
-            log.info("Persistiendo usuario:"+usuarioFrontEnd.getUsername()+" rol: "+usuarioFrontEnd.rolesToString()+ " Artista: "+artista.getUsuario().getUsername());
+            //log.info("Persistiendo usuario:"+usuarioFrontEnd.getUsername()+" rol: "+usuarioFrontEnd.rolesToString()+ " Artista: "+artista.getUsuario().getUsername());
+
+            log.info(" desde FORM a Artista");
+            Artista artista = new Artista();
+            artista.setNombre(formulario.get("nombre").getAsString());
+            artista.setApellido(formulario.get("apellido").getAsString());
+            artista.setNickname(formulario.get("nickname").getAsString());
+            artista.setGenero(formulario.get("genero").getAsString());
+            artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
+            //artista.setFechaNacimiento(formulario.get("fechanacimiento").getasd);
+
+
+            ArrayList<String> listaInstrumentos = new ArrayList<String>();
+            Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
+
+            try{
+                String[] splitter = instrumentos.split(Pattern.quote(","));
+                listaInstrumentos = (ArrayList<String>) Arrays.asList(splitter);
+            }catch (Exception e){
+                listaInstrumentos.add(instrumentos);
+            }
+
+            for (String inst : listaInstrumentos){
+                try{
+                    Instrumento instrumentoBD = this.instrumentoServicio.obtenerPorNombre(inst).get();
+                    setInstrumento.add(instrumentoBD);
+
+                }catch (Exception e){
+
+                }
+
+            }
+
+            artista.setInstrumento(setInstrumento);
+            artista.setUsuario(usuarioFrontEnd);
             this.usuarioRepositorio.save(usuarioFrontEnd);
             this.artistaRepositorio.save(artista);
-    		return true;
+
+
+
+            return true;
         }
     }
-    
+
+    public boolean guardarComercio(Usuario usuario, JsonObject formulario) {
+        if (this.usuarioRepositorio.existsByUsername(usuario.getUsername())) return false; else {
+            Rol rol = rolRepositorio.findByNombre("Comercio");
+            usuario.addRol(rol);
+
+            // Luego encodeo la pass
+            usuario.encodePassword();
+            Comercio c = new Comercio();
+            c.setUsuario(usuario);
+            c.setDireccion(formulario.get("direccion").getAsString());
+            c.setRazonsocial(formulario.get("razonsocial").getAsString());
+            this.usuarioRepositorio.save(usuario);
+            this.comercioRepositorio.save(c);
+            return true;
+        }
+    }
+
     public boolean guardar(Usuario usuarioFrontEnd, Comercio comercio) {
     	 if (this.usuarioRepositorio.existsByUsername(usuarioFrontEnd.getUsername())) return false; else {
 			 // Obtengo el rol que me dice
@@ -144,4 +198,6 @@ public class UsuarioServicio {
 
 
 	}
+
+
 }
