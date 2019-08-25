@@ -100,7 +100,7 @@
                <label for="instrumento"> Instrumento que toca: </label>
                
                <!--  -->
-               <input #instrumento type="text" (keyup)="predictivo($event)" autocomplete= "off" id="instrumento" list="dinamicInstrumento"  autofocus/>
+               <input type="text" (keyup)="predictivo($event)" autocomplete= "off" id="instrumento" list="dinamicInstrumento"  autofocus/>
                <datalist id="dinamicInstrumento" >
                  <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
                </datalist>
