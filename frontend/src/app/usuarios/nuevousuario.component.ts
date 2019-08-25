@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { InstrumentoService } from '../servicios/instrumento.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Instrumento } from '../modelos/instrumento';
   styleUrls: ['./nuevousuario.component.css']
 })
 export class NuevousuarioComponent implements OnInit {
-
+  @ViewChild('instrumento', null) myInput: ElementRef;
   form: any = {};
   formCompleto: false;
   msjFallo = '';
@@ -77,14 +77,20 @@ export class NuevousuarioComponent implements OnInit {
 
   }
 
+  
+
   predictivo (evt){
+    
       // [STEP 2] -> en la parte de -> texto.length > 2) voy a buscar para autocompletar
       // [STEP 3] -> en la parte de -> key = 13 -> estoy tomando el enter para agregar a lista
-      
+      this.myInput.nativeElement.focus(); 
+      //document.getElementById('instrumento').focus();  
       try{
        var texto = (<HTMLInputElement>document.getElementById('instrumento')).value;
+       
         // PARTE ENTER
         if (evt.keyCode == 13){
+          
           this.guardarEnLista(texto);
 
         }else{
@@ -95,7 +101,7 @@ export class NuevousuarioComponent implements OnInit {
             }
         }
 
-      document.getElementById('instrumento').focus();  
+      
         
       }catch {
         // ERROR 
