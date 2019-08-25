@@ -86,6 +86,7 @@ export class NuevousuarioComponent implements OnInit {
         // PARTE ENTER
         if (evt.keyCode == 13){
           this.guardarEnLista(texto);
+
         }else{
           // PARTE DE AUTOCOMPLETAR
             if (texto.length > 2){
@@ -93,6 +94,8 @@ export class NuevousuarioComponent implements OnInit {
               console.log ("predictivo: ", this.respuesta);
             }
         }
+
+      document.getElementById('instrumento').focus();  
         
       }catch {
         // ERROR 
@@ -103,6 +106,8 @@ export class NuevousuarioComponent implements OnInit {
     
   guardarEnLista (texto : string){
     var found = false;
+    // Si el texto que pasé está permitido por lo que habia en la base de datos
+    // -> lo marco como found
     this.listaInstrumento.forEach(instrumento => {
       if ((instrumento.nombreInstrumento.length == texto.length) && (instrumento.nombreInstrumento.includes(texto))){
          
@@ -110,15 +115,18 @@ export class NuevousuarioComponent implements OnInit {
       }
     });
     if (found){
-   
+      var estaEnSeleccionado = false;
       if (this.instrumentosSeleccionados.length>0){
         this.instrumentosSeleccionados.forEach(seleccionado => {
         
-          if (!(seleccionado.includes(texto))){
-            console.log ("Se agrega", texto);
-            this.instrumentosSeleccionados.push(texto);  
-          }
+          if ((seleccionado.includes(texto))){
+            estaEnSeleccionado = true;          }
         });
+
+        if (!estaEnSeleccionado){
+          console.log ("Se agrega", texto);
+          this.instrumentosSeleccionados.push(texto);  
+        }
       }else{
         this.instrumentosSeleccionados.push (texto);
       }

@@ -65,7 +65,11 @@ public class UsuarioServicio {
             artista.setApellido(formulario.get("apellido").getAsString());
             artista.setNickname(formulario.get("nickname").getAsString());
             artista.setGenero(formulario.get("genero").getAsString());
-            artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
+            try{
+                artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
+            }catch (Exception e){
+                artista.setDocumentoIdentidad(0);
+            }
             //artista.setFechaNacimiento(formulario.get("fechanacimiento").getasd);
 
 

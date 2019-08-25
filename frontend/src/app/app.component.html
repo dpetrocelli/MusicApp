@@ -11,13 +11,22 @@
       </li>
       <div *ngIf="isArtista">
         <li class="nav-item">
-          <a class="nav-link" routerLink="instrumento">Instrumentos</a>
+          <a class="nav-link" routerLink="biografia">Perfil</a>
         </li>
       </div>
-
+      <div *ngIf="isArtista">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="post/nuevo">Nuevo Post</a>
+        </li>
+      </div>
       <div *ngIf="isAdmin">
         <li class="nav-item">
           <a class="nav-link" routerLink="marketplace">MarketPlace</a>
+        </li>
+      </div>
+      <div *ngIf="isAdmin">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="instrumento">Instrumentos</a>
         </li>
       </div>
       <div *ngIf="isComercio">

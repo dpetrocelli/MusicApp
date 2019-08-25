@@ -24,6 +24,10 @@ import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
+import { VerBiografiaComponent } from './redsocial/ver-biografia.component';
+import { NuevoPostComponent } from './redsocial/nuevo-post.component';
+import { VerPostsComponent } from './redsocial/ver-posts.component';
+import { EditarPostComponent } from './redsocial/editar-post.component';
 
 @NgModule({
    declarations: [
@@ -44,7 +48,11 @@ import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.compone
       ListarpromocionesComponent,
       EditarpromocionComponent,
       DetallepromocionComponent,
-      AccesodenegadoComponent
+      AccesodenegadoComponent,
+      VerBiografiaComponent,
+      NuevoPostComponent,
+      VerPostsComponent,
+      EditarPostComponent
    ],
    imports: [
       BrowserModule,
