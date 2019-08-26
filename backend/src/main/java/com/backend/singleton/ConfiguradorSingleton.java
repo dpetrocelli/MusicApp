@@ -1,12 +1,11 @@
 package com.backend.singleton;
 
-import com.backend.entidades.Instrumento;
-import com.backend.entidades.MarketPlace;
-import com.backend.entidades.Rol;
-import com.backend.entidades.Usuario;
+import com.backend.entidades.*;
+import com.backend.repositorios.ArtistaRepositorio;
 import com.backend.repositorios.MarketPlaceRepositorio;
 import com.backend.repositorios.RolRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
+import com.backend.servicios.ArtistaServicio;
 import com.backend.servicios.InstrumentoServicio;
 import com.backend.servicios.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class ConfiguradorSingleton implements CommandLineRunner {
@@ -33,6 +34,10 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     private RolRepositorio rolRepositorio;
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private ArtistaRepositorio artistaRepositorio;
+
+    @Autowired ArtistaServicio artistaServicio;
     @Autowired
     private MarketPlaceRepositorio marketPlaceRepositorio;
 
@@ -67,6 +72,34 @@ public class ConfiguradorSingleton implements CommandLineRunner {
         }
 
         if (usuarioRepositorio.count()==0){
+              /*
+            log.info("HAY QUE AGREGAR USUARIO ARTISTa ");
+            Rol r = rolRepositorio.findByNombre("artista");
+            Usuario usuarioArtista = new Usuario();
+            usuarioArtista.setUsername("artista");
+            usuarioArtista.setPassword("artista");
+            usuarioArtista.setEmail("dmpetrocelli@gmail.com");
+            usuarioArtista.addRol(r);
+
+
+            Artista artista = new Artista();
+            artista.setUsuario(usuarioArtista);
+            artista.setDocumentoIdentidad(1234);
+            artista.setGenero("masculino");
+            artista.setNickname("nickname");
+            artista.setNombre("nombre");
+            artista.setApellido("apellido");
+            artista.setGeneroMusical("raro");
+
+            Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
+            Set<Banda> setBanda = new HashSet<>();
+            artista.setInstrumento(setInstrumento);
+            artista.setBanda(setBanda);
+            usuarioRepositorio.save(usuarioArtista);
+            artistaRepositorio.save(artista);
+            log.info("Usuario artista almacenado con exito");
+
+            */
             log.info("HAY QUE AGREGAR USUARIO ADMIN ");
             Rol r = rolRepositorio.findByNombre("admin");
             Usuario usuarioAdmin = new Usuario();
@@ -76,6 +109,8 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             usuarioAdmin.addRol(r);
             usuarioRepositorio.save(usuarioAdmin);
             log.info("Usuario admin almacenado con exito");
+
+
 
         }else{
             log.info("ADMIN USER LOADED");

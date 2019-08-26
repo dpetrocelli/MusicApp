@@ -32,7 +32,7 @@ export class NuevousuarioComponent implements OnInit {
 
   ngOnInit() {
     // [STEP 0] - Voy a buscar al backend la lista de los instrumentos que tengo almacenados
-
+    
     this.instrumentoService.lista().subscribe(data => {
       console.log (JSON.stringify(data));
       this.listaInstrumento = data;

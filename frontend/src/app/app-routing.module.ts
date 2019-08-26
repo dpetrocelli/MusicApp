@@ -18,6 +18,8 @@ import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.compone
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
 import { VerBiografiaComponent } from './redsocial/ver-biografia.component';
 import { NuevoPostComponent } from './redsocial/nuevo-post.component';
+import { EditarPostComponent } from './redsocial/editar-post.component';
+import { VerPostsComponent } from './redsocial/ver-posts.component';
 const routes: Routes = [
   
   // Lista de acceso base para todos 
@@ -30,6 +32,8 @@ const routes: Routes = [
   // Opciones de Artista 
     {path: 'biografia', component: VerBiografiaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
     {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+    {path: 'posts/detalle', component: VerPostsComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
   // Opciones de Comercio
     // Promociones
   {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
