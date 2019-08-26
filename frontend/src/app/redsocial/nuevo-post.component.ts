@@ -27,6 +27,18 @@ export class NuevoPostComponent implements OnInit {
     this.loginDatos = this.usuarioService.getUserLoggedIn();
   }
   
+  public cargandoImagen(files: FileList){
+    console.log (files);
+      this.postService.enviarimagen(files[0]).subscribe(data => {
+        console.log (" HOLI ENTRE");
+      },
+      (err: any) => {
+        console.log (err);
+      }
+    );
+      
+  }
+  
   onCreate(): void {
     this.post = this.form;
     this.postService.crearpost (this.loginDatos, this.post).subscribe(data => {

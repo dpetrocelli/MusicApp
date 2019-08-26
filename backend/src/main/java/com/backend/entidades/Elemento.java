@@ -15,6 +15,7 @@ public class Elemento {
     private Long id;
 
     String tipoRecurso;
+    // youtube, spotify, img
     String rutaAcceso;
     Date fechaCreacion;
     Date fechaModificacion;

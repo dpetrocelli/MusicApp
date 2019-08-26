@@ -38,6 +38,14 @@ export class PostService {
   public lista(login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'listar',login, cabecera);
   }
+
+  public enviarimagen (imagenParaSubir: File): Observable<any> {
+    //const formData = new FormData(); 
+    //formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name); 
+    
+    return this.httpClient.post<any>(this.baseURL + 'subirimagen', imagenParaSubir, cabecera);
+		//return this.http.post(this.url_servidor, formData);
+  }
 /*
   public detalle(id: number, ld :LoginDatos): Observable<Promocion> {
     return this.httpClient.post<Promocion>(this.baseURL + `detalle/${id}`,ld, cabecera);

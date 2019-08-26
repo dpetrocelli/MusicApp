@@ -83,6 +83,8 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             usuarioRepositorio.save(usuarioAdmin);
             log.info("Usuario admin almacenado con exito");
 
+            // USUARIO ARTISTA
+
             log.info("HAY QUE AGREGAR USUARIO ARTISTa ");
             r = rolRepositorio.findByNombre("artista");
             Usuario usuarioArtista = new Usuario();

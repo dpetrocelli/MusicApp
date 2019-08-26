@@ -13,7 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +58,32 @@ public class PostControlador {
         }
     }
 
+    @PostMapping("subirimagen")
+    public ResponseEntity<?> subirimagen (@RequestBody File file ){
+        try{
+            // Get the file and save it somewhere
+            /*byte[] bytes = file.getBytes();
+            Path path = Paths.get("/home/soporte/foto/" + file.getOriginalFilename());
+            Files.write(path, bytes);*/
+            log.info ( " LLEGAMOS ACA "+ file.getName());
+            /*byte[] bArray = new byte[(int) file.length()];
+
+
+            FileInputStream fis = new FileInputStream(file);
+            fis.read(bArray);
+            fis.close();
+            Path path = Paths.get("/home/soporte/foto/" + file.getName());
+            Files.write(path, bArray);
+            */
+            log.info(("IMG UPLOAD OK"));
+
+
+            return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("obtenerPosts")
     public ResponseEntity<?> obtenerPosts (@RequestBody LoginDatos ld){
         try{
@@ -82,6 +114,9 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
+
+
+
     @PostMapping("actualizarBiografia")
     public ResponseEntity<?> actualizar (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
