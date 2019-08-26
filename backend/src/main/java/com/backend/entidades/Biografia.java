@@ -68,4 +68,8 @@ public class Biografia {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+    public void addPost (Post post){
+       this.posts.add(post);
+    }
 }

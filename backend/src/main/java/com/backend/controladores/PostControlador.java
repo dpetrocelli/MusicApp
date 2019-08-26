@@ -6,6 +6,7 @@ import com.backend.servicios.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,18 @@ public class PostControlador {
                 Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
                 Artista artista = this.artistaServicio.obtenerPorUsuario(u);
                 Biografia b =  this.biografiaServicio.obtener(artista);
-                ArrayList<Post> arrayPost = this.postServicio.obtenerPosts(b);
+
+                List<Post> arrayPost = b.getPosts();
+                ArrayList<Post> alist = new ArrayList<Post>();
+                for (Post post : arrayPost) {
+                    Post p = new Post();
+                    p.setInformacion(post.getInformacion());
+                    p.setId(post.getId());
+                    alist.add(p);
+                }
                 log.info (String.valueOf(arrayPost.size()));
-                return new ResponseEntity<ArrayList<Post>> (arrayPost, HttpStatus.OK);
+
+                return new ResponseEntity<ArrayList<Post>> (alist, HttpStatus.OK);
             }
 
             else{
@@ -106,6 +116,47 @@ public class PostControlador {
             }catch (Exception e){
                 return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
             }
+    }
+
+    @PostMapping("crearPost")
+    public ResponseEntity<?> crearPost (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+            JsonObject formulario = new Gson().fromJson(json.get("post"), JsonObject.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Biografia bio = this.biografiaServicio.obtener(artista);
+                Post post = new Post();
+                post.setBiografia(bio);
+                post.setInformacion(formulario.get("informacion").getAsString());
+
+                bio.addPost(post);
+                this.biografiaServicio.guardar(bio);
+
+
+
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude crear post"), HttpStatus.OK);
+        }
     }
 
 

@@ -30,4 +30,8 @@ public class PostServicio {
         return this.postRepositorio.findAllByBiografia(b).get();
     }
 
+    public boolean guardar (Post post){
+        this.postRepositorio.save(post);
+        return true;
+    }
 }

@@ -28,7 +28,7 @@ export class PostService {
   }
 
   public crearpost (login : LoginDatos, post : Post ): Observable<any> {
-    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, post : post}, cabecera);
+    return this.httpClient.post<any>(this.baseURL + 'crearPost',{login : login, post : post}, cabecera);
   }
 
   public actualizarbiografia (login : LoginDatos, biografia : String ): Observable<any> {

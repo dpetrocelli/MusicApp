@@ -72,9 +72,19 @@ public class ConfiguradorSingleton implements CommandLineRunner {
         }
 
         if (usuarioRepositorio.count()==0){
-              /*
+
+            log.info("HAY QUE AGREGAR USUARIO ADMIN ");
+            Rol r = rolRepositorio.findByNombre("admin");
+            Usuario usuarioAdmin = new Usuario();
+            usuarioAdmin.setUsername("admin");
+            usuarioAdmin.setPassword("admin");
+            usuarioAdmin.setEmail("dmpetrocelli@gmail.com");
+            usuarioAdmin.addRol(r);
+            usuarioRepositorio.save(usuarioAdmin);
+            log.info("Usuario admin almacenado con exito");
+
             log.info("HAY QUE AGREGAR USUARIO ARTISTa ");
-            Rol r = rolRepositorio.findByNombre("artista");
+            r = rolRepositorio.findByNombre("artista");
             Usuario usuarioArtista = new Usuario();
             usuarioArtista.setUsername("artista");
             usuarioArtista.setPassword("artista");
@@ -95,21 +105,10 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             Set<Banda> setBanda = new HashSet<>();
             artista.setInstrumento(setInstrumento);
             artista.setBanda(setBanda);
-            usuarioRepositorio.save(usuarioArtista);
             artistaRepositorio.save(artista);
+            usuarioRepositorio.save(usuarioArtista);
+
             log.info("Usuario artista almacenado con exito");
-
-            */
-            log.info("HAY QUE AGREGAR USUARIO ADMIN ");
-            Rol r = rolRepositorio.findByNombre("admin");
-            Usuario usuarioAdmin = new Usuario();
-            usuarioAdmin.setUsername("admin");
-            usuarioAdmin.setPassword("admin");
-            usuarioAdmin.setEmail("dmpetrocelli@gmail.com");
-            usuarioAdmin.addRol(r);
-            usuarioRepositorio.save(usuarioAdmin);
-            log.info("Usuario admin almacenado con exito");
-
 
 
         }else{

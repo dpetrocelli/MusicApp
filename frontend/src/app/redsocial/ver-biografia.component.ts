@@ -3,6 +3,7 @@ import { PostService } from '../servicios/post.service';
 import { LoginDatos } from '../modelos/logindatos';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Router } from '@angular/router';
+import { Post } from '../modelos/post';
 
 @Component({
   selector: 'app-ver-biografia',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./ver-biografia.component.css']
 })
 export class VerBiografiaComponent implements OnInit {
- 
+  posts : Post[] = [];
   userLogged : LoginDatos;
   biografia : String;
   form: any = {};
@@ -33,13 +34,14 @@ export class VerBiografiaComponent implements OnInit {
    // luego voy a buscar los posts
    this.postService.obtenerposts (this.userLogged).subscribe(data => {
     //this.biografia = data.mensaje;
-     console.log (JSON.stringify(data));
+     this.posts = data;
+    
     },
     (err: any) => {
       console.log(err);
       //this.router.navigate(['/accesodenegado']);
     });
-
+    
   }
 
   actualizar(){
