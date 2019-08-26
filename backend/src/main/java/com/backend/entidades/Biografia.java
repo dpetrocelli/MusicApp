@@ -61,8 +61,11 @@ public class Biografia {
     }
 
 
+    public List<Post> getPosts() {
+        return posts;
+    }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 }

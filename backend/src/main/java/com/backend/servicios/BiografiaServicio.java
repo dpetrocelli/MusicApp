@@ -19,8 +19,13 @@ public class BiografiaServicio {
         if (this.biografiaRepositorio.existsByArtista(artista)){
             return this.biografiaRepositorio.findByArtista(artista).get();
         }else{
-            return null;
+            return new Biografia();
         }
 
+    }
+
+    public boolean guardar(Biografia bio) {
+        this.biografiaRepositorio.save(bio);
+        return true;
     }
 }

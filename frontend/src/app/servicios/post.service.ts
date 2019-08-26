@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { LoginDatos } from '../modelos/logindatos';
 import { Observable } from 'rxjs';
+import { Post } from '../modelos/post';
 
 
 
@@ -20,6 +21,14 @@ export class PostService {
 
   public obtenerbiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
+  }
+
+  public obtenerposts (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerPosts',login, cabecera);
+  }
+
+  public crearpost (login : LoginDatos, post : Post ): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, post : post}, cabecera);
   }
 
   public actualizarbiografia (login : LoginDatos, biografia : String ): Observable<any> {

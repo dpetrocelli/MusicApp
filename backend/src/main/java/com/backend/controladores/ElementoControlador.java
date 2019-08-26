@@ -1,11 +1,14 @@
 package com.backend.controladores;
+
 import com.backend.dto.Mensaje;
-import com.backend.entidades.*;
+import com.backend.entidades.Artista;
+import com.backend.entidades.Biografia;
+import com.backend.entidades.Post;
+import com.backend.entidades.Usuario;
 import com.backend.recursos.LoginDatos;
 import com.backend.servicios.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,67 +16,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/post/")
+@RequestMapping("/api/elemento/")
 @CrossOrigin(origins = "*")
-public class PostControlador {
+
+public class ElementoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired PromocionServicio promocionServicio;
     @Autowired UsuarioServicio usuarioServicio;
     @Autowired ArtistaServicio artistaServicio;
     @Autowired BiografiaServicio biografiaServicio;
-    @Autowired PostServicio postServicio;
-
-    @PostMapping("obtenerBiografia")
-    public ResponseEntity<?> obtener (@RequestBody LoginDatos ld){
-        try{
-
-            if (promocionServicio.validarTokenUsuario(ld)){
-                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
-
-                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
-
-                Biografia b =  this.biografiaServicio.obtener(artista);
-                return new ResponseEntity (new Mensaje(b.getBiografiaBasica()), HttpStatus.OK);
-
-
-
-            }else{
-                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
-            }
-
-        }catch (Exception e){
-            return new ResponseEntity(new Mensaje("no pude obtener biografia"), HttpStatus.OK);
-        }
-    }
 
     @PostMapping("obtenerPosts")
-    public ResponseEntity<?> obtenerPosts (@RequestBody LoginDatos ld){
-        try{
-            log.info(("TOMAR DATOS POSTS"));
-            if (promocionServicio.validarTokenUsuario(ld)){
-                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
-                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
-                Biografia b =  this.biografiaServicio.obtener(artista);
-                ArrayList<Post> arrayPost = this.postServicio.obtenerPosts(b);
-                log.info (String.valueOf(arrayPost.size()));
-                return new ResponseEntity<ArrayList<Post>> (arrayPost, HttpStatus.OK);
-            }
-
-            else{
-                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
-            }
-
-        }catch (Exception e){
-            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
-        }
-    }
-    @PostMapping("actualizarBiografia")
-    public ResponseEntity<?> actualizar (@RequestBody String payload){
+    public ResponseEntity<?> obtenerPosts (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
         // esto aplica a cualquier tipo de mensaje
 
@@ -82,12 +40,13 @@ public class PostControlador {
             log.info ("siendo: "+payload.toString());
 
             LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
-            String biografia = json.get("biografia").getAsString();
+            String idpost = json.get("idpost").getAsString();
 
             log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
             boolean result = this.usuarioServicio.validarTokenUsuario(ld);
 
             if (result){
+                /*
                 Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
                 Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
                 // ES UN ARTISTA VALIDO
@@ -96,7 +55,7 @@ public class PostControlador {
                     bio.setBiografiaBasica(biografia);
                     bio.setArtista(artista);
                     this.biografiaServicio.guardar (bio);
-                }
+                }*/
                 return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
