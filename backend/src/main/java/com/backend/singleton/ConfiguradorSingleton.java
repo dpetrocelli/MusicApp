@@ -1,10 +1,7 @@
 package com.backend.singleton;
 
 import com.backend.entidades.*;
-import com.backend.repositorios.ArtistaRepositorio;
-import com.backend.repositorios.MarketPlaceRepositorio;
-import com.backend.repositorios.RolRepositorio;
-import com.backend.repositorios.UsuarioRepositorio;
+import com.backend.repositorios.*;
 import com.backend.servicios.ArtistaServicio;
 import com.backend.servicios.InstrumentoServicio;
 import com.backend.servicios.PostServicio;
@@ -45,7 +42,8 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
     @Autowired
     PostServicio postServicio;
-
+    @Autowired
+    PostRepositorio postRepositorio;
     @Autowired
     InstrumentoServicio instrumentoServicio;
 
@@ -139,15 +137,8 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
         }
-        /*
-        Long l = Long.valueOf(4);
-        Post p = this.postServicio.obtenerPostPorId(l).get();
-        log.info( " POST info: "+p.getInformacion());
-        List<Elemento> list = p.getElementos();
-        for (Elemento elemento: list) {
-            log.info(" Elemento "+elemento);
-        }
-        */
+
+
 
     }
 }

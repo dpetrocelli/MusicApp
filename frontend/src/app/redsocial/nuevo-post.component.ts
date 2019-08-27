@@ -39,6 +39,7 @@ export class NuevoPostComponent implements OnInit {
   onCreate(): void {
     this.post = this.form;
     this.crearPost();
+    
     /*this.postService.crearpost (this.loginDatos, this.post).subscribe(data => {
         this.msjOK = data.mensaje;
         this.creado = true;
@@ -67,15 +68,27 @@ export class NuevoPostComponent implements OnInit {
     console.log ("ejecute crear post", data.mensaje);
     this.idPost = data.mensaje;
 
-    this.postService.enviarimagen(this.files[0], this.idPost).subscribe(data => {
-      console.log (" Pude guardar imagen");
-    },
-    (err: any) => {
-      console.log (err);
+    Array.from (this.files).forEach(file => {
+      this.postService.enviarimagen(file, this.idPost).subscribe(data => {
+        console.log (" Pude guardar imagen", file.name);
+        this.creado = true;
+        this.falloCreacion = false;
+        this.msjOK = data.mensaje;
+      },
+      (err: any) => {
+        console.log (err);
+        this.msjFallo = err.error.mensaje;
+        this.creado = false;
+        this.falloCreacion = true;
+      });
     });
+    
 
     
   }
 
+  volver(): void {
+    window.history.back();
+  }
 
 }

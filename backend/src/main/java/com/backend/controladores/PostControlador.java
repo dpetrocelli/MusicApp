@@ -34,6 +34,7 @@ public class PostControlador {
     @Autowired ArtistaServicio artistaServicio;
     @Autowired BiografiaServicio biografiaServicio;
     @Autowired PostServicio postServicio;
+    @Autowired ElementoServicio elementoServicio;
 
     @PostMapping("obtenerBiografia")
     public ResponseEntity<?> obtener (@RequestBody LoginDatos ld){
@@ -58,34 +59,39 @@ public class PostControlador {
         }
     }
 
-    @PostMapping("subirimagen")
-    public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id){
+    @PostMapping("actualizarBiografia")
+    public ResponseEntity<?> actualizar (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
         try{
-            // Obtengo en post
-            Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id)).get();
+            log.info ("siendo: "+payload.toString());
 
-            // guardo el binario
-            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(pathFile);
-            Files.write(path, bytes);
-            // creo el elemento vacio
-            Elemento el = new Elemento();
-            el.setRutaAcceso(pathFile);
-            // se lo seteo al post
-            post.addElemento(el);
-            // guardo
-            this.postServicio.guardar(post);
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+            String biografia = json.get("biografia").getAsString();
 
-            // Get the file and save it somewhere
-            log.info ( " LLEGAMOS ACA "+ file.getName());
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
 
-            log.info(("IMG UPLOAD OK"));
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    Biografia bio = this.biografiaServicio.obtener(artista);
+                    bio.setBiografiaBasica(biografia);
+                    bio.setArtista(artista);
+                    this.biografiaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
 
 
-            return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
         }
     }
 
@@ -120,44 +126,6 @@ public class PostControlador {
         }
     }
 
-
-
-    @PostMapping("actualizarBiografia")
-    public ResponseEntity<?> actualizar (@RequestBody String payload){
-        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
-        // esto aplica a cualquier tipo de mensaje
-
-        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
-        try{
-            log.info ("siendo: "+payload.toString());
-
-            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
-            String biografia = json.get("biografia").getAsString();
-
-            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
-            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
-
-            if (result){
-                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
-                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
-                // ES UN ARTISTA VALIDO
-                if (artista.getId()!=null){
-                    Biografia bio = this.biografiaServicio.obtener(artista);
-                    bio.setBiografiaBasica(biografia);
-                    bio.setArtista(artista);
-                    this.biografiaServicio.guardar (bio);
-                }
-                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
-            }else{
-                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
-            }
-
-
-            }catch (Exception e){
-                return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
-            }
-    }
-
     @PostMapping("crearPost")
     public ResponseEntity<?> crearPost (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -181,12 +149,21 @@ public class PostControlador {
                 post.setBiografia(bio);
                 post.setInformacion(formulario.get("informacion").getAsString());
 
-                bio.addPost(post);
+                //bio.addPost(post);
                 this.biografiaServicio.guardar(bio);
+                this.postServicio.guardar(post);
 
+                // creo el elemento youtube
+                String urlYoutube = formulario.get("youtube").getAsString();
+                if (urlYoutube.length()>0){
 
-
-                return new ResponseEntity(new Mensaje("4"), HttpStatus.OK);
+                    Elemento video = new Elemento();
+                    video.setTipoRecurso("youtube");
+                    video.setPost(post);
+                    video.setRutaAcceso(urlYoutube);
+                    this.elementoServicio.guardar(video);
+                }
+                return new ResponseEntity(new Mensaje(String.valueOf(post.getId())), HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
             }
@@ -196,6 +173,31 @@ public class PostControlador {
 
         }catch (Exception e){
             return new ResponseEntity(new Mensaje("no pude crear post"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("subirimagen")
+    public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id){
+        try{
+            // Obtengo en post
+            log.info ("arrancamos vamos a buscar");
+            Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
+
+            // guardo el binario
+            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+            Elemento el = new Elemento();
+
+            el.setRutaAcceso(pathFile);
+            el.setPost(post);
+            el.setTipoRecurso("imglocal");
+            this.elementoServicio.guardar(el);
+            return new ResponseEntity(new Mensaje("Se guardaron los elementos y el post"), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
 

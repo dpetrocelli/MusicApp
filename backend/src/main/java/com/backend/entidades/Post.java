@@ -20,7 +20,7 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<Elemento> elementos;
 
-    @ManyToOne
+    @ManyToOne (optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_biografia", nullable = false, updatable = false)
     private Biografia biografia;
 

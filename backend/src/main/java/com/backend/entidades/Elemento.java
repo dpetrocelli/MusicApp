@@ -20,7 +20,7 @@ public class Elemento {
     Date fechaCreacion;
     Date fechaModificacion;
 
-    @ManyToOne
+    @ManyToOne (optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_post", nullable = false, updatable = false)
     private Post post;
 

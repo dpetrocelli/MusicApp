@@ -31,8 +31,23 @@
                required
                autocomplete="off">
       </div>
-      <input type="file"  (change)="cargandoImagen($event.target.files)" multiple enctype="multipart/form-data">     
-    
+      <div class="form-group">
+        <label for="youtube">Link Video Youtube: </label>
+        <input type="text"
+               class="form-control"
+               name="youtube"
+               id="youtube"
+               [(ngModel)]="form.youtube"
+               required="off"
+               autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="uploadfiles"> Subir Imagenes: </label>
+        <input type="file" name="uploadfiles" (change)="cargandoImagen($event.target.files)" multiple enctype="multipart/form-data">     
+      </div>
+      
+      
+
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
     </div>

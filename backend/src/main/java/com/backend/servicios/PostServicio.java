@@ -19,9 +19,9 @@ import java.util.Optional;
 @Transactional
 public class PostServicio {
 
-    @Autowired
-    BiografiaRepositorio biografiaRepositorio;
-    PostRepositorio postRepositorio;
+
+    @Autowired BiografiaRepositorio biografiaRepositorio;
+    @Autowired PostRepositorio postRepositorio;
     public Optional<Biografia> obtenerPorId(Long id){
         return this.biografiaRepositorio.findById(id);
     }
@@ -30,7 +30,13 @@ public class PostServicio {
         return this.postRepositorio.findAllByBiografia(b).get();
     }
 
-    public Optional <Post> obtenerPostPorId (Long id) { return this.postRepositorio.findById(id);}
+    public Post obtenerPostPorId (Long id) {
+        System.out.println(" ID PIOLA: "+id);
+        Post p = this.postRepositorio.findById(id).get();
+        System.out.println(" INFO "+p.getInformacion());
+        return p;
+        }
+
     public boolean guardar (Post post){
         this.postRepositorio.save(post);
         return true;
