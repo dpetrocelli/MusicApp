@@ -126,6 +126,28 @@ public class PostControlador {
         }
     }
 
+
+    @PostMapping("obtenerElementos")
+    public ResponseEntity<?> obtenerElementos (@RequestBody Long idpost){
+        try{
+            log.info(("TOMAR DATOS ID POST PARA ELEMENTOS "));
+                Post post = this.postServicio.obtenerPostPorId(idpost);
+                List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
+                ArrayList<String> nombres = new ArrayList<String>();
+            for (Elemento elemento: elementos
+                 ) {
+                log.info( "EL: "+elemento.getRutaAcceso());
+                nombres.add(elemento.getRutaAcceso());
+
+            }
+
+                return new ResponseEntity<ArrayList<String>> (nombres, HttpStatus.OK);
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
     @PostMapping("crearPost")
     public ResponseEntity<?> crearPost (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje

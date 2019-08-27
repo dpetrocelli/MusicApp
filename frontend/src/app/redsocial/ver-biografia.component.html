@@ -33,7 +33,10 @@
         <td>{{post.informacion}}</td>
         <td>{{post.fechaCreacion}}</td>
         <td>{{post.fechaEdicion}}</td>
-        <td>{{post.fechaEdicion}}</td>
+            <td *ngFor="let elemento of elementos">
+              {{elemento.rutaAcceso}}
+            </td>
+            
         <td><button class="btn btn-primary" routerLink="posts/detalle/{{post.id}}"> Detalle </button></td>
         <td><button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button></td>
         <td><button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button></td>

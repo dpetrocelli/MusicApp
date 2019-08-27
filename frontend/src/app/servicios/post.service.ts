@@ -39,6 +39,13 @@ export class PostService {
     return this.httpClient.post<any>(this.baseURL + 'listar',login, cabecera);
   }
 
+  public obtenerelementos(idpost: number): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerElementos', idpost, cabecera);
+  }
+
+ 
+
+
   public enviarimagen (imagenParaSubir: File, id: string): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('file', imagenParaSubir);
