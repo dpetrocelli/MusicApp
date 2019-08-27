@@ -7,6 +7,7 @@ import com.backend.repositorios.RolRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
 import com.backend.servicios.ArtistaServicio;
 import com.backend.servicios.InstrumentoServicio;
+import com.backend.servicios.PostServicio;
 import com.backend.servicios.RolServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class ConfiguradorSingleton implements CommandLineRunner {
@@ -44,6 +42,9 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
     @Autowired
     RolServicio rolServicio;
+
+    @Autowired
+    PostServicio postServicio;
 
     @Autowired
     InstrumentoServicio instrumentoServicio;
@@ -138,7 +139,15 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
         }
-
+        /*
+        Long l = Long.valueOf(4);
+        Post p = this.postServicio.obtenerPostPorId(l).get();
+        log.info( " POST info: "+p.getInformacion());
+        List<Elemento> list = p.getElementos();
+        for (Elemento elemento: list) {
+            log.info(" Elemento "+elemento);
+        }
+        */
 
     }
 }

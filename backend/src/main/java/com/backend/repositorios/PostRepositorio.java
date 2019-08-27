@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface PostRepositorio extends JpaRepository<Post, Long> {
 
     Optional<ArrayList<Post>> findAllByBiografia(Biografia biografia);
-
+    Optional<Post> findById (Long id);
 
 }

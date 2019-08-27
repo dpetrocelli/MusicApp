@@ -59,22 +59,27 @@ public class PostControlador {
     }
 
     @PostMapping("subirimagen")
-    public ResponseEntity<?> subirimagen (@RequestBody File file ){
+    public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id){
         try{
+            // Obtengo en post
+            Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id)).get();
+
+            // guardo el binario
+            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+            Elemento el = new Elemento();
+            el.setRutaAcceso(pathFile);
+            // se lo seteo al post
+            post.addElemento(el);
+            // guardo
+            this.postServicio.guardar(post);
+
             // Get the file and save it somewhere
-            /*byte[] bytes = file.getBytes();
-            Path path = Paths.get("/home/soporte/foto/" + file.getOriginalFilename());
-            Files.write(path, bytes);*/
             log.info ( " LLEGAMOS ACA "+ file.getName());
-            /*byte[] bArray = new byte[(int) file.length()];
 
-
-            FileInputStream fis = new FileInputStream(file);
-            fis.read(bArray);
-            fis.close();
-            Path path = Paths.get("/home/soporte/foto/" + file.getName());
-            Files.write(path, bArray);
-            */
             log.info(("IMG UPLOAD OK"));
 
 
@@ -181,7 +186,7 @@ public class PostControlador {
 
 
 
-                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+                return new ResponseEntity(new Mensaje("4"), HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
             }

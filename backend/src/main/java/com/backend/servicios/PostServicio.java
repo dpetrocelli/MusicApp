@@ -30,6 +30,7 @@ public class PostServicio {
         return this.postRepositorio.findAllByBiografia(b).get();
     }
 
+    public Optional <Post> obtenerPostPorId (Long id) { return this.postRepositorio.findById(id);}
     public boolean guardar (Post post){
         this.postRepositorio.save(post);
         return true;

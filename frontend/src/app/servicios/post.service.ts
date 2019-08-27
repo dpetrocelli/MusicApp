@@ -39,11 +39,12 @@ export class PostService {
     return this.httpClient.post<any>(this.baseURL + 'listar',login, cabecera);
   }
 
-  public enviarimagen (imagenParaSubir: File): Observable<any> {
-    //const formData = new FormData(); 
-    //formData.append('imagenPropia', imagenParaSubir, imagenParaSubir.name); 
+  public enviarimagen (imagenParaSubir: File, id: string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('file', imagenParaSubir);
+    formdata.append('id', id);
     
-    return this.httpClient.post<any>(this.baseURL + 'subirimagen', imagenParaSubir, cabecera);
+    return this.httpClient.post<any>(this.baseURL + 'subirimagen', formdata);
 		//return this.http.post(this.url_servidor, formData);
   }
 /*

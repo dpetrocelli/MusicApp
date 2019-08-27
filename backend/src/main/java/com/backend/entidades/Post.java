@@ -68,9 +68,20 @@ public class Post {
         this.fechaEdicion = fechaEdicion;
     }
 
+    public List<Elemento> getElementos() {
+        return elementos;
+    }
+
+    public void setElementos(List<Elemento> elementos) {
+        this.elementos = elementos;
+    }
 
     public void setElementos(ArrayList<Elemento> elementos) {
         this.elementos = elementos;
+    }
+
+    public void addElemento(Elemento elemento) {
+        this.elementos.add(elemento);
     }
 
     public Biografia getBiografia() {

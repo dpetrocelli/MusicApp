@@ -13,11 +13,13 @@ import { LoginDatos } from '../modelos/logindatos';
 export class NuevoPostComponent implements OnInit {
   form: any = {};
   post: Post;
+  files : FileList;
   creado = false;
   falloCreacion = false;
   msjFallo = '';
   msjOK = '';
   loginDatos: LoginDatos = new LoginDatos();
+  idPost: string;
 
   constructor(private postService : PostService,
               private usuarioService: UsuarioService,
@@ -28,23 +30,20 @@ export class NuevoPostComponent implements OnInit {
   }
   
   public cargandoImagen(files: FileList){
-    console.log (files);
-      this.postService.enviarimagen(files[0]).subscribe(data => {
-        console.log (" HOLI ENTRE");
-      },
-      (err: any) => {
-        console.log (err);
-      }
-    );
-      
+    this.files = files;
+         
   }
+
   
+ 
   onCreate(): void {
     this.post = this.form;
-    this.postService.crearpost (this.loginDatos, this.post).subscribe(data => {
+    this.crearPost();
+    /*this.postService.crearpost (this.loginDatos, this.post).subscribe(data => {
         this.msjOK = data.mensaje;
         this.creado = true;
         this.falloCreacion = false;
+        this.idPost = data.mensaje;
       },
       (err: any) => {
         this.msjFallo = err.error.mensaje;
@@ -52,6 +51,30 @@ export class NuevoPostComponent implements OnInit {
         this.falloCreacion = true;
       }
     );
+      
+    this.postService.enviarimagen(this.files[0], this.idPost).subscribe(data => {
+      console.log (" HOLI ENTRE");
+    },
+    (err: any) => {
+      console.log (err);
+    });
+*/
+    
+  }
+
+  async crearPost () {
+    let data = await this.postService.crearpost (this.loginDatos, this.post).toPromise();
+    console.log ("ejecute crear post", data.mensaje);
+    this.idPost = data.mensaje;
+
+    this.postService.enviarimagen(this.files[0], this.idPost).subscribe(data => {
+      console.log (" Pude guardar imagen");
+    },
+    (err: any) => {
+      console.log (err);
+    });
+
+    
   }
 
 
