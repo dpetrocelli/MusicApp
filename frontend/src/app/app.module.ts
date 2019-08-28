@@ -24,7 +24,6 @@ import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
-import { VerBiografiaComponent } from './redsocial/biografia/ver-biografia.component';
 import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
 import { VerPostsComponent } from './redsocial/post/ver-posts.component';
 import { EditarPostComponent } from './redsocial/post/editar-post.component';
@@ -54,7 +53,6 @@ import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component
       EditarpromocionComponent,
       DetallepromocionComponent,
       AccesodenegadoComponent,
-      VerBiografiaComponent,
       NuevoPostComponent,
       VerPostsComponent,
       EditarPostComponent,

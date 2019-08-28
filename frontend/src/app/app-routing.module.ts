@@ -16,7 +16,6 @@ import { EditarpromocionComponent } from './promociones/editarpromocion.componen
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
-import { VerBiografiaComponent } from './redsocial/biografia/ver-biografia.component';
 import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
 import { EditarPostComponent } from './redsocial/post/editar-post.component';
 import { VerPostsComponent } from './redsocial/post/ver-posts.component';
@@ -33,7 +32,7 @@ const routes: Routes = [
 
   // Opciones de Artista 
     {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-    {path: 'biografia', component: VerBiografiaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+    
     {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
     {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
     {path: 'posts/detalle', component: VerPostsComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

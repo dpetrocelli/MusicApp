@@ -30,6 +30,7 @@ export class PostComponent implements OnInit {
   nuevoPostComponent : NuevoPostComponent;
 
   ngOnInit() {
+    this.userLogged = this.usuarioService.getUserLoggedIn();
     this.nuevoPostComponent = new NuevoPostComponent(this.postService, this.usuarioService, this.router);
     this.nuevoPostForm = false;
     // luego voy a buscar los posts

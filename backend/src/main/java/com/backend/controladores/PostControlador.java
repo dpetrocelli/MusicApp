@@ -95,7 +95,7 @@ public class PostControlador {
         }
     }
 
-    @PostMapping("obtenerPosts")
+    @PostMapping("obtenerpostsporusuario")
     public ResponseEntity<?> obtenerPosts (@RequestBody LoginDatos ld){
         try{
             log.info(("TOMAR DATOS POSTS"));

@@ -22,9 +22,11 @@ export class PerfilService {
   public obtenerbiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
   }
+  
 
   public obtenerposts (login : LoginDatos): Observable<any> {
-    return this.httpClient.post<any>(this.baseURL + 'obtenerPosts',login, cabecera);
+    console.log ("VAMOS A BUSCAR LOS POSTS", login);
+    return this.httpClient.post<any>(this.baseURL + 'obtenerpostsporusuario',login, cabecera);
   }
 
   public crearpost (login : LoginDatos, post : Post ): Observable<any> {
