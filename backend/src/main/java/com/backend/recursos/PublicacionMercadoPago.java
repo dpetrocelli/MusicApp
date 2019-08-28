@@ -113,6 +113,7 @@ public class PublicacionMercadoPago {
             log.info("Creamos payer vacio");
             this.preference.setPayer(payer);
 
+               /*
             // Para la vuelta de MP cuando paga (ID de promoción)
             this.preference.setAdditionalInfo(title);
 
@@ -124,6 +125,8 @@ public class PublicacionMercadoPago {
             this.preference.setBackUrls(backUrls);
 
             this.preference.setNotificationUrl(baseurl+VueltaPagoURL+"notificacion_de_pago");
+            
+                */
 
             this.preference.setExpirationDateTo(vigencia);
             this.preference.appendItem(this.item);
