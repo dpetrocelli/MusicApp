@@ -25,7 +25,8 @@ public class Biografia {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "biografia")
     private List<Post> posts;
 
-
+    private String pathImagenPerfil;
+    private String pathImagenPortada;
    public Biografia(){
 
     }
@@ -71,5 +72,21 @@ public class Biografia {
 
     public void addPost (Post post){
        this.posts.add(post);
+    }
+
+    public String getPathImagenPerfil() {
+        return pathImagenPerfil;
+    }
+
+    public void setPathImagenPerfil(String pathImagenPerfil) {
+        this.pathImagenPerfil = pathImagenPerfil;
+    }
+
+    public String getPathImagenPortada() {
+        return pathImagenPortada;
+    }
+
+    public void setPathImagenPortada(String pathImagenPortada) {
+        this.pathImagenPortada = pathImagenPortada;
     }
 }

@@ -12,6 +12,7 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
   providedIn: 'root'
 })
 export class PerfilService {
+  
   baseURL = 'http://localhost:8081/api/post/';
 
   constructor(private httpClient: HttpClient) { 
@@ -19,6 +20,18 @@ export class PerfilService {
       
   }
 
+  public buscarimagenperfil (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerImagenPerfil',login, cabecera);
+  }
+
+  public subirImagenPerfil (imagenParaSubir: File, login : LoginDatos): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('file', imagenParaSubir);
+    formdata.append('login', JSON.stringify(login));
+    return this.httpClient.post<any>(this.baseURL + 'subirImagenPerfil', formdata);
+  }
+
+  
   public obtenerbiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
   }
@@ -44,9 +57,6 @@ export class PerfilService {
   public obtenerelementos(idpost: number): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerElementos', idpost, cabecera);
   }
-
- 
-
 
   public enviarimagen (imagenParaSubir: File, id: string): Observable<any> {
     var formdata: FormData = new FormData();

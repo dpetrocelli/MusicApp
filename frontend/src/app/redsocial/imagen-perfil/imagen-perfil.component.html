@@ -1,1 +1,10 @@
-<img src="https://picsum.photos/200/300" class="img-fluid">
+
+ 
+        <div>
+            <!-- Ya esta andando-->
+            <img id="imgperfil" src={{img}} class="img-fluid" width="193" height="250" >
+        </div>
+            
+            <input type="file" id="uploadfiles" name="uploadfiles" style="display:none" (change)="subirImagenPerfil($event.target.files)" multiple enctype="multipart/form-data">
+            <input type="button" value="Editar imagen" (click)='abrirFiles();' />
+            

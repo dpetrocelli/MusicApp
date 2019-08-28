@@ -148,6 +148,56 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
+
+    @PostMapping("obtenerImagenPerfil")
+    public ResponseEntity<?> obtenerimagenperfil (@RequestBody LoginDatos ld){
+        try{
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+                String pathImagenPerfil = b.getPathImagenPerfil();
+
+                return new ResponseEntity(new Mensaje(pathImagenPerfil), HttpStatus.OK);
+
+
+
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener la imagen de perfil "), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("obtenerImagenPortada")
+    public ResponseEntity<?> obtenerimagenportada(@RequestBody LoginDatos ld){
+        try{
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+                String pathImagenPortada = b.getPathImagenPortada();
+
+                return new ResponseEntity <String> (pathImagenPortada, HttpStatus.OK);
+
+
+
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener la imagen de portada"), HttpStatus.OK);
+        }
+    }
+
+
+
+
     @PostMapping("crearPost")
     public ResponseEntity<?> crearPost (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -195,6 +245,33 @@ public class PostControlador {
 
         }catch (Exception e){
             return new ResponseEntity(new Mensaje("no pude crear post"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("subirImagenPerfil")
+    public ResponseEntity<?> subirImagenPerfil (@RequestParam("file") MultipartFile file, @RequestParam("login") String login){
+        try{
+            // Obtengo en post
+            log.info ("arrancamos vamos a buscar");
+            LoginDatos eled = new Gson().fromJson(login, LoginDatos.class);
+
+
+            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(eled.getIdUsuario()));
+            Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+            Biografia bio = this.biografiaServicio.obtener(artista);
+
+            // guardo el binario
+            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+
+            bio.setPathImagenPerfil(pathFile);
+            this.biografiaServicio.guardar(bio);
+            return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
 

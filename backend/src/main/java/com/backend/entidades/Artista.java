@@ -38,6 +38,8 @@ public class Artista {
     private Set<Instrumento> instrumento = new HashSet<>();
 
 
+
+
     public Artista() {
     }
 
@@ -110,6 +112,7 @@ public class Artista {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+
     public String getGenero() {
         return genero;
     }
@@ -141,4 +144,6 @@ public class Artista {
     public void setInstrumento(Set<Instrumento> instrumento) {
         this.instrumento = instrumento;
     }
+
+
 }
