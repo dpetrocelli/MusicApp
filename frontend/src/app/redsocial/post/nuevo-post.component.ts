@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Post } from '../modelos/post';
-import { PostService } from '../servicios/post.service';
+import { Post } from '../../modelos/post';
+import { PerfilService } from '../../servicios/perfil.service';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../servicios/usuario.service';
-import { LoginDatos } from '../modelos/logindatos';
+import { UsuarioService } from '../../servicios/usuario.service';
+import { LoginDatos } from '../../modelos/logindatos';
 
 @Component({
   selector: 'app-nuevo-post',
@@ -20,12 +20,15 @@ export class NuevoPostComponent implements OnInit {
   msjOK = '';
   loginDatos: LoginDatos = new LoginDatos();
   idPost: string;
+  visible : boolean;
 
-  constructor(private postService : PostService,
+  constructor(private postService : PerfilService,
               private usuarioService: UsuarioService,
               private router: Router) { }
 
   ngOnInit() {
+    this.visible = true;
+    console.log("Post nuevo. Visible:",this.visible);
     this.loginDatos = this.usuarioService.getUserLoggedIn();
   }
   
@@ -82,13 +85,9 @@ export class NuevoPostComponent implements OnInit {
         this.falloCreacion = true;
       });
     });
-    
-
-    
+    setTimeout(() => {
+      this.msjOK = "Posteado correctamente";
+    }, 1500);
+    this.visible = false;
   }
-
-  volver(): void {
-    window.history.back();
-  }
-
 }

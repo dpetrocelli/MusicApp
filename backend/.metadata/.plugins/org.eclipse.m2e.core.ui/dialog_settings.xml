@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\sacco\Documents\GitDavid"/>
 			<item value="C:\Users\sacco\Documents\GitDavid\MusicApp2019\backend"/>
 		</list>
 		<list key="projectNameTemplate">

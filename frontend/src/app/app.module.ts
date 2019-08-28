@@ -24,10 +24,15 @@ import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
-import { VerBiografiaComponent } from './redsocial/ver-biografia.component';
-import { NuevoPostComponent } from './redsocial/nuevo-post.component';
-import { VerPostsComponent } from './redsocial/ver-posts.component';
-import { EditarPostComponent } from './redsocial/editar-post.component';
+import { VerBiografiaComponent } from './redsocial/biografia/ver-biografia.component';
+import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
+import { VerPostsComponent } from './redsocial/post/ver-posts.component';
+import { EditarPostComponent } from './redsocial/post/editar-post.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { PostComponent } from './redsocial/post/post.component';
+import { ImagenPerfilComponent } from './redsocial/imagen-perfil/imagen-perfil.component';
+import { InfoPerfilComponent } from './redsocial/info-perfil/info-perfil.component';
+import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component';
 
 @NgModule({
    declarations: [
@@ -52,7 +57,12 @@ import { EditarPostComponent } from './redsocial/editar-post.component';
       VerBiografiaComponent,
       NuevoPostComponent,
       VerPostsComponent,
-      EditarPostComponent
+      EditarPostComponent,
+      PerfilComponent,
+      PostComponent,
+      ImagenPerfilComponent,
+      InfoPerfilComponent,
+      PuntuacionComponent
    ],
    imports: [
       BrowserModule,

@@ -11,7 +11,7 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class PerfilService {
   baseURL = 'http://localhost:8081/api/post/';
 
   constructor(private httpClient: HttpClient) { 

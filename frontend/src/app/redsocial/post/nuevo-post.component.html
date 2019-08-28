@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="visible">
     <h5>Nuevo Post</h5>
     <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
       <div class="form-group">
@@ -52,9 +52,6 @@
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
     </div>
   </form>
-  <div>
-    <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>
-  </div>
   <br>
   <br>
   <div *ngIf="falloCreacion" class="float-left">
