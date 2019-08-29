@@ -1,10 +1,6 @@
+<div id="imgContainer">
+    <img id="imgPerfil" src={{img}} class="img-fluid" width="193" height="250" >
 
- 
-        <div>
-            <!-- Ya esta andando-->
-            <img id="imgperfil" src={{img}} class="img-fluid" width="193" height="250" >
-        </div>
-            
-            <input type="file" id="uploadfiles" name="uploadfiles" style="display:none" (change)="subirImagenPerfil($event.target.files)" multiple enctype="multipart/form-data">
-            <input type="button" value="Editar imagen" (click)='abrirFiles();' />
-            
+    <input type="file" id="uploadfiles" name="uploadfiles" style="display:none" (change)="subirImagenPerfil($event.target.files)" multiple enctype="multipart/form-data">
+    <input id="cambiarImg" class="btn btn-primary" type="button" value="Cambiar imagen" (click)='abrirFiles();' />
+</div>

@@ -28,6 +28,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class PostControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    final String UPLOAD_FOLDER = "c:/uploads/";
     @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired PromocionServicio promocionServicio;
     @Autowired UsuarioServicio usuarioServicio;
@@ -261,7 +262,7 @@ public class PostControlador {
             Biografia bio = this.biografiaServicio.obtener(artista);
 
             // guardo el binario
-            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
+            String pathFile = this.UPLOAD_FOLDER + file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);
@@ -283,7 +284,7 @@ public class PostControlador {
             Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
 
             // guardo el binario
-            String pathFile = "/home/soporte/foto/" + file.getOriginalFilename();
+            String pathFile = this.UPLOAD_FOLDER + file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);

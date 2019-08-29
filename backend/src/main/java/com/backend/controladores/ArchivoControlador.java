@@ -19,18 +19,20 @@ import java.io.InputStream;
 @CrossOrigin(origins = "*")
 public class ArchivoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-
+    final String DEFAULT_IMG = "c:/uploads/default.jpg";
 
     @GetMapping("descargar")
     public ResponseEntity<byte[]> getFoos(@RequestParam(required = true) String path) {
         try {
-
-            log.info("path: " + path);
+        	log.info("/api/archivo/descargar -> path:"+path);
+        	if(path.equals("null")) {
+                log.info("No hay foto de perfil, dandole una por default...");
+                path = this.DEFAULT_IMG;
+        	}
             InputStream is = new FileInputStream(path);
             BufferedImage img = ImageIO.read(is);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ImageIO.write(img, "jpg", bos);
-
             return new ResponseEntity(bos.toByteArray(), HttpStatus.OK);
         } catch (IOException e) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
