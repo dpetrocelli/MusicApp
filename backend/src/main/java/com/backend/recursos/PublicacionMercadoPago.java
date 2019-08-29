@@ -11,6 +11,7 @@ import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.Payer;
+import com.mercadopago.resources.datastructures.preference.PaymentMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,10 +108,20 @@ public class PublicacionMercadoPago {
             this.item.setCurrencyId("ARS");
             this.item.setQuantity(1);
             this.item.setUnitPrice((float) precio);
+
             log.info("seteamos todas las propiedades");
 
             Payer payer = new Payer();
             log.info("Creamos payer vacio");
+
+            PaymentMethods paymentMethods = new PaymentMethods();
+            paymentMethods.setInstallments(1);
+            paymentMethods.setInstallments(3);
+            paymentMethods.setInstallments(6);
+            paymentMethods.setInstallments(12);
+            paymentMethods.setDefaultInstallments(1);
+
+            this.preference.setPaymentMethods(paymentMethods);
             this.preference.setPayer(payer);
 
                /*

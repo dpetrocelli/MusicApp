@@ -26,6 +26,7 @@ public class ArchivoControlador {
         try {
         	log.info("/api/archivo/descargar -> path:"+path);
         	if(path.equals("null")) {
+
                 log.info("No hay foto de perfil, dandole una por default...");
                 path = this.DEFAULT_IMG;
         	}
