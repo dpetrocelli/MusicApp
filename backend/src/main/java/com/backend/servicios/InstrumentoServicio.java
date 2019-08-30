@@ -16,32 +16,32 @@ public class InstrumentoServicio {
     @Autowired
     InstrumentoRepositorio instrumentoRepositorio;
 
-    public List<Instrumento> obtenerTodos(){
+    public List<Instrumento> obtenerTodos() {
         List<Instrumento> lista = instrumentoRepositorio.findAll();
         return lista;
     }
 
-    public Optional<Instrumento> obtenerPorId(Long id){
+    public Optional<Instrumento> obtenerPorId(Long id) {
         return instrumentoRepositorio.findById(id);
     }
 
-    public Optional<Instrumento> obtenerPorNombre(String ni){
+    public Optional<Instrumento> obtenerPorNombre(String ni) {
         return instrumentoRepositorio.findByNombreInstrumento(ni);
     }
 
-    public void guardar(Instrumento instrumento){
+    public void guardar(Instrumento instrumento) {
         instrumentoRepositorio.save(instrumento);
     }
 
-    public void borrar(Long id){
+    public void borrar(Long id) {
         instrumentoRepositorio.deleteById(id);
     }
 
-    public boolean existePorNombre(String ni){
+    public boolean existePorNombre(String ni) {
         return instrumentoRepositorio.existsByNombreInstrumento(ni);
     }
 
-    public boolean existePorId(Long id){
+    public boolean existePorId(Long id) {
         return instrumentoRepositorio.existsById(id);
     }
 }

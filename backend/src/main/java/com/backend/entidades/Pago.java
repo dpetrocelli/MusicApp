@@ -10,12 +10,14 @@ import java.util.Date;
 public class Pago {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /*
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "venta_id", referencedColumnName = "id")
-    private Venta venta;
+    */
+    //private Venta venta;
+    private Long idVenta;
 
     private Date fechaPago;
 
@@ -25,13 +27,23 @@ public class Pago {
 
     private double importe;
 
-
-
     public Pago() {
     }
 
-    public Pago(Venta venta, Date fechaPago, TipoMovimiento tipoMovimiento, String estado, double importe) {
+    /*
+    public Pago(Venta venta, Long id, Date fechaPago, TipoMovimiento tipoMovimiento, String estado, double importe) {
+        this.id = id;
         this.venta = venta;
+        this.fechaPago = fechaPago;
+        this.tipoMovimiento = tipoMovimiento;
+        this.estado = estado;
+        this.importe = importe;
+    }
+    */
+
+    public Pago(Long idVenta, Long id, Date fechaPago, TipoMovimiento tipoMovimiento, String estado, double importe) {
+        this.id = id;
+        this.idVenta = idVenta;
         this.fechaPago = fechaPago;
         this.tipoMovimiento = tipoMovimiento;
         this.estado = estado;
@@ -46,12 +58,22 @@ public class Pago {
         this.id = id;
     }
 
+    /*
     public Venta getVenta() {
         return venta;
     }
 
     public void setVenta(Venta venta) {
         this.venta = venta;
+    }
+    */
+
+    public void setIdVenta(Long idVenta) {
+        this.idVenta = idVenta;
+    }
+
+    public Long getIdVenta() {
+        return idVenta;
     }
 
     public Date getFechaPago() {

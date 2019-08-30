@@ -1,13 +1,11 @@
 package com.backend.servicios;
 
 
-import com.backend.entidades.Comercio;
-import com.backend.entidades.MarketPlace;
-import com.backend.entidades.Notificacion;
+import com.backend.entidades.*;
+import com.backend.recursos.OrdenDeVentaMercadoPago;
 import com.backend.repositorios.ComercioRepositorio;
 import com.backend.repositorios.MarketPlaceRepositorio;
 
-import com.backend.repositorios.NotificacionRepositorio;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +29,17 @@ public class MarketPlaceServicio {
     ComercioRepositorio comercioRepositorio;
     @Autowired
     MarketPlaceRepositorio marketPlaceRepositorio;
-    @Autowired
-    NotificacionRepositorio notificacion;
 
     @Autowired
     UsuarioServicio usuarioServicio;
+
+
+    @Autowired
+    NotificacionServicio notificacionServicio;
+    @Autowired
+    PagoServicio pagoServicio;
+    @Autowired
+    VentaServicio ventaServicio;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -187,8 +191,18 @@ public class MarketPlaceServicio {
         try {
             log.info("Registrando Nueva Notificacion: id:" + id.toString() + ", topic:" + topic);
 
-            notificacion.save(new Notificacion(id, topic));
+            Notificacion notificacion = new Notificacion(id, topic);
+
+            notificacionServicio.guardar(notificacion);
             //luego de registrar la notificacion hay que buscar el recurso en MP por el ID y luego registrar el pago
+
+            OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago("accessToken");
+
+            Pago pago = ordenDeVentaMercadoPago.obtenerPago(notificacion);
+
+            pagoServicio.guardar(pago);
+
+            log.info("pago obtenido");
 
         } catch (Exception e) {
             System.err.println(e.getStackTrace());

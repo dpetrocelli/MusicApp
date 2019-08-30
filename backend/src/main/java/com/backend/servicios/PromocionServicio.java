@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -39,6 +40,19 @@ public class PromocionServicio {
         //ArrayList<Promocion> lp = new ArrayList<Promocion>();
         ArrayList<Promocion> lp = this.promocionRepositorio.findAllByComercio(idComercio).get();
 
+        return lp;
+    }
+
+    public ArrayList<Promocion> obtenerPromocionesVigentes(){
+        ArrayList<Promocion> lp = new ArrayList<Promocion>();
+
+        Date date = new Date();
+
+        for (Promocion promocion: this.promocionRepositorio.findAll()) {
+            if (0 >= date.compareTo(promocion.getVigencia()))
+                lp.add(promocion);
+        }
+        
         return lp;
     }
 
@@ -82,9 +96,6 @@ public class PromocionServicio {
                 return "sin ACCESS_TOKEN de MP de Vendedor CONFIGURADO";
             }
 
-
-
-
         }catch (Exception e){
             return e.getMessage();
         }
@@ -109,10 +120,6 @@ public class PromocionServicio {
         this.promocionRepositorio.save(promocion);
         return true;
 
-
-
-
-
     }
 
     public Boolean borrarPromocion (Promocion promocion, LoginDatos ld){
@@ -129,11 +136,8 @@ public class PromocionServicio {
         this.promocionRepositorio.delete(promocion);
         return true;
 
-
-
-
-
     }
+
     public boolean existe (Long idComercio){
         return this.promocionRepositorio.existsByComercio(idComercio);
     }

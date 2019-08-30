@@ -70,6 +70,33 @@ public class PromocionControlador {
 
     }
 
+    @PostMapping("obtenerVigentes")
+    public ResponseEntity<?> obtenerVigentes(@RequestBody LoginDatos ld) {
+        log.info(" POST -> /listar/ \n User Logged: " + ld.getNombreUsuario());
+        try {
+            if (promocionServicio.validarTokenUsuario(ld)) {
+                log.info(" TOKEN VALIDADO OK ! ");
+
+                log.info("Buscando promociones vigentes");
+                ArrayList<Promocion> promociones = new ArrayList<Promocion>();
+
+                promociones = this.promocionServicio.obtenerPromocionesVigentes();
+                log.info("Cantidad de promociones: " + promociones.size());
+                return new ResponseEntity<ArrayList<Promocion>>(promociones, HttpStatus.OK);
+
+            } else {
+                return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
+            }
+
+
+        } catch (Exception e) {
+            log.info("Estamos saliendo por except " + e.getMessage());
+            return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
     @PostMapping("nuevo")
     public ResponseEntity<?> nuevo(@RequestBody PromocionRequest request){
 
