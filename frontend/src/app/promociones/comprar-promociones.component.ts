@@ -43,10 +43,6 @@ export class ComprarPromocionesComponent implements OnInit {
 
     var win = window.open(String(promocion.init_point_mercadopago), '_blank');
     win.focus();
-    setTimeout(function() {
-      win.close();
-    }, 5000);
-    this.cargarPromocionesVigentes();
     /*
     this.promocionService.comprar(promocion, this.userLogged).subscribe(data => {
         this.cargarPromocionesVigentes();
