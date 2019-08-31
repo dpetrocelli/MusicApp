@@ -32,6 +32,7 @@ import { PostComponent } from './redsocial/post/post.component';
 import { ImagenPerfilComponent } from './redsocial/imagen-perfil/imagen-perfil.component';
 import { InfoPerfilComponent } from './redsocial/info-perfil/info-perfil.component';
 import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component';
+import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 
 @NgModule({
    declarations: [
@@ -60,7 +61,8 @@ import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component
       PostComponent,
       ImagenPerfilComponent,
       InfoPerfilComponent,
-      PuntuacionComponent
+      PuntuacionComponent,
+      ComprarPromocionesComponent
    ],
    imports: [
       BrowserModule,

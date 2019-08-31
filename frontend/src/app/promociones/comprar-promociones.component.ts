@@ -4,13 +4,14 @@ import { PromocionService } from '../servicios/promocion.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { LoginDatos } from '../modelos/logindatos';
 import { Router } from '@angular/router';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
-  selector: 'app-listarpromociones',
-  templateUrl: './listarpromociones.component.html',
-  styleUrls: ['./listarpromociones.component.css']
+  selector: 'app-comprar-promociones',
+  templateUrl: './comprar-promociones.component.html',
+  styleUrls: ['./comprar-promociones.component.css']
 })
-export class ListarpromocionesComponent implements OnInit {
+export class ComprarPromocionesComponent implements OnInit {
   promociones : Promocion[] = [];
   userLogged : LoginDatos;
   
@@ -20,11 +21,11 @@ export class ListarpromocionesComponent implements OnInit {
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
-    this.cargarpromociones();
+    this.cargarPromocionesVigentes();
   }
 
-  cargarpromociones(): void {
-    this.promocionService.lista(this.userLogged).subscribe(data => {
+  cargarPromocionesVigentes(): void {
+    this.promocionService.obtenerVigentes(this.userLogged).subscribe(data => {
       
          data.forEach(element => {
             element.vigenciaStr = new Date(element.vigencia).toLocaleDateString('es-AR');
@@ -38,11 +39,18 @@ export class ListarpromocionesComponent implements OnInit {
       });
   }
 
-  onDelete(promocion: Promocion): void {
-    if (confirm('¿Estás seguro?')) {
-      this.promocionService.borrar(promocion, this.userLogged).subscribe(data => {
-        this.cargarpromociones();
+  comprar(promocion: Promocion): void {
+
+    var win = window.open(String(promocion.init_point_mercadopago), '_blank');
+    win.focus();
+    setTimeout(function() {
+      win.close();
+    }, 5000);
+    this.cargarPromocionesVigentes();
+    /*
+    this.promocionService.comprar(promocion, this.userLogged).subscribe(data => {
+        this.cargarPromocionesVigentes();
       });
-    }
+    */
   }
 }
