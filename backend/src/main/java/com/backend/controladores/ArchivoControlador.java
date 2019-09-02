@@ -17,7 +17,7 @@ import java.net.URL;
 @CrossOrigin(origins = "*")
 public class ArchivoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-
+    private static String BASE_PATH = "src/images/";
 
     @GetMapping("descargar")
     public ResponseEntity<byte[]> getFoos(@RequestParam(required = true) String path) {
@@ -25,7 +25,7 @@ public class ArchivoControlador {
         	log.info("/api/archivo/descargar -> path:"+path);
         	if(path.equals("null")) {
         	    // Si nulo es porque no tiene imagen
-                File defImage = new File("src/images/default/");
+                File defImage = new File(BASE_PATH+"default/");
 
                 // si es primera vez y no tengo la imagen por defecto la descargo y creo el directorio
                 if (!defImage.exists()) {
@@ -59,7 +59,7 @@ public class ArchivoControlador {
 
     private void descargarImagenDefecto(File file) {
         try{
-            URL url = new URL("http://datamining.dc.uba.ar/datamining/docentes/unknown.png");
+            URL url = new URL("https://icon-library.net/images/default-user-icon/default-user-icon-4.jpg");
             InputStream in = new BufferedInputStream(url.openStream());
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];

@@ -58,10 +58,11 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerElementos', idpost, cabecera);
   }
 
-  public enviarimagen (imagenParaSubir: File, id: string): Observable<any> {
+  public enviarimagen (imagenParaSubir: File, id: string, login : LoginDatos): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('file', imagenParaSubir);
     formdata.append('id', id);
+    formdata.append('login',JSON.stringify(login) )
     
     return this.httpClient.post<any>(this.baseURL + 'subirimagen', formdata);
 		//return this.http.post(this.url_servidor, formData);

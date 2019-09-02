@@ -72,7 +72,7 @@ export class NuevoPostComponent implements OnInit {
     this.idPost = data.mensaje;
 
     Array.from (this.files).forEach(file => {
-      this.postService.enviarimagen(file, this.idPost).subscribe(data => {
+      this.postService.enviarimagen(file, this.idPost, this.loginDatos).subscribe(data => {
         console.log (" Pude guardar imagen", file.name);
         this.creado = true;
         this.falloCreacion = false;

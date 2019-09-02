@@ -28,7 +28,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class PostControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    final String UPLOAD_FOLDER = "c:/uploads/";
+    final String UPLOAD_FOLDER = "src/images/";
     @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired PromocionServicio promocionServicio;
     @Autowired UsuarioServicio usuarioServicio;
@@ -162,8 +162,6 @@ public class PostControlador {
 
                 return new ResponseEntity(new Mensaje(pathImagenPerfil), HttpStatus.OK);
 
-
-
             }else{
                 return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
             }
@@ -262,7 +260,20 @@ public class PostControlador {
             Biografia bio = this.biografiaServicio.obtener(artista);
 
             // guardo el binario
-            String pathFile = this.UPLOAD_FOLDER + file.getOriginalFilename();
+            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername();
+            File directory = new File(folder);
+            if (!(directory).exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directorio creado"+directory.getAbsolutePath());
+
+
+
+                } else {
+                    System.out.println("Error al crear directorio");
+                }
+            }
+
+            String pathFile = folder + file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);
@@ -277,14 +288,17 @@ public class PostControlador {
     }
 
     @PostMapping("subirimagen")
-    public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id){
+    public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id, @RequestParam("login") String login ){
         try{
             // Obtengo en post
             log.info ("arrancamos vamos a buscar");
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(ld.getIdUsuario()));
+
             Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
 
             // guardo el binario
-            String pathFile = this.UPLOAD_FOLDER + file.getOriginalFilename();
+            String pathFile = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/"+ file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);
