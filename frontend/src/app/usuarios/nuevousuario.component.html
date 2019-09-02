@@ -47,7 +47,7 @@
               <div class="form-artista">
                 
                 <label for="nombre"> Nombre:</label>
-                <input class="form-control"
+                <input #nombre class="form-control"
                       type="text"
                       name="nombre"
                       id="nombre"
@@ -70,6 +70,32 @@
                       [(ngModel)]="form.nickname"
                       required
                       autocomplete="off">  
+                  <!-- USING HTML 5 DATALIST-->
+                  <label for="instrumento"> Instrumento que toca: </label>
+               
+                  <!--  -->
+                  <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete= "off" id="instrumento" list="dinamicInstrumento"/>
+                  <datalist id="dinamicInstrumento" >
+                    <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
+                  </datalist>
+                  <table >
+                     <thead>
+                     <tr>
+                       <th scope="col">Instrumento</th>
+                       <th scope="col">Acción</th>
+                       
+                     </tr>
+                     </thead>
+                     <tbody>
+                           <tr *ngFor="let seleccionado of instrumentosSeleccionados">
+                             <td>{{seleccionado}}</td>
+                             <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25" (click)="borrarLinea($event)" />
+                             
+                           </tr>
+                       
+                       
+                     </tbody>
+                  </table>
                <label for="genero"> Género:</label>
                <input class="form-control"
                       type="text"
@@ -96,22 +122,11 @@
                        required
                        autocomplete="off">
 
-               <!-- USING HTML 5 DATALIST-->
-               <label for="instrumento"> Instrumento que toca: </label>
+             
                
-               <!--  -->
-               <input type="text" (keyup)="predictivo($event)" autocomplete= "off" id="instrumento" list="dinamicInstrumento"  autofocus/>
-               <datalist id="dinamicInstrumento" >
-                 <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
-               </datalist>
-              
-               <div *ngFor="let seleccionado of instrumentosSeleccionados">
-                  <span>{{seleccionado}}</span>
-                  <span (click)="borrarLinea($event)" > X </span>
-                  
-               </div>
-              </div>
+               
 
+              </div>
             
 
             </div>

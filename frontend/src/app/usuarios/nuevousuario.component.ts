@@ -10,7 +10,8 @@ import { Instrumento } from '../modelos/instrumento';
   styleUrls: ['./nuevousuario.component.css']
 })
 export class NuevousuarioComponent implements OnInit {
-  
+  @ViewChild('nombre', null) nombreInput: ElementRef; 
+  @ViewChild('instrumento', null) instrumentoInput: ElementRef; 
   form: any = {};
   formCompleto: false;
   msjFallo = '';
@@ -66,11 +67,13 @@ export class NuevousuarioComponent implements OnInit {
   }
 
   cambioRadioButton(evt) {
+    
     // [STEP 1] - Cuando clickeo habilito la opción artista o comercio
     this.isChecked = true;
     if (evt.target.id == "artista") {
       this.isArtista = true;
       this.isComercio = false;
+      this.nombreInput.nativeElement.focus(); 
     } else {
       this.isComercio = true;
       this.isArtista = false;
@@ -104,7 +107,7 @@ export class NuevousuarioComponent implements OnInit {
         }
 
       
-        
+        this.instrumentoInput.nativeElement.focus(); 
       }catch {
         // ERROR 
         console.log (evt);
