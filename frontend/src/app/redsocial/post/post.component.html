@@ -1,49 +1,32 @@
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">ID Post</th>
-      <th scope="col">Información</th>
-      <th scope="col">Fecha Pub</th>
-      <th scope="col">Fecha Edi</th>
-      <th scope="col">Video </th>
-      <th scope="col">Img </th>
-      <th scope="col">Editar</th>
-      <th scope="col">Borrar</th>
-    </tr>
-  </thead>
-  <div *ngIf="hayPosts">
-    <tbody>
-        <tr *ngFor="let post of posts">
-        <td>{{post.id}}</td>
-        <td>{{post.informacion}}</td>
-        <td>{{post.fechaCreacion}}</td>
-        <td>{{post.fechaEdicion}}</td>
-         <td> <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoYoutube)' frameborder="0" allowfullscreen> </iframe> </td>
-         <!-- <td> <ng-image-slider []="imgs" #nav></ng-image-slider></td> -->
-
-           <!-- <div *ngFor="let elemento of listaDeElementos">
-              <div *ngIf="elemento.includes('youtube')">
-                <div> <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(elemento)' frameborder="0" allowfullscreen></iframe> </div>
-              </div> 
-           </div>
-           -->
-           
-      
-        
-        <td><button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button></td>
-        <td><button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button></td>
-      </tr>
-    </tbody>
-  </div>
-</table>
-<div *ngIf="hayBiografia">
+<div id="nuevoPostBoton">
   <button class="btn btn-success btn-lg" (click)="nuevoPost()">Nuevo Post</button>
   <app-nuevo-post *ngIf="nuevoPostComponent.visible"></app-nuevo-post>
 </div>
 
-<div class="container">
-  <ng-image-slider [images]="imageObject"></ng-image-slider>
+<section id="postContainer" class="col-12">
+    <div *ngIf="hayPosts" class="container">
+
+      <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
+        <div class="fechaCreacion col-4"><span>{{post.fechaCreacion}}</span></div>
+        <div class="info col-12">{{post.informacion}}</div>
+        <div *ngIf="hasVideo(post)" class="iconYT">
+          <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoYoutube)' frameborder="0" allowfullscreen> </iframe> 
+        </div>
+        <!--
+          <div *ngIf="hasImage(post)" class="iconImg">
+            <ng-image-slider [images]="imageObject"></ng-image-slider>
+          </div>
+        -->
+        <div class="fechaEdicion col-4" *ngIf="isEdited(post)"><span>Editado: {{post.fechaEdicion}}</span></div>
+        <button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button>
+        <button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button>
+      </div>
+
+    </div>
+</section>
+
     <!--
+<div class="container">
     
       <ngb-carousel *ngIf="event_list">
         <ng-template ngbSlide *ngFor="let event of event_list">
@@ -54,5 +37,5 @@
           </div>
         </ng-template>
       </ngb-carousel>
-  -->
 </div>
+  -->

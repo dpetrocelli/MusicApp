@@ -1,0 +1,13 @@
+#nuevoPostBoton{
+    margin: 1em 0em;
+}
+.post{
+    margin: 1em 0em;
+    background: #bdc6cf;
+    border-radius: 1em;
+    padding: 1em;
+}
+.iconYT{
+    content:'LOGO YT';
+    margin: 1em;
+}

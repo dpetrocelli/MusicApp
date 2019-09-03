@@ -76,10 +76,6 @@ public class Post {
         this.elementos = elementos;
     }
 
-    public void setElementos(ArrayList<Elemento> elementos) {
-        this.elementos = elementos;
-    }
-
     public void addElemento(Elemento elemento) {
         this.elementos.add(elemento);
     }

@@ -163,18 +163,15 @@ public class PostControlador {
     public ResponseEntity<?> obtenerElementos (@RequestBody Long idpost){
         try{
             log.info(("TOMAR DATOS ID POST PARA ELEMENTOS "));
-                Post post = this.postServicio.obtenerPostPorId(idpost);
-                List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
-                ArrayList<String> nombres = new ArrayList<String>();
-            for (Elemento elemento: elementos) {
+            Post post = this.postServicio.obtenerPostPorId(idpost);
+            ArrayList<Elemento> elementos = (ArrayList) this.elementoServicio.obtenerTodos(post);
+            log.info("Primer elemento: "+elementos.get(0).getRutaAcceso()+" // "+elementos.get(0).getTipoRecurso()+" ID: "+elementos.get(0).getId());
+            //ArrayList<String> nombres = new ArrayList<String>();
+            /*for (Elemento elemento: elementos) {
                 log.info( "EL: "+elemento.getRutaAcceso());
                 nombres.add(elemento.getRutaAcceso());
-
-            }
-
-                return new ResponseEntity<ArrayList<String>> (nombres, HttpStatus.OK);
-
-
+            }*/
+            return new ResponseEntity<ArrayList<Elemento>> (elementos, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }

@@ -4,5 +4,4 @@ export class Elemento {
   rutaAcceso: String;
   fechaCreacion: Date;
   fechaModificacion: Date;
-  
 }

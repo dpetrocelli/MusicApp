@@ -3,12 +3,15 @@ import { PerfilService } from 'src/app/servicios/perfil.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/modelos/post';
+import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
 import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+
 
 
 @Component({
@@ -54,9 +57,15 @@ export class PostComponent implements OnInit {
       console.log( err );
       //this.router.navigate(['/accesodenegado']);
     });
-    this.perfilService.obtenerposts (this.userLogged).subscribe(data => {
-      //this.biografia = data.mensaje;
-      this.posts = data;
+
+    this.obtenerPosts();
+
+  
+    
+  }
+
+  async obtenerPosts(){
+      this.posts = await this.perfilService.obtenerposts (this.userLogged).toPromise();
      
       console.log("Biografia: ",this.posts);
      
@@ -64,10 +73,9 @@ export class PostComponent implements OnInit {
       if (this.posts.length>0){
         this.hayPosts = true;
         this.posts.forEach(post => {
-          
-          this.perfilService.obtenerelementos(post.id).subscribe(data => {
-            
-          
+          post.elementos = this.obtenerElementos(post.id);
+        });
+          /*
             if ((data[0].includes('youtube'))){
               this.videoYoutube = data[0];
               console.log (" THISVIDEOYOUTUBE: "+this.videoYoutube);
@@ -80,34 +88,68 @@ export class PostComponent implements OnInit {
               this.listaDeElementos = data;
             }
 
-            
-            let campo : object;
-              this.listaDeElementos.forEach(element => {
-                
-                        
-                this.imageObject.push({image: element,thumbImage: element});
-              });
-            console.log (" SIZE IMG : ",this.imageObject.length );
-          },
-          (err: any) => {
-            console.log(err);
-            //this.router.navigate(['/accesodenegado']);
-          });
-      });
-      }
-      
+          let campo : object;
+            this.listaDeElementos.forEach(element => {
+              
+                      
+              this.imageObject.push({image: element,thumbImage: element});
+            });
+          console.log (" SIZE IMG : ",this.imageObject.length );
+      //});
+            */
+    }
+  }
+
+  obtenerElementos(id : number){
+    var e : Elemento[] ;
+    this.perfilService.obtenerelementos(id).subscribe(data => {
+      console.log(data);
+      e = data;
     },
     (err: any) => {
-      console.log(err);
-      
+      console.log("Sali obtenerElemento ",err );
     });
-
-  
-    
+    return e;
   }
 
   nuevoPost(){
    this.nuevoPostForm = !this.nuevoPostForm;
    this.nuevoPostComponent.visible = this.nuevoPostForm;
   }
+  
+  hasVideo(post : Post) : Boolean{
+    try{
+      var result : Boolean = false;
+      post.elementos.forEach(e => {
+        if (e.tipoRecurso == "youtube"){
+          result = true;
+        }
+      });
+      return result;
+    }catch{
+      console.log(post);
+      return false;
+    }
+  }
+  
+  hasImage(post : Post) : Boolean{
+    try{
+      var result : Boolean = false;
+      if (post.elementos.length > 0){
+        post.elementos.forEach(e => {
+          if (e.tipoRecurso == "imglocal"){
+            console.log("Hay imagenes")
+            result = true;
+          }
+        });
+      }
+      return result;
+    }catch{
+      return false;
+    }
+  }
+  isEdited(post: Post) : Boolean {
+    return post.fechaEdicion == null?false : true;
+  }
 }
+
