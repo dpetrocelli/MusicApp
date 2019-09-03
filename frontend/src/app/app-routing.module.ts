@@ -18,7 +18,6 @@ import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.compone
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
 import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
 import { EditarPostComponent } from './redsocial/post/editar-post.component';
-import { VerPostsComponent } from './redsocial/post/ver-posts.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './redsocial/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
@@ -35,7 +34,6 @@ const routes: Routes = [
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   {path: 'posts/detalle', component: VerPostsComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
  

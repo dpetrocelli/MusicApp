@@ -5,28 +5,36 @@
       <th scope="col">Información</th>
       <th scope="col">Fecha Pub</th>
       <th scope="col">Fecha Edi</th>
-      <th scope="col">Elementos (path)</th>
+      <th scope="col">Video </th>
+      <th scope="col">Img </th>
       <th scope="col">Editar</th>
       <th scope="col">Borrar</th>
     </tr>
   </thead>
-  <!--<div *ngIf="hayPosts"> -->
+  <div *ngIf="hayPosts">
     <tbody>
         <tr *ngFor="let post of posts">
         <td>{{post.id}}</td>
         <td>{{post.informacion}}</td>
         <td>{{post.fechaCreacion}}</td>
         <td>{{post.fechaEdicion}}</td>
-         <td> 
-           <div *ngFor="let elemento of listaDeElementos">
-              {{elemento}}
+         <td> <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoYoutube)' frameborder="0" allowfullscreen> </iframe> </td>
+         <!-- <td> <ng-image-slider []="imgs" #nav></ng-image-slider></td> -->
+
+           <!-- <div *ngFor="let elemento of listaDeElementos">
+              <div *ngIf="elemento.includes('youtube')">
+                <div> <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(elemento)' frameborder="0" allowfullscreen></iframe> </div>
+              </div> 
            </div>
-        </td>
+           -->
+           
+      
+        
         <td><button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button></td>
         <td><button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button></td>
       </tr>
     </tbody>
-  <!-- </div>-->
+  </div>
 </table>
 <div *ngIf="hayBiografia">
   <button class="btn btn-success btn-lg" (click)="nuevoPost()">Nuevo Post</button>

@@ -25,7 +25,6 @@ import { EditarpromocionComponent } from './promociones/editarpromocion.componen
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
-import { VerPostsComponent } from './redsocial/post/ver-posts.component';
 import { EditarPostComponent } from './redsocial/post/editar-post.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './redsocial/post/post.component';
@@ -55,7 +54,6 @@ import { ComprarPromocionesComponent } from './promociones/comprar-promociones.c
       DetallepromocionComponent,
       AccesodenegadoComponent,
       NuevoPostComponent,
-      VerPostsComponent,
       EditarPostComponent,
       PerfilComponent,
       PostComponent,

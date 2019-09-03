@@ -260,7 +260,11 @@ public class PostControlador {
                 // creo el elemento youtube
                 String urlYoutube = formulario.get("youtube").getAsString();
                 if (urlYoutube.length()>0){
-
+                    try{
+                        urlYoutube = urlYoutube.replace("watch?v=", "embed/");
+                    }catch (Exception e){
+                        log.info(" NO youtube URL CHANGEd");
+                    }
                     Elemento video = new Elemento();
                     video.setTipoRecurso("youtube");
                     video.setPost(post);
@@ -338,7 +342,7 @@ public class PostControlador {
             Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
 
             // guardo el binario
-            String pathFile = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+file.getOriginalFilename();
+            String pathFile = this.UPLOAD_FOLDER+usuario.getUsername()+"/"+file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);

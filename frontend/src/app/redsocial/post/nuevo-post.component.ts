@@ -70,21 +70,24 @@ export class NuevoPostComponent implements OnInit {
     let data = await this.postService.crearpost (this.loginDatos, this.post).toPromise();
     console.log ("ejecute crear post", data.mensaje);
     this.idPost = data.mensaje;
-
-    Array.from (this.files).forEach(file => {
-      this.postService.enviarimagen(file, this.idPost, this.loginDatos).subscribe(data => {
-        console.log (" Pude guardar imagen", file.name);
-        this.creado = true;
-        this.falloCreacion = false;
-        this.msjOK = data.mensaje;
-      },
-      (err: any) => {
-        console.log (err);
-        this.msjFallo = err.error.mensaje;
-        this.creado = false;
-        this.falloCreacion = true;
+    if (this.files != null){
+      
+      Array.from (this.files).forEach(file => {
+        this.postService.enviarimagen(file, this.idPost, this.loginDatos).subscribe(data => {
+          console.log (" Pude guardar imagen", file.name);
+          this.creado = true;
+          this.falloCreacion = false;
+          this.msjOK = data.mensaje;
+        },
+        (err: any) => {
+          console.log (err);
+          this.msjFallo = err.error.mensaje;
+          this.creado = false;
+          this.falloCreacion = true;
+        });
       });
-    });
+    }
+    
     setTimeout(() => {
       this.msjOK = "Posteado correctamente";
     }, 1500);
