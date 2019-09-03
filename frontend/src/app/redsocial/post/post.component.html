@@ -40,3 +40,19 @@
   <button class="btn btn-success btn-lg" (click)="nuevoPost()">Nuevo Post</button>
   <app-nuevo-post *ngIf="nuevoPostComponent.visible"></app-nuevo-post>
 </div>
+
+<div class="container">
+  <ng-image-slider [images]="imageObject"></ng-image-slider>
+    <!--
+    
+      <ngb-carousel *ngIf="event_list">
+        <ng-template ngbSlide *ngFor="let event of event_list">
+          <img [src]="event.img" alt="Random slide">
+          <div class="carousel-caption">
+            <h3>{{ event.eventLocation }}</h3>
+            <p [innerText]="event.eventDescription"></p>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+  -->
+</div>

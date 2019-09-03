@@ -7,19 +7,9 @@ import { LoginDatos } from 'src/app/modelos/logindatos';
 import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { BrowserModule } from '@angular/platform-browser';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-
-@NgModule({
-  declarations: [
-      PostComponent
-  ],
-  imports: [
-      NgImageSliderModule
-      
-  ],
-  providers: [],
-  bootstrap: [PostComponent]
-})
 
 @Component({
   selector: 'app-post',
@@ -47,7 +37,8 @@ export class PostComponent implements OnInit {
   nuevoPostComponent : NuevoPostComponent;
   hayPosts : boolean = false;
   hayBiografia : boolean = false;
-  imgs : Array<object>;
+  event_list : Array<object>;
+  imageObject: Array<object> = [];
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
     
@@ -89,23 +80,14 @@ export class PostComponent implements OnInit {
               this.listaDeElementos = data;
             }
 
-            console.log ("Post: "+JSON.stringify(post) +" / Recursos: ",this.listaDeElementos);
-            this.imgs = [{
-                    image: 'https://upload.wikimedia.org/wikipedia/commons/6/67/USS_Bowfin_img.JPG',
-                    thumbImage: 'https://upload.wikimedia.org/wikipedia/commons/6/67/USS_Bowfin_img.JPG',
-                    alt: 'alt of image',
-                    title: 'title of image'
-                }, {
-                    image: 'https://cdn.fileinfo.com/img/ss/lg/jpg_44.jpg', // Support base64 image
-                    thumbImage: 'https://cdn.fileinfo.com/img/ss/lg/jpg_44.jpg', // Support base64 image
-                    title: 'Image title', //Optional: You can use this key if want to show image with title
-                    alt: 'Image alt' //Optional: You can use this key if want to show image with alt
-                }
-            ];
             
-            
-
-           
+            let campo : object;
+              this.listaDeElementos.forEach(element => {
+                
+                        
+                this.imageObject.push({image: element,thumbImage: element});
+              });
+            console.log (" SIZE IMG : ",this.imageObject.length );
           },
           (err: any) => {
             console.log(err);
@@ -119,6 +101,9 @@ export class PostComponent implements OnInit {
       console.log(err);
       
     });
+
+  
+    
   }
 
   nuevoPost(){

@@ -32,6 +32,8 @@ import { ImagenPerfilComponent } from './redsocial/imagen-perfil/imagen-perfil.c
 import { InfoPerfilComponent } from './redsocial/info-perfil/info-perfil.component';
 import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
    declarations: [
@@ -66,7 +68,9 @@ import { ComprarPromocionesComponent } from './promociones/comprar-promociones.c
       BrowserModule,
       HttpClientModule,
       FormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      NgbModule,
+      NgImageSliderModule
    ],
    providers: [],
    bootstrap: [

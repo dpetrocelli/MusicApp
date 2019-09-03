@@ -44,7 +44,7 @@ export class ImagenPerfilComponent implements OnInit {
       this.img = "http://localhost:8081/api/archivo/descargar?path=";
       this.img+= data.mensaje;
 
-      console.log ("Img Backend loaded: ",this.img);
+      //console.log ("Img Backend loaded: ",this.img);
     },
     (err: any) => {
       console.log(" TENEMOS UN ERROR ", err);
