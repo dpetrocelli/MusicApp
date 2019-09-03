@@ -18,41 +18,60 @@ export class PostComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private router: Router,
-              private postService : PerfilService,
+              private perfilService : PerfilService,
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   posts : Post[] = [];
-  elemString : String[];
+  listaDeElementos : String[];
   userLogged : LoginDatos;
   biografia : String;
   form: any = {};
   nuevoPostForm : boolean;
   nuevoPostComponent : NuevoPostComponent;
+  hayPosts : boolean = false;
+  hayBiografia : boolean = false;
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
-    this.nuevoPostComponent = new NuevoPostComponent(this.postService, this.usuarioService, this.router);
+    
+    this.nuevoPostComponent = new NuevoPostComponent(this.perfilService, this.usuarioService, this.router);
     this.nuevoPostForm = false;
     // luego voy a buscar los posts
-    this.postService.obtenerposts (this.userLogged).subscribe(data => {
+    this.perfilService.existebiografia (this.userLogged).subscribe(data => {
+      
+      console.log (data);
+      this.hayBiografia = true;
+    },
+    (err: any) => {
+      console.log( err );
+      //this.router.navigate(['/accesodenegado']);
+    });
+    this.perfilService.obtenerposts (this.userLogged).subscribe(data => {
       //this.biografia = data.mensaje;
       this.posts = data;
+     
       console.log("Biografia: ",this.posts);
+     
       // ahora voy a buscar todos los recursos
-      this.posts.forEach(post => {
-          this.postService.obtenerelementos(post.id).subscribe(data => {
-            this.elemString = data;
-            console.log ("Recursos: ",this.elemString);
+      if (this.posts.length>0){
+        this.hayPosts = true;
+        this.posts.forEach(post => {
+          
+          this.perfilService.obtenerelementos(post.id).subscribe(data => {
+            this.listaDeElementos = data;
+            console.log ("Post: "+JSON.stringify(post) +" / Recursos: ",this.listaDeElementos);
           },
           (err: any) => {
             console.log(err);
             //this.router.navigate(['/accesodenegado']);
           });
       });
+      }
+      
     },
     (err: any) => {
       console.log(err);
-      //this.router.navigate(['/accesodenegado']);
+      
     });
   }
 

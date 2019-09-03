@@ -36,6 +36,9 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
   }
   
+  public existebiografia (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'existeBiografia',login, cabecera);
+  }
 
   public obtenerposts (login : LoginDatos): Observable<any> {
     console.log ("VAMOS A BUSCAR LOS POSTS", login);

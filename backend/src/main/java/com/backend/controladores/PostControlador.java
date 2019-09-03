@@ -20,7 +20,12 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,20 +42,46 @@ public class PostControlador {
     @Autowired PostServicio postServicio;
     @Autowired ElementoServicio elementoServicio;
 
+    /*
+        En post controlador voy a tener varias cosas que van a estar disponibles para el usuario
+        - Obtener biografía
+        - Obtener imagen de perfil
+        - Obtener posts
+        - Obtener elementos
+        (4 cosas que están diferenciadas en el frontend
+     */
+
+    @PostMapping("existeBiografia")
+    public ResponseEntity<?> existeBiografia (@RequestBody LoginDatos ld){
+        try{
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+                if (b.getBiografiaBasica()!= null){
+                    return new ResponseEntity (new Mensaje("existe biografia"), HttpStatus.OK);
+                }else{
+                    return new ResponseEntity(new Mensaje("No existe biografia"), HttpStatus.BAD_REQUEST);
+                }
+
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No existe biografia"), HttpStatus.BAD_REQUEST);
+        }
+    }
     @PostMapping("obtenerBiografia")
     public ResponseEntity<?> obtener (@RequestBody LoginDatos ld){
         try{
 
             if (promocionServicio.validarTokenUsuario(ld)){
                 Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
-
                 Artista artista = this.artistaServicio.obtenerPorUsuario(u);
-
                 Biografia b =  this.biografiaServicio.obtener(artista);
                 return new ResponseEntity (new Mensaje(b.getBiografiaBasica()), HttpStatus.OK);
-
-
-
             }else{
                 return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
             }
@@ -135,8 +166,7 @@ public class PostControlador {
                 Post post = this.postServicio.obtenerPostPorId(idpost);
                 List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
                 ArrayList<String> nombres = new ArrayList<String>();
-            for (Elemento elemento: elementos
-                 ) {
+            for (Elemento elemento: elementos) {
                 log.info( "EL: "+elemento.getRutaAcceso());
                 nombres.add(elemento.getRutaAcceso());
 
@@ -219,9 +249,12 @@ public class PostControlador {
                 Post post = new Post();
                 post.setBiografia(bio);
                 post.setInformacion(formulario.get("informacion").getAsString());
+                Date actual = Calendar.getInstance().getTime();
+                post.setFechaCreacion(actual);
 
                 //bio.addPost(post);
                 this.biografiaServicio.guardar(bio);
+
                 this.postServicio.guardar(post);
 
                 // creo el elemento youtube
@@ -250,8 +283,8 @@ public class PostControlador {
     @PostMapping("subirImagenPerfil")
     public ResponseEntity<?> subirImagenPerfil (@RequestParam("file") MultipartFile file, @RequestParam("login") String login){
         try{
-            // Obtengo en post
-            log.info ("arrancamos vamos a buscar");
+            // [STEP 0] - Obtener las estructuras
+
             LoginDatos eled = new Gson().fromJson(login, LoginDatos.class);
 
 
@@ -259,21 +292,28 @@ public class PostControlador {
             Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
             Biografia bio = this.biografiaServicio.obtener(artista);
 
-            // guardo el binario
+            // [STEP 1] Preparo para guardar el binario en el folder del usuario
             String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername();
             File directory = new File(folder);
             if (!(directory).exists()) {
                 if (directory.mkdirs()) {
                     System.out.println("Directorio creado"+directory.getAbsolutePath());
-
-
-
-                } else {
-                    System.out.println("Error al crear directorio");
+                }
+            }else{
+                String[] files = directory.list();
+                for (String f: files) {
+                    File remove = new File(directory.getAbsolutePath() + "/" + f);
+                    remove.delete();
+                    remove.deleteOnExit();
                 }
             }
 
-            String pathFile = folder + file.getOriginalFilename();
+
+            System.out.println("Eliminé imágenes actuales (para dejar 1 sola");
+
+            // [STEP 3] - subir img de perfil
+
+            String pathFile = folder +"/"+ file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);
@@ -298,7 +338,7 @@ public class PostControlador {
             Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
 
             // guardo el binario
-            String pathFile = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/"+ file.getOriginalFilename();
+            String pathFile = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);

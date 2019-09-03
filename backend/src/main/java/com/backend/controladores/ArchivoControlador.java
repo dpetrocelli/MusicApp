@@ -17,32 +17,49 @@ import java.net.URL;
 @CrossOrigin(origins = "*")
 public class ArchivoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    // se define el path básico del sistema de archivos.
+    // Carpeta SRC del proyecto bajo el path images
+    // luego to do se hará en base al usuario en cuestión
+
     private static String BASE_PATH = "src/images/";
 
     @GetMapping("descargar")
     public ResponseEntity<byte[]> getFoos(@RequestParam(required = true) String path) {
         try {
-        	log.info("/api/archivo/descargar -> path:"+path);
+        	/*
+        	Validar si es nulo -> esto significa que lo que me está diciendo es que no tiene cargada
+        	imagen de perfil aún.
+        	 */
         	if(path.equals("null")) {
         	    // Si nulo es porque no tiene imagen
+                // entonces la carpeta base es "default"
                 File defImage = new File(BASE_PATH+"default/");
 
-                // si es primera vez y no tengo la imagen por defecto la descargo y creo el directorio
+                /*
+                    si es la primera vez que levanta el sistema
+                    no tengo la imagen por defecto.  Por eso la descargo de internet
+                     y creo el directorio
+                 */
                 if (!defImage.exists()) {
                     if (defImage.mkdirs()) {
                         System.out.println("Directorio creado"+defImage.getAbsolutePath());
-
                         this.descargarImagenDefecto(defImage);
-                        log.info(" Descargue img");
+                        log.info(" Descargue img basica");
                     } else {
                         System.out.println("Error al crear directorio");
                     }
                 }
 
-
+                // por lo tanto el path para obtener la imagen quedo /src/images/default/default.jpg
                 path = defImage.getAbsolutePath()+"/default.jpg";
 
         	}
+        	/*
+        	 Ya sea path real (que viene por parámetro)
+        	 o path que yo construí, leo la imagen y envio
+        	 */
+
 
             InputStream is = new FileInputStream(path);
             BufferedImage img = ImageIO.read(is);
@@ -57,6 +74,7 @@ public class ArchivoControlador {
 
     }
 
+    // método para descargar la imagen de internet y poner en default
     private void descargarImagenDefecto(File file) {
         try{
             URL url = new URL("https://icon-library.net/images/default-user-icon/default-user-icon-4.jpg");

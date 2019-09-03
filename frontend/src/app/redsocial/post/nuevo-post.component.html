@@ -1,5 +1,5 @@
 <div class="container" *ngIf="visible">
-    <h5>Nuevo Post</h5>
+    <p></p>
     <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="informacion"> Data Post : </label>
@@ -11,26 +11,7 @@
                required
                autocomplete="off">
       </div>
-      <div class="form-group">
-        <label for="fechacreacion">Fecha Creacion: </label>
-        <input type="text"
-               class="form-control"
-               name="fechacreacion"
-               id="fechacreacion"
-               [(ngModel)]="form.fechacreacion"
-               required
-               autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label for="fechaedicion">Fecha Edicion: </label>
-        <input type="text"
-               class="form-control"
-               name="fechaedicion"
-               id="fechaedicion"
-               [(ngModel)]="form.fechaedicion"
-               required
-               autocomplete="off">
-      </div>
+     
       <div class="form-group">
         <label for="youtube">Link Video Youtube: </label>
         <input type="text"

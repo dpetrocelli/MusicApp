@@ -96,6 +96,7 @@ public class UsuarioServicio {
 
             artista.setInstrumento(setInstrumento);
             artista.setUsuario(usuarioFrontEnd);
+
             this.usuarioRepositorio.save(usuarioFrontEnd);
             this.artistaRepositorio.save(artista);
 
