@@ -40,7 +40,7 @@ export class InfoPerfilComponent implements OnInit {
 
   actualizar(){
     this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia).subscribe(data => {
-      console.log (data);         
+      //console.log (data);         
     },
     (err: any) => {
       console.log(err);

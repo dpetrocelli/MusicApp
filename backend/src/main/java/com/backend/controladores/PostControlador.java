@@ -142,9 +142,21 @@ public class PostControlador {
                     Post p = new Post();
                     p.setInformacion(post.getInformacion());
                     p.setId(post.getId());
+                    p.setFechaCreacion(post.getFechaCreacion());
+                    p.setFechaEdicion(post.getFechaEdicion());
+                    List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
+                    //log.info("Primer elemento: "+elementos.get(0).getRutaAcceso()+" // "+elementos.get(0).getTipoRecurso()+" ID: "+elementos.get(0).getId());
+                    ArrayList<Elemento> response = new ArrayList<Elemento>();
+                    for (Elemento elemento: elementos) {
+                        Elemento e = new Elemento();
+                        e.setRutaAcceso(elemento.getRutaAcceso());
+                        e.setTipoRecurso(elemento.getTipoRecurso());
+                        response.add(e);
+                    }
+                    p.setElementos(response);
                     alist.add(p);
                 }
-                log.info (String.valueOf(arrayPost.size()));
+                log.info(" Llegamos ");
 
                 return new ResponseEntity<ArrayList<Post>> (alist, HttpStatus.OK);
             }
@@ -164,14 +176,16 @@ public class PostControlador {
         try{
             log.info(("TOMAR DATOS ID POST PARA ELEMENTOS "));
             Post post = this.postServicio.obtenerPostPorId(idpost);
-            ArrayList<Elemento> elementos = (ArrayList) this.elementoServicio.obtenerTodos(post);
-            log.info("Primer elemento: "+elementos.get(0).getRutaAcceso()+" // "+elementos.get(0).getTipoRecurso()+" ID: "+elementos.get(0).getId());
-            //ArrayList<String> nombres = new ArrayList<String>();
-            /*for (Elemento elemento: elementos) {
-                log.info( "EL: "+elemento.getRutaAcceso());
-                nombres.add(elemento.getRutaAcceso());
-            }*/
-            return new ResponseEntity<ArrayList<Elemento>> (elementos, HttpStatus.OK);
+            List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
+            //log.info("Primer elemento: "+elementos.get(0).getRutaAcceso()+" // "+elementos.get(0).getTipoRecurso()+" ID: "+elementos.get(0).getId());
+            ArrayList<Elemento> response = new ArrayList<Elemento>();
+            for (Elemento elemento: elementos) {
+                Elemento e = new Elemento();
+                e.setRutaAcceso(elemento.getRutaAcceso());
+                e.setTipoRecurso(elemento.getTipoRecurso());
+                response.add(e);
+            }
+            return new ResponseEntity<ArrayList<Elemento>> (response, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }

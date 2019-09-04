@@ -4,38 +4,28 @@
 </div>
 
 <section id="postContainer" class="col-12">
-    <div *ngIf="hayPosts" class="container">
+  
+  <div *ngIf="hayPosts" class="container">
 
       <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
         <div class="fechaCreacion col-4"><span>{{post.fechaCreacion}}</span></div>
         <div class="info col-12">{{post.informacion}}</div>
-        <div *ngIf="hasVideo(post)" class="iconYT">
-          <iframe width="200" height="100" [src]='sanitizer.bypassSecurityTrustResourceUrl(videoYoutube)' frameborder="0" allowfullscreen> </iframe> 
-        </div>
-        <!--
-          <div *ngIf="hasImage(post)" class="iconImg">
+        <div *ngIf="hasResource(post)" class="iconYT">
+            <iframe [class.thumbnail]="thumbnail" [src]="safeSrc" width="200" height="100" frameborder="0" webkitallowfullscreen mozallowfullscreen
+            allowfullscreen></iframe>
             <ng-image-slider [images]="imageObject"></ng-image-slider>
-          </div>
-        -->
+        </div>
+        
+          <!--<div *ngIf="hasResource(post)" class="iconImg">
+            
+          </div> -->
+       
         <div class="fechaEdicion col-4" *ngIf="isEdited(post)"><span>Editado: {{post.fechaEdicion}}</span></div>
         <button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button>
         <button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button>
       </div>
 
     </div>
+     
 </section>
 
-    <!--
-<div class="container">
-    
-      <ngb-carousel *ngIf="event_list">
-        <ng-template ngbSlide *ngFor="let event of event_list">
-          <img [src]="event.img" alt="Random slide">
-          <div class="carousel-caption">
-            <h3>{{ event.eventLocation }}</h3>
-            <p [innerText]="event.eventDescription"></p>
-          </div>
-        </ng-template>
-      </ngb-carousel>
-</div>
-  -->

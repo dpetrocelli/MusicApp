@@ -72,6 +72,7 @@ public class Post {
         return elementos;
     }
 
+
     public void setElementos(List<Elemento> elementos) {
         this.elementos = elementos;
     }

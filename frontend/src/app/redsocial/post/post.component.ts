@@ -6,11 +6,12 @@ import { Post } from 'src/app/modelos/post';
 import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
 import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { promise } from 'selenium-webdriver';
 
 
 
@@ -31,6 +32,7 @@ export class PostComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   posts : Post[] = [];
+  imageObject: Array<object> =[];
   videoYoutube : String;
   listaDeElementos : String[];
   userLogged : LoginDatos;
@@ -41,7 +43,9 @@ export class PostComponent implements OnInit {
   hayPosts : boolean = false;
   hayBiografia : boolean = false;
   event_list : Array<object>;
-  imageObject: Array<object> = [];
+  
+  temporalElementos: Elemento[];
+  safeSrc: SafeResourceUrl;
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
     
@@ -50,7 +54,7 @@ export class PostComponent implements OnInit {
     // luego voy a buscar los posts
     this.perfilService.existebiografia (this.userLogged).subscribe(data => {
       
-      console.log (data);
+      console.log ("[APP-POST] -> Biografía obtenida");
       this.hayBiografia = true;
     },
     (err: any) => {
@@ -66,88 +70,66 @@ export class PostComponent implements OnInit {
 
   async obtenerPosts(){
       this.posts = await this.perfilService.obtenerposts (this.userLogged).toPromise();
-     
-      console.log("Biografia: ",this.posts);
-     
-      // ahora voy a buscar todos los recursos
-      if (this.posts.length>0){
-        this.hayPosts = true;
-        this.posts.forEach(post => {
-          post.elementos = this.obtenerElementos(post.id);
-        });
-          /*
-            if ((data[0].includes('youtube'))){
-              this.videoYoutube = data[0];
-              console.log (" THISVIDEOYOUTUBE: "+this.videoYoutube);
-              try{
-                this.listaDeElementos = data.slice (1, data.length);
-              }catch{
-                console.log (" NO HAY ELEMENTOS");
-              }
-            }else{
-              this.listaDeElementos = data;
-            }
+      console.log("[APP-POST] -> Posts y elementos Obtenidos:",this.posts);
+      
+      try{
+          if (this.posts.length>0){
+          this.hayPosts = true;
+          }
+      }catch{
 
-          let campo : object;
-            this.listaDeElementos.forEach(element => {
-              
-                      
-              this.imageObject.push({image: element,thumbImage: element});
-            });
-          console.log (" SIZE IMG : ",this.imageObject.length );
-      //});
-            */
-    }
+      }
+             
   }
-
-  obtenerElementos(id : number){
+/*
+  obtenerElementos(id : number)  {
     var e : Elemento[] ;
     this.perfilService.obtenerelementos(id).subscribe(data => {
-      console.log(data);
-      e = data;
+      console.log("[APP-POST] -> Elementos Obtenidos:", data);
+      this.temporalElementos = data;
+      
     },
     (err: any) => {
       console.log("Sali obtenerElemento ",err );
+      
     });
     return e;
   }
-
+*/
   nuevoPost(){
    this.nuevoPostForm = !this.nuevoPostForm;
    this.nuevoPostComponent.visible = this.nuevoPostForm;
   }
   
-  hasVideo(post : Post) : Boolean{
+  hasResource(post : Post) : Boolean{
     try{
       var result : Boolean = false;
+      if (post.elementos.length>0){
+        result = true;
+      }
+      this.imageObject = [];
       post.elementos.forEach(e => {
         if (e.tipoRecurso == "youtube"){
-          result = true;
+          this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(e.rutaAcceso);
+        }else{
+          // URL REF
+          
+          var obj: object = {image: "http://localhost:8081/api/archivo/descargar?path="+e.rutaAcceso, thumbImage:"http://localhost:8081/api/archivo/descargar?path="+e.rutaAcceso};
+          this.imageObject.push(obj);
+          
         }
+        
+        
       });
+      //console.log (JSON.stringify(this.imageObject));
       return result;
     }catch{
-      console.log(post);
+      console.log(" ERROR POST " + post);
       return false;
     }
   }
   
-  hasImage(post : Post) : Boolean{
-    try{
-      var result : Boolean = false;
-      if (post.elementos.length > 0){
-        post.elementos.forEach(e => {
-          if (e.tipoRecurso == "imglocal"){
-            console.log("Hay imagenes")
-            result = true;
-          }
-        });
-      }
-      return result;
-    }catch{
-      return false;
-    }
-  }
+
   isEdited(post: Post) : Boolean {
     return post.fechaEdicion == null?false : true;
   }

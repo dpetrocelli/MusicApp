@@ -41,7 +41,6 @@ export class PerfilService {
   }
 
   public obtenerposts (login : LoginDatos): Observable<any> {
-    console.log ("VAMOS A BUSCAR LOS POSTS", login);
     return this.httpClient.post<any>(this.baseURL + 'obtenerpostsporusuario',login, cabecera);
   }
 
