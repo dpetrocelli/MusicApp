@@ -2,10 +2,7 @@ package com.backend.singleton;
 
 import com.backend.entidades.*;
 import com.backend.repositorios.*;
-import com.backend.servicios.ArtistaServicio;
-import com.backend.servicios.InstrumentoServicio;
-import com.backend.servicios.PostServicio;
-import com.backend.servicios.RolServicio;
+import com.backend.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +43,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     PostRepositorio postRepositorio;
     @Autowired
     InstrumentoServicio instrumentoServicio;
+    @Autowired BiografiaServicio biografiaServicio;
 
     public ArrayList<String> permisosDelComercio;
     public ArrayList<String> permisosDelArtista;
@@ -106,8 +104,13 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             Set<Banda> setBanda = new HashSet<>();
             artista.setInstrumento(setInstrumento);
             artista.setBanda(setBanda);
+            Biografia biografia = new Biografia();
+            biografia.setArtista(artista);
+            this.biografiaServicio.guardar(biografia);
             artistaRepositorio.save(artista);
             usuarioRepositorio.save(usuarioArtista);
+
+
 
             log.info("Usuario artista almacenado con exito");
 

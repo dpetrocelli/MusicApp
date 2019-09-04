@@ -21,6 +21,7 @@ import { EditarPostComponent } from './redsocial/post/editar-post.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './redsocial/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
+import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 const routes: Routes = [
   
   // Lista de acceso base para todos 
@@ -35,6 +36,7 @@ const routes: Routes = [
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'puntuacion/nuevo', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
  
     // Opciones de Comercio

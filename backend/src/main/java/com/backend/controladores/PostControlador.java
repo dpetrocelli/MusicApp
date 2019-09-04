@@ -308,7 +308,7 @@ public class PostControlador {
             Biografia bio = this.biografiaServicio.obtener(artista);
 
             // [STEP 1] Preparo para guardar el binario en el folder del usuario
-            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername();
+            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/perfil/";
             File directory = new File(folder);
             if (!(directory).exists()) {
                 if (directory.mkdirs()) {
@@ -352,8 +352,16 @@ public class PostControlador {
 
             Post post = this.postServicio.obtenerPostPorId(Long.parseLong(id));
 
-            // guardo el binario
-            String pathFile = this.UPLOAD_FOLDER+usuario.getUsername()+"/"+file.getOriginalFilename();
+            // verifico si existe el path
+            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/recursosUsuario/";
+            File directory = new File(folder);
+            if (!(directory).exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directorio creado"+directory.getAbsolutePath());
+                }
+            }
+
+            String pathFile = this.UPLOAD_FOLDER+usuario.getUsername()+"/recursosUsuario/"+file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);

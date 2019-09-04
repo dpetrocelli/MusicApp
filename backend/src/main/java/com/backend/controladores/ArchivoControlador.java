@@ -1,6 +1,7 @@
 package com.backend.controladores;
 import com.backend.dto.Mensaje;
 import com.backend.entidades.Instrumento;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -59,12 +60,12 @@ public class ArchivoControlador {
         	 Ya sea path real (que viene por parámetro)
         	 o path que yo construí, leo la imagen y envio
         	 */
-
+            String extension = FilenameUtils.getExtension(path);
 
             InputStream is = new FileInputStream(path);
             BufferedImage img = ImageIO.read(is);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(img, "jpg", bos);
+            ImageIO.write(img, extension, bos);
             return new ResponseEntity(bos.toByteArray(), HttpStatus.OK);
         } catch (IOException e) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -21,9 +21,15 @@
       </div>
       <div *ngIf="isArtista">
         <li class="nav-item">
+          <a class="nav-link" routerLink="puntuacion/nuevo">Puntuar </a>
+        </li>
+      </div>
+      <div *ngIf="isArtista">
+        <li class="nav-item">
           <a class="nav-link" routerLink="promociones/comprar">Promociones</a>
         </li>
       </div>
+      
       <div *ngIf="isAdmin">
         <li class="nav-item">
           <a class="nav-link" routerLink="marketplace">MarketPlace</a>

@@ -34,6 +34,7 @@ import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 
 @NgModule({
    declarations: [
@@ -62,7 +63,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
       ImagenPerfilComponent,
       InfoPerfilComponent,
       PuntuacionComponent,
-      ComprarPromocionesComponent
+      ComprarPromocionesComponent,
+      CrearPuntuacionComponent
    ],
    imports: [
       BrowserModule,

@@ -34,6 +34,7 @@ public class UsuarioServicio {
     @Autowired ComercioServicio artistaServicio;
     @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired ConfiguradorSingleton configuradorSingleton;
+    @Autowired BiografiaServicio biografiaServicio;
     public boolean validarCredenciales(Usuario usuarioFrontend){
         try{
             Usuario usuarioBackend = usuarioRepositorio.findByUsername(usuarioFrontend.getUsername());
@@ -96,9 +97,12 @@ public class UsuarioServicio {
 
             artista.setInstrumento(setInstrumento);
             artista.setUsuario(usuarioFrontEnd);
-
+            Biografia biografia = new Biografia();
+            biografia.setArtista(artista);
+            this.biografiaServicio.guardar(biografia);
             this.usuarioRepositorio.save(usuarioFrontEnd);
             this.artistaRepositorio.save(artista);
+
 
 
 

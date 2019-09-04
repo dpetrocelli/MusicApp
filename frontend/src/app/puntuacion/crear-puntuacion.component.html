@@ -1,0 +1,50 @@
+<div class="container">
+    <h5> Puntuación Artista / Banda </h5>
+    <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="nombre"> Nombre Artista/Banda: </label>
+        <input type="text"
+               class="form-control"
+               name="nombre"
+               id="nombre"
+               [(ngModel)]="form.nombre"
+               required
+               autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="comentario">Comentario: </label>
+        <input type="text"
+               class="form-control"
+               name="comentario"
+               id="comentario"
+               [(ngModel)]="form.comentario"
+               required
+               autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="puntuacion">Puntuación (1 a 5): </label>
+        <input type="text"
+               class="form-control"
+               name="puntuacion"
+               id="puntuacion"
+               [(ngModel)]="form.puntuacion"
+               required
+               autocomplete="off">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
+      </div>
+    </form>
+    <div>
+      <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>
+    </div>
+    <br>
+    <br>
+    <div *ngIf="falloCreacion" class="float-left">
+      <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+    </div>
+    <div *ngIf="creado" class="float-left">
+      <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+    </div>
+  </div>
+  

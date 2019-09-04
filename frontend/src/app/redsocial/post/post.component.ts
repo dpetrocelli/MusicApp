@@ -110,7 +110,7 @@ export class PostComponent implements OnInit {
       this.imageObject = [];
       post.elementos.forEach(e => {
         if (e.tipoRecurso == "youtube"){
-          this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(e.rutaAcceso);
+          this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(String (e.rutaAcceso));
         }else{
           // URL REF
           
