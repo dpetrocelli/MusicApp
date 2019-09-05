@@ -23,15 +23,15 @@ export class PuntuacionService {
   public crear(ld : LoginDatos, puntuacion: Puntuacion): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(ld));
-    formdata.append('id', id);
-    return this.httpClient.post<any>(this.baseURL + 'nuevo', instrumento, cabecera);
+    formdata.append('puntuacion', JSON.stringify(puntuacion));
+    return this.httpClient.post<any>(this.baseURL + 'nuevo', formdata, cabecera);
   }
-
+/*
   public editar(instrumento: Instrumento, id: number): Observable<any> {
     return this.httpClient.put<any>(this.baseURL + `actualizar/${id}`, instrumento, cabecera);
   }
 
   public borrar(id: number): Observable<any> {
     return this.httpClient.delete<any>(this.baseURL + `borrar/${id}`, cabecera);
-  }
+  }*/
 }

@@ -2,6 +2,7 @@ package com.backend.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "banda")
@@ -21,6 +22,9 @@ public class Banda {
 
     @NotBlank
     private String generoMusical;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
+    private List<Puntuacion> puntuacionesRecibidas;
 
    public Banda(){
 

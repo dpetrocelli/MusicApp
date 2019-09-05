@@ -1,8 +1,15 @@
+import { Banda } from './banda';
+import { Artista } from './artista';
+
 export class Puntuacion {
   id?: number;
-  artista: Artista;
-  banda: Banda;
   comentario: String;
   puntuacion: number;
+  artistaPuntuador: Artista;
+  artistaPuntuado: Artista;
+  bandaPuntuada: Banda;
+  
+  
+   
   
 }

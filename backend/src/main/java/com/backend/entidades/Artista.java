@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,23 +38,29 @@ public class Artista {
     @JoinTable(name = "instrumento_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "instrumento_id"))
     private Set<Instrumento> instrumento = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
+    private List<Puntuacion> puntuacionesRealizadas;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
+    private List<Puntuacion> puntuacionesRecibidas;
 
 
     public Artista() {
     }
 
-    public Artista(Usuario usuario, String nombre, String apellido, String nickname, int documentoIdentidad, Date fechaNacimiento, String sexo, Set<Banda> banda, String generoMusical, Set<Instrumento> instrumento) {
+    public Artista(Usuario usuario, String nombre, String apellido, String nickname, int documentoIdentidad, Date fechaNacimiento, String genero, Set<Banda> banda, String generoMusical, Set<Instrumento> instrumento, List<Puntuacion> puntuacionesRealizadas, List<Puntuacion> puntuacionesRecibidas) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.nickname = nickname;
         this.documentoIdentidad = documentoIdentidad;
         this.fechaNacimiento = fechaNacimiento;
-        this.genero = sexo;
+        this.genero = genero;
         this.banda = banda;
         this.generoMusical = generoMusical;
         this.instrumento = instrumento;
+        this.puntuacionesRealizadas = puntuacionesRealizadas;
+        this.puntuacionesRecibidas = puntuacionesRecibidas;
     }
 
     public Long getId() {
@@ -112,7 +119,6 @@ public class Artista {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-
     public String getGenero() {
         return genero;
     }
@@ -145,5 +151,19 @@ public class Artista {
         this.instrumento = instrumento;
     }
 
+    public List<Puntuacion> getPuntuacionesRealizadas() {
+        return puntuacionesRealizadas;
+    }
 
+    public void setPuntuacionesRealizadas(List<Puntuacion> puntuacionesRealizadas) {
+        this.puntuacionesRealizadas = puntuacionesRealizadas;
+    }
+
+    public List<Puntuacion> getPuntuacionesRecibidas() {
+        return puntuacionesRecibidas;
+    }
+
+    public void setPuntuacionesRecibidas(List<Puntuacion> puntuacionesRecibidas) {
+        this.puntuacionesRecibidas = puntuacionesRecibidas;
+    }
 }

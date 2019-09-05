@@ -5,6 +5,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
+import { Puntuacion } from '../modelos/puntuacion';
 
 @Component({
   selector: 'app-crear-puntuacion',
@@ -23,7 +24,7 @@ export class CrearPuntuacionComponent implements OnInit {
     this.userLogged = this.usuarioService.getUserLoggedIn();
    
     this.puntuacion = this.form;
-    this.puntuacionService.crear(this.userLogged, this.form).subscribe(data => {
+    this.puntuacionService.crear(this.userLogged, this.puntuacion).subscribe(data => {
       
       console.log ("[APP-PUNT] -> puntuacion publicada");
       
