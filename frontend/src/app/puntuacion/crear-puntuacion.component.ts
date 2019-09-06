@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
 import { Puntuacion } from '../modelos/puntuacion';
+import { Artista } from '../modelos/artista';
 
 @Component({
   selector: 'app-crear-puntuacion',
@@ -15,6 +16,9 @@ import { Puntuacion } from '../modelos/puntuacion';
 export class CrearPuntuacionComponent implements OnInit {
   userLogged : LoginDatos;
   puntuacion : Puntuacion;
+  listaDeArtistas : Artista[];
+  listaDeNombres : string[];
+
   form: any = {};
   constructor(private usuarioService: UsuarioService,
               private router: Router,
@@ -22,7 +26,43 @@ export class CrearPuntuacionComponent implements OnInit {
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
-   
+
+    this.loadUsers();
+    
+  };
+
+  loadUsers (){
+    this.usuarioService.obtenerTodos(this.userLogged).subscribe(data => {
+      this.listaDeArtistas = data;
+      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeArtistas);
+      if (this.listaDeArtistas.length>0){
+        this.listaDeArtistas.forEach(artista => {
+          console.log (artista.usuario.username);
+          
+        });
+        console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
+      }
+    },
+      (err: any) => {
+       console.log ( " ERROR BROX ");
+      }
+
+    );
+    /*
+    
+      if (this.listaDeArtistas.length>0){
+        this.listaDeArtistas.forEach(artista => {
+          console.log (artista.usuario.username);
+          this.listaDeNombres.push(artista.usuario.username);
+        });
+        console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
+      }
+      
+      */
+       
+  }
+
+  onCreate(){
     this.puntuacion = this.form;
     this.puntuacionService.crear(this.userLogged, this.puntuacion).subscribe(data => {
       

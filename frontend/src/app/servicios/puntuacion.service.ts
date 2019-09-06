@@ -24,8 +24,12 @@ export class PuntuacionService {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(ld));
     formdata.append('puntuacion', JSON.stringify(puntuacion));
-    return this.httpClient.post<any>(this.baseURL + 'nuevo', formdata, cabecera);
+    return this.httpClient.post<any>(this.baseURL + 'nuevo', formdata);
   }
+
+  
+
+  
 /*
   public editar(instrumento: Instrumento, id: number): Observable<any> {
     return this.httpClient.put<any>(this.baseURL + `actualizar/${id}`, instrumento, cabecera);

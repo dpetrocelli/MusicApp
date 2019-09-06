@@ -2,14 +2,14 @@
     <h5> Puntuación Artista / Banda </h5>
     <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
       <div class="form-group">
-        <label for="nombre"> Nombre Artista/Banda: </label>
-        <input type="text"
-               class="form-control"
-               name="nombre"
-               id="nombre"
-               [(ngModel)]="form.nombre"
-               required
-               autocomplete="off">
+        <label for="artista"> Nombre Artista/Banda: </label>
+        <input #artista class="form-control" type="text" (keyup)="predictivo($event)" autocomplete= "off" id="artista" list="dinamicArtista"/>
+        <datalist id="dinamicArtista" >
+          <option *ngFor="let artista of listaDeArtistas" [value]="artista" >{{artista.usuario.username}}</option>
+        </datalist>
+        
+        
+        
       </div>
       <div class="form-group">
         <label for="comentario">Comentario: </label>

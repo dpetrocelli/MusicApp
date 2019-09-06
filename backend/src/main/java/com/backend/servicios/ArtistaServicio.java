@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,10 @@ public class ArtistaServicio {
             return new Artista();
         }
 
+    }
+
+    public List<Artista> obtenerTodos (){
+        return this.artistaRepositorio.findAll();
     }
     public boolean guardar (Artista artista) {
         this.artistaRepositorio.save(artista);

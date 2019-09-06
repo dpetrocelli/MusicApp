@@ -51,6 +51,10 @@ export class UsuarioService {
     }
 
     
+  public obtenerTodos (ld : LoginDatos) : Observable <any> {
+      return this.httpClient.post<any>(this.baseURL + 'obtenerTodos', ld, cabecera);
+  }
+  
   public ingresar(usuarioForm: Usuario): Observable<any> {
   //public ingresar(usuario: Usuario): Observable<any> {
     

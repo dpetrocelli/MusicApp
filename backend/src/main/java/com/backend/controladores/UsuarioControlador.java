@@ -10,6 +10,7 @@ import com.backend.entidades.Usuario;
 import com.backend.recursos.LoginDatos;
 
 
+import com.backend.servicios.ArtistaServicio;
 import com.backend.servicios.ComercioServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.backend.singleton.ConfiguradorSingleton;
@@ -40,6 +41,8 @@ public class UsuarioControlador {
     @Autowired
     ComercioServicio comercioServicio;
 
+    @Autowired
+    ArtistaServicio artistaServicio;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -74,27 +77,31 @@ public class UsuarioControlador {
             return new ResponseEntity(new Mensaje(" El uNOOOOOOOOOOOOOOOOOOOO se creó correctamente"), HttpStatus.BAD_REQUEST);
         }
     }
-    /*
-    public ResponseEntity<?> registrar(@RequestBody RegistrarUsuarioRequest request){
-    	Usuario usuarioFE = request.getUsuario();
-    	if(request.getArtista() != null) {
-    		log.info("Registrando a "+usuarioFE.getUsername()+" Tipo: Artista.");
-    		Artista artista = request.getArtista();
-            if(this.usuarioServicio.guardar(usuarioFE, artista))
-            	return new ResponseEntity(new Mensaje(" El usuario "+ usuarioFE.getUsername()+" se creó correctamente"), HttpStatus.OK);
-            else
-                return new ResponseEntity(new Mensaje(" Error al persistir"), HttpStatus.BAD_REQUEST);
-            	
-    	}else{
-    		log.info("Registrando a "+usuarioFE.getUsername()+" Tipo: Comercio.");
-    		Comercio comercio = request.getComercio();
-            if(this.usuarioServicio.guardar(usuarioFE, comercio))
-            	return new ResponseEntity(new Mensaje(" El usuario "+ usuarioFE.getUsername()+" se creó correctamente"), HttpStatus.OK);
-            else
-                return new ResponseEntity(new Mensaje(" Error al persistir"), HttpStatus.BAD_REQUEST);
-    	}
+
+    @PostMapping("obtenerTodos")
+    public ResponseEntity<?> obtenerTodos (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                List<Artista> listArtista = this.artistaServicio.obtenerTodos();
+
+                return new ResponseEntity<List<Artista>>(listArtista, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
     }
-    */
+
+
+
+
+
     @PostMapping("ingresar")
     public ResponseEntity<?> ingresar(@RequestBody Usuario usuarioFrontEnd){
         // [STEP 0] - Validar usuario y contraseña

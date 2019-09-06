@@ -27,16 +27,15 @@ public class PuntuacionControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping("nuevo")
-    public ResponseEntity<?> crear  (@RequestBody String payload) {
+    public ResponseEntity<?> crear  (@RequestParam("login") String login, @RequestParam("puntuacion") String puntuacion) {
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
         // esto aplica a cualquier tipo de mensaje
 
-        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
-        try {
-            log.info("siendo: " + payload.toString());
 
-            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
-            Puntuacion puntuacion = new Gson().fromJson(json.get("puntuacion"), Puntuacion.class);
+        try {
+
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Puntuacion punt = new Gson().fromJson(puntuacion, Puntuacion.class);
 
             log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
             boolean result = this.usuarioServicio.validarTokenUsuario(ld);
