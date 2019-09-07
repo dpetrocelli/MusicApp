@@ -27,14 +27,14 @@ export class CrearPuntuacionComponent implements OnInit {
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
-    this.loadUsers();
+    this.loadUsuarios();
 
     
   };
 
-  loadUsers (){
+  loadUsuarios (){
     this.usuarioService.obtenerTodos(this.userLogged).subscribe(data => {
-      this.listaDeNombres = data;
+      this.listaDeNombres+= data;
       
       console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
       /*if (this.listaDeArtistas.length>0){
@@ -62,6 +62,26 @@ export class CrearPuntuacionComponent implements OnInit {
       
       */
        
+  }
+
+  loadBanda(){
+    this.bandaService.obtenerTodos(this.userLogged).subscribe(data => {
+      this.listaDeNombres+= data;
+      
+      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
+      /*if (this.listaDeArtistas.length>0){
+        this.listaDeArtistas.forEach(artista => {
+          
+          this.listaDeNombres.push(artista.usuario.username);
+        });
+        
+      }*/
+    },
+      (err: any) => {
+       console.log ( " ERROR BROX ");
+      }
+
+    );
   }
 
   onCreate(){
