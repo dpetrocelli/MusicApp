@@ -54,7 +54,7 @@ public class PuntuacionServicio {
         Usuario usuarioPuntuado = this.usuarioServicio.obtener(ld.getIdUsuario());
         Artista artistaPuntuado = this.artistaServicio.obtenerPorUsuario(usuarioPuntuado);
 
-        return this.puntuacionRepositorio.findAllByArtistaPuntuadoByDateDesc(artistaPuntuado);
+        return this.puntuacionRepositorio.findAllByArtistaPuntuado(artistaPuntuado);
 
 
     }
