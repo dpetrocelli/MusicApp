@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfilService } from 'src/app/servicios/perfil.service';
 import { PuntuacionService } from 'src/app/servicios/puntuacion.service';
+import { BandaService } from 'src/app/servicios/banda.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
@@ -22,35 +23,21 @@ export class CrearPuntuacionComponent implements OnInit {
   form: any = {};
   constructor(private usuarioService: UsuarioService,
               private router: Router,
-              private puntuacionService : PuntuacionService) {}
+              private puntuacionService : PuntuacionService,
+              private bandaService : BandaService) {}
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
     this.loadUsuarios();
+    this.loadBanda();
 
     
   };
 
-  loadUsuarios (){
-    this.usuarioService.obtenerTodos(this.userLogged).subscribe(data => {
-      this.listaDeNombres+= data;
-      
-      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
-      /*if (this.listaDeArtistas.length>0){
-        this.listaDeArtistas.forEach(artista => {
-          
-          this.listaDeNombres.push(artista.usuario.username);
-        });
-        
-      }*/
-    },
-      (err: any) => {
-       console.log ( " ERROR BROX ");
-      }
-
-    );
-    /*
+  async loadUsuarios (){
+    this.listaDeNombres = await this.usuarioService.obtenerTodos(this.userLogged).toPromise();
+        /*
     
       if (this.listaDeArtistas.length>0){
         this.listaDeArtistas.forEach(artista => {
@@ -64,24 +51,11 @@ export class CrearPuntuacionComponent implements OnInit {
        
   }
 
-  loadBanda(){
-    this.bandaService.obtenerTodos(this.userLogged).subscribe(data => {
-      this.listaDeNombres+= data;
-      
-      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
-      /*if (this.listaDeArtistas.length>0){
-        this.listaDeArtistas.forEach(artista => {
-          
-          this.listaDeNombres.push(artista.usuario.username);
-        });
-        
-      }*/
-    },
-      (err: any) => {
-       console.log ( " ERROR BROX ");
-      }
-
-    );
+  async loadBanda(){
+    let intermediate : string[] = await this.bandaService.obtenerTodos(this.userLogged).toPromise();
+     //this.listaDeNombres.join(intermediate);
+     
+   
   }
 
   onCreate(){

@@ -5,10 +5,9 @@
         <label for="artista"> Nombre Artista/Banda: </label>
         <input #artista class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off" id="artista" list="dinamicArtista"/>
         <datalist id="dinamicArtista" >
-          <option *ngFor="let artista of listaDeNombres" [value]="artista" >{{artista}}</option>
+          <option *ngFor="let nombre of listaDeNombres" [value]="artista" >{{nombre}}</option>
         </datalist>
-        
-        
+               
         
       </div>
       <div class="form-group">

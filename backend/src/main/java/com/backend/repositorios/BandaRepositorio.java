@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface BandaRepositorio extends JpaRepository<Banda, Long> {
-    Optional<Banda> findByNombreBanda(String ni);
-    boolean existsByNombreBanda(String ni);
+    Optional<Banda> findByNombre(String ni);
+    boolean existsByNombre(String ni);
 }
