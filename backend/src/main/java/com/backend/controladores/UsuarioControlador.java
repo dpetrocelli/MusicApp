@@ -85,8 +85,12 @@ public class UsuarioControlador {
         try {
             if (this.usuarioServicio.validarTokenUsuario(ld)) {
                 List<Artista> listArtista = this.artistaServicio.obtenerTodos();
+                ArrayList<String> listaRespuesta = new ArrayList<String>();
 
-                return new ResponseEntity<List<Artista>>(listArtista, HttpStatus.OK);
+                for (Artista artista : listArtista){
+                    listaRespuesta.add( artista.getUsuario().getUsername());
+                }
+                return new ResponseEntity<ArrayList<String>>(listaRespuesta, HttpStatus.OK);
 
             }else{
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);

@@ -3,20 +3,14 @@ package com.backend.controladores;
 import com.backend.dto.Mensaje;
 import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
-import com.backend.servicios.ComercioServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/puntuacion/")
@@ -35,7 +29,7 @@ public class PuntuacionControlador {
         try {
 
             LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
-            Puntuacion punt = new Gson().fromJson(puntuacion, Puntuacion.class);
+            PuntuacionArtista punt = new Gson().fromJson(puntuacion, PuntuacionArtista.class);
 
             log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
             boolean result = this.usuarioServicio.validarTokenUsuario(ld);

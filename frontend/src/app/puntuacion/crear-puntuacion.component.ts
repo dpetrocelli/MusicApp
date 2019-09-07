@@ -16,8 +16,8 @@ import { Artista } from '../modelos/artista';
 export class CrearPuntuacionComponent implements OnInit {
   userLogged : LoginDatos;
   puntuacion : Puntuacion;
-  listaDeArtistas : Artista[];
-  listaDeNombres : string[];
+  
+  listaDeNombres : string[] = [];
 
   form: any = {};
   constructor(private usuarioService: UsuarioService,
@@ -28,20 +28,22 @@ export class CrearPuntuacionComponent implements OnInit {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
     this.loadUsers();
+
     
   };
 
   loadUsers (){
     this.usuarioService.obtenerTodos(this.userLogged).subscribe(data => {
-      this.listaDeArtistas = data;
-      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeArtistas);
-      if (this.listaDeArtistas.length>0){
+      this.listaDeNombres = data;
+      
+      console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
+      /*if (this.listaDeArtistas.length>0){
         this.listaDeArtistas.forEach(artista => {
-          console.log (artista.usuario.username);
           
+          this.listaDeNombres.push(artista.usuario.username);
         });
-        console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
-      }
+        
+      }*/
     },
       (err: any) => {
        console.log ( " ERROR BROX ");

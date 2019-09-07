@@ -1,12 +1,10 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "puntuacion")
-public class Puntuacion {
+@Table(name = "puntuacionBanda")
+public class PuntuacionBanda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +19,20 @@ public class Puntuacion {
     private Artista artistaPuntuador;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fkArtistaPuntuado", nullable = true, updatable = true)
-    private Artista artistaPuntuado;
-
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "fkBandaPuntuada", nullable = true, updatable = true)
-    private Banda bandaPuntuada;
+    private Banda bandaPuntuado;
 
-    public Puntuacion() {
+
+
+    public PuntuacionBanda() {
     }
 
-    public Puntuacion(String comentario, double puntuacion, Artista artistaPuntuador, Artista artistaPuntuado, Banda bandaPuntuada) {
+
+    public PuntuacionBanda(String comentario, double puntuacion, Artista artistaPuntuador, Banda bandaPuntuado) {
         this.comentario = comentario;
         this.puntuacion = puntuacion;
         this.artistaPuntuador = artistaPuntuador;
-        this.artistaPuntuado = artistaPuntuado;
-        this.bandaPuntuada = bandaPuntuada;
+        this.bandaPuntuado = bandaPuntuado;
     }
 
     public Long getId() {
@@ -71,20 +67,12 @@ public class Puntuacion {
         this.artistaPuntuador = artistaPuntuador;
     }
 
-    public Artista getArtistaPuntuado() {
-        return artistaPuntuado;
+    public Banda getBandaPuntuado() {
+        return bandaPuntuado;
     }
 
-    public void setArtistaPuntuado(Artista artistaPuntuado) {
-        this.artistaPuntuado = artistaPuntuado;
-    }
-
-    public Banda getBandaPuntuada() {
-        return bandaPuntuada;
-    }
-
-    public void setBandaPuntuada(Banda bandaPuntuada) {
-        this.bandaPuntuada = bandaPuntuada;
+    public void setBandaPuntuado(Banda bandaPuntuado) {
+        this.bandaPuntuado = bandaPuntuado;
     }
 }
 

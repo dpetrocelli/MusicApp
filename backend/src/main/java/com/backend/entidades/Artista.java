@@ -1,8 +1,6 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -39,16 +37,16 @@ public class Artista {
     private Set<Instrumento> instrumento = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
-    private List<Puntuacion> puntuacionesRealizadas;
+    private List<PuntuacionArtista> puntuacionesRealizadas;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
-    private List<Puntuacion> puntuacionesRecibidas;
+    private List<PuntuacionArtista> puntuacionesRecibidas;
 
 
     public Artista() {
     }
 
-    public Artista(Usuario usuario, String nombre, String apellido, String nickname, int documentoIdentidad, Date fechaNacimiento, String genero, Set<Banda> banda, String generoMusical, Set<Instrumento> instrumento, List<Puntuacion> puntuacionesRealizadas, List<Puntuacion> puntuacionesRecibidas) {
+    public Artista(Usuario usuario, String nombre, String apellido, String nickname, int documentoIdentidad, Date fechaNacimiento, String genero, Set<Banda> banda, String generoMusical, Set<Instrumento> instrumento, List<PuntuacionArtista> puntuacionesRealizadas, List<PuntuacionArtista> puntuacionesRecibidas) {
         this.usuario = usuario;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -151,19 +149,19 @@ public class Artista {
         this.instrumento = instrumento;
     }
 
-    public List<Puntuacion> getPuntuacionesRealizadas() {
+    public List<PuntuacionArtista> getPuntuacionesRealizadas() {
         return puntuacionesRealizadas;
     }
 
-    public void setPuntuacionesRealizadas(List<Puntuacion> puntuacionesRealizadas) {
+    public void setPuntuacionesRealizadas(List<PuntuacionArtista> puntuacionesRealizadas) {
         this.puntuacionesRealizadas = puntuacionesRealizadas;
     }
 
-    public List<Puntuacion> getPuntuacionesRecibidas() {
+    public List<PuntuacionArtista> getPuntuacionesRecibidas() {
         return puntuacionesRecibidas;
     }
 
-    public void setPuntuacionesRecibidas(List<Puntuacion> puntuacionesRecibidas) {
+    public void setPuntuacionesRecibidas(List<PuntuacionArtista> puntuacionesRecibidas) {
         this.puntuacionesRecibidas = puntuacionesRecibidas;
     }
 }

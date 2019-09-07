@@ -24,7 +24,7 @@ public class Banda {
     private String generoMusical;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
-    private List<Puntuacion> puntuacionesRecibidas;
+    private List<PuntuacionArtista> puntuacionesRecibidas;
 
    public Banda(){
 
