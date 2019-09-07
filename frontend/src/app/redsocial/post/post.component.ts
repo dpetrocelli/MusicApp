@@ -43,18 +43,18 @@ export class PostComponent implements OnInit {
   hayPosts : boolean = false;
   hayBiografia : boolean = false;
   event_list : Array<object>;
-  
+
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
-    
+
     this.nuevoPostComponent = new NuevoPostComponent(this.perfilService, this.usuarioService, this.router);
     this.nuevoPostForm = false;
     // luego voy a buscar los posts
     this.perfilService.existebiografia (this.userLogged).subscribe(data => {
-      
-      console.log ("[APP-POST] -> Biografía obtenida");
+
+      console.log ('[APP-POST] -> Biografía obtenida');
       this.hayBiografia = true;
     },
     (err: any) => {
@@ -64,14 +64,14 @@ export class PostComponent implements OnInit {
 
     this.obtenerPosts();
 
-  
-    
+
+
   }
 
   async obtenerPosts(){
       this.posts = await this.perfilService.obtenerposts (this.userLogged).toPromise();
-      console.log("[APP-POST] -> Posts y elementos Obtenidos:",this.posts);
-      
+      console.log('[APP-POST] -> Posts y elementos Obtenidos:',this.posts);
+
       try{
           if (this.posts.length>0){
           this.hayPosts = true;
@@ -79,7 +79,7 @@ export class PostComponent implements OnInit {
       }catch{
 
       }
-             
+
   }
 /*
   obtenerElementos(id : number)  {
@@ -87,11 +87,11 @@ export class PostComponent implements OnInit {
     this.perfilService.obtenerelementos(id).subscribe(data => {
       console.log("[APP-POST] -> Elementos Obtenidos:", data);
       this.temporalElementos = data;
-      
+
     },
     (err: any) => {
       console.log("Sali obtenerElemento ",err );
-      
+
     });
     return e;
   }
@@ -100,35 +100,42 @@ export class PostComponent implements OnInit {
    this.nuevoPostForm = !this.nuevoPostForm;
    this.nuevoPostComponent.visible = this.nuevoPostForm;
   }
-  
-  hasResource(post : Post) : Boolean{
+
+  hasResource(post : Post, type : string) : Boolean{
     try{
       var result : Boolean = false;
-      if (post.elementos.length>0){
-        result = true;
-      }
       this.imageObject = [];
-      post.elementos.forEach(e => {
-        if (e.tipoRecurso == "youtube"){
-          this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(String (e.rutaAcceso));
-        }else{
-          // URL REF
-          
-          var obj: object = {image: "http://localhost:8081/api/archivo/descargar?path="+e.rutaAcceso, thumbImage:"http://localhost:8081/api/archivo/descargar?path="+e.rutaAcceso};
-          this.imageObject.push(obj);
-          
+      if (post.elementos.length > 0) {
+        if (type.includes('vid')) {
+          this.imageObject = [];
+          post.elementos.forEach(e => {
+            if (e.tipoRecurso.includes('youtube')) {
+              this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(String(e.rutaAcceso));
+              result = true;
+            }
+          });
         }
-        
-        
-      });
-      //console.log (JSON.stringify(this.imageObject));
+        if(type.includes('img')){
+          post.elementos.forEach(e => {
+            if(e.tipoRecurso.includes('img')){
+              var obj: object = {
+                image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+              };
+              this.imageObject.push(obj);
+              result = true;
+            }
+          });
+        }
+        console.log('hasResource Type:',type,' Respuesta: ',result, 'post: ',post);
+      }
       return result;
     }catch{
-      console.log(" ERROR POST " + post);
+      console.log(' ERROR POST ' + post);
       return false;
     }
   }
-  
+
 
   isEdited(post: Post) : Boolean {
     return post.fechaEdicion == null?false : true;
