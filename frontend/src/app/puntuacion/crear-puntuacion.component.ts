@@ -6,7 +6,7 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
-import { Puntuacion } from '../modelos/puntuacion';
+import { PuntuacionArtista } from '../modelos/puntuacion';
 import { Artista } from '../modelos/artista';
 
 @Component({
@@ -16,7 +16,7 @@ import { Artista } from '../modelos/artista';
 })
 export class CrearPuntuacionComponent implements OnInit {
   userLogged : LoginDatos;
-  puntuacion : Puntuacion;
+  puntuacion : PuntuacionArtista;
   
   listaDeNombres : string[] = [];
 
@@ -29,8 +29,8 @@ export class CrearPuntuacionComponent implements OnInit {
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
-    this.loadUsuarios();
-    this.loadBanda();
+    //this.loadUsuarios();
+    //this.loadBanda();
 
     
   };
@@ -59,8 +59,11 @@ export class CrearPuntuacionComponent implements OnInit {
   }
 
   onCreate(){
-    this.puntuacion = this.form;
-    this.puntuacionService.crear(this.userLogged, this.puntuacion).subscribe(data => {
+    
+    let usuarioPuntuado = this.form.artista;
+    let comentario = this.form.comentario;
+    let puntuacion = this.form.puntuacion;
+    this.puntuacionService.crear(this.userLogged, usuarioPuntuado, comentario, puntuacion).subscribe(data => {
       
       console.log ("[APP-PUNT] -> puntuacion publicada");
       

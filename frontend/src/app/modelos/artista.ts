@@ -1,5 +1,5 @@
 import { Usuario } from './usuario';
-import { Puntuacion } from './puntuacion';
+import { PuntuacionArtista } from './puntuacion';
 import { Instrumento } from './instrumento';
 import { Banda } from './banda';
 export class Artista {
@@ -14,8 +14,7 @@ export class Artista {
   banda : Banda[];
   generoMusical : String;
   instrumento : Instrumento[];
-  puntuacionesRealizadas : Puntuacion[];
-  puntuacionesRecibidas : Puntuacion[];
+  puntuacionesRecibidas : PuntuacionArtista[];
 
       
 }

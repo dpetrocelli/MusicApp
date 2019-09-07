@@ -102,7 +102,25 @@ public class UsuarioControlador {
 
     }
 
+    @PostMapping("obtenerDatosUsuario")
+    public ResponseEntity<?> obtenerUsuario (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
 
+        try {
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                return new ResponseEntity<Artista>(artista, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
 
 

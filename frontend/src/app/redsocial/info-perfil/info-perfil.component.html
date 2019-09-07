@@ -1,4 +1,15 @@
-<div class="container">
+<div class="container text-center">
+  
+  <div class="d-flex flex-column" *ngIf="isLoaded"> 
+    
+    <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
+    <span> NickName: {{artista.nickname}}</span>
+    <span> Sexo: {{artista.genero}}</span>
+    <span> Género Musical: {{artista.genero}}</span>
+    <span> Fecha de Nacimiento: {{artista.fechaNacimiento}}</span>
+    <p></p>
+  </div>
+
   <form #f="ngForm" novalidate>
       <div class="form-group">
       <label for="biografia">Biografia </label>
@@ -11,6 +22,14 @@
               autocomplete="off"
               value = "{{biografia}}">
       </div>
+      
+ 
+    
   </form>
-  <button class="btn btn-primary float-left mr-3" (click)="actualizar()"> Actualizar Biografia </button>
+  
+  <button class="btn btn-primary mr-3" (click)="actualizar()"> Actualizar Biografia </button>
+  
+  
+  
+  
 </div>

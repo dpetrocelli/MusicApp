@@ -78,6 +78,9 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.baseURL + `comercio_esta_activado`, ld, cabecera); 
   }
 
+  public obtenerDatosUsuario (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerDatosUsuario',login, cabecera);
+  }
   
 }
 

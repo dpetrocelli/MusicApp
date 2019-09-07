@@ -24,7 +24,7 @@ public class PuntuacionArtista {
     @JoinColumn(name = "fkArtistaPuntuado", nullable = true, updatable = true)
     private Artista artistaPuntuado;
 
-
+    Date fechaPuntuacion;
 
     public PuntuacionArtista() {
     }
@@ -34,6 +34,14 @@ public class PuntuacionArtista {
         this.puntuacion = puntuacion;
         this.artistaPuntuador = artistaPuntuador;
         this.artistaPuntuado = artistaPuntuado;
+    }
+
+    public Date getFechaPuntuacion() {
+        return fechaPuntuacion;
+    }
+
+    public void setFechaPuntuacion(Date fechaPuntuacion) {
+        this.fechaPuntuacion = fechaPuntuacion;
     }
 
     public Long getId() {

@@ -169,6 +169,7 @@ public class UsuarioServicio {
        return this.usuarioRepositorio.findById(idUsuario).get();
     }
 
+
     public Usuario obtenerPorNombre (String nombre){
         return this.usuarioRepositorio.findByUsername(nombre);
     }

@@ -3,12 +3,18 @@
     <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
       <div class="form-group">
         <label for="artista"> Nombre Artista/Banda: </label>
-        <input #artista class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off" id="artista" list="dinamicArtista"/>
+        <!--<input #artista class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off" id="artista" list="dinamicArtista"/>
         <datalist id="dinamicArtista" >
           <option *ngFor="let nombre of listaDeNombres" [value]="artista" >{{nombre}}</option>
         </datalist>
-               
-        
+            -->   
+            <input type="text"
+            class="form-control"
+            name="artista"
+            id="artista"
+            [(ngModel)]="form.artista"
+            required
+            autocomplete="off">
       </div>
       <div class="form-group">
         <label for="comentario">Comentario: </label>
