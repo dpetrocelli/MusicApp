@@ -269,19 +269,24 @@ public class PostControlador {
                 this.postServicio.guardar(post);
 
                 // creo el elemento youtube
-                String urlYoutube = formulario.get("youtube").getAsString();
-                if (urlYoutube.length()>0){
-                    try{
-                        urlYoutube = urlYoutube.replace("watch?v=", "embed/");
-                    }catch (Exception e){
-                        log.info(" NO youtube URL CHANGEd");
+                try{
+                    String urlYoutube = formulario.get("youtube").getAsString();
+                    if (urlYoutube.length()>0){
+                        try{
+                            urlYoutube = urlYoutube.replace("watch?v=", "embed/");
+                        }catch (Exception e){
+                            log.info(" NO youtube URL CHANGEd");
+                        }
+                        Elemento video = new Elemento();
+                        video.setTipoRecurso("youtube");
+                        video.setPost(post);
+                        video.setRutaAcceso(urlYoutube);
+                        this.elementoServicio.guardar(video);
                     }
-                    Elemento video = new Elemento();
-                    video.setTipoRecurso("youtube");
-                    video.setPost(post);
-                    video.setRutaAcceso(urlYoutube);
-                    this.elementoServicio.guardar(video);
+                }catch (Exception e){
+
                 }
+
                 return new ResponseEntity(new Mensaje(String.valueOf(post.getId())), HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
