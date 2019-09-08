@@ -16,9 +16,8 @@
                <iframe [src]="safeSrc" width="200" height="100" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
             </div>
             <div *ngIf="hasResource(post, 'img')">
-              <ng-image-slider [images]="imageObject"></ng-image-slider>
+              <button class="btn btn-success" (click)="verImagen(post)">Ver Imagenes</button>
             </div>
-            <span>{{post.elementos}}</span>
         </div>
         <button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button>
         <button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button>

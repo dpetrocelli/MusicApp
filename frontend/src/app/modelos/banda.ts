@@ -6,6 +6,4 @@ export class Banda {
   generoMusical : String;
   artistaLider : Artista;
   puntuacionesRecibidas : PuntuacionArtista[];
-  
-      
 }

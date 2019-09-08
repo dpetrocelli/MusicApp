@@ -7,11 +7,10 @@ import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
 import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { NgImageSliderModule } from 'ng-image-slider';
-import { BrowserModule } from '@angular/platform-browser';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { promise } from 'selenium-webdriver';
+import { OverlayModule, Overlay } from '@angular/cdk/overlay';
+import { TemplatePortalDirective, ComponentPortal } from '@angular/cdk/portal';
+import { ImgSliderComponent } from './imgSlider/imgSlider.component';
+import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -27,9 +26,10 @@ export class PostComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private router: Router,
-              private perfilService : PerfilService,
+              private perfilService: PerfilService,
               public sanitizer: DomSanitizer,
-              private componentFactoryResolver: ComponentFactoryResolver) { }
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private modalService: NgbModal) { }
 
   posts : Post[] = [];
   imageObject: Array<object> =[];
@@ -43,6 +43,8 @@ export class PostComponent implements OnInit {
   hayPosts : boolean = false;
   hayBiografia : boolean = false;
   event_list : Array<object>;
+  idImagenAbierta : number;
+  private overlay: Overlay;
 
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
@@ -64,7 +66,8 @@ export class PostComponent implements OnInit {
 
     this.obtenerPosts();
 
-
+    //prueba
+    this.overlay.create();
 
   }
 
@@ -127,7 +130,6 @@ export class PostComponent implements OnInit {
             }
           });
         }
-        console.log('hasResource Type:',type,' Respuesta: ',result, 'post: ',post);
       }
       return result;
     }catch{
@@ -136,9 +138,28 @@ export class PostComponent implements OnInit {
     }
   }
 
+  verImagen(post: Post) {
+    var packImg: Array<object> =[];
+    post.elementos.forEach(e => {
+      if(e.tipoRecurso.includes('img')) {
+        var obj: object = {
+          image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+        };
+        packImg.push(obj);
+      }
+    });
+    const modalRef = this.modalService.open(ImgSliderComponent);
+    modalRef.componentInstance.packImg = packImg;
+  }
+
+  ocultarImagen(){
+    var contenedor : HTMLElement = document.getElementById('post'+this.idImagenAbierta);
+    this.idImagenAbierta = 0;
+  }
 
   isEdited(post: Post) : Boolean {
-    return post.fechaEdicion == null?false : true;
+    return post.fechaEdicion == null ? false : true;
   }
 }
 

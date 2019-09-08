@@ -11,3 +11,6 @@
     content:'LOGO YT';
     margin: 1em;
 }
+.containerImg{
+  display: none;
+}
