@@ -196,7 +196,11 @@ public class MarketPlaceServicio {
             notificacionServicio.guardar(notificacion);
             //luego de registrar la notificacion hay que buscar el recurso en MP por el ID y luego registrar el pago
 
-            OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago("accessToken");
+            //eltanito89 String accessToken ="APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839";
+//            String accessToken ="APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839"; OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago(accessToken);
+
+            MarketPlace mp = this.obtener();
+            OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago(mp.getAppID(),mp.getClientSecret());
 
             Pago pago = ordenDeVentaMercadoPago.obtenerPago(notificacion);
 

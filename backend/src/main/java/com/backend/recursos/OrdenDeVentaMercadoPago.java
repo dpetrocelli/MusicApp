@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class OrdenDeVentaMercadoPago {
 
-    private String accessToken = null;
     private Payment payment;
     private MerchantOrder merchantOrder;
 
@@ -28,9 +27,21 @@ public class OrdenDeVentaMercadoPago {
 
     public OrdenDeVentaMercadoPago(String accessToken) {
 
-        this.accessToken = "APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839";
         try {
-            MercadoPago.SDK.setAccessToken(this.accessToken);
+            MercadoPago.SDK.cleanConfiguration();
+            MercadoPago.SDK.setAccessToken(accessToken);
+            log.info("SDK MERCADOPAGO SETEADO CORRECTAMENTE");
+        } catch (Exception e) {
+            log.info("ERROR CON SDK MERCADOPAGO");
+        }
+    }
+
+    public OrdenDeVentaMercadoPago(String clientId, String clientSecret) {
+
+        try {
+            MercadoPago.SDK.cleanConfiguration();
+            MercadoPago.SDK.setClientId(clientId);
+            MercadoPago.SDK.setClientSecret(clientSecret);
             log.info("SDK MERCADOPAGO SETEADO CORRECTAMENTE");
         } catch (Exception e) {
             log.info("ERROR CON SDK MERCADOPAGO");
@@ -41,6 +52,7 @@ public class OrdenDeVentaMercadoPago {
         Pago pago = null;
 
         try {
+            String token=MercadoPago.SDK.getAccessToken();
             payment = Payment.findById(Long.toString(notificacion.getId()));
             log.info("Pago obtenido desde MP");
 
