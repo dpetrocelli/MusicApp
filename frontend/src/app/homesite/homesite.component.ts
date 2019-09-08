@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginDatos } from '../modelos/logindatos';
 import { HomeSiteService } from '../servicios/homesite.service';
 import { UsuarioService } from '../servicios/usuario.service';
+import { Post } from '../modelos/post';
 
 @Component({
   selector: 'app-homesite',
@@ -13,7 +14,8 @@ import { UsuarioService } from '../servicios/usuario.service';
 })
 export class HomesiteComponent implements OnInit {
   userLogged : LoginDatos;
-  
+  hayInformacion : boolean = false;
+  listaPosts : Post[];
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
               private router: Router,
@@ -31,9 +33,9 @@ export class HomesiteComponent implements OnInit {
     let inicio = 0;
     let fin = 10;
     this.homeSiteService.obtener(this.userLogged, inicio, fin).subscribe(data => {
-
+      this.listaPosts = data;
       console.log ('[APP-POST] -> Biografía obtenida');
-      this.hayBiografia = true;
+      this.hayInformacion = true;
     },
     (err: any) => {
       console.log( err );

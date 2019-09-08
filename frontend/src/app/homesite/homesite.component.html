@@ -2,7 +2,7 @@
 
   <div *ngIf="hayInformacion" class="container">
 
-      <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
+      <div class="post row d-flex justify-content-center" *ngFor="let post of listaPosts">
         <div class="info col-12"> Creado: {{post.fechaCreacion}}</div>
         <div class="fechaEdicion col-4" *ngIf="isEdited(post)"><span>Editado: {{post.fechaEdicion}}</span></div>
         <div class="info col-12">Info Post {{post.informacion}}</div>

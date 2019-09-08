@@ -3,6 +3,7 @@ import com.backend.dto.Mensaje;
 import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
 import com.backend.servicios.*;
+import com.backend.singleton.ConfiguradorSingleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,7 @@ public class PostControlador {
     @Autowired BiografiaServicio biografiaServicio;
     @Autowired PostServicio postServicio;
     @Autowired ElementoServicio elementoServicio;
+    @Autowired ConfiguradorSingleton configuradorSingleton;
 
     /*
         En post controlador voy a tener varias cosas que van a estar disponibles para el usuario
@@ -350,7 +352,10 @@ public class PostControlador {
 
     @PostMapping("obtenerHomeSite")
     public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
-          /*
+
+            log.error( " LOS POST QUE TENEMOS SON: "+this.configuradorSingleton.listPost.size());
+
+        /*
         try{
             // [STEP 0] - Obtener las estructuras
 

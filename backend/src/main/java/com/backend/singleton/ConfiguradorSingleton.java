@@ -49,9 +49,10 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     public ArrayList<String> permisosDelArtista;
     public String baseURLSistema;
     public List<Post> listPost;
-
+    String msg;
     @Override
     public void run(String...args) {
+        this.msg = " HOLA ";
         // SETEAR LA BASE URL PARA EL FUNCIONAMIENTO DEL SISTEMA
         this.baseURLSistema = "http://localhost:8081";
 
@@ -141,14 +142,29 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
         }
-
         this.listPost = new ArrayList<Post>();
-        ThreadSingleton ts = new ThreadSingleton(5000, this.postRepositorio, this.listPost);
-        Thread tsThread = new Thread (ts);
-        tsThread.start();
+        while (true){
+            try {
+                Thread.sleep(5000);
+                synchronized (this.listPost){
+                    this.listPost =  this.postRepositorio.findAll();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
 
 
 
     }
+
+    public void printMessage() {
+
+        System.out.println(this.msg);
+    }
+
+
 }
 
