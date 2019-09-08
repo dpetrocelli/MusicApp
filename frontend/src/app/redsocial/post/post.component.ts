@@ -7,10 +7,9 @@ import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
 import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { OverlayModule, Overlay } from '@angular/cdk/overlay';
-import { TemplatePortalDirective, ComponentPortal } from '@angular/cdk/portal';
 import { ImgSliderComponent } from './imgSlider/imgSlider.component';
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { YoutubePopupComponent } from './youtubePopup/youtubePopup.component';
 
 
 
@@ -44,7 +43,6 @@ export class PostComponent implements OnInit {
   hayBiografia : boolean = false;
   event_list : Array<object>;
   idImagenAbierta : number;
-  private overlay: Overlay;
 
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
@@ -65,9 +63,6 @@ export class PostComponent implements OnInit {
     });
 
     this.obtenerPosts();
-
-    //prueba
-    this.overlay.create();
 
   }
 
@@ -100,8 +95,8 @@ export class PostComponent implements OnInit {
   }
 */
   nuevoPost(){
-   this.nuevoPostForm = !this.nuevoPostForm;
-   this.nuevoPostComponent.visible = this.nuevoPostForm;
+    this.nuevoPostForm = !this.nuevoPostForm;
+    this.nuevoPostComponent.visible = this.nuevoPostForm;
   }
 
   hasResource(post : Post, type : string) : Boolean{
@@ -149,8 +144,19 @@ export class PostComponent implements OnInit {
         packImg.push(obj);
       }
     });
-    const modalRef = this.modalService.open(ImgSliderComponent);
+    const modalRef = this.modalService.open(ImgSliderComponent, { centered: true , size: 'xl'});
     modalRef.componentInstance.packImg = packImg;
+  }
+
+  verVideo(post: Post) {
+    var safeSrc : SafeResourceUrl;
+    post.elementos.forEach(e => {
+      if(e.tipoRecurso.includes('youtube')) {
+        safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl(String(e.rutaAcceso));
+      }
+    });
+    const modalRef = this.modalService.open(YoutubePopupComponent, { centered: true , size: 'xl'});
+    modalRef.componentInstance.url = safeSrc;
   }
 
   ocultarImagen(){

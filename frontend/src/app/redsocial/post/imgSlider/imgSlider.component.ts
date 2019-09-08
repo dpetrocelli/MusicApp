@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
   selector: 'app-imgSlider',
@@ -9,10 +10,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ImgSliderComponent implements OnInit {
   @Input() packImg;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  @ViewChild('slider', null) slider: NgImageSliderComponent;
+
+  constructor(public activeModal: NgbActiveModal) {  }
 
   ngOnInit() {
-
+    this.slider.sliderImageHeight = 400;
+    this.slider.sliderImageWidth = 400;
+    this.slider.imagePopup = true;
   }
 
 }

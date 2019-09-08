@@ -36,6 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { ImgSliderComponent } from './redsocial/post/imgSlider/imgSlider.component';
+import { YoutubePopupComponent } from './redsocial/post/youtubePopup/youtubePopup.component';
 
 @NgModule({
    declarations: [
@@ -65,6 +66,7 @@ import { ImgSliderComponent } from './redsocial/post/imgSlider/imgSlider.compone
       InfoPerfilComponent,
       PuntuacionComponent,
       ImgSliderComponent,
+      YoutubePopupComponent,
       ComprarPromocionesComponent,
       CrearPuntuacionComponent
    ],
@@ -81,7 +83,8 @@ import { ImgSliderComponent } from './redsocial/post/imgSlider/imgSlider.compone
       AppComponent
    ],
    entryComponents: [
-     ImgSliderComponent
+     ImgSliderComponent,
+     YoutubePopupComponent
    ]
 })
 export class AppModule { }
