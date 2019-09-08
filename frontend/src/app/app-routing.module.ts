@@ -16,13 +16,14 @@ import { EditarpromocionComponent } from './promociones/editarpromocion.componen
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
-import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
-import { EditarPostComponent } from './redsocial/post/editar-post.component';
+import { NuevoPostComponent } from './miactividad/post/nuevo-post.component';
+import { EditarPostComponent } from './miactividad/post/editar-post.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { PostComponent } from './redsocial/post/post.component';
+import { PostComponent } from './miactividad/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
-import { HomesiteComponent } from './homesite/homesite.component';
+import {HomesiteComponent} from './home/homesite.component';
+
 const routes: Routes = [
   
   // Lista de acceso base para todos 

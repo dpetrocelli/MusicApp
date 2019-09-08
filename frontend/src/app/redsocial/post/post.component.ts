@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Post } from 'src/app/modelos/post';
 import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
-import { NuevoPostComponent } from 'src/app/redsocial/post/nuevo-post.component';
+import { NuevoPostComponent } from 'src/app/miactividad/post/nuevo-post.component';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ImgSliderComponent } from './imgSlider/imgSlider.component';
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';

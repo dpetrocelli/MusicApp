@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PerfilService } from 'src/app/servicios/perfil.service';
+import { PerfilService } from '../miactividad/post/node_modules/src/app/servicios/perfil.service';
 import { PuntuacionService } from 'src/app/servicios/puntuacion.service';
 import { BandaService } from 'src/app/servicios/banda.service';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { UsuarioService } from '../miactividad/post/node_modules/src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
