@@ -1,0 +1,15 @@
+<p> Puntuación Usuario </p>
+    <div class="col-12" *ngIf="isReady">
+        <span>  General: {{promedio}} </span>
+        <div class="d-flex flex-column" *ngFor="let puntuacion of listaPuntuacion">
+          <div class="puntuacion"> 
+            <span> usuario : {{puntuacion.artistaPuntuador.usuario.username}} </span><br>
+            <span> Comentario: {{puntuacion.comentario}}</span><br>
+            <span> Puntuacion: {{puntuacion.puntuacion}}</span>
+          </div>
+        </div>
+         
+        
+  
+    </div>
+

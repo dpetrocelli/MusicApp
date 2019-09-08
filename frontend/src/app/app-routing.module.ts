@@ -22,7 +22,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './miactividad/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
-import {HomesiteComponent} from './home/homesite.component';
+import { HomesiteComponent } from './homesite/homesite.component';
 
 const routes: Routes = [
 

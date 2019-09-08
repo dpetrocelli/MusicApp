@@ -2,7 +2,7 @@
   <h1> Bienvenido a MiusicApp! </h1>
 
   <div *ngIf="logOff">
-    <h5>Hola, {{userLogged.username}}</h5>
+    <h5>Hola, {{userLogged}}</h5>
     <button (click)="cerrarsesion()" class="btn btn-danger">Cerrar sesion</button>
   </div>
 
@@ -20,7 +20,7 @@
               [(ngModel)]="form.username"
               required
               autocomplete="off">
-     
+
         <label for="pass">Contraseña:</label>
         <input class="form-control"
               type="password"
@@ -37,17 +37,17 @@
       <div *ngIf="(!conectado) && (errorConexion)" class="float-left">
         <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
       </div>
-      <br> 
+      <br>
       <div *ngIf="conectado" class="float-left">
         <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
       </div>
       </form>
- 
+
       <br><br>
      <div>
       <button class="btn btn-success" routerLink="/crearusuario">Registre nuevo usuario </button>
      </div>
-     
+
   <br>
-  
+
 </div>

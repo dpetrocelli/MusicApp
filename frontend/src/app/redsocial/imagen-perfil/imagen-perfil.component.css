@@ -1,0 +1,18 @@
+#cambiarImg{
+    position: absolute;
+    bottom: 1%;
+    left: 20%;
+    width: 60%;
+    transition: opacity 2s linear;  
+    transform:translate(9999px);
+    opacity: 0;  
+}
+#imgContainer{
+    position: relative;
+    margin: 2vh 0vw; 
+}
+#imgContainer:hover #cambiarImg{
+    transition: opacity 1s linear;  
+    transform:translate(0);
+    opacity: 1;
+}

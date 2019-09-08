@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PerfilService } from '../miactividad/post/node_modules/src/app/servicios/perfil.service';
+import { PerfilService } from '../servicios/perfil.service';
 import { PuntuacionService } from 'src/app/servicios/puntuacion.service';
 import { BandaService } from 'src/app/servicios/banda.service';
-import { UsuarioService } from '../miactividad/post/node_modules/src/app/servicios/usuario.service';
+import { UsuarioService } from '../servicios/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
@@ -17,7 +17,7 @@ import { Artista } from '../modelos/artista';
 export class CrearPuntuacionComponent implements OnInit {
   userLogged : LoginDatos;
   puntuacion : PuntuacionArtista;
-  
+
   listaDeNombres : string[] = [];
 
   form: any = {};
@@ -32,13 +32,13 @@ export class CrearPuntuacionComponent implements OnInit {
     //this.loadUsuarios();
     //this.loadBanda();
 
-    
+
   };
 
   async loadUsuarios (){
     this.listaDeNombres = await this.usuarioService.obtenerTodos(this.userLogged).toPromise();
         /*
-    
+
       if (this.listaDeArtistas.length>0){
         this.listaDeArtistas.forEach(artista => {
           console.log (artista.usuario.username);
@@ -46,27 +46,27 @@ export class CrearPuntuacionComponent implements OnInit {
         });
         console.log ("[APP-PUNT] -> trajo usuarios ", this.listaDeNombres);
       }
-      
+
       */
-       
+
   }
 
   async loadBanda(){
     let intermediate : string[] = await this.bandaService.obtenerTodos(this.userLogged).toPromise();
      //this.listaDeNombres.join(intermediate);
-     
-   
+
+
   }
 
   onCreate(){
-    
+
     let usuarioPuntuado = this.form.artista;
     let comentario = this.form.comentario;
     let puntuacion = this.form.puntuacion;
     this.puntuacionService.crear(this.userLogged, usuarioPuntuado, comentario, puntuacion).subscribe(data => {
-      
+
       console.log ("[APP-PUNT] -> puntuacion publicada");
-      
+
     },
     (err: any) => {
       console.log( err );
