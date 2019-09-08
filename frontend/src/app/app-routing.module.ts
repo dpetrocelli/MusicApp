@@ -22,6 +22,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './redsocial/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
+import { HomesiteComponent } from './homesite/homesite.component';
 const routes: Routes = [
   
   // Lista de acceso base para todos 
@@ -32,6 +33,7 @@ const routes: Routes = [
   
 
   // Opciones de Artista 
+   {path: 'homesite', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'perfil/:nombre', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

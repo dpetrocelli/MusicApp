@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
           this.loginDialog = false;
           this.registryDialog = false;
           this.logOff = true;
+          
         }else{
        
           this.loginDialog = true;

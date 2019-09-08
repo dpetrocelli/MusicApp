@@ -37,6 +37,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { ImgSliderComponent } from './redsocial/post/imgSlider/imgSlider.component';
 import { YoutubePopupComponent } from './redsocial/post/youtubePopup/youtubePopup.component';
+import { HomesiteComponent } from './homesite/homesite.component';
 
 @NgModule({
    declarations: [
@@ -68,7 +69,8 @@ import { YoutubePopupComponent } from './redsocial/post/youtubePopup/youtubePopu
       ImgSliderComponent,
       YoutubePopupComponent,
       ComprarPromocionesComponent,
-      CrearPuntuacionComponent
+      CrearPuntuacionComponent,
+      HomesiteComponent
    ],
    imports: [
       BrowserModule,
