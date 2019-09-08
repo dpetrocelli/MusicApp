@@ -11,15 +11,17 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
   providedIn: 'root'
 })
 export class BandaService {
- 
+  // DESARROLLO URL
+  baseURL = 'http://localhost:8081/api/banda/';
+
+  // PRODUCCION URL
+  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8081/api/banda/';
+
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();
   loginDatos: LoginDatos = new LoginDatos();
   valueByGet : String;
-  // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/banda/';
-  
 
   constructor(private httpClient: HttpClient) { }
 

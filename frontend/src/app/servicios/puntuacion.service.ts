@@ -14,9 +14,7 @@ export class PuntuacionService {
   // DESARROLLO IP
   baseURL = 'http://localhost:8081/api/puntuacion/';
   // PRODUCCION IP
-  //baseURL = 'http://localhost:8080/api/instrumento/';
- 
-//  instrumentoURL = 'http://ec2-54-224-216-200.compute-1.amazonaws.com:9000/api/instrumento/';
+  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8081/api/puntuacion/';
 
   constructor(private httpClient: HttpClient) { }
 

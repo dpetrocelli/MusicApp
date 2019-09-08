@@ -16,8 +16,10 @@ export class MarketplaceService {
    */
   // DESARROLLO URL
    baseURL = 'http://localhost:8081/api/marketplace/';
-  // PROD URL
-  // baseURL = 'http://localhost:8080/api/marketplace/';
+
+  // PRODUCCION URL
+  // baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8080/api/marketplace/';
+
   constructor(private httpClient: HttpClient) { }
 
   public obtener(): Observable <Marketplace> {
