@@ -16,23 +16,23 @@ import { EditarpromocionComponent } from './promociones/editarpromocion.componen
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
-import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
-import { EditarPostComponent } from './redsocial/post/editar-post.component';
+import { NuevoPostComponent } from './miactividad/post/nuevo-post.component';
+import { EditarPostComponent } from './miactividad/post/editar-post.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { PostComponent } from './redsocial/post/post.component';
+import { PostComponent } from './miactividad/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { HomesiteComponent } from './homesite/homesite.component';
 const routes: Routes = [
-  
-  // Lista de acceso base para todos 
+
+  // Lista de acceso base para todos
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
   {path: 'accesodenegado', component: AccesodenegadoComponent},
-  
 
-  // Opciones de Artista 
+
+  // Opciones de Artista
    {path: 'homesite', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'perfil/:nombre', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
@@ -41,7 +41,7 @@ const routes: Routes = [
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'puntuacion/nuevo', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
- 
+
     // Opciones de Comercio
     // Promociones/
    {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
@@ -62,7 +62,7 @@ const routes: Routes = [
    {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: '**', redirectTo: 'home', pathMatch: 'full'}
-  
+
 ];
 
 @NgModule({

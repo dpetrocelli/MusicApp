@@ -24,19 +24,19 @@ import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
 import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
-import { NuevoPostComponent } from './redsocial/post/nuevo-post.component';
-import { EditarPostComponent } from './redsocial/post/editar-post.component';
+import { NuevoPostComponent } from './miactividad/post/nuevo-post.component';
+import { EditarPostComponent } from './miactividad/post/editar-post.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { PostComponent } from './redsocial/post/post.component';
-import { ImagenPerfilComponent } from './redsocial/imagen-perfil/imagen-perfil.component';
-import { InfoPerfilComponent } from './redsocial/info-perfil/info-perfil.component';
-import { PuntuacionComponent } from './redsocial/puntuacion/puntuacion.component';
+import { PostComponent } from './miactividad/post/post.component';
+import { ImagenPerfilComponent } from './miactividad/imagen-perfil/imagen-perfil.component';
+import { InfoPerfilComponent } from './miactividad/info-perfil/info-perfil.component';
+import { PuntuacionComponent } from './miactividad/puntuacion/puntuacion.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
-import { ImgSliderComponent } from './redsocial/post/imgSlider/imgSlider.component';
-import { YoutubePopupComponent } from './redsocial/post/youtubePopup/youtubePopup.component';
+import { ImgSliderComponent } from './miactividad/post/imgSlider/imgSlider.component';
+import { YoutubePopupComponent } from './miactividad/post/youtubePopup/youtubePopup.component';
 import { HomesiteComponent } from './homesite/homesite.component';
 
 @NgModule({
