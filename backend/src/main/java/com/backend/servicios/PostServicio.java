@@ -8,12 +8,15 @@ import com.backend.repositorios.BiografiaRepositorio;
 import com.backend.repositorios.InstrumentoRepositorio;
 import com.backend.repositorios.PostRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+
 
 @Service
 @Transactional
@@ -40,5 +43,13 @@ public class PostServicio {
     public boolean guardar (Post post){
         this.postRepositorio.save(post);
         return true;
+    }
+
+    public List<Post> obtenerPostHomeSite(Integer inicio, Integer fin) {
+       /* this.postRepositorio.List<User> findFirst10ByLastname(String lastname, Sort sort);
+
+        List <Post> pag = this.postRepositorio.findAllTop10();
+        TopTenByAge();*/
+       return null;
     }
 }

@@ -347,6 +347,59 @@ public class PostControlador {
         }
     }
 
+
+    @PostMapping("obtenerHomeSite")
+    public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
+          /*
+        try{
+            // [STEP 0] - Obtener las estructuras
+
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+            //ArrayList<Post> postHomeSite = this.postServicio.obtenerPostHomeSite(Integer.valueOf(inicio), Integer.valueOf(fin));
+
+            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(ld.getIdUsuario()));
+            Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+            Biografia bio = this.biografiaServicio.obtener(artista);
+
+            // [STEP 1] Preparo para guardar el binario en el folder del usuario
+            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/perfil/";
+            File directory = new File(folder);
+            if (!(directory).exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directorio creado"+directory.getAbsolutePath());
+                }
+            }else{
+                String[] files = directory.list();
+                for (String f: files) {
+                    File remove = new File(directory.getAbsolutePath() + "/" + f);
+                    remove.delete();
+                    remove.deleteOnExit();
+                }
+            }
+
+
+            System.out.println("Eliminé imágenes actuales (para dejar 1 sola");
+
+            // [STEP 3] - subir img de perfil
+
+            String pathFile = folder +"/"+ file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+
+            bio.setPathImagenPerfil(pathFile);
+            this.biografiaServicio.guardar(bio);
+            return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+        */
+        return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+    }
+
+
     @PostMapping("subirimagen")
     public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id, @RequestParam("login") String login ){
         try{
