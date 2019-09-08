@@ -22,7 +22,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { PostComponent } from './miactividad/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
-import { HomesiteComponent } from './homesite/homesite.component';
+import {HomesiteComponent} from './home/homesite.component';
+
 const routes: Routes = [
 
   // Lista de acceso base para todos
