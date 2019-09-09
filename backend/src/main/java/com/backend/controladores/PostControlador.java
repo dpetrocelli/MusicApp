@@ -29,9 +29,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/post/")
-@CrossOrigin(origins = "*")
 public class PostControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     final String UPLOAD_FOLDER = "src/images/";

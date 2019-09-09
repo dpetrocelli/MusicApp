@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/instrumento/")
-@CrossOrigin(origins = "*")
 public class InstrumentoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired

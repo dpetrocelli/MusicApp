@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/banda/")
-@CrossOrigin(origins = "*")
 public class BandaControlador {
 
     @Autowired

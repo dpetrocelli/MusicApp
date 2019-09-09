@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/usuario/")
-@CrossOrigin(origins = "*")
 public class UsuarioControlador {
 
     @Autowired
