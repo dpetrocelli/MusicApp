@@ -15,10 +15,10 @@ export class MarketplaceService {
     En este caso recordar que va a ser /api/marketplace
    */
   // DESARROLLO URL
-   baseURL = 'http://localhost:8081/api/marketplace/';
+  baseURL = 'http://localhost:8081/api/marketplace/';
 
   // PRODUCCION URL
-  // baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8080/api/marketplace/';
+  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/marketplace/';
 
   constructor(private httpClient: HttpClient) { }
 

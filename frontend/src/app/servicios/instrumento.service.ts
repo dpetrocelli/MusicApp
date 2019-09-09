@@ -13,7 +13,7 @@ export class InstrumentoService {
   baseURL = 'http://localhost:8081/api/instrumento/';
 
   // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8080/api/instrumento/';
+  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/instrumento/';
  
   constructor(private httpClient: HttpClient) { }
 
