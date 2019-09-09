@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -352,56 +353,17 @@ public class PostControlador {
 
     @PostMapping("obtenerHomeSite")
     public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
-
-            log.error( " LOS POST QUE TENEMOS SON: "+this.configuradorSingleton.listPost.size());
-
-        /*
         try{
-            // [STEP 0] - Obtener las estructuras
-
-            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
-
-            //ArrayList<Post> postHomeSite = this.postServicio.obtenerPostHomeSite(Integer.valueOf(inicio), Integer.valueOf(fin));
-
-            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(ld.getIdUsuario()));
-            Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
-            Biografia bio = this.biografiaServicio.obtener(artista);
-
-            // [STEP 1] Preparo para guardar el binario en el folder del usuario
-            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/perfil/";
-            File directory = new File(folder);
-            if (!(directory).exists()) {
-                if (directory.mkdirs()) {
-                    System.out.println("Directorio creado"+directory.getAbsolutePath());
-                }
-            }else{
-                String[] files = directory.list();
-                for (String f: files) {
-                    File remove = new File(directory.getAbsolutePath() + "/" + f);
-                    remove.delete();
-                    remove.deleteOnExit();
-                }
-            }
+            List<Post> lp = this.postServicio.obtenerTodos();
+            return new ResponseEntity<List<Post>>(lp, HttpStatus.OK);
 
 
-            System.out.println("Eliminé imágenes actuales (para dejar 1 sola");
-
-            // [STEP 3] - subir img de perfil
-
-            String pathFile = folder +"/"+ file.getOriginalFilename();
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(pathFile);
-            Files.write(path, bytes);
-            // creo el elemento vacio
-
-            bio.setPathImagenPerfil(pathFile);
-            this.biografiaServicio.guardar(bio);
-            return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+            log.info(" something has failed");
+            return new ResponseEntity<List<Post>>((List<Post>) null, HttpStatus.BAD_REQUEST);
         }
-        */
-        return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+
+
     }
 
 

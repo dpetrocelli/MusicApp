@@ -16,10 +16,12 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Component
+
 public class ConfiguradorSingleton implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ConfiguradorSingleton.class);
     @Autowired
@@ -142,18 +144,23 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
         }
+        /*
         this.listPost = new ArrayList<Post>();
         while (true){
             try {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
                 synchronized (this.listPost){
                     this.listPost =  this.postRepositorio.findAll();
+                    //findTop100ByOrderByIdDesc();
+
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
         }
+        */
+
 
 
 

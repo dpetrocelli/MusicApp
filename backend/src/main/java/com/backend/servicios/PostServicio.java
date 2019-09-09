@@ -52,4 +52,8 @@ public class PostServicio {
         TopTenByAge();*/
        return null;
     }
+
+    public List<Post> obtenerTodos() {
+        return this.postRepositorio.findAll();
+    }
 }
