@@ -74,4 +74,7 @@ export class CrearPuntuacionComponent implements OnInit {
     });
   }
 
+  volver(): void {
+    window.history.back();
+  }
 }

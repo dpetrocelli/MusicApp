@@ -15,7 +15,7 @@ export class BandaService {
   baseURL = 'http://localhost:8081/api/banda/';
 
   // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8081/api/banda/';
+  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/banda/';
 
 
   private isUserLoggedIn = false;

@@ -13,9 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/archivo/")
-@CrossOrigin(origins = "*")
 public class ArchivoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 

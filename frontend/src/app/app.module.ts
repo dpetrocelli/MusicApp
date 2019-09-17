@@ -59,6 +59,7 @@ import { HomesiteComponent } from './homesite/homesite.component';
       EditarpromocionComponent,
       DetallepromocionComponent,
       AccesodenegadoComponent,
+      HomesiteComponent,
       NuevoPostComponent,
       EditarPostComponent,
       PerfilComponent,
@@ -69,8 +70,7 @@ import { HomesiteComponent } from './homesite/homesite.component';
       ImgSliderComponent,
       YoutubePopupComponent,
       ComprarPromocionesComponent,
-      CrearPuntuacionComponent,
-      HomesiteComponent
+      CrearPuntuacionComponent
    ],
    imports: [
       BrowserModule,

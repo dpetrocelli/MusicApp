@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/elemento/")
-@CrossOrigin(origins = "*")
-
 public class ElementoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired InstrumentoServicio instrumentoServicio;
