@@ -401,7 +401,7 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
         */
-        return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+        return new ResponseEntity<List<Post>>(this.configuradorSingleton.listPost, HttpStatus.OK);
     }
 
 
