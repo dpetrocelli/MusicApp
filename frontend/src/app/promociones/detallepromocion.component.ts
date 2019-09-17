@@ -12,4 +12,8 @@ export class DetallepromocionComponent implements OnInit {
   ngOnInit() {
   }
 
+  volver(): void {
+    window.history.back();
+  }
+  
 }

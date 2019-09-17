@@ -61,6 +61,15 @@ public class OrdenDeVentaMercadoPago {
                 merchantOrder = MerchantOrder.findById(Long.toString(payment.getOrder().getId()));
 
                 pago = new Pago(
+                        Long.parseLong("0")
+                        , Long.parseLong(payment.getId())
+                        , payment.getDateCreated()
+                        , TipoMovimiento.DINERO_MP
+                        , payment.getStatus().name()
+                        , payment.getTransactionAmount()
+                );
+/*
+                pago = new Pago(
                         Long.parseLong(merchantOrder.getId())
                         , Long.parseLong(payment.getId())
                         , payment.getDateCreated()
@@ -68,7 +77,7 @@ public class OrdenDeVentaMercadoPago {
                         , payment.getStatus().name()
                         , payment.getTransactionAmount()
                 );
-
+*/
             }
 
         } catch (MPException e) {

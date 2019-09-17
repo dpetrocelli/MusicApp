@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, NgModule } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { LoginDatos } from '../modelos/logindatos';
 import { HomeSiteService } from '../servicios/homesite.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Post } from '../modelos/post';
+
 
 @Component({
   selector: 'app-homesite',
@@ -34,11 +35,11 @@ export class HomesiteComponent implements OnInit {
     let fin = 10;
     this.homeSiteService.obtener(this.userLogged, inicio, fin).subscribe(data => {
       this.listaPosts = data;
-      console.log ('[APP-POST] -> Biografía obtenida');
+      console.log ('[APP-HOMESITE', this.listaPosts);
       this.hayInformacion = true;
     },
     (err: any) => {
-      console.log( err );
+      console.log("ERROR", err );
       //this.router.navigate(['/accesodenegado']);
     });
   }
