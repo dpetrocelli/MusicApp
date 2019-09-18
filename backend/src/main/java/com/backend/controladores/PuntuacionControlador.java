@@ -34,13 +34,18 @@ public class PuntuacionControlador {
             boolean result = this.usuarioServicio.validarTokenUsuario(ld);
 
             if (result){
-
-                boolean guardado = this.puntuacionServicio.guardarPuntuacionArtista(ld, art, comentario,puntuacion);
-                if (guardado){
-                    return new ResponseEntity(new Mensaje(" HOLA "), HttpStatus.OK);
+                boolean yaPuntue = this.puntuacionServicio.validarSiYaPuntuee(ld, art);
+                if (!yaPuntue){
+                    boolean guardado = this.puntuacionServicio.guardarPuntuacionArtista(ld, art, comentario,puntuacion);
+                    if (guardado){
+                        return new ResponseEntity(new Mensaje(" HOLA "), HttpStatus.OK);
+                    }else{
+                        return new ResponseEntity(new Mensaje(" REVENTO "), HttpStatus.BAD_REQUEST);
+                    }
                 }else{
-                    return new ResponseEntity(new Mensaje(" REVENTO "), HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity(new Mensaje(" Ya puntuaste a ese usuario "), HttpStatus.BAD_REQUEST);
                 }
+
 
 
             }else return new ResponseEntity(new Mensaje(" ERROR no autorizado"), HttpStatus.UNAUTHORIZED);

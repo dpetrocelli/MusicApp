@@ -12,4 +12,6 @@ import java.util.Optional;
 @Repository
 public interface PuntuacionRepositorio extends JpaRepository<PuntuacionArtista, Long> {
     List<PuntuacionArtista> findAllByArtistaPuntuado(Artista artista);
+
+
 }

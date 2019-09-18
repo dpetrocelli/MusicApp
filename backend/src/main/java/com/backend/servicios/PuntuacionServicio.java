@@ -32,7 +32,24 @@ public class PuntuacionServicio {
     MarketPlaceServicio marketPlaceServicio;
 
 
+    public boolean validarSiYaPuntuee(LoginDatos ld, String art){
+        Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
+        Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
+        Usuario usuario = this.usuarioServicio.obtenerPorNombre(art);
+        Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
 
+        List<PuntuacionArtista> listaPuntos = this.puntuacionRepositorio.findAllByArtistaPuntuado(artista);
+        boolean found = false;
+
+        for (PuntuacionArtista puntuacion: listaPuntos) {
+            if (puntuacion.getArtistaPuntuador() == artistaPuntuador){
+                found = true;
+                break;
+            }
+        }
+
+        return found;
+    }
     public boolean guardarPuntuacionArtista(LoginDatos ld, String art, String comentario, String puntuacion){
         Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
         Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);

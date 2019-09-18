@@ -28,13 +28,20 @@ export class PuntuacionComponent implements OnInit {
       console.log (data);
       this.listaPuntuacion = data;
 
-      this.listaPuntuacion.forEach(puntuacion => {
-        this.promedio+=puntuacion.puntuacion;
-        this.contador+=1;
-      });
-      this.promedio = this.promedio / this.contador;
-      console.log (" PROM PUNT : "+this.promedio);
+      if (this.listaPuntuacion.length> 0){
+        this.listaPuntuacion.forEach(puntuacion => {
+          this.promedio+=puntuacion.puntuacion;
+          this.contador+=1;
+        });
+        this.promedio = this.promedio / this.contador;
+        console.log (" PROM PUNT : "+this.promedio);
+        
+      }else{
+        this.promedio = 0;
+        
+      }
       this.isReady = true;
+      
       //| limitTo : 3
     },
     (err: any) => {

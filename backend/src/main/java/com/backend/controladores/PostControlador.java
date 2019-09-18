@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -277,6 +278,9 @@ public class PostControlador {
                     if (urlYoutube.length()>0){
                         try{
                             urlYoutube = urlYoutube.replace("watch?v=", "embed/");
+
+                            urlYoutube = urlYoutube.split(Pattern.quote("&"))[0];
+
                         }catch (Exception e){
                             log.info(" NO youtube URL CHANGEd");
                         }
@@ -316,7 +320,7 @@ public class PostControlador {
             Biografia bio = this.biografiaServicio.obtener(artista);
 
             // [STEP 1] Preparo para guardar el binario en el folder del usuario
-            String folder = this.UPLOAD_FOLDER+"/"+usuario.getUsername()+"/perfil/";
+            String folder = this.UPLOAD_FOLDER+usuario.getUsername()+"/perfil/";
             File directory = new File(folder);
             if (!(directory).exists()) {
                 if (directory.mkdirs()) {
@@ -325,7 +329,7 @@ public class PostControlador {
             }else{
                 String[] files = directory.list();
                 for (String f: files) {
-                    File remove = new File(directory.getAbsolutePath() + "/" + f);
+                    File remove = new File(directory.getAbsolutePath() + f);
                     remove.delete();
                     remove.deleteOnExit();
                 }
@@ -336,7 +340,7 @@ public class PostControlador {
 
             // [STEP 3] - subir img de perfil
 
-            String pathFile = folder +"/"+ file.getOriginalFilename();
+            String pathFile = folder +file.getOriginalFilename();
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathFile);
             Files.write(path, bytes);
