@@ -46,14 +46,16 @@ public class PostServicio {
     }
 
     public List<Post> obtenerPostHomeSite(Integer inicio, Integer fin) {
-       /* this.postRepositorio.List<User> findFirst10ByLastname(String lastname, Sort sort);
+        //List <Post> pag = this.postRepositorio.findAllTop10();
+        /* this.postRepositorio.List<User> findFirst10ByLastname(String lastname, Sort sort);
 
-        List <Post> pag = this.postRepositorio.findAllTop10();
+
         TopTenByAge();*/
        return null;
     }
 
     public List<Post> obtenerTodos() {
-        return this.postRepositorio.findAll();
+        //return this.postRepositorio.findAll();
+        return this.postRepositorio.findTop100ByOrderByIdDesc();
     }
 }

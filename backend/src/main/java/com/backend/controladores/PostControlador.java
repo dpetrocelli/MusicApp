@@ -359,7 +359,13 @@ public class PostControlador {
     public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
         try{
             List<Post> lp = this.postServicio.obtenerTodos();
-            return new ResponseEntity<List<Post>>(lp, HttpStatus.OK);
+            ArrayList<Post> resp = new ArrayList<Post>();
+            for (Post p: lp) {
+                resp.add(p);
+
+            }
+            log.info(" Array" + resp.size());
+            return new ResponseEntity<ArrayList<Post>>(resp, HttpStatus.OK);
 
 
         }catch (Exception e){
@@ -400,6 +406,8 @@ public class PostControlador {
             el.setRutaAcceso(pathFile);
             el.setPost(post);
             el.setTipoRecurso("imglocal");
+            Date actual = Calendar.getInstance().getTime();
+            el.setFechaCreacion(actual);
             this.elementoServicio.guardar(el);
             return new ResponseEntity(new Mensaje("Se guardaron los elementos y el post"), HttpStatus.OK);
         }catch (Exception e){
