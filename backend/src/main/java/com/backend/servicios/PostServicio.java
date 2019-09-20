@@ -56,6 +56,12 @@ public class PostServicio {
 
     public List<Post> obtenerTodos() {
         //return this.postRepositorio.findAll();
-        return this.postRepositorio.findTop100ByOrderByIdDesc();
+        List<Post> test =  this.postRepositorio.findTop10ByOrderByFechaCreacionDesc();
+       /* String result;
+        for (Post post: test) {
+            result = post.getBiografia().getArtista().getUsuario().getUsername();
+        }*/
+        return test;
+
     }
 }

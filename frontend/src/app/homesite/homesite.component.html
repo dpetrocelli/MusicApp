@@ -1,15 +1,31 @@
+
+<div> 
+  <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
+  <input type="text" name="buscar" id="buscar">
+  
+</div>
 <section id="homeSiteContainer" class="col-12">
-
-  <div *ngIf="hayInformacion" class="container">
-
-      <div class="post row d-flex justify-content-center" *ngFor="let post of listaPosts">
-        <div class="info col-12"> Creado: {{post.fechaCreacion}}</div>
-        <div class="fechaEdicion col-4" *ngIf="isEdited(post)"><span>Editado: {{post.fechaEdicion}}</span></div>
-        <div class="info col-12">Info Post {{post.informacion}}</div>
-
-
+   <div *ngIf="hayPosts" >
+    <span></span>
+    <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
+      <div class="info col-12"> Usuario: {{post.username}}</div>
+      <div class="info col-12"> NickName: {{post.nickname}}</div>
+      <div class="info col-12"> Creado: {{post.fechaCreacion | date: 'dd/MM/yyyy HH:mm:SS' }}</div>
+      <div class="fechaEdicion col-4" *ngIf="isEdited(post)"><span>Editado: {{post.fechaEdicion | date: 'dd/MM/yyyy HH:mm:SS'}}</span></div>
+      <div class="info col-12">Info Post {{post.informacion}}</div>
+      <div class="col-12 d-flex flex-row justify-content-center">
+        <div *ngIf="hasResource(post, 'vid')">
+          <button class="btn btn-success" (click)="verVideo(post)">Ver video</button>
+        </div>
+        <div *ngIf="hasResource(post, 'img')">
+          <button class="btn btn-success" (click)="verImagen(post)">Ver Imagenes</button>
+        </div>
+        <button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button>
+        <button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button>
+        <button class="btn btn-success" routerLink="redsocial/{{post.username}}">Ver Perfil</button>
       </div>
-
     </div>
+
+  </div>
 
 </section>

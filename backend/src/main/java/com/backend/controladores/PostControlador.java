@@ -6,8 +6,6 @@ import com.backend.servicios.*;
 import com.backend.singleton.ConfiguradorSingleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @CrossOrigin(origins = "*")
@@ -263,6 +253,8 @@ public class PostControlador {
                 Biografia bio = this.biografiaServicio.obtener(artista);
                 Post post = new Post();
                 post.setBiografia(bio);
+                post.setNickname(artista.getNickname());
+                post.setUsername(usuario.getUsername());
                 post.setInformacion(formulario.get("informacion").getAsString());
                 Date actual = Calendar.getInstance().getTime();
                 post.setFechaCreacion(actual);
@@ -357,17 +349,10 @@ public class PostControlador {
 
     @PostMapping("obtenerHomeSite")
     public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
+
         try{
             List<Post> lp = this.postServicio.obtenerTodos();
-            ArrayList<Post> resp = new ArrayList<Post>();
-            for (Post p: lp) {
-                resp.add(p);
-
-            }
-            log.info(" Array" + resp.size());
-            return new ResponseEntity<ArrayList<Post>>(resp, HttpStatus.OK);
-
-
+           return new ResponseEntity<List<Post>>(lp, HttpStatus.OK);
         }catch (Exception e){
             log.info(" something has failed");
             return new ResponseEntity<List<Post>>((List<Post>) null, HttpStatus.BAD_REQUEST);

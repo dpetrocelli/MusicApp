@@ -1,5 +1,7 @@
 package com.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +23,7 @@ public class Elemento {
     Date fechaModificacion;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "fk_post", nullable = false, updatable = false)
     private Post post;
 

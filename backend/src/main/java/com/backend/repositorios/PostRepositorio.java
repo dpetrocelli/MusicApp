@@ -18,7 +18,7 @@ public interface PostRepositorio extends JpaRepository<Post, Long> {
 
     Optional<ArrayList<Post>> findAllByBiografia(Biografia biografia);
     Optional<Post> findById (Long id);
-    List<Post> findTop100ByOrderByIdDesc();
+    List<Post> findTop10ByOrderByFechaCreacionDesc();
 
 
 

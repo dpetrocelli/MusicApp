@@ -23,6 +23,7 @@ import { PostComponent } from './miactividad/post/post.component';
 import { ComprarPromocionesComponent } from './promociones/comprar-promociones.component';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { HomesiteComponent } from './homesite/homesite.component';
+import { RedSocialComponent } from './redsocial/redsocial.component';
 
 const routes: Routes = [
 
@@ -34,9 +35,14 @@ const routes: Routes = [
 
 
   // Opciones de Artista
+      // Home RedSocial
    {path: 'homesite', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   {path: 'perfil/:nombre', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+      // Perfil (otro) RedSocial
+{path: 'redsocial', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+      // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   
+      // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

@@ -37,7 +37,13 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { ImgSliderComponent } from './miactividad/post/imgSlider/imgSlider.component';
 import { YoutubePopupComponent } from './miactividad/post/youtubePopup/youtubePopup.component';
+
 import { HomesiteComponent } from './homesite/homesite.component';
+import { RedSocialComponent } from './redsocial/redsocial.component';
+import {ImagenPerfilRedsocialComponent} from './redsocial/imagen-perfil-redsocial/imagen-perfil-redsocial.component';
+import {InfoPerfilRedsocialComponent} from './redsocial/info-perfil-redsocial/info-perfil-redsocial.component';
+import {PostRedsocialComponent} from './redsocial/post-redsocial/post-redsocial.component';
+import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/puntuacion-redsocial.component';
 
 @NgModule({
    declarations: [
@@ -70,7 +76,12 @@ import { HomesiteComponent } from './homesite/homesite.component';
       ImgSliderComponent,
       YoutubePopupComponent,
       ComprarPromocionesComponent,
-      CrearPuntuacionComponent
+      CrearPuntuacionComponent,
+      PuntuacionRedsocialComponent,
+      PostRedsocialComponent,
+      InfoPerfilRedsocialComponent,
+      ImagenPerfilRedsocialComponent,
+      RedSocialComponent
    ],
    imports: [
       BrowserModule,
@@ -85,8 +96,8 @@ import { HomesiteComponent } from './homesite/homesite.component';
       AppComponent
    ],
    entryComponents: [
-     ImgSliderComponent,
-     YoutubePopupComponent
+      ImgSliderComponent,
+      YoutubePopupComponent
    ]
 })
 export class AppModule { }

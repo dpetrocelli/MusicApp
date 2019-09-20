@@ -1,5 +1,7 @@
 package com.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -17,10 +19,12 @@ public class PuntuacionArtista {
     double puntuacion;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "fkArtistaPuntuador", nullable = true, updatable = true)
     private Artista artistaPuntuador;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "fkArtistaPuntuado", nullable = true, updatable = true)
     private Artista artistaPuntuado;
 

@@ -1,5 +1,7 @@
 package com.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,8 +23,12 @@ public class Post {
     private List<Elemento> elementos;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "fk_biografia", nullable = false, updatable = false)
     private Biografia biografia;
+
+    private String username;
+    private String nickname;
 
 
     public Post() {
@@ -34,6 +40,22 @@ public class Post {
         this.fechaEdicion = fechaEdicion;
         this.elementos = elementos;
         this.biografia = biografia;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Long getId() {

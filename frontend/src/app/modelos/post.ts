@@ -1,4 +1,5 @@
 import { Elemento } from "./elemento";
+import { Biografia } from './biografia';
 
 export class Post {
   id?: number;
@@ -6,5 +7,9 @@ export class Post {
   fechaCreacion: Date;
   fechaEdicion: Date;
   elementos: Elemento[];
+  biografia: Biografia;
+  username : string; 
+  nickname : string; 
+  
   
 }
