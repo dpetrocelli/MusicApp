@@ -1,6 +1,7 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "artista")
-public class Artista {
+public class Artista implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

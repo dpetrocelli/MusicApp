@@ -2,11 +2,12 @@ package com.backend.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "banda")
-public class Banda {
+public class Banda implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

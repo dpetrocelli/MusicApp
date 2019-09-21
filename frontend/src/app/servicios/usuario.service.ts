@@ -79,8 +79,21 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.baseURL + `comercio_esta_activado`, ld, cabecera); 
   }
 
+  public obtenerDatosUsuarioPorId( login : LoginDatos, id : number): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('id', String (id));
+    return this.httpClient.post<any>(this.baseURL + 'obtenerDatosUsuarioPorId',formdata);
+  }
+
   public obtenerDatosUsuario (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerDatosUsuario',login, cabecera);
+  }
+  public obtenerDatosUsuarioRedSocial (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerDatosUsuario',formdata);
   }
   
 }

@@ -3,7 +3,7 @@
         <h4 style="color: chocolate;"> General {{promedio}} </h4>
         <div class="d-flex flex-column" *ngFor="let puntuacion of listaPuntuacion">
           <div class="puntuacion" style="background-color: peachpuff"> 
-            <span> Usuario : {{puntuacion.artistaPuntuador.usuario.username}} </span>
+            <!-- <span> Usuario : {{puntuacion.artistaLoaded.usuario.username}} </span>-->
             <span> - {{puntuacion.fechaPuntuacion | date: 'dd/MM/yyyy HH:mm:SS'}}</span>
             <br>
             <span> Comentario: {{puntuacion.comentario}}</span><br>

@@ -67,6 +67,26 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("No existe biografia"), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("RedSocialObtenerBiografia")
+    public ResponseEntity<?> RedSocialObtenerBiografia (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtenerPorNombre(nombre);
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+                return new ResponseEntity (new Mensaje(b.getBiografiaBasica()), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener biografia"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("obtenerBiografia")
     public ResponseEntity<?> obtener (@RequestBody LoginDatos ld){
         try{
@@ -120,6 +140,53 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
         }
     }
+
+
+
+    @PostMapping("RedSocialObtenerPost")
+    public ResponseEntity<?> RedSocialObtenerPost (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtenerPorNombre(nombre);
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+
+                List<Post> arrayPost = b.getPosts();
+                ArrayList<Post> alist = new ArrayList<Post>();
+                for (Post post : arrayPost) {
+                    Post p = new Post();
+                    p.setInformacion(post.getInformacion());
+                    p.setId(post.getId());
+                    p.setFechaCreacion(post.getFechaCreacion());
+                    p.setFechaEdicion(post.getFechaEdicion());
+                    List<Elemento> elementos = this.elementoServicio.obtenerTodos(post);
+                    //log.info("Primer elemento: "+elementos.get(0).getRutaAcceso()+" // "+elementos.get(0).getTipoRecurso()+" ID: "+elementos.get(0).getId());
+                    ArrayList<Elemento> response = new ArrayList<Elemento>();
+                    for (Elemento elemento: elementos) {
+                        Elemento e = new Elemento();
+                        e.setRutaAcceso(elemento.getRutaAcceso());
+                        e.setTipoRecurso(elemento.getTipoRecurso());
+                        response.add(e);
+                    }
+                    p.setElementos(response);
+                    alist.add(p);
+                }
+                log.info(" Llegamos ");
+
+                return new ResponseEntity<ArrayList<Post>> (alist, HttpStatus.OK);
+            }
+
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
 
     @PostMapping("obtenerpostsporusuario")
     public ResponseEntity<?> obtenerPosts (@RequestBody LoginDatos ld){
@@ -182,6 +249,29 @@ public class PostControlador {
             return new ResponseEntity<ArrayList<Elemento>> (response, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("RedSocialObtenerImagenPerfil")
+    public ResponseEntity<?> RedSocialObtenerImagenPerfil (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.promocionServicio.validarTokenUsuario(ld)){
+                // Si el usuario de logindatos es válido, voy a avanzar a buscar la info del otro usuario
+
+                Usuario u =  this.usuarioServicio.obtenerPorNombre(nombre);
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Biografia b =  this.biografiaServicio.obtener(artista);
+                String pathImagenPerfil = b.getPathImagenPerfil();
+
+                return new ResponseEntity(new Mensaje(pathImagenPerfil), HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener la imagen de perfil "), HttpStatus.OK);
         }
     }
 

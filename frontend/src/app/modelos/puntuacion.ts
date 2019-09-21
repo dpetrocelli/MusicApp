@@ -5,8 +5,9 @@ export class PuntuacionArtista {
   id?: number;
   comentario: String;
   puntuacion: number;
-  artistaPuntuador: Artista;
-  artistaPuntuado: Artista;
+  artistaPuntuador: number;
+  artistaPuntuado: number;
+  artistaLoaded: Artista;
 
   
 }

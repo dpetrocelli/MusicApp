@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -35,6 +36,7 @@ public class PuntuacionControlador {
 
             if (result){
                 boolean yaPuntue = this.puntuacionServicio.validarSiYaPuntuee(ld, art);
+                //yaPuntue = false;
                 if (!yaPuntue){
                     boolean guardado = this.puntuacionServicio.guardarPuntuacionArtista(ld, art, comentario,puntuacion);
                     if (guardado){
@@ -57,10 +59,56 @@ public class PuntuacionControlador {
 
     @PostMapping("obtenerPuntuacion")
     public ResponseEntity<?> validar (@RequestBody LoginDatos loginDatos){
-        List<PuntuacionArtista> lista = this.puntuacionServicio.obtenerPuntuacionArtista(loginDatos);
+        List<PuntuacionArtista> lista = this.puntuacionServicio.obtenerPuntuacionArtistaByLoginDatos(loginDatos);
+        /*ArrayList<PuntuacionArtista> pArt = new ArrayList<PuntuacionArtista>();
+        for (PuntuacionArtista pa: lista) {
+            // ARtista puntuador
+            Artista artPuntuador = new Artista();
+            Usuario u = new Usuario();
+            u.setUsername(pa.getArtistaPuntuador().getUsuario().getUsername());
+            artPuntuador.setUsuario(u);
+            PuntuacionArtista puntuacionArtista = new PuntuacionArtista();
+            puntuacionArtista.setArtistaPuntuador(artPuntuador);
+            // Artista puntuado
+            Artista artPuntuado = new Artista();
+            u = new Usuario();
+            u.setUsername(pa.getArtistaPuntuado().getUsuario().getUsername());
+            artPuntuado.setUsuario(u);
+
+            puntuacionArtista.setArtistaPuntuador(artPuntuador);
+            puntuacionArtista.setArtistaPuntuado(artPuntuado);
+            puntuacionArtista.setFechaPuntuacion(pa.getFechaPuntuacion());
+            puntuacionArtista.setPuntuacion(pa.getPuntuacion());
+            puntuacionArtista.setComentario(pa.getComentario());
+
+            // Agrego a la lista respuesta
+            pArt.add(puntuacionArtista);
+
+        }
         log.info(" Obteniendo lista de puntuaciones");
+        return new ResponseEntity<ArrayList<PuntuacionArtista>>(pArt, HttpStatus.OK);
+
+         */
         return new ResponseEntity<List<PuntuacionArtista>>(lista, HttpStatus.OK);
     }
 
+    @PostMapping("verificarSiPuntuee")
+    public ResponseEntity<?>  verificarSiPuntuee (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+        boolean yaPuntue = this.puntuacionServicio.validarSiYaPuntuee(ld, nombre);
+
+        return new ResponseEntity<Boolean>(yaPuntue, HttpStatus.OK);
+    }
+
+    @PostMapping("RedSocialObtenerPuntuacion")
+    public ResponseEntity<?> RedSocialObtenerPuntuacion (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+
+        Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombre);
+        Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+        List<PuntuacionArtista> lista = this.puntuacionServicio.obtenerPuntuacionArtistaByArtista(artista);
+        log.info(" Obteniendo lista de puntuaciones");
+        return new ResponseEntity<List<PuntuacionArtista>>(lista, HttpStatus.OK);
+    }
 
 }

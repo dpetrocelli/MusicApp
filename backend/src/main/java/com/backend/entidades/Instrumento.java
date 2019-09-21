@@ -3,10 +3,11 @@ package com.backend.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "instrumento")
-public class Instrumento {
+public class Instrumento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

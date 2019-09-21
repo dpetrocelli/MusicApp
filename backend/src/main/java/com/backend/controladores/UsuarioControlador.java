@@ -123,6 +123,44 @@ public class UsuarioControlador {
     }
 
 
+    @PostMapping("obtenerDatosUsuarioPorId")
+    public ResponseEntity<?> obtenerDatosUsuarioPorId (@RequestParam("login") String login, @RequestParam("id") String id){
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Artista artista = this.artistaServicio.obtener(Long.parseLong(id));
+                return new ResponseEntity<Artista>(artista, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("RedSocialObtenerDatosUsuario")
+    public ResponseEntity<?> RedSocialObtenerDatosUsuario (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombre);
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                return new ResponseEntity<Artista>(artista, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
     @PostMapping("ingresar")
     public ResponseEntity<?> ingresar(@RequestBody Usuario usuarioFrontEnd){

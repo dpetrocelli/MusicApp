@@ -32,6 +32,19 @@ export class PuntuacionService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerPuntuacion', login, cabecera);
   }
 
+  public verificarSiPuntuee(login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'verificarSiPuntuee',formdata);
+  }
+
+  public obtenerPuntuacionRedSocial(login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerPuntuacion',formdata);
+  }
   
 /*
   public editar(instrumento: Instrumento, id: number): Observable<any> {

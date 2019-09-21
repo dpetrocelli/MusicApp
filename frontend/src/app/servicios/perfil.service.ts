@@ -28,6 +28,13 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerImagenPerfil',login, cabecera);
   }
 
+  public buscarimagenperfilRedSocial (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerImagenPerfil', formdata);
+  }
+
   public subirImagenPerfil (imagenParaSubir: File, login : LoginDatos): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('file', imagenParaSubir);
@@ -40,6 +47,13 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
   }
   
+   public obtenerbiografiaRedSocial (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerBiografia', formdata);
+  }
+  
   public existebiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'existeBiografia',login, cabecera);
   }
@@ -48,6 +62,12 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerpostsporusuario',login, cabecera);
   }
 
+  public obtenerpostsRedSocial (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerPost',formdata);
+  }
   public crearpost (login : LoginDatos, post : Post ): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'crearPost',{login : login, post : post}, cabecera);
   }

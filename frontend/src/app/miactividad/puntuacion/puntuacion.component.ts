@@ -20,34 +20,46 @@ export class PuntuacionComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private router: Router,
-              private puntuacionService : PuntuacionService,) { }
+              private puntuacionService : PuntuacionService) { }
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
-    this.puntuacionService.obtenerPuntuacion(this.userLogged).subscribe(data => {
-      console.log (data);
-      this.listaPuntuacion = data;
+    this.obtenerPuntuacion();
+    this.delay(3000);
+    this.isReady = true;
+    
+  }
 
-      if (this.listaPuntuacion.length> 0){
-        this.listaPuntuacion.forEach(puntuacion => {
-          this.promedio+=puntuacion.puntuacion;
-          this.contador+=1;
-        });
-        this.promedio = this.promedio / this.contador;
-        console.log (" PROM PUNT : "+this.promedio);
-        
-      }else{
-        this.promedio = 0;
-        
-      }
-      this.isReady = true;
+  async obtenerPuntuacion(){
+    this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacion(this.userLogged).toPromise();
+    if (this.listaPuntuacion.length> 0){
+      this.listaPuntuacion.forEach(puntuacion => {
+        this.buscarUsuario(puntuacion);
+        this.promedio+=puntuacion.puntuacion;
+        this.contador+=1;
+        //console.log (" OBJETO", puntuacion);
+      });
+      this.promedio = this.promedio / this.contador;
+      //console.log (" PROM PUNT : "+this.promedio);
       
-      //| limitTo : 3
-    },
-    (err: any) => {
-      console.log( err );
-      //this.router.navigate(['/accesodenegado']);
-    });
+    }else{
+      this.promedio = 0;
+      
+    }
+    
+  }
+  async buscarUsuario (puntuacion : PuntuacionArtista){
+    puntuacion.artistaLoaded = await this.usuarioService.obtenerDatosUsuarioPorId(this.userLogged, puntuacion.artistaPuntuador).toPromise();
+    
+  }
+
+  hasResource (id : number){
+    console.log(id);
+    
+  }
+
+  async delay(ms: number) {
+    return await new Promise( resolve => setTimeout(resolve, ms) );
   }
   
 

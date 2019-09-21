@@ -18,27 +18,24 @@ public class PuntuacionArtista {
 
     double puntuacion;
 
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "fkArtistaPuntuador", nullable = true, updatable = true)
-    private Artista artistaPuntuador;
 
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
-    @JsonIgnore
+    private Long artistaPuntuador;
+    private Long artistaPuntuado;
+
+/*    @ManyToOne (optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "fkArtistaPuntuado", nullable = true, updatable = true)
     private Artista artistaPuntuado;
 
+    @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "fkArtistaPuntuador", nullable = true, updatable = true)
+    private Artista artistaPuntuador;
+*/
     Date fechaPuntuacion;
 
     public PuntuacionArtista() {
     }
 
-    public PuntuacionArtista(String comentario, double puntuacion, Artista artistaPuntuador, Artista artistaPuntuado) {
-        this.comentario = comentario;
-        this.puntuacion = puntuacion;
-        this.artistaPuntuador = artistaPuntuador;
-        this.artistaPuntuado = artistaPuntuado;
-    }
+
 
     public Date getFechaPuntuacion() {
         return fechaPuntuacion;
@@ -72,6 +69,7 @@ public class PuntuacionArtista {
         this.puntuacion = puntuacion;
     }
 
+    /*
     public Artista getArtistaPuntuador() {
         return artistaPuntuador;
     }
@@ -85,6 +83,23 @@ public class PuntuacionArtista {
     }
 
     public void setArtistaPuntuado(Artista artistaPuntuado) {
+        this.artistaPuntuado = artistaPuntuado;
+    }
+    */
+
+    public Long getArtistaPuntuador() {
+        return artistaPuntuador;
+    }
+
+    public void setArtistaPuntuador(Long artistaPuntuador) {
+        this.artistaPuntuador = artistaPuntuador;
+    }
+
+    public Long getArtistaPuntuado() {
+        return artistaPuntuado;
+    }
+
+    public void setArtistaPuntuado(Long artistaPuntuado) {
         this.artistaPuntuado = artistaPuntuado;
     }
 }

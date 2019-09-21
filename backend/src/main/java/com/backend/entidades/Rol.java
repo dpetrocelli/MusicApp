@@ -2,9 +2,11 @@ package com.backend.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+
 @Entity
 @Table(name = "rol")
-public class Rol {
+public class Rol implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

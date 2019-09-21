@@ -37,16 +37,21 @@ public class PuntuacionServicio {
         Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
         Usuario usuario = this.usuarioServicio.obtenerPorNombre(art);
         Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
-
-        List<PuntuacionArtista> listaPuntos = this.puntuacionRepositorio.findAllByArtistaPuntuado(artista);
         boolean found = false;
+        try{
+            List<PuntuacionArtista> listaPuntos = this.puntuacionRepositorio.findAllByArtistaPuntuado(artista.getId());
 
-        for (PuntuacionArtista puntuacion: listaPuntos) {
-            if (puntuacion.getArtistaPuntuador() == artistaPuntuador){
-                found = true;
-                break;
+
+            for (PuntuacionArtista puntuacion: listaPuntos) {
+                if (puntuacion.getArtistaPuntuador() == artistaPuntuador.getId()){
+                    found = true;
+                    break;
+                }
             }
+        }catch (Exception e){
+
         }
+
 
         return found;
     }
@@ -60,19 +65,23 @@ public class PuntuacionServicio {
 
         puntuacionArtista.setComentario(comentario);
         puntuacionArtista.setPuntuacion(Double.parseDouble(puntuacion));
-        puntuacionArtista.setArtistaPuntuador(artistaPuntuador);
-        puntuacionArtista.setArtistaPuntuado(artista);
+        puntuacionArtista.setArtistaPuntuador(artistaPuntuador.getId());
+        puntuacionArtista.setArtistaPuntuado(artista.getId());
         puntuacionArtista.setFechaPuntuacion(new Date());
         this.puntuacionRepositorio.save(puntuacionArtista);
         return true;
     }
 
-    public List<PuntuacionArtista> obtenerPuntuacionArtista(LoginDatos ld) {
+    public List<PuntuacionArtista> obtenerPuntuacionArtistaByLoginDatos(LoginDatos ld) {
         Usuario usuarioPuntuado = this.usuarioServicio.obtener(ld.getIdUsuario());
         Artista artistaPuntuado = this.artistaServicio.obtenerPorUsuario(usuarioPuntuado);
 
-        return this.puntuacionRepositorio.findAllByArtistaPuntuado(artistaPuntuado);
+        return this.puntuacionRepositorio.findAllByArtistaPuntuado(artistaPuntuado.getId());
 
 
+    }
+
+    public List<PuntuacionArtista> obtenerPuntuacionArtistaByArtista (Artista art){
+        return this.puntuacionRepositorio.findAllByArtistaPuntuado(art.getId());
     }
 }
