@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   isComercio = false;
   isComercioVinculadoMP = false;
   isAdmin = false;
+  isLoggedIn = false;
   userLogged : LoginDatos;
 
   constructor(private usuarioService: UsuarioService,
@@ -30,6 +31,8 @@ export class AppComponent implements OnInit {
   
   reloadInfo(): void{
     this.userLogged = this.usuarioService.getUserLoggedIn();
+    this.isLoggedIn = true;
+    
     if (this.userLogged!= null){
       if (this.userLogged.roles == "comercio"){
         this.isComercio = true;
@@ -57,6 +60,16 @@ export class AppComponent implements OnInit {
     }
   );  
     
+  }
+
+  cerrarsesion(){
+    localStorage.setItem('currentUser', null);
+    this.isArtista = false;
+    this.isComercio = false;
+    this.isAdmin = false;
+    this.isLoggedIn = false;
+    this.router.navigate(['']);
+    window.location.reload();
   }
   
 }

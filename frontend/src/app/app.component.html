@@ -7,14 +7,14 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink="homesite">Home</a>
+        <a class="nav-link" routerLink="homesite">Inicio</a>
       </li>
       <div *ngIf="isArtista">
         <li class="nav-item">
           <a class="nav-link" routerLink="perfil">Perfil</a>
         </li>
       </div>
-      <div *ngIf="isArtista">
+      <!--<div *ngIf="isArtista">
         <li class="nav-item">
           <a class="nav-link" routerLink="posts/nuevo">Nuevo Post</a>
         </li>
@@ -23,7 +23,7 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="puntuacion/nuevo">Puntuar </a>
         </li>
-      </div>
+      </div>-->
       <div *ngIf="isArtista">
         <li class="nav-item">
           <a class="nav-link" routerLink="promociones/comprar">Promociones</a>
@@ -50,8 +50,14 @@
           <a class="nav-link" routerLink="activarComercio">Activar comercio</a>
         </li>
       </div>
+        
+      
     </ul>
   </div>
-</nav> 
+  <div class="usuarioLogged" *ngIf="userLogged"> 
 
+    <label for="cerrarsesion"> Hola: {{userLogged.nombreUsuario}}  </label>
+    <button id="cerrarsesion" (click)="cerrarsesion()" class="btn btn-danger">Cerrar sesion</button>
+  </div>  
+</nav> 
 <router-outlet></router-outlet>

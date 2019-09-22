@@ -124,13 +124,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  cerrarsesion(){
-    localStorage.setItem('currentUser', null);
-    this.loginDialog = false;
-    this.registryDialog = false;
-    this.logOff = true;
-    location.reload();
-  }
+  
 
   volver(): void {
     window.history.back();
