@@ -63,13 +63,21 @@ export class AppComponent implements OnInit {
   }
 
   cerrarsesion(){
-    localStorage.setItem('currentUser', null);
+    localStorage.clear();
+    this.userLogged = null;
     this.isArtista = false;
     this.isComercio = false;
     this.isAdmin = false;
-    this.isLoggedIn = false;
+    
     this.router.navigate(['']);
-    window.location.reload();
+   setTimeout(() => 
+    {
+      window.location.reload();
+    },
+    100);
+    
+    
   }
+  
   
 }
