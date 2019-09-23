@@ -45,6 +45,8 @@ import {InfoPerfilRedsocialComponent} from './redsocial/info-perfil-redsocial/in
 import {PostRedsocialComponent} from './redsocial/post-redsocial/post-redsocial.component';
 import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/puntuacion-redsocial.component';
 
+
+
 @NgModule({
    declarations: [
       AppComponent,

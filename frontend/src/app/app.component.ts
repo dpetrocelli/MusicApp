@@ -18,12 +18,36 @@ export class AppComponent implements OnInit {
   isAdmin = false;
   isLoggedIn = false;
   userLogged : LoginDatos;
+  notificacionesCargadas = false;
+  items : any[];
 
   constructor(private usuarioService: UsuarioService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
               
   ngOnInit(): void {
+    this.items = [
+      {
+        id: 19,
+        cliente: 'El gato volador',
+        total: 1000
+      },
+      {
+        id: 212,
+        cliente: 'servicios industriales del reino del muy pero muy lejano sa de cv',
+        total: 78456
+      },
+      {
+        id: 312,
+        cliente: 'Cliente nuevo',
+        total: 10000
+      },
+      {
+        id: 5000,
+        cliente: 'Eduardo Cespedes Carrera',
+        total: 100000
+      }
+    ];
     this.reloadInfo();
     
   }
@@ -49,6 +73,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+
+  mostrarNotificaciones(){
+    this.notificacionesCargadas = true;
+  }
   verificarComercioActivado() {
     
     this.usuarioService.verificarComercioActivado(this.userLogged).subscribe(data => {
@@ -74,7 +102,7 @@ export class AppComponent implements OnInit {
     {
       window.location.reload();
     },
-    100);
+    30);
     
     
   }

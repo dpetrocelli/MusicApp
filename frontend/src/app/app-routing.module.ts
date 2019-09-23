@@ -25,6 +25,7 @@ import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.componen
 import { HomesiteComponent } from './homesite/homesite.component';
 import { RedSocialComponent } from './redsocial/redsocial.component';
 
+
 const routes: Routes = [
 
   // Lista de acceso base para todos
@@ -41,6 +42,7 @@ const routes: Routes = [
 {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   
    
       // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

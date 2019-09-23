@@ -50,14 +50,48 @@
           <a class="nav-link" routerLink="activarComercio">Activar comercio</a>
         </li>
       </div>
-        
+      <!-- <div *ngIf="hayNotificaciones"> -->
+    <!--  Recurso url: https://stackblitz.com/edit/angular-v55ace-dropdown?file=app%2Fapp.component.ts-->
+      <div class="notificaciones">
+          <div class="row">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block">
+                <img src="https://freeiconshop.com/wp-content/uploads/edd/notification-flat.png" height="42" width="42" id="dropdownBasic1" ngbDropdownToggle> 
+                
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="min-width: 430px;">
+                  <h6 class="dropdown-header">Notificaciones usuario: {{userLogged.nombreUsuario}}</h6>
+                  <div *ngFor="let item of items" class="dropdown-item">
+                    <strong class="text-danger m-1">{{item.id}}</strong> <strong>{{item.total | currency:'MXN'}}</strong>
+                    <div class="p-0 m-0"><small>{{ item.cliente | uppercase }}</small></div>
+                    <div class="botones"> 
+                        <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
+                        <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="rechazar(item)">
+                        <button class="btn btn-success" (click)="verperfil(post.id)"> ver Perfil</button>
+                        <button class="btn btn-danger" (click)="descartar(post.id)">Descartar</button>
+                        
+
+                    </div>
+                    
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-center" href="#">See more</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>   
       
     </ul>
+    
   </div>
+  
+    
+   
+    <div class="usuarioLogged">
+        <label for="cerrarsesion"> <strong class="usuario">  Usuario: {{userLogged.nombreUsuario}}  </strong> </label>
+      </div>
   <div class="usuarioLogged" *ngIf="userLogged"> 
-
-    <label for="cerrarsesion"> Hola: {{userLogged.nombreUsuario}}  </label>
-    <button id="cerrarsesion" (click)="cerrarsesion()" class="btn btn-danger">Cerrar sesion</button>
+      <img src="https://www.iconshock.com/image/Beta/Communications/close_session" height="42" width="42" id="cerrarsesion" (click)="cerrarsesion()" >
   </div>  
 </nav> 
 <router-outlet></router-outlet>
