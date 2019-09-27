@@ -44,6 +44,8 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     @Autowired
     PostRepositorio postRepositorio;
     @Autowired
+    ComercioRepositorio comercioRepositorio;
+    @Autowired
     InstrumentoServicio instrumentoServicio;
     @Autowired BiografiaServicio biografiaServicio;
 
@@ -83,6 +85,27 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             usuarioAdmin.addRol(r);
             usuarioRepositorio.save(usuarioAdmin);
             log.info("Usuario admin almacenado con exito");
+
+            // USUARIO COMERCIO
+            log.info("HAY QUE AGREGAR USUARIO COMERCIO ");
+            r = rolRepositorio.findByNombre("comercio");
+            Usuario usuarioComercio = new Usuario();
+            usuarioComercio.setUsername("comercio");
+            usuarioComercio.setPassword("comercio");
+            usuarioComercio.setEmail("comercio@gmail.com");
+            usuarioComercio.addRol(r);
+
+
+            Comercio comercio = new Comercio();
+            comercio.setUsuario(usuarioComercio);
+            comercio.setRazonsocial("comecio");
+            comercio.setDireccion("comercio direccion");
+
+            comercioRepositorio.save(comercio);
+            usuarioRepositorio.save(usuarioComercio);
+
+
+            log.info("Usuario comercio almacenado con exito");
 
             // USUARIO ARTISTA
 

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from './servicios/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginDatos } from './modelos/logindatos';
+import { NotificacionBandaUsuario } from './modelos/notificacionbandausuario';
 import { Observable } from 'rxjs';
+import {NotificacionService} from './servicios/notificacion.service';
 
 @Component({
   selector: 'app-root',
@@ -19,37 +21,62 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   userLogged : LoginDatos;
   notificacionesCargadas = false;
-  items : any[];
+  items : any[] = [];
+  notificaciones : NotificacionBandaUsuario[];
 
   constructor(private usuarioService: UsuarioService,
+              private notificacionService: NotificacionService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
               
   ngOnInit(): void {
-    this.items = [
-      {
-        id: 19,
-        cliente: 'El gato volador',
-        total: 1000
-      },
-      {
-        id: 212,
-        cliente: 'servicios industriales del reino del muy pero muy lejano sa de cv',
-        total: 78456
-      },
-      {
-        id: 312,
-        cliente: 'Cliente nuevo',
-        total: 10000
-      },
-      {
-        id: 5000,
-        cliente: 'Eduardo Cespedes Carrera',
-        total: 100000
-      }
-    ];
     this.reloadInfo();
-    
+    console.log (this.userLogged);
+    this.notificacionService.obtener(this.userLogged).subscribe(data => {
+      this.notificaciones = data;
+      this.notificaciones.forEach(element => {
+        var obj: object = {
+          id: element.nombreDestino,
+          cliente: element.mensaje,
+          fecha: element.fechaNotificacion,
+          total: element.tipoDeOperacion
+        };
+        
+        this.items.push(obj);
+      });      
+      /*
+      this.items = [
+        {
+          id: 19,
+          cliente: 'El gato volador',
+          total: 1000
+        },
+        {
+          id: 212,
+          cliente: 'servicios industriales del reino del muy pero muy lejano sa de cv',
+          total: 78456
+        },
+        {
+          id: 312,
+          cliente: 'Cliente nuevo',
+          total: 10000
+        },
+        {
+          id: 5000,
+          cliente: 'Eduardo Cespedes Carrera',
+          total: 100000
+        }
+      ];
+      */
+      console.log (" CARTEL ", data);
+    },
+    (err: any) => {
+      console.log(err.error.mensaje);
+      
+    }
+  ); 
+
+        
   }
 
   

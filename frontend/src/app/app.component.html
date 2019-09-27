@@ -59,17 +59,16 @@
                 <img src="https://freeiconshop.com/wp-content/uploads/edd/notification-flat.png" height="42" width="42" id="dropdownBasic1" ngbDropdownToggle> 
                 
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="min-width: 430px;">
-                  <h6 class="dropdown-header">Notificaciones usuario: {{userLogged.nombreUsuario}}</h6>
+                  <h6 class="dropdown-header">Notificaciones usuario: <strong> {{userLogged.nombreUsuario}} </strong></h6>
                   <div *ngFor="let item of items" class="dropdown-item">
-                    <strong class="text-danger m-1">{{item.id}}</strong> <strong>{{item.total | currency:'MXN'}}</strong>
+                    <strong class="text-danger m-1">{{item.id}}</strong> <strong class="text-danger m-1">{{item.fecha | date: 'dd/MM/yyyy HH:mm:SS'}}</strong> 
+                    <br><strong>Tipo {{item.total}}</strong>
                     <div class="p-0 m-0"><small>{{ item.cliente | uppercase }}</small></div>
                     <div class="botones"> 
                         <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
                         <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="rechazar(item)">
-                        <button class="btn btn-success" (click)="verperfil(post.id)"> ver Perfil</button>
-                        <button class="btn btn-danger" (click)="descartar(post.id)">Descartar</button>
-                        
-
+                        <button class="btn btn-success" (click)="verperfil(item)"> ver Perfil</button>
+                        <button class="btn btn-danger" (click)="descartar(item)">Descartar</button>
                     </div>
                     
                   </div>
