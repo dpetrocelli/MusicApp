@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       this.notificaciones = data;
       this.notificaciones.forEach(element => {
         var obj: object = {
-          id: element.nombreDestino,
+          id: element.nombreOrigen,
           cliente: element.mensaje,
           fecha: element.fechaNotificacion,
           total: element.tipoDeOperacion
@@ -100,6 +100,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+
+  aceptar(item : NotificacionBandaUsuario) {
+
+  }
+  
+  descartar(item : NotificacionBandaUsuario){
+
+  }
+  verperfil(item : NotificacionBandaUsuario){
+
+  }
+  responder(item : NotificacionBandaUsuario){
+
+  }
+  eliminar(item : NotificacionBandaUsuario){
+
+  }
 
   mostrarNotificaciones(){
     this.notificacionesCargadas = true;

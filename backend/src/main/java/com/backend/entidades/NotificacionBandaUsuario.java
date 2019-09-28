@@ -17,6 +17,7 @@ public class NotificacionBandaUsuario {
     String nombreDestino;
     int tipoDestino;
     String tipoDeOperacion;
+    String estado;
     // los tipos de operacion harcodeados por ahora son
 
     /*
@@ -106,5 +107,13 @@ public class NotificacionBandaUsuario {
 
     public void setTipoOrigen(int tipoOrigen) {
         this.tipoOrigen = tipoOrigen;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

@@ -62,15 +62,37 @@
                   <h6 class="dropdown-header">Notificaciones usuario: <strong> {{userLogged.nombreUsuario}} </strong></h6>
                   <div *ngFor="let item of items" class="dropdown-item">
                     <strong class="text-danger m-1">{{item.id}}</strong> <strong class="text-danger m-1">{{item.fecha | date: 'dd/MM/yyyy HH:mm:SS'}}</strong> 
-                    <br><strong>Tipo {{item.total}}</strong>
+                    <!--<br><strong>Tipo {{item.total}}</strong>-->
                     <div class="p-0 m-0"><small>{{ item.cliente | uppercase }}</small></div>
-                    <div class="botones"> 
-                        <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
-                        <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="rechazar(item)">
-                        <button class="btn btn-success" (click)="verperfil(item)"> ver Perfil</button>
-                        <button class="btn btn-danger" (click)="descartar(item)">Descartar</button>
+                    <div class="botones">
+                      <div *ngIf="item.total==='moderacionArtista' || item.total==='moderacionBanda'; else tipomsg">
+                        <!-- Si es msg, solo puedo poner reply--> 
+                            <div *ngIf="item.estado!='procesado'; else moderacionprocesada">
+                              <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
+                              <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="descartar(item)">
+                              <img src="https://png.pngtree.com/svg/20170602/person_1058425.png" height="42" width="42" (click)="verperfil(item)">
+                              <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">                             
+                            </div>
+                            <ng-template #moderacionprocesada>
+                                <img src="https://png.pngtree.com/svg/20170602/person_1058425.png" height="42" width="42" (click)="verperfil(item)">
+                                <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">  
+                            </ng-template>
+                              
+                      </div>
+                      <!-- Si no es mensaje, es decir es autorizaciones tengo que habilitar las opciones -->
+                              
+                        <ng-template #tipomsg>
+                            <div *ngIf="item.estado!='procesado'; else msgprocesado">
+                              <img src="https://image.flaticon.com/icons/png/512/63/63365.png" height="42" width="42" (click)="responder(item)">
+                              <img src="https://png.pngtree.com/svg/20170602/person_1058425.png" height="42" width="42" (click)="verperfil(item)">
+                              <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">
+                            </div>
+                            
+                          <ng-template #msgprocesado>
+                              <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">
+                          </ng-template>
+                        </ng-template>
                     </div>
-                    
                   </div>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item text-center" href="#">See more</a>

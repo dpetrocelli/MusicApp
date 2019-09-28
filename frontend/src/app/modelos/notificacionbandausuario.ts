@@ -8,5 +8,6 @@ export class NotificacionBandaUsuario{
   fechaNotificacion : Date;
   nombreOrigen : String;
   tipoOrigen : number;
+  estado: String;
   
 }
