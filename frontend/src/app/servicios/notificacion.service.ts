@@ -53,6 +53,14 @@ export class NotificacionService {
     return this.httpClient.post<any>(this.baseURL + 'descartar', formdata);
   }
   
+  public incluirABanda (login: LoginDatos, nombreOrigen: string, nombreDestino: string, id: string) : Observable <any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombreOrigen', nombreOrigen);
+    formdata.append('nombreDestino', nombreDestino);
+    formdata.append('id', id);
+    return this.httpClient.post<any>(this.baseURL + 'incluirABanda', formdata);
+  }
   
 }
 

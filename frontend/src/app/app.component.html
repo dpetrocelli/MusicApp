@@ -72,7 +72,7 @@
                     <div class="botones">
                       <div *ngIf="item.tipo==='moderacionArtista' || item.tipo==='moderacionBanda'; else tipomsg">
                         <!-- Si es msg, solo puedo poner reply--> 
-                            <div class="noprocesado" *ngIf="item.estado!='procesado'; else moderacionprocesada">
+                            <div class="noprocesado" *ngIf="item.estado!='moderado'; else moderacionprocesada">
                               <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
                               <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="descartar(item)">
                               <img src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" height="42" width="42" (click)="verperfil(item)">
@@ -87,7 +87,7 @@
                       
                         <ng-template #tipomsg>
                           <div *ngIf="item.tipo==='msg'; else msginfo">
-                            <div class="noprocesado" *ngIf="item.estado!='msgModerado'; else msgModerado">
+                            <div class="noprocesado" *ngIf="item.estado!='moderado'; else msgModerado">
                               
                               <img src="https://image.flaticon.com/icons/png/512/63/63365.png" height="42" width="42" (click)="openModal(true, item.origen, item.id)">
                               <img src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" height="42" width="42" (click)="verperfil(item)">

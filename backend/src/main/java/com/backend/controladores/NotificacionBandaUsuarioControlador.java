@@ -111,4 +111,28 @@ public class NotificacionBandaUsuarioControlador {
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
+
+    @PostMapping("incluirABanda")
+    public ResponseEntity<?> incluirABanda (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
+
+                boolean result = this.notificacionBandaUsuarioServicio.incluirABanda(id, nombreOrigen, nombreDestino);
+                if (result){
+                    return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+                }else {
+                    return new ResponseEntity(new Mensaje("ERROR cn algolabur"), HttpStatus.BAD_REQUEST);
+                }
+
+            }
+
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
 }

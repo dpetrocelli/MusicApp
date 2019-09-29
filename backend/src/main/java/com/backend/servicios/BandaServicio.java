@@ -37,4 +37,8 @@ public class BandaServicio {
     public boolean verificarSiSoyAdminDeBanda(Artista artista) {
         return this.bandaRepositorio.existsByArtistaLider(artista);
     }
+
+    public Banda obtenerBandaPorNombre(String nombreDestino) {
+        return this.bandaRepositorio.findByNombre(nombreDestino).get();
+    }
 }

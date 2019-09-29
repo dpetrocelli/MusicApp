@@ -131,4 +131,33 @@ public class NotificacionBandaUsuarioServicio {
         avisoASolicitante.setFechaNotificacion(new Date());
         this.notificacionBandaUsuarioRepositorio.save(avisoASolicitante);
     }
+
+    public boolean incluirABanda(String id, String nombreOrigen, String nombreDestino) {
+        //[STEP 0] - Incluyo el usuario a la banda, si to do sale bien hago step 1 y 2
+        Banda b = this.bandaServicio.obtenerBandaPorNombre (nombreDestino);
+        Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombreOrigen);
+        Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+        artista.addBanda(b);
+        this.artistaServicio.guardar(artista);
+        //b.addArtista(artista);
+        //this.artistaServicio.guardar(artista);
+        //this.bandaServicio.bandaRepositorio.save(b);
+        //[STEP 1] - Actualizo la notificación para darla como procesada
+        NotificacionBandaUsuario notificacionBandaUsuario = this.notificacionBandaUsuarioRepositorio.findById(Long.parseLong(id)).get();
+        notificacionBandaUsuario.setEstado("moderado");
+        this.notificacionBandaUsuarioRepositorio.save(notificacionBandaUsuario);
+        //[STEP 2] - Genero notificación para el usuario para darle la noticia
+        NotificacionBandaUsuario avisoASolicitante = new NotificacionBandaUsuario();
+        avisoASolicitante.setEstado("nueva");
+        avisoASolicitante.setMensaje(" Ahora forma parte la banda "+nombreDestino);
+        avisoASolicitante.setTipoOrigen(2);
+        avisoASolicitante.setTipoDestino(1);
+        avisoASolicitante.setTipoDeOperacion("info");
+        avisoASolicitante.setNombreOrigen(nombreDestino);
+        avisoASolicitante.setNombreDestino(nombreOrigen);
+        avisoASolicitante.setFechaNotificacion(new Date());
+        this.notificacionBandaUsuarioRepositorio.save(avisoASolicitante);
+        return true;
+
+    }
 }
