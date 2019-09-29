@@ -15,7 +15,7 @@ export class NotificacionService {
   baseURL = 'http://localhost:8081/api/notificacionesBandaUsuario/';
 
   // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/banda/';
+  //baseURL = 'http://lacajadepandora.ddns.net:9000/api/banda/';
 
 
   private isUserLoggedIn = false;
