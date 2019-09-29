@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface ArtistaRepositorio extends JpaRepository<Artista, Long> {
     boolean existsByUsuario(Usuario usuario);
     Optional<Artista> findByUsuario(Usuario usuario);
+
+    Artista findByNombre(String nombre);
 }

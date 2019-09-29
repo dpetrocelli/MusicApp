@@ -165,4 +165,11 @@ public class Artista implements Serializable {
     public void setPuntuacionesRecibidas(List<PuntuacionArtista> puntuacionesRecibidas) {
         this.puntuacionesRecibidas = puntuacionesRecibidas;
     }
+    public void addBanda (Banda banda){
+        this.banda.add(banda);
+    }
+
+    public void removeBanda (Banda banda){
+        this.banda.remove(banda);
+    }
 }

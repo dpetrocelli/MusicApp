@@ -6,23 +6,42 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "NotificacionBandasUsuarios")
+@Table(name = "NotificacionBandaUsuario")
 
-public class NotificacionBandasUsuarios {
+public class NotificacionBandaUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    Long idDestino;
+    String nombreDestino;
     int tipoDestino;
     String tipoDeOperacion;
+    String estado;
+    // los tipos de operacion harcodeados por ahora son
+
+    /*
+    Usuario:    -> msg
+                -> aceptar
+                -> rechazar
+                -> puedo_unirme_a_tu_banda
+
+    Banda:      -> msg
+                -> aceptar
+                -> rechazar
+                -> queres_sumarte_a_mi_banda
+
+     */
     String mensaje;
     Date fechaNotificacion;
-    Long idOrigen;
+    String nombreOrigen;
     int tipoOrigen;
+    /*
+        tipo 1 -> artista
+        tipo 2 -> banda
+     */
 
-    public NotificacionBandasUsuarios() {
+    public NotificacionBandaUsuario() {
     }
 
     public Long getId() {
@@ -33,12 +52,12 @@ public class NotificacionBandasUsuarios {
         this.id = id;
     }
 
-    public Long getIdDestino() {
-        return idDestino;
+    public String getNombreDestino() {
+        return nombreDestino;
     }
 
-    public void setIdDestino(Long idDestino) {
-        this.idDestino = idDestino;
+    public void setNombreDestino(String nombreDestino) {
+        this.nombreDestino = nombreDestino;
     }
 
     public int getTipoDestino() {
@@ -54,6 +73,7 @@ public class NotificacionBandasUsuarios {
     }
 
     public void setTipoDeOperacion(String tipoDeOperacion) {
+
         this.tipoDeOperacion = tipoDeOperacion;
     }
 
@@ -73,12 +93,12 @@ public class NotificacionBandasUsuarios {
         this.fechaNotificacion = fechaNotificacion;
     }
 
-    public Long getIdOrigen() {
-        return idOrigen;
+    public String getNombreOrigen() {
+        return nombreOrigen;
     }
 
-    public void setIdOrigen(Long idOrigen) {
-        this.idOrigen = idOrigen;
+    public void setNombreOrigen(String nombreOrigen) {
+        this.nombreOrigen = nombreOrigen;
     }
 
     public int getTipoOrigen() {
@@ -87,5 +107,13 @@ public class NotificacionBandasUsuarios {
 
     public void setTipoOrigen(int tipoOrigen) {
         this.tipoOrigen = tipoOrigen;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

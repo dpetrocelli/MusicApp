@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   logOff = false;
 
   // tipo user
-  isArtista = true;
+  //isArtista = true;
 
   // si pude pasar y loguear
   conectado = false;
@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
       //this.msjOK = data.msg ;
       this.conectado = true;
       this.errorConexion = false;
-      console.log(data);
+      //console.log(data);
 
       //Voy a guardar el usuario en LocalStorage
       this.userLogged  = data;

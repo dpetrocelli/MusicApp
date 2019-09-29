@@ -3,7 +3,9 @@ package com.backend.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "banda")
@@ -27,7 +29,8 @@ public class Banda implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRecibidas;
 
-   public Banda(){
+
+    public Banda() {
 
     }
 
@@ -67,5 +70,13 @@ public class Banda implements Serializable {
 
     public void setGeneroMusical(String generoMusical) {
         this.generoMusical = generoMusical;
+    }
+
+    public List<PuntuacionArtista> getPuntuacionesRecibidas() {
+        return puntuacionesRecibidas;
+    }
+
+    public void setPuntuacionesRecibidas(List<PuntuacionArtista> puntuacionesRecibidas) {
+        this.puntuacionesRecibidas = puntuacionesRecibidas;
     }
 }

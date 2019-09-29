@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from './servicios/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginDatos } from './modelos/logindatos';
+import { NotificacionBandaUsuario } from './modelos/notificacionbandausuario';
 import { Observable } from 'rxjs';
+import {NotificacionService} from './servicios/notificacion.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   
+
   title = 'frontend';
   isArtista = false;
   isComercio = false;
@@ -19,38 +22,66 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   userLogged : LoginDatos;
   notificacionesCargadas = false;
-  items : any[];
+  items : any[] = [];
+  notificaciones : any[];
+  modalPopupResponseIsOpen : boolean = false;
+  modalPopupUsuario : string;
+  modalPopupIdNotificacion : string;
 
   constructor(private usuarioService: UsuarioService,
+              private notificacionService: NotificacionService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
               
   ngOnInit(): void {
-    this.items = [
-      {
-        id: 19,
-        cliente: 'El gato volador',
-        total: 1000
-      },
-      {
-        id: 212,
-        cliente: 'servicios industriales del reino del muy pero muy lejano sa de cv',
-        total: 78456
-      },
-      {
-        id: 312,
-        cliente: 'Cliente nuevo',
-        total: 10000
-      },
-      {
-        id: 5000,
-        cliente: 'Eduardo Cespedes Carrera',
-        total: 100000
-      }
-    ];
     this.reloadInfo();
     
+    
   }
+  
+  obtener(){
+    this.notificaciones = [];
+    this.items = [];
+    this.notificacionService.obtener(this.userLogged).subscribe(data => {
+      console.log ("RESPUESTA:", data);
+      this.notificaciones = data;
+      this.notificaciones.forEach(element => {
+        var obj: object = {
+            id : element.id,
+            origen: element.nombreOrigen,
+            destino: element.nombreDestino,
+            cliente: element.mensaje,
+            fecha: element.fechaNotificacion,
+            tipo: element.tipoDeOperacion,
+            estado: element.estado
+          };
+          
+          this.items.push(obj);
+        });      
+       
+        //console.log (" CARTEL ", data);
+      },
+      (err: any) => {
+        console.log(err.error.mensaje);
+        
+      }
+    ); 
+  }
+    
+
+  private openModal(open : boolean, user : string, idNotificacion : string) : void {
+    this.modalPopupResponseIsOpen = open;
+    this.modalPopupUsuario = user;
+    this.modalPopupIdNotificacion = idNotificacion;
+  }
+
+  async botonRespuesta() {
+    this.modalPopupResponseIsOpen = false;
+    let msgRespuesta = (<HTMLInputElement>document.getElementById('respuestaPopup')).value;
+    await this.notificacionService.actualizarNotificacion(this.userLogged, msgRespuesta, this.modalPopupIdNotificacion).toPromise();
+    this.obtener();
+  }
+  
 
   
   reloadInfo(): void{
@@ -67,12 +98,57 @@ export class AppComponent implements OnInit {
         }else {
           if (this.userLogged.roles = "artista"){
             this.isArtista = true;
+            this.obtener();
           }
         }
       }
     }
   }
 
+
+  async aceptar(itemForm: any) {
+    // si acepta depende el tipo de operación
+    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+      // hago una cosa
+    }else{
+      // hago otra cosa
+      console.log ("aceptar e incluir a banda");
+      await this.notificacionService.incluirABanda(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
+      this.obtener();
+    }
+  }
+  
+  async descartar(itemForm: any){
+    
+    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+      // si es un usuario
+    }else{
+      // Banda <- recibe solicitud <- artista
+      console.log ("descartar");
+      await this.notificacionService.descartarNotificacion(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
+      this.obtener();
+      
+
+    }
+  }
+  
+  verperfil(itemForm: any){
+    this.router.navigate(['/redsocial/'+itemForm.origen]);
+  }
+  responder(itemForm: any){
+
+  }
+  async eliminar(itemForm: any){
+    await this.notificacionService.eliminar(this.userLogged, itemForm.id).toPromise();
+    console.log ("ELIMINADO CON EXITO");
+    setTimeout(() => 
+    {
+      this.obtener();
+    },
+    100);
+
+    
+  }
 
   mostrarNotificaciones(){
     this.notificacionesCargadas = true;

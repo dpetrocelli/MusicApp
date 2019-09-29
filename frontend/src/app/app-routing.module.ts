@@ -30,7 +30,6 @@ const routes: Routes = [
 
   // Lista de acceso base para todos
   {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
   {path: 'accesodenegado', component: AccesodenegadoComponent},
 
@@ -48,7 +47,7 @@ const routes: Routes = [
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   {path: 'puntuacion/nuevo', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'puntuacion/nuevo/:usuario', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
 
     // Opciones de Comercio

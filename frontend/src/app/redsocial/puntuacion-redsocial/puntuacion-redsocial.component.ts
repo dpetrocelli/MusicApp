@@ -66,6 +66,14 @@ export class PuntuacionRedsocialComponent implements OnInit {
       
     }
   
+    puntuar(){
+      // tomar el usuario y armar la url para puntuar
+      // quien puntuador -> sesion
+      // a quien puntuar -> 
+      //alert (this.nombreUsuario);
+      this.router.navigate(['puntuacion/nuevo/'+this.nombreUsuario]);
+
+    }
    
   
     async delay(ms: number) {

@@ -18,6 +18,7 @@ export class ImgSliderComponent implements OnInit {
     this.slider.sliderImageHeight = 400;
     this.slider.sliderImageWidth = 400;
     this.slider.imagePopup = true;
+    this.slider.autoSlide = true;
   }
 
 }
