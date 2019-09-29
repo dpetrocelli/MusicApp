@@ -13,6 +13,7 @@ import {NotificacionService} from './servicios/notificacion.service';
 })
 export class AppComponent implements OnInit {
   
+
   title = 'frontend';
   isArtista = false;
   isComercio = false;
@@ -22,7 +23,10 @@ export class AppComponent implements OnInit {
   userLogged : LoginDatos;
   notificacionesCargadas = false;
   items : any[] = [];
-  notificaciones : NotificacionBandaUsuario[];
+  notificaciones : any[];
+  modalPopupResponseIsOpen : boolean = false;
+  modalPopupUsuario : string;
+  modalPopupIdNotificacion : string;
 
   constructor(private usuarioService: UsuarioService,
               private notificacionService: NotificacionService,
@@ -31,53 +35,53 @@ export class AppComponent implements OnInit {
               
   ngOnInit(): void {
     this.reloadInfo();
-    console.log (this.userLogged);
+    
+    
+  }
+  
+  obtener(){
+    this.notificaciones = [];
+    this.items = [];
     this.notificacionService.obtener(this.userLogged).subscribe(data => {
+      console.log ("RESPUESTA:", data);
       this.notificaciones = data;
       this.notificaciones.forEach(element => {
         var obj: object = {
-          id: element.nombreOrigen,
-          cliente: element.mensaje,
-          fecha: element.fechaNotificacion,
-          total: element.tipoDeOperacion
-        };
+            id : element.id,
+            origen: element.nombreOrigen,
+            destino: element.nombreDestino,
+            cliente: element.mensaje,
+            fecha: element.fechaNotificacion,
+            tipo: element.tipoDeOperacion,
+            estado: element.estado
+          };
+          
+          this.items.push(obj);
+        });      
+       
+        //console.log (" CARTEL ", data);
+      },
+      (err: any) => {
+        console.log(err.error.mensaje);
         
-        this.items.push(obj);
-      });      
-      /*
-      this.items = [
-        {
-          id: 19,
-          cliente: 'El gato volador',
-          total: 1000
-        },
-        {
-          id: 212,
-          cliente: 'servicios industriales del reino del muy pero muy lejano sa de cv',
-          total: 78456
-        },
-        {
-          id: 312,
-          cliente: 'Cliente nuevo',
-          total: 10000
-        },
-        {
-          id: 5000,
-          cliente: 'Eduardo Cespedes Carrera',
-          total: 100000
-        }
-      ];
-      */
-      console.log (" CARTEL ", data);
-    },
-    (err: any) => {
-      console.log(err.error.mensaje);
-      
-    }
-  ); 
-
-        
+      }
+    ); 
   }
+    
+
+  private openModal(open : boolean, user : string, idNotificacion : string) : void {
+    this.modalPopupResponseIsOpen = open;
+    this.modalPopupUsuario = user;
+    this.modalPopupIdNotificacion = idNotificacion;
+  }
+
+  async botonRespuesta() {
+    this.modalPopupResponseIsOpen = false;
+    let msgRespuesta = (<HTMLInputElement>document.getElementById('respuestaPopup')).value;
+    await this.notificacionService.actualizarNotificacion(this.userLogged, msgRespuesta, this.modalPopupIdNotificacion).toPromise();
+    this.obtener();
+  }
+  
 
   
   reloadInfo(): void{
@@ -94,6 +98,7 @@ export class AppComponent implements OnInit {
         }else {
           if (this.userLogged.roles = "artista"){
             this.isArtista = true;
+            this.obtener();
           }
         }
       }
@@ -101,21 +106,45 @@ export class AppComponent implements OnInit {
   }
 
 
-  aceptar(item : NotificacionBandaUsuario) {
-
+  aceptar(itemForm: any) {
+    // si acepta depende el tipo de operación
+    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+      // hago una cosa
+    }else{
+      // hago otra cosa
+    }
   }
   
-  descartar(item : NotificacionBandaUsuario){
+  async descartar(itemForm: any){
+    
+    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+      // si es un usuario
+    }else{
+      // Banda <- recibe solicitud <- artista
+      console.log ("descartar");
+      await this.notificacionService.descartarNotificacion(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
+      this.obtener();
+      
+
+    }
+  }
+  
+  verperfil(itemForm: any){
+    this.router.navigate(['/redsocial/'+itemForm.origen]);
+  }
+  responder(itemForm: any){
 
   }
-  verperfil(item : NotificacionBandaUsuario){
+  async eliminar(itemForm: any){
+    await this.notificacionService.eliminar(this.userLogged, itemForm.id).toPromise();
+    console.log ("ELIMINADO CON EXITO");
+    setTimeout(() => 
+    {
+      this.obtener();
+    },
+    100);
 
-  }
-  responder(item : NotificacionBandaUsuario){
-
-  }
-  eliminar(item : NotificacionBandaUsuario){
-
+    
   }
 
   mostrarNotificaciones(){

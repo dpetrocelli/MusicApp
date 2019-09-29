@@ -32,6 +32,8 @@ public class ArtistaServicio {
 
     }
 
+    public Artista obtenerPorNombre (String nombre) {return this.artistaRepositorio.findByNombre(nombre);}
+
     public List<Artista> obtenerTodos (){
         return this.artistaRepositorio.findAll();
     }

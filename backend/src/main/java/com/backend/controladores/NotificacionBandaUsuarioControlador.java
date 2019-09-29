@@ -50,11 +50,65 @@ public class NotificacionBandaUsuarioControlador {
             }
 
         }catch (Exception e){
-            return new ResponseEntity(new Mensaje("no pude obtener biografia"), HttpStatus.OK);
+            return new ResponseEntity(new Mensaje("no pude obtener bien los datos"), HttpStatus.OK);
         }
     }
 
 
+    @PostMapping("eliminar")
+    public ResponseEntity<?> Eliminar (@RequestParam("login") String login, @RequestParam("id") String id){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
 
+                this.notificacionBandaUsuarioServicio.eliminar(id);
+                return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+            }
 
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("actualizar")
+    public ResponseEntity<?> Actualizar (@RequestParam("login") String login, @RequestParam("msg") String msg, @RequestParam("id") String id){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
+
+                this.notificacionBandaUsuarioServicio.actualizar(id, msg);
+                return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+            }
+
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("descartar")
+    public ResponseEntity<?> Descartar (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
+
+                this.notificacionBandaUsuarioServicio.descartar(id, nombreOrigen, nombreDestino);
+                return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+            }
+
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
 }

@@ -17,7 +17,7 @@ public interface NotificacionBandaUsuarioRepositorio extends JpaRepository<Notif
 
     Boolean existsByComercio(Long comercio);
 */
-    Optional<ArrayList<NotificacionBandaUsuario>> findAllByNombreDestinoAndTipoDestino(@Param("nombreDestino") String idDestino, @Param("tipoDestino") int tipoDestino);
-
+    Optional<ArrayList<NotificacionBandaUsuario>> findAllByNombreDestinoAndTipoDestinoOrderByFechaNotificacionDesc(@Param("nombreDestino") String idDestino, @Param("tipoDestino") int tipoDestino);
+    Optional<ArrayList<NotificacionBandaUsuario>> findAllByNombreDestinoOrderByFechaNotificacionDesc(String nombre);
 
 }

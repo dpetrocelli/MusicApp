@@ -30,7 +30,6 @@ const routes: Routes = [
 
   // Lista de acceso base para todos
   {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
   {path: 'accesodenegado', component: AccesodenegadoComponent},
 
