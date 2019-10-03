@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/archivo/")
 public class ArchivoControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
