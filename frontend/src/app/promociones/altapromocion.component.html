@@ -61,7 +61,8 @@
               id="vigencia"
               [(ngModel)]="form.vigencia"
               required
-              autocomplete="off">
+              autocomplete="off"
+              (blur)="compareTwoDates()">
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>

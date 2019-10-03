@@ -4,6 +4,9 @@ import { PromocionService } from '../servicios/promocion.service';
 import { LoginDatos } from '../modelos/logindatos';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import {formatDate} from '@angular/common';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-altapromocion',
@@ -46,6 +49,25 @@ export class AltapromocionComponent implements OnInit {
       }
     );
   }
+
+  error:any={isError:false,errorMessage:''};
+
+compareTwoDates(){
+  let currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  
+   if(this.form.vigencia < currentDate ){
+    
+    Swal.fire({
+      type: 'error',
+      title: 'Oops...',
+      text: "La fecha debe ser posterior a "+ currentDate
+      
+    });
+    
+   }else{
+     this.form.f.valid=true;
+   }
+}
 
   volver(): void {
     window.history.back();

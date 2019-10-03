@@ -72,8 +72,10 @@ public class MarketPlaceControlador {
         if (marketPlace.getAppID().isBlank() || (marketPlace.getClientSecret().isBlank())) {
             return new ResponseEntity(new Mensaje("Los campos de configuración no pueden estar vacíos"), HttpStatus.BAD_REQUEST);
         } else {
-
-            marketPlaceServicio.guardar(marketPlace);
+            MarketPlace mPlace = marketPlaceServicio.obtener();
+            mPlace.setAppID(marketPlace.getAppID());
+            mPlace.setClientSecret(marketPlace.getClientSecret());
+            marketPlaceServicio.guardar(mPlace);
             return new ResponseEntity(new Mensaje("MarketPlace - APP_ID y CLIENT_SECRET resguardados"), HttpStatus.CREATED);
 
         }

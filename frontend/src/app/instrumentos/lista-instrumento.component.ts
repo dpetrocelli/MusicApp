@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Instrumento } from '../modelos/instrumento';
 import { InstrumentoService } from '../servicios/instrumento.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-instrumento',
@@ -11,7 +12,7 @@ export class ListaInstrumentoComponent implements OnInit {
 
   instrumentos: Instrumento[] = [];
 
-  constructor(private instrumentoService: InstrumentoService) { }
+  constructor(private instrumentoService: InstrumentoService, private router: Router) { }
 
   ngOnInit() {
     this.cargarInstrumentos();
@@ -29,7 +30,9 @@ export class ListaInstrumentoComponent implements OnInit {
   onDelete(id: number): void {
     if (confirm('¿Estás seguro?')) {
       this.instrumentoService.borrar(id).subscribe(data => {
+        this.router.navigate(['/instrumento/'])
         this.cargarInstrumentos();
+        
       });
     }
   }
