@@ -21,8 +21,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/post/")
 public class PostControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/puntuacion/")
 public class PuntuacionControlador {
     @Autowired UsuarioServicio usuarioServicio;

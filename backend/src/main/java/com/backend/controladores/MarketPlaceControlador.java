@@ -24,8 +24,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/marketplace/")
 public class MarketPlaceControlador {
     ArrayList<Long> enEspera = new ArrayList<Long>();
