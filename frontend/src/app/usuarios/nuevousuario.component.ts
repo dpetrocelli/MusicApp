@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
-import { InstrumentoService } from '../servicios/instrumento.service';
+import { ZonaService } from '../servicios/zona.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Instrumento } from '../modelos/instrumento';
+import { Zona } from '../modelos/zona';
+import { InstrumentoService } from '../servicios/instrumento.service';
 
 @Component({
   selector: 'app-nuevousuario',
@@ -29,13 +31,14 @@ export class NuevousuarioComponent implements OnInit {
   
   constructor(private usuarioService: UsuarioService,
               private instrumentoService: InstrumentoService,
+              private zonaService: ZonaService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
     // [STEP 0] - Voy a buscar al backend la lista de los instrumentos que tengo almacenados
     this.zonaService.lista().subscribe(data => {
-      console.log (JSON.stringify(data));
+      
       this.zonas = data;
     },
       (err: any) => {
@@ -46,7 +49,7 @@ export class NuevousuarioComponent implements OnInit {
 
     );
     this.instrumentoService.lista().subscribe(data => {
-      console.log (JSON.stringify(data));
+      
       this.listaInstrumento = data;
     },
       (err: any) => {
@@ -59,9 +62,16 @@ export class NuevousuarioComponent implements OnInit {
     
   }
 
+  zonaElegida (nombreZona){
+    //console.log (nombreZona);
+    console.log (this.form.zona);
+  }
   guardarUsuario() {
     this.form.isArtista = this.isArtista;
     console.log(this.form);
+    
+    
+    
     this.usuarioService.registrar(this.form, this.isArtista, this.instrumentosSeleccionados).subscribe(data => {
       this.msjOK = data.msg ;
       this.creado = true;

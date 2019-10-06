@@ -9,6 +9,7 @@ import com.backend.repositorios.TokenUsuarioRepositorio;
 import com.backend.repositorios.UsuarioRepositorio;
 
 import com.backend.singleton.ConfiguradorSingleton;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,8 @@ public class UsuarioServicio {
             artista.setApellido(formulario.get("apellido").getAsString());
             artista.setNickname(formulario.get("nickname").getAsString());
             artista.setGenero(formulario.get("genero").getAsString());
+            Zona zona = new Gson().fromJson(formulario.get("zona"), Zona.class);
+            artista.addZona(zona);
             try{
                 artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
             }catch (Exception e){

@@ -37,6 +37,10 @@ public class Artista implements Serializable {
     @JoinTable(name = "instrumento_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "instrumento_id"))
     private Set<Instrumento> instrumento = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "zona_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "zona_id"))
+    private Set<Zona> zona = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRealizadas;
 
@@ -167,6 +171,17 @@ public class Artista implements Serializable {
     }
     public void addBanda (Banda banda){
         this.banda.add(banda);
+    }
+
+    public Set<Zona> getZona() {
+        return zona;
+    }
+
+    public void addZona (Zona zona){
+        this.zona.add(zona);
+    }
+    public void setZona(Set<Zona> zona) {
+        this.zona = zona;
     }
 
     public void removeBanda (Banda banda){
