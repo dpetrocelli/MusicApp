@@ -12,10 +12,10 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
 })
 export class NotificacionService {
   // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/notificacionesBandaUsuario/';
+  //baseURL = 'https://localhost:8081/api/notificacionesBandaUsuario/';
 
   // PRODUCCION URL
-  //baseURL = 'http://lacajadepandora.ddns.net:9000/api/banda/';
+  baseURL = 'https://localhost:8081/api/banda/';
 
 
   private isUserLoggedIn = false;

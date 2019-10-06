@@ -1,12 +1,7 @@
 package com.backend.controladores;
 import com.backend.dto.Mensaje;
-import com.backend.entidades.Comercio;
 import com.backend.entidades.MarketPlace;
-import com.backend.recursos.AccessTokenMP;
-import com.backend.repositorios.ComercioRepositorio;
 import com.backend.servicios.MarketPlaceServicio;
-import com.google.gson.Gson;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
+import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Enumeration;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -123,8 +113,34 @@ public class MarketPlaceControlador {
 
     }
 
-    @RequestMapping(value = "notificacion", method = RequestMethod.GET)
-    public ResponseEntity<?> notificacion(@RequestParam("id") Long id, @RequestParam("topic") String topic) throws MalformedURLException {
+    @RequestMapping(value = "notificacion", method = RequestMethod.POST)
+    public void notificacion(@RequestBody String payload) throws MalformedURLException {
+
+        log.info("MPAGO envio un payload : " + payload);
+
+    }
+
+/*
+    @RequestMapping(value = "notificacion", method = RequestMethod.POST)
+    public void notificacion(HttpServletRequest request) throws MalformedURLException {
+
+        log.info("MPAGO envio una notification : " + request.getRequestURI());
+        log.info("MPAGO envio una notification : " + request.getRequestURL());
+
+        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
+
+            log.info("MPAGO envio un parametro : " + e.nextElement() + " - " + request.getParameter());
+        }
+
+        for (Enumeration e = request.getv; e.hasMoreElements();) {
+            log.info("MPAGO envio un parametro : " + e.nextElement());
+        }
+
+    }
+ */
+/*
+    @RequestMapping(value = "notificacion", method = RequestMethod.POST)
+    public ResponseEntity<?> notificacion(@RequestParam("topic") String topic, @RequestParam("id") Long id) throws MalformedURLException {
 
         try {
             log.info("MPAGO envio una notification topic:" + topic + " id:" + id.toString());
@@ -143,4 +159,5 @@ public class MarketPlaceControlador {
 
     }
 
+ */
 }

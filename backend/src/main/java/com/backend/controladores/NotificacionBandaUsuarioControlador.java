@@ -25,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/notificacionesBandaUsuario/")
 
 public class NotificacionBandaUsuarioControlador {

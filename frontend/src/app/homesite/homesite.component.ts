@@ -90,8 +90,8 @@ export class HomesiteComponent implements OnInit {
           post.elementos.forEach(e => {
             if(e.tipoRecurso.includes('img')){
               var obj: object = {
-                image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-                thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+                image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
               };
               this.imageObject.push(obj);
               result = true;
@@ -111,8 +111,8 @@ export class HomesiteComponent implements OnInit {
     post.elementos.forEach(e => {
       if(e.tipoRecurso.includes('img')) {
         var obj: object = {
-          image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-          thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+          image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
         };
         packImg.push(obj);
       }

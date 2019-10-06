@@ -11,10 +11,10 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 })
 export class HomeSiteService {
   // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/post/';
+  //baseURL = 'https://localhost:8081/api/post/';
 
   // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:8080/api/post/';
+  baseURL = 'https://localhost:8081/api/post/';
  
   constructor(private httpClient: HttpClient) { }
 

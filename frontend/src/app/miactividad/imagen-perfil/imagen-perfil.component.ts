@@ -41,7 +41,7 @@ export class ImagenPerfilComponent implements OnInit {
 
   cargarImagenPerfil(){
     this.perfilService.buscarimagenperfil (this.loginDatos).subscribe(data => {
-      this.img = "http://localhost:8081/api/archivo/descargar?path=";
+      this.img = "https://localhost:8081/api/archivo/descargar?path=";
       this.img+= data.mensaje;
 
       //console.log ("Img Backend loaded: ",this.img);

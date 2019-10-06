@@ -18,10 +18,10 @@ export class UsuarioService {
   loginDatos: LoginDatos = new LoginDatos();
   valueByGet : String;
   // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/usuario/';
+  //baseURL = 'https://localhost:8081/api/usuario/';
 
   // PROD URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/usuario/';
+  baseURL = 'https://localhost:8081/api/usuario/';
 
   constructor(private httpClient: HttpClient) { }
 

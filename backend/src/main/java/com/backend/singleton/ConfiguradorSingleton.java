@@ -64,7 +64,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     public void run(String...args) {
         this.msg = " HOLA ";
         // SETEAR LA BASE URL PARA EL FUNCIONAMIENTO DEL SISTEMA
-        this.baseURLSistema = "http://localhost:8081";
+        this.baseURLSistema = "https://localhost:8081";
 
         if (rolRepositorio.count()==0){
             log.info("HAY QUE METER DATOS");
