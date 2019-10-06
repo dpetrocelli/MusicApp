@@ -2,15 +2,15 @@
         <!-- escucha fin guardarUsuario -->
        <form name="registrar" (ngSubmit)="guardarUsuario()" #f="ngForm" validate>
           <div class="form-group">
-            <label for="username">Usuario</label>
+            <label for="username">Username:</label>
             <input class="form-control"
-                  type="text"
+                  type="username"
                   name="username"
                   id="username"
                   [(ngModel)]="form.username"
                   required
                   autocomplete="off">
-                  
+               
             <label for="pwd">Contraseña:</label>
             <input class="form-control"
                   type="password"
@@ -19,16 +19,20 @@
                   [(ngModel)]="form.pwd"
                   required
                   autocomplete="off">
-          
-            <label for="email">Email</label>
-            <input class="form-control"
-                  type="text"
-                  name="email"
-                  id="email"
-                  [(ngModel)]="form.email"
-                  required
-                  autocomplete="off">
-            
+
+                  <div class="form-group">
+                      
+                      <label for ="email">Email</label>
+                        <input type="text" class="form-control" [(ngModel)]="form.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"name="email" ngModel #email="ngModel">
+                        <div *ngIf="email.errors &&(email.touched || email.dirty)" class ="aler alert-danger">
+                         <div [hidden]="!email.errors?.pattern">
+                           No es un patrón valido de email
+                         </div> 
+                        </div> 
+                  </div>
+
+                  
+                    
             <label for="tipousuario">Tipo de usuario:</label>
             <div>
                 <div>
@@ -99,13 +103,18 @@
                    
                  </table>
                       <label for="documento">  Nro Documento:</label>
+
+                     
+
                       <input class="form-control"
-                                   type="text"
+                                   type="number"
                                    name="documento"
                                    id="documento"
                                    [(ngModel)]="form.documento"
                                    required
-                                   autocomplete="off">
+                                   autocomplete="off"
+                                   min="0" oninput="validity.valid||(value='');"
+                                   >
                       <label for="fechanacimiento"> Fecha Nacimiento: </label>
                       <input type="date"
                               class="form-control"
@@ -113,7 +122,12 @@
                               id="fechanacimiento"
                               [(ngModel)]="form.fechanacimiento"
                               required
-                              autocomplete="off">
+                              autocomplete="off"
+                              (blur)="revisarFecha($event)">
+
+                              <div class ="aler alert-danger" [hidden]="fechaValida" > 
+                                  No es una fecha de nacimiento válida
+                              </div>
        
                          
                               <label for="genero"> Género:</label>

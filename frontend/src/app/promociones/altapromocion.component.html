@@ -50,7 +50,7 @@
 
     <div class="form-group">
         <label for="vigencia"> Vigencia de Promoción: </label>
-        <input type="date" formControlName="vigencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && fval.vigencia.errors }" />
+        <input type="date" formControlName="vigencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.control.errors }" />
           <!--(blur)="compareTwoDates()"-->
         <div *ngIf="submitted && fval.vigencia.errors" class="invalid-feedback">
           

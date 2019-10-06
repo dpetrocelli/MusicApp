@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Instrumento } from '../modelos/instrumento';
 import { Zona } from '../modelos/zona';
 import { InstrumentoService } from '../servicios/instrumento.service';
+import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-nuevousuario',
@@ -20,7 +22,7 @@ export class NuevousuarioComponent implements OnInit {
   msjOK = '';
   creado = false;
   falloCreacion = false;
-  
+  submitted = false;
   isChecked = false;
   isArtista = false;
   isComercio = false;
@@ -28,6 +30,7 @@ export class NuevousuarioComponent implements OnInit {
   zonas : Zona[];
   instrumentosSeleccionados = [];
   respuesta : [];
+  fechaValida = true;
   
   constructor(private usuarioService: UsuarioService,
               private instrumentoService: InstrumentoService,
@@ -62,29 +65,47 @@ export class NuevousuarioComponent implements OnInit {
     
   }
 
+  get fval() {
+    return this.form.controls;
+  }
+
   zonaElegida (nombreZona){
-    //console.log (nombreZona);
+    
     console.log (this.form.zona);
   }
   guardarUsuario() {
     this.form.isArtista = this.isArtista;
     console.log(this.form);
     
-    
+    this.submitted = true;
     
     this.usuarioService.registrar(this.form, this.isArtista, this.instrumentosSeleccionados).subscribe(data => {
       this.msjOK = data.msg ;
       this.creado = true;
       this.falloCreacion = false;
+      localStorage.clear();
+      Swal.fire({
+        type: 'success',
+        title: 'Buenísimo...',
+        text: "se creó el usuario exitosamente"        
+      });
       this.router.navigate(['']);
     },
       (err: any) => {
         this.msjFallo = err.error.mensaje;
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: "hay problemas "+err.error.mensaje        
+        });
         this.creado = false;
         this.falloCreacion = true;
       }
 
     );
+    
+    
+    
   }
 
   cambioRadioButton(evt) {
@@ -102,8 +123,21 @@ export class NuevousuarioComponent implements OnInit {
 
   }
 
-  
-
+  revisarFecha(){
+    
+   
+    this.fechaValida=true;
+    try{
+      let currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+      let fechanac = formatDate(this.form.fechanacimiento, 'yyyy-MM-dd', 'en');
+       if(fechanac > currentDate ){
+        this.fechaValida = false;
+       }
+        
+    }catch{
+      this.fechaValida = false;
+    }
+  }
   predictivo (evt){
     
       // [STEP 2] -> en la parte de -> texto.length > 2) voy a buscar para autocompletar

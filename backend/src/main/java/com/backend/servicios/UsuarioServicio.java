@@ -102,14 +102,23 @@ public class UsuarioServicio {
             artista.setUsuario(usuarioFrontEnd);
             Biografia biografia = new Biografia();
             biografia.setArtista(artista);
-            this.biografiaServicio.guardar(biografia);
-            this.usuarioRepositorio.save(usuarioFrontEnd);
-            this.artistaRepositorio.save(artista);
+            try{
+                this.biografiaServicio.guardar(biografia);
+                this.usuarioRepositorio.save(usuarioFrontEnd);
+                this.artistaRepositorio.save(artista);
+                return true;
+            }catch (Exception e){
+                log.error(" NO PUDE GUARDAR ALGO ");
+                return false;
+            }
 
 
 
 
-            return true;
+
+
+
+
         }
     }
 
