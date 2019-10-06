@@ -96,6 +96,11 @@
                        
                      </tbody>
                   </table>
+
+                  <select [(ngModel)]="zona">
+                    <option *ngFor="let zona of zonas" [ngValue]="zona">{{zona.nombreZona}}</option>
+                  </select>
+                  
                <label for="genero"> Género:</label>
                <input class="form-control"
                       type="text"

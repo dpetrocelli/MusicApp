@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 // módulos para el cliente http y los formularios
 
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { ListaInstrumentoComponent } from './instrumentos/lista-instrumento.component';
 import { HomeComponent } from './usuarios/home.component';
 import { DetalleInstrumentoComponent } from './instrumentos/detalle-instrumento.component';
@@ -47,6 +47,7 @@ import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/pun
 
 
 
+
 @NgModule({
    declarations: [
       AppComponent,
@@ -83,12 +84,15 @@ import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/pun
       PostRedsocialComponent,
       InfoPerfilRedsocialComponent,
       ImagenPerfilRedsocialComponent,
-      RedSocialComponent
+      RedSocialComponent,
+      
+     
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ReactiveFormsModule,
       AppRoutingModule,
       NgbModule,
       NgImageSliderModule

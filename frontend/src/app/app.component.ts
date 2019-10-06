@@ -6,6 +6,7 @@ import { NotificacionBandaUsuario } from './modelos/notificacionbandausuario';
 import { Observable } from 'rxjs';
 import {NotificacionService} from './servicios/notificacion.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

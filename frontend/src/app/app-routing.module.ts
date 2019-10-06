@@ -26,12 +26,14 @@ import { HomesiteComponent } from './homesite/homesite.component';
 import { RedSocialComponent } from './redsocial/redsocial.component';
 
 
+
 const routes: Routes = [
 
   // Lista de acceso base para todos
   {path: '', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
   {path: 'accesodenegado', component: AccesodenegadoComponent},
+  
 
 
   // Opciones de Artista

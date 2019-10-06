@@ -6,6 +6,7 @@ import com.backend.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import org.springframework.boot.CommandLineRunner;
 /**
  * Database initializer that populates the database with some
@@ -47,6 +48,11 @@ public class ConfiguradorSingleton implements CommandLineRunner {
     ComercioRepositorio comercioRepositorio;
     @Autowired
     InstrumentoServicio instrumentoServicio;
+
+    @Autowired
+    ZonaGeograficaServicio zonaGeograficaServicio;
+
+
     @Autowired BiografiaServicio biografiaServicio;
 
     public ArrayList<String> permisosDelComercio;
@@ -166,6 +172,13 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("bajo", "cuerdas"));
             this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
+        }
+
+        if ((this.zonaGeograficaServicio.obtenerTodos()).size()==0){
+            this.zonaGeograficaServicio.guardar(new Zona ("sur" ));
+            this.zonaGeograficaServicio.guardar(new Zona ("norte" ));
+            this.zonaGeograficaServicio.guardar(new Zona ("este" ));
+            this.zonaGeograficaServicio.guardar(new Zona ("oeste" ));
         }
         /*
         this.listPost = new ArrayList<Post>();

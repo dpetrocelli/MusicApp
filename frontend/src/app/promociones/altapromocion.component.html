@@ -1,72 +1,65 @@
 <div class="container">
   <h5>Nueva Promocion</h5>
-  <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
+  <!--<form (ngSubmit)="onCreate()" [formGroup]="registerForm" #f="ngForm" novalidate>-->
+    <form [formGroup]="registerForm" (ngSubmit)="onCreate()">
+    
     <div class="form-group">
       <label for="titulo">Titulo: </label>
-      <input type="text"
-              class="form-control"
-              name="titulo"
-              id="titulo"
-              [(ngModel)]="form.titulo"
-              required
-              autocomplete="off">
+      <input type="text" formControlName="titulo" class="form-control" placeholder="Titulo" [ngClass]="{ 'is-invalid': submitted && fval.titulo.errors }"/>
+        
+      <div *ngIf="submitted && fval.titulo.errors" class="invalid-feedback">
+        <div *ngIf="fval.titulo.errors.required">
+            El título es un campo requerido y debe ser válido
+        </div>
+      </div>
     </div>
+
     <div class="form-group">
-      <label for="descripcion">Descripcion: </label>
-      <input type="text"
-              class="form-control"
-              name="descripcion"
-              id="descripcion"
-              [(ngModel)]="form.descripcion"
-              required
-              autocomplete="off">
+        <label for="descripcion">Descripción: </label>
+        <input type="text" formControlName="descripcion" class="form-control" placeholder="Descripcion" [ngClass]="{ 'is-invalid': submitted && fval.descripcion.errors }"/>
+          
+        <div *ngIf="submitted && fval.descripcion.errors" class="invalid-feedback">
+          <div *ngIf="fval.descripcion.errors.required">
+              Debe detallar una descripción
+          </div>
+        </div>
     </div>
+    
     <div class="form-group">
-      <label for="tipomoneda">Tipo moneda: </label>
-      <select class="form-control"
-        name="tipomoneda"
-        id="tipomoneda"
-        [(ngModel)]="form.tipomoneda"
-        required
-        autocomplete="off">
-        <option value="ars">Pesos Argentinos</option>
-        <option value="usd">Dolares</option>
-      </select>
+        <label for="valorpromocion"> Valor Promocion: </label>
+        <input  type="number" formControlName="valorpromocion" class="form-control" placeholder="0" min=1 [ngClass]="{ 'is-invalid': submitted && fval.valorpromocion.errors }"/>
+          
+        <div *ngIf="submitted && fval.valorpromocion.errors" class="invalid-feedback">
+          
+              El valor de la promoción tiene que estar definido y debe ser > 0
+         
+        </div>
     </div>
+
+
     <div class="form-group">
-      <label for="valorpromocion">Valor promocion: </label>
-      <input type="number"
-              class="form-control"
-              name="valorpromocion"
-              id="valorpromocion"
-              [(ngModel)]="form.valorpromocion"
-              required
-              autocomplete="off">
+        <label for="importe"> Importe Real: </label>
+        <input  type="number" formControlName="importe" class="form-control" placeholder="0" min=1 [ngClass]="{ 'is-invalid': submitted && fval.importe.errors }"/>
+          
+        <div *ngIf="submitted && fval.importe.errors" class="invalid-feedback">
+         
+              El Importe Real de la promoción tiene que estar definido y debe ser > 0
+          
+        </div>
     </div>
+
     <div class="form-group">
-      <label for="importe">Importe: </label>
-      <input type="number"
-              class="form-control"
-              name="importe"
-              id="importe"
-              [(ngModel)]="form.importe"
-              required
-              autocomplete="off">
+        <label for="vigencia"> Vigencia de Promoción: </label>
+        <input type="date" formControlName="vigencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && fval.vigencia.errors }" />
+          <!--(blur)="compareTwoDates()"-->
+        <div *ngIf="submitted && fval.vigencia.errors" class="invalid-feedback">
+          
+              Se debe definir la fecha y esta debe ser una fecha superior al día de la fecha
+          
+        </div>
     </div>
-    <div class="form-group">
-      <label for="vigencia">Vigencia: </label>
-      <input type="date"
-              class="form-control"
-              name="vigencia"
-              id="vigencia"
-              [(ngModel)]="form.vigencia"
-              required
-              autocomplete="off"
-              (blur)="compareTwoDates()">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
-    </div>
+  
+    <button type="submit" class="btn btn-success">Crear</button>
   </form>
   <div>
     <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>

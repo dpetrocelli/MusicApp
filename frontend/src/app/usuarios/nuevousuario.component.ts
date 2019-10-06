@@ -23,6 +23,7 @@ export class NuevousuarioComponent implements OnInit {
   isArtista = false;
   isComercio = false;
   listaInstrumento : Instrumento[]; 
+  zonas : Zona[];
   instrumentosSeleccionados = [];
   respuesta : [];
   
@@ -33,7 +34,17 @@ export class NuevousuarioComponent implements OnInit {
 
   ngOnInit() {
     // [STEP 0] - Voy a buscar al backend la lista de los instrumentos que tengo almacenados
-    
+    this.zonaService.lista().subscribe(data => {
+      console.log (JSON.stringify(data));
+      this.zonas = data;
+    },
+      (err: any) => {
+        this.msjFallo = err.error.mensaje;
+        this.creado = false;
+        this.falloCreacion = true;
+      }
+
+    );
     this.instrumentoService.lista().subscribe(data => {
       console.log (JSON.stringify(data));
       this.listaInstrumento = data;

@@ -175,6 +175,7 @@ public class MarketPlaceServicio {
                 log.info("Registrando Datos (ACC TOKEN) en el COMERCIO ");
                 c.setUsuario(this.usuarioServicio.obtener(Long.parseLong(id)));
                 c.setCode(code);
+                log.info (" ACCESS TOKEN"+accessToken);
                 c.setAccessToken(accessToken);
                 c.setFechaExpiracion(currentDate);
                 comercioRepositorio.save(c);

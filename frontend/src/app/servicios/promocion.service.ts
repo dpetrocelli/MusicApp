@@ -35,6 +35,7 @@ export class PromocionService {
   }
 
   public crear(promocion: Promocion, login : LoginDatos): Observable<any> {
+    console.log ("PROMO METHOD", promocion);
     return this.httpClient.post<any>(this.baseURL + 'nuevo', {promocion, login}, cabecera);
   }
 
