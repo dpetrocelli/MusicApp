@@ -1,0 +1,5 @@
+keytool -genkey -alias miusicapp_cert -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore miusicapp.p12 -validity 365
+
+openssl pkcs12 -in miusicapp.p12 -nodes -nocerts -out miusicapp_key.pem
+
+openssl pkcs12 -in miusicapp.p12 -nokeys -out miusicapp_crt.pem

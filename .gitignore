@@ -32,3 +32,5 @@ build/
 /.metadata/
 
 backend/src/images/
+
+configuraciones/cert/old/
