@@ -80,6 +80,7 @@ public class MarketPlaceServicio {
                 log.info("obtuve app id" + appid);
 
                 String urlServicio = urlRespuestaVinculacion + id;
+
                 String url = new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid + "&response_type=code&platform_id=mp&redirect_uri=" + urlServicio);
                 log.warn(" URL HACIA MPG: " + url);
                 return url;
@@ -105,6 +106,7 @@ public class MarketPlaceServicio {
             con.setDoOutput(true);
 
             String urlRegreso = urlRespuestaVinculacion + id;
+
             //AccessTokenMP atmp = new AccessTokenMP(mp.getAppID(), mp.getClientSecret(), "authorization_code", code, urlRegreso);
             JSONObject obj = new JSONObject();
 
