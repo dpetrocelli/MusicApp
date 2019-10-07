@@ -13,7 +13,6 @@ import { NuevousuarioComponent } from './usuarios/nuevousuario.component';
 import { ListarpromocionesComponent } from './promociones/listarpromociones.component';
 import { AltapromocionComponent } from './promociones/altapromocion.component';
 import { EditarpromocionComponent } from './promociones/editarpromocion.component';
-import { DetallepromocionComponent } from './promociones/detallepromocion.component';
 import { AccesodenegadoComponent } from './accesodenegado/accesodenegado.component';
 import { SeguridadService as seguridad } from './servicios/seguridad.service';
 import { NuevoPostComponent } from './miactividad/post/nuevo-post.component';
@@ -55,7 +54,6 @@ const routes: Routes = [
     // Opciones de Comercio
     // Promociones/
    {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
-   {path: 'promociones/detalle/:id', component: DetallepromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},

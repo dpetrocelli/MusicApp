@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
 import { Mensaje } from '../modelos/mensaje';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -11,12 +12,8 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
   providedIn: 'root'
 })
 export class BandaService {
-  // DESARROLLO URL
-  //baseURL = 'https://localhost:8081/api/banda/';
 
-  // PRODUCCION URL
-  baseURL = 'https://localhost:8081/api/banda/';
-
+  baseURL = environment.urlApiBackend + 'api/banda/';
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();

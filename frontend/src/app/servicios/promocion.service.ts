@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginDatos } from '../modelos/logindatos';
 import { Promocion } from '../modelos/promocion';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -10,11 +11,8 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
   providedIn: 'root'
 })
 export class PromocionService {
-  // DESARROLLO URL
-  //baseURL = 'https://localhost:8081/api/promocion/';
 
-  // PRODUCCION URL
-  baseURL = 'https://localhost:8081/api/promocion/';
+  baseURL = environment.urlApiBackend + 'api/promocion/';
  
   constructor(private httpClient: HttpClient) { }
 

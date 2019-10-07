@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Marketplace} from '../modelos/marketplace';
 import { Mensaje } from '../modelos/mensaje';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'})};
 
@@ -11,14 +12,8 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json; c
 })
 
 export class MarketplaceService {
-  /* Tengo que tener la URL de la aplicación a la cual le voy a pegar
-    En este caso recordar que va a ser /api/marketplace
-   */
-  // DESARROLLO URL
-  //baseURL = 'https://localhost:8081/api/marketplace/';
 
-  // PRODUCCION URL
-  baseURL = 'https://localhost:8081/api/marketplace/';
+  baseURL = environment.urlApiBackend + 'api/marketplace/';
 
   constructor(private httpClient: HttpClient) { }
 

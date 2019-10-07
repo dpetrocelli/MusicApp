@@ -10,7 +10,7 @@ import { NuevoPostComponent } from '../miactividad/post/nuevo-post.component';
 import { Elemento } from '../modelos/elemento';
 import { YoutubePopupComponent } from '../miactividad/post/youtubePopup/youtubePopup.component';
 import { ImgSliderComponent } from '../miactividad/post/imgSlider/imgSlider.component';
-
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-homesite',
@@ -90,8 +90,8 @@ export class HomesiteComponent implements OnInit {
           post.elementos.forEach(e => {
             if(e.tipoRecurso.includes('img')){
               var obj: object = {
-                image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-                thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+                image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
               };
               this.imageObject.push(obj);
               result = true;
@@ -111,8 +111,8 @@ export class HomesiteComponent implements OnInit {
     post.elementos.forEach(e => {
       if(e.tipoRecurso.includes('img')) {
         var obj: object = {
-          image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-          thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+          image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
         };
         packImg.push(obj);
       }
@@ -141,4 +141,8 @@ export class HomesiteComponent implements OnInit {
     return post.fechaEdicion == null ? false : true;
   }
 
+  onDelete(id: number): void {
+    if (confirm('¿Estás seguro?')) {
+    }
+  }
 }

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Instrumento } from '../modelos/instrumento';
 import { LoginDatos } from '../modelos/logindatos';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -10,11 +11,8 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
   providedIn: 'root'
 })
 export class HomeSiteService {
-  // DESARROLLO URL
-  //baseURL = 'https://localhost:8081/api/post/';
 
-  // PRODUCCION URL
-  baseURL = 'https://localhost:8081/api/post/';
+  baseURL = environment.urlApiBackend + 'api/post/';
  
   constructor(private httpClient: HttpClient) { }
 

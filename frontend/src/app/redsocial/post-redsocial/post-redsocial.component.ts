@@ -10,6 +10,7 @@ import { PerfilService } from 'src/app/servicios/perfil.service';
 import { ImgSliderComponent } from '../../miactividad/post/imgSlider/imgSlider.component';
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { YoutubePopupComponent } from '../../miactividad/post/youtubePopup/youtubePopup.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-post-redsocial',
@@ -85,8 +86,8 @@ export class PostRedsocialComponent implements OnInit {
           post.elementos.forEach(e => {
             if(e.tipoRecurso.includes('img')){
               var obj: object = {
-                image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-                thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+                image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
               };
               this.imageObject.push(obj);
               result = true;
@@ -106,8 +107,8 @@ export class PostRedsocialComponent implements OnInit {
     post.elementos.forEach(e => {
       if(e.tipoRecurso.includes('img')) {
         var obj: object = {
-          image: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-          thumbImage: 'https://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+          image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
         };
         packImg.push(obj);
       }
@@ -134,5 +135,10 @@ export class PostRedsocialComponent implements OnInit {
 
   isEdited(post: Post) : Boolean {
     return post.fechaEdicion == null ? false : true;
+  }
+
+  onDelete(id: number): void {
+    if (confirm('¿Estás seguro?')) {
+    }
   }
 }

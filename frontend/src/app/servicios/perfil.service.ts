@@ -3,8 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { LoginDatos } from '../modelos/logindatos';
 import { Observable } from 'rxjs';
 import { Post } from '../modelos/post';
-
-
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -13,11 +12,7 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 })
 export class PerfilService {
 
-  // DESARROLLO URL
-  //baseURL = 'https://localhost:8081/api/post/';
-
-  // PRODUCCION URL
-  baseURL = 'https://localhost:8081/api/post/';
+  baseURL = environment.urlApiBackend + 'api/post/';
 
   constructor(private httpClient: HttpClient) { 
 

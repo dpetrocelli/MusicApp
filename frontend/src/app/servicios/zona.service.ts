@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Zona } from '../modelos/zona';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -9,12 +10,9 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
   providedIn: 'root'
 })
 export class ZonaService {
-  // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/zonaGeografica/';
 
-  // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/Zona/';
- 
+  baseURL = environment.urlApiBackend + 'api/zonaGeografica/';
+
   constructor(private httpClient: HttpClient) { }
 
   public lista(): Observable<Zona[]> {
