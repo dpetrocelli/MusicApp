@@ -3,6 +3,7 @@ import { PerfilService } from 'src/app/servicios/perfil.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
 import { LoginDatos } from 'src/app/modelos/logindatos';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-imagen-perfil',
@@ -41,7 +42,7 @@ export class ImagenPerfilComponent implements OnInit {
 
   cargarImagenPerfil(){
     this.perfilService.buscarimagenperfil (this.loginDatos).subscribe(data => {
-      this.img = "http://localhost:8081/api/archivo/descargar?path=";
+      this.img = environment.urlApiBackend + "api/archivo/descargar?path=";
       this.img+= data.mensaje;
 
       //console.log ("Img Backend loaded: ",this.img);

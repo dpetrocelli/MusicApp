@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
 import { Mensaje } from '../modelos/mensaje';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -17,11 +18,8 @@ export class UsuarioService {
   usuarioFrontEnd: Usuario = new Usuario();
   loginDatos: LoginDatos = new LoginDatos();
   valueByGet : String;
-  // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/usuario/';
 
-  // PROD URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/usuario/';
+  baseURL = environment.urlApiBackend + 'api/usuario/';
 
   constructor(private httpClient: HttpClient) { }
 

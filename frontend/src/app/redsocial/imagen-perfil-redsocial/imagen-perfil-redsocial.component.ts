@@ -3,6 +3,7 @@ import { PerfilService } from 'src/app/servicios/perfil.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoginDatos } from 'src/app/modelos/logindatos';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-imagen-perfil-redsocial',
@@ -27,7 +28,7 @@ export class ImagenPerfilRedsocialComponent implements OnInit {
 
   cargarImagenPerfil(){
     this.perfilService.buscarimagenperfilRedSocial (this.loginDatos, this.nombreUsuario).subscribe(data => {
-      this.img = "http://localhost:8081/api/archivo/descargar?path=";
+      this.img = environment.urlApiBackend + "api/archivo/descargar?path=";
       this.img+= data.mensaje;
 
       //console.log ("Img Backend loaded: ",this.img);

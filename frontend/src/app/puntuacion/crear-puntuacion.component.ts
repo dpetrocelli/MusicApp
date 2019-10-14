@@ -21,8 +21,10 @@ export class CrearPuntuacionComponent implements OnInit {
 
   listaDeNombres : string[] = [];
   nombreUsuario : string;
+  falloCreacion = false;
   creado = false;
-  msgOK = "puntuación generada correctamente";
+  msjOK = "puntuación generada correctamente";
+  msjFallo = '';
   form: any = {};
   constructor(private usuarioService: UsuarioService,
               private router: ActivatedRoute,

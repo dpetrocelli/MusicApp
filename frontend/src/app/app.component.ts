@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   }
     
 
-  private openModal(open : boolean, user : string, idNotificacion : string) : void {
+  openModal(open : boolean, user : string, idNotificacion : string) : void {
     this.modalPopupResponseIsOpen = open;
     this.modalPopupUsuario = user;
     this.modalPopupIdNotificacion = idNotificacion;

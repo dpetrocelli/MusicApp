@@ -123,7 +123,7 @@
                               [(ngModel)]="form.fechanacimiento"
                               required
                               autocomplete="off"
-                              (blur)="revisarFecha($event)">
+                              (blur)="revisarFecha()">
 
                               <div class ="aler alert-danger" [hidden]="fechaValida" > 
                                   No es una fecha de nacimiento válida

@@ -43,6 +43,8 @@ public class MarketPlaceServicio {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private String urlRespuestaVinculacion = "https://localhost:8081/api/marketplace/vueltamp/";
+
     public MarketPlace obtener() {
         log.info(" TOME LOS DATOS DE TOKEN MARKETPLACE POR DEFECTO");
         List<MarketPlace> marketPlace = marketPlaceRepositorio.findAll();
@@ -76,10 +78,9 @@ public class MarketPlaceServicio {
             if (c.getCode() == null) {
                 String appid = String.valueOf((this.obtener().getAppID()));
                 log.info("obtuve app id" + appid);
-                // PROD URL
-                // String urlServicio = "http://localhost:8080/api/marketplace/vueltamp/"+id;
-                // DESA URL
-                String urlServicio = "http://localhost:8081/api/marketplace/vueltamp/" + id;
+
+                String urlServicio = urlRespuestaVinculacion + id;
+
                 String url = new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid + "&response_type=code&platform_id=mp&redirect_uri=" + urlServicio);
                 log.warn(" URL HACIA MPG: " + url);
                 return url;
@@ -104,8 +105,8 @@ public class MarketPlaceServicio {
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
 
+            String urlRegreso = urlRespuestaVinculacion + id;
 
-            String urlRegreso = "http://localhost:8081/api/marketplace/vueltamp/" + id;
             //AccessTokenMP atmp = new AccessTokenMP(mp.getAppID(), mp.getClientSecret(), "authorization_code", code, urlRegreso);
             JSONObject obj = new JSONObject();
 

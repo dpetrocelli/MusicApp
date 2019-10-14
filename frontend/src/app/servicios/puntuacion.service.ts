@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Instrumento } from '../modelos/instrumento';
 import { PuntuacionArtista } from '../modelos/puntuacion';
 import { LoginDatos } from '../modelos/logindatos';
+import { environment } from '../../environments/environment';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -11,11 +12,8 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
   providedIn: 'root'
 })
 export class PuntuacionService {
-  // DESARROLLO URL
-  baseURL = 'http://localhost:8081/api/puntuacion/';
 
-  // PRODUCCION URL
-  //baseURL = 'http://ec2-3-93-69-45.compute-1.amazonaws.com:9000/api/puntuacion/';
+  baseURL = environment.urlApiBackend + 'api/puntuacion/';
 
   constructor(private httpClient: HttpClient) { }
 
