@@ -1,38 +1,33 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "notificacion")
 public class Notificacion {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String topic;
+
+    @NotBlank
+    private String payload;
     private Boolean registrado = false;
 
     public Notificacion() {
     }
 
-    public Notificacion(Long id, String topic) {
-        this.id = id;
-        this.topic = topic;
+    public Notificacion(String payload) {
+        this.payload = payload;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPayload(String payload) {
+        this.payload = payload;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public String getTopic() {
-        return topic;
+    public String getPayload() {
+        return payload;
     }
 
     public void setRegistrado(Boolean registrado) {
@@ -41,5 +36,13 @@ public class Notificacion {
 
     public Boolean getRegistrado() {
         return registrado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

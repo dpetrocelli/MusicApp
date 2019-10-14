@@ -3,3 +3,13 @@ keytool -genkey -alias miusicapp_cert -storetype PKCS12 -keyalg RSA -keysize 204
 openssl pkcs12 -in miusicapp.p12 -nodes -nocerts -out miusicapp_key.pem
 
 openssl pkcs12 -in miusicapp.p12 -nokeys -out miusicapp_crt.pem
+
+
+# CONFIGURACION HTTPS
+server.port = 8081
+server.ssl.key-store = src/main/resources/miusicapp.p12
+server.ssl.key-store-password = miusicapp2019
+server.ssl.keyStoreType = PKCS12
+server.ssl.keyAlias = miusicapp_cert
+# CONFIGURACION HTTPS
+cccc

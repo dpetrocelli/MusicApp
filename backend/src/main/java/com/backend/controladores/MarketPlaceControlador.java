@@ -84,10 +84,10 @@ public class MarketPlaceControlador {
 
     @GetMapping("armarurlvinculacion/{id}")
     public ResponseEntity<?> armarurl(@PathVariable String id) {
-        System.out.println("Entrando ArmarURLVinculacion id=" + id);
+        log.info("Entrando ArmarURLVinculacion id=" + id);
         String url = this.marketPlaceServicio.armarurl(id);
         if (url != null) {
-            //log.info("arme url: "+url);
+            log.info("arme url: "+url);
             return new ResponseEntity<Mensaje>(new Mensaje(url), HttpStatus.OK);
         } else {
             log.info("ESE USUARIO YA ESTA VINCULADO en MusicAPP");
@@ -114,10 +114,19 @@ public class MarketPlaceControlador {
     }
 
     @RequestMapping(value = "notificacion", method = RequestMethod.POST)
-    public void notificacion(@RequestBody String payload) throws MalformedURLException {
+    public ResponseEntity<?>  notificacion(@RequestBody String payload) throws MalformedURLException {
 
-        log.info("MPAGO envio un payload : " + payload);
+        try {
 
+            log.info("MPAGO envio una notificacion : " + payload);
+            this.marketPlaceServicio.registrarNotificacion(payload);
+
+            return new ResponseEntity<Mensaje>(new Mensaje("Notificacion Guardada"), HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Mensaje>(new Mensaje("Ocurrio un error"), HttpStatus.BAD_REQUEST);
+        }
     }
 
 /*

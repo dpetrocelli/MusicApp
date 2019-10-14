@@ -79,9 +79,9 @@ public class MarketPlaceServicio {
                 String appid = String.valueOf((this.obtener().getAppID()));
                 log.info("obtuve app id" + appid);
 
-                String urlServicio = urlRespuestaVinculacion + id;
-
-                String url = new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid + "&response_type=code&platform_id=mp&redirect_uri=" + urlServicio);
+                String url =
+                        new String("https://auth.mercadopago.com.ar/authorization?client_id=" + appid
+                        + "&response_type=code&platform_id=mp&redirect_uri=" + urlRespuestaVinculacion + id);
                 log.warn(" URL HACIA MPG: " + url);
                 return url;
             } else return null;
@@ -105,8 +105,6 @@ public class MarketPlaceServicio {
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
 
-            String urlRegreso = urlRespuestaVinculacion + id;
-
             //AccessTokenMP atmp = new AccessTokenMP(mp.getAppID(), mp.getClientSecret(), "authorization_code", code, urlRegreso);
             JSONObject obj = new JSONObject();
 
@@ -114,7 +112,7 @@ public class MarketPlaceServicio {
             obj.put("client_secret", mp.getClientSecret());
             obj.put("grant_type", "authorization_code");
             obj.put("code", code);
-            obj.put("redirect_uri", urlRegreso);
+            obj.put("redirect_uri", urlRespuestaVinculacion + id);
 
             log.info(" Para eso definimos la url a donde enviar");
             log.info("https://api.mercadopago.com/oauth/token");
@@ -188,40 +186,32 @@ public class MarketPlaceServicio {
 
     }
 
-    public Boolean registrarNotificacion(Long id, String topic) {
+    public Boolean registrarNotificacion(String payload) {
 
         try {
-            log.info("Registrando Nueva Notificacion: id:" + id.toString() + ", topic:" + topic);
+            log.info("Registrando Nueva Notificacion: payload:" + payload);
 
-            Notificacion notificacion = new Notificacion(id, topic);
-
+            Notificacion notificacion = new Notificacion(payload);
             notificacionServicio.guardar(notificacion);
-            //luego de registrar la notificacion hay que buscar el recurso en MP por el ID y luego registrar el pago
-
-            //eltanito89 String accessToken ="APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839";
-//            String accessToken ="APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839"; OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago(accessToken);
+            log.info("Nueva Notificacion registrada: payload:" + payload);
 
             MarketPlace mp = this.obtener();
+            //luego de registrar la notificacion hay que buscar el recurso en MP por el ID y luego registrar el pago
             OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago(mp.getAppID(),mp.getClientSecret());
-
             Pago pago = ordenDeVentaMercadoPago.obtenerPago(notificacion);
-
             pagoServicio.guardar(pago);
-
             log.info("pago obtenido");
+
+            return true;
 
         } catch (Exception e) {
             System.err.println(e.getStackTrace());
             log.error("Ocurrio un error al intentar guardar la nofiticacion: id:"
-                    + id.toString()
-                    + ", topic:"
-                    + topic + " - "
-                    + e.getStackTrace() );
+                    + payload + " - "
+                    + e.getStackTrace());
 
             return false;
         }
-        log.info("Nueva Notificacion registrada: id:" + id.toString() + ", topic:" + topic);
-        return true;
     }
 
 }

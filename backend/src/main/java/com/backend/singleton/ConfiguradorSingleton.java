@@ -87,7 +87,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             Usuario usuarioAdmin = new Usuario();
             usuarioAdmin.setUsername("admin");
             usuarioAdmin.setPassword("admin");
-            usuarioAdmin.setEmail("dmpetrocelli@gmail.com");
+            usuarioAdmin.setEmail("admin@gmiusicapp.com");
             usuarioAdmin.addRol(r);
             usuarioRepositorio.save(usuarioAdmin);
             log.info("Usuario admin almacenado con exito");
