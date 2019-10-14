@@ -27,15 +27,20 @@ export class PuntuacionRedsocialComponent implements OnInit {
     ngOnInit() {
       this.userLogged = this.usuarioService.getUserLoggedIn();
       this.nombreUsuario = this.activatedRoute.snapshot.paramMap.get("nombre");
-      this.puntuacionService.verificarSiPuntuee(this.userLogged, this.nombreUsuario).subscribe(data => {
+      if (this.userLogged.nombreUsuario==this.nombreUsuario){
+        this.isPunctuated = true;
+      }else{
+        this.puntuacionService.verificarSiPuntuee(this.userLogged, this.nombreUsuario).subscribe(data => {
         
-        this.isPunctuated = data;
-        
-      },
-      (err: any) => {
-        
-       
-      });
+          this.isPunctuated = data;
+          
+        },
+        (err: any) => {
+          
+         
+        });
+      }
+      
       this.obtenerPuntuacion(this.nombreUsuario);
       this.delay(3000);
       this.isReady = true;
