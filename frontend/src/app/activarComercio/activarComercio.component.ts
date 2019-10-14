@@ -39,7 +39,7 @@ export class ActivarComercioComponent implements OnInit {
         setTimeout(function() {
             win.close();
             window.location.href= "";
-          }, 10000);
+          }, 30000);
       },
       (err: any) => {
         console.log(err.error.mensaje);

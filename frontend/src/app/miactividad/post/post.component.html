@@ -19,7 +19,7 @@
           <div *ngIf="hasResource(post, 'img')">
             <button class="btn btn-success" (click)="verImagen(post)">Ver Imagenes</button>
           </div>
-          <button class="btn btn-warning" routerLink="posts/editar/{{post.id}}">Editar</button>
+          <button class="btn btn-warning" routerLink="/posts/editar/{{post.id}}">Editar</button>
           <button class="btn btn-danger" (click)="onDelete(post.id)">Borrar</button>
         </div>
       </div>
