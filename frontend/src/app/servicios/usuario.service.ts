@@ -49,7 +49,10 @@ export class UsuarioService {
       return this.httpClient.post<any>(this.baseURL + 'validar', loginDatos, cabecera);
     }
 
+  public existeUsuario (nombreUsuario : String) : Observable <any> {
     
+    return this.httpClient.post<any>(this.baseURL + 'existeUsuario', nombreUsuario, cabecera);
+}
   public obtenerTodos (ld : LoginDatos) : Observable <any> {
       return this.httpClient.post<any>(this.baseURL + 'obtenerTodos', ld, cabecera);
   }

@@ -1,6 +1,7 @@
+
 <div id="nuevoPostBoton">
   <button class="btn btn-success btn-lg" (click)="nuevoPost()">Nuevo Post</button>
-  <app-nuevo-post *ngIf="nuevoPostComponent.visible"></app-nuevo-post>
+  <app-nuevo-post *ngIf="nuevoPostComponent.visible" (messageEvent)="receiveMessage($event)"></app-nuevo-post>
 </div>
 
 <section id="postContainer" class="col-12">

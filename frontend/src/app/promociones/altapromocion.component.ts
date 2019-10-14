@@ -24,7 +24,7 @@ export class AltapromocionComponent implements OnInit {
   userLogged : LoginDatos;
   creado = false;
   falloCreacion = false;
-  
+  fechaError = false;
   msjFallo = '';
   msjOK = '';
   
@@ -72,11 +72,18 @@ export class AltapromocionComponent implements OnInit {
     if (! (this.fval.importe.valid)) this.formIsValid = false;
     this.promocion.importe = Number (this.fval.importe.value);
     
-    
+    if (this.fval.vigencia.value == ""){
+      alert (" ENTRE ");
+      this.fval.vigencia.setErrors({'incorrect': true});
+      this.fechaError = true;
+      this.formIsValid = false;
+    }
     let wrongDate = this.compareTwoDates(this.fval.vigencia.value);
     if (!wrongDate){
       //this.fval.vigencia.invalid = true;
       this.fval.vigencia.setErrors({'incorrect': true});
+      //this.fval.vigencia.setErrors({});
+      this.fechaError = true;
       this.formIsValid = false;
           
     }else{

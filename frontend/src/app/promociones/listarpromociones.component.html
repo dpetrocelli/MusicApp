@@ -4,7 +4,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Titulo</th>
-        <th scope="col">Moneda</th>
+        
         <th scope="col">Valor promocion</th>
         <th scope="col">Importe</th>
         <th scope="col">Vigencia</th>
@@ -16,9 +16,9 @@
       <tr *ngFor="let promocion of promociones">
         <td>{{promocion.id}}</td>
         <td>{{promocion.titulo}}</td>
-        <td>{{promocion.tipomoneda}}</td>
-        <td>{{promocion.valorpromocion}}</td>
-        <td>{{promocion.importe}}</td>
+       
+        <td>${{promocion.valorpromocion}}</td>
+        <td>${{promocion.importe}}</td>
         <td>{{promocion.vigenciaStr}}</td>
         <td><button class="btn btn-warning" routerLink="/promociones/editar/{{promocion.id}}">Editar</button></td>
         <td><button class="btn btn-danger" (click)="onDelete(promocion)">Borrar</button></td>

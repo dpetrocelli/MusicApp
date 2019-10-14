@@ -78,6 +78,26 @@ public class UsuarioControlador {
         }
     }
 
+    @PostMapping("existeUsuario")
+    public ResponseEntity<?> existeUsuario (@RequestBody String nombreUsuario) {
+        // [STEP 0] - Validar usuario y contraseña
+        log.info( " HOLI");
+        try {
+
+                boolean existe = this.usuarioServicio.existeUsuarioPorNombre(nombreUsuario);
+                ArrayList<String> listaRespuesta = new ArrayList<String>();
+
+                log.info(" USER existe" + existe);
+                return new ResponseEntity<Boolean>(existe, HttpStatus.OK);
+
+
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @PostMapping("obtenerTodos")
     public ResponseEntity<?> obtenerTodos (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña

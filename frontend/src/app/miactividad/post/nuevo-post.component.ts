@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Post } from '../../modelos/post';
 import { PerfilService } from '../../servicios/perfil.service';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { LoginDatos } from '../../modelos/logindatos';
+import { PostComponent } from './post.component';
 
 @Component({
   selector: 'app-nuevo-post',
+  
   templateUrl: './nuevo-post.component.html',
   styleUrls: ['./nuevo-post.component.css']
 })
@@ -21,6 +23,9 @@ export class NuevoPostComponent implements OnInit {
   loginDatos: LoginDatos = new LoginDatos();
   idPost: string;
   visible : boolean;
+  message: string = "hola mundo!"
+  @Output() messageEvent = new EventEmitter<string>();
+  
 
   constructor(private postService : PerfilService,
               private usuarioService: UsuarioService,
@@ -92,5 +97,11 @@ export class NuevoPostComponent implements OnInit {
       this.msjOK = "Posteado correctamente";
     }, 1500);
     this.visible = false;
+  
+    this.messageEvent.emit(this.message);
+    console.log(" TRUE PAPU ", this.message);
+  
+    
+    
   }
 }

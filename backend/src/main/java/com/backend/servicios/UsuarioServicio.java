@@ -49,6 +49,10 @@ public class UsuarioServicio {
         }
     }
 
+    public boolean existeUsuarioPorNombre(String nombreUsuario) {
+        return this.usuarioRepositorio.existsByUsername(nombreUsuario);
+    }
+
     public boolean guardarArtista (Usuario usuarioFrontEnd, JsonObject formulario, String instrumentos){
         log.info( " ENTRAMOS ");
         if (this.usuarioRepositorio.existsByUsername(usuarioFrontEnd.getUsername())) return false; else {

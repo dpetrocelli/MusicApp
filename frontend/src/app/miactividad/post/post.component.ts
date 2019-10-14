@@ -16,13 +16,15 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  styleUrls: ['./post.component.css'],
+  
+  
 })
 export class PostComponent implements OnInit {
 
   @HostBinding('class')
   @Input() postComponent: PostComponent;
-
+ 
   constructor(private usuarioService: UsuarioService,
               private router: Router,
               private perfilService: PerfilService,
@@ -49,6 +51,11 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
+   this.cargar();
+
+  }
+
+  cargar(){
     this.nuevoPostComponent = new NuevoPostComponent(this.perfilService, this.usuarioService, this.router);
     this.nuevoPostForm = false;
     // luego voy a buscar los posts
@@ -63,9 +70,12 @@ export class PostComponent implements OnInit {
     });
 
     this.obtenerPosts();
-
   }
-
+  
+  receiveMessage(){
+    alert (" LLEGO EL EVENTO");
+    this.cargar();
+  }
   async obtenerPosts(){
       this.posts = await this.perfilService.obtenerposts (this.userLogged).toPromise();
       console.log('[APP-POST] -> Posts y elementos Obtenidos:',this.posts);
@@ -97,6 +107,7 @@ export class PostComponent implements OnInit {
   nuevoPost(){
     this.nuevoPostForm = !this.nuevoPostForm;
     this.nuevoPostComponent.visible = this.nuevoPostForm;
+    
   }
 
   hasResource(post : Post, type : string) : Boolean{

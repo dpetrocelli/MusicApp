@@ -8,9 +8,9 @@
       <input type="text" formControlName="titulo" class="form-control" placeholder="Titulo" [ngClass]="{ 'is-invalid': submitted && fval.titulo.errors }"/>
         
       <div *ngIf="submitted && fval.titulo.errors" class="invalid-feedback">
-        <div *ngIf="fval.titulo.errors.required">
+       
             El título es un campo requerido y debe ser válido
-        </div>
+        
       </div>
     </div>
 
@@ -19,9 +19,9 @@
         <input type="text" formControlName="descripcion" class="form-control" placeholder="Descripcion" [ngClass]="{ 'is-invalid': submitted && fval.descripcion.errors }"/>
           
         <div *ngIf="submitted && fval.descripcion.errors" class="invalid-feedback">
-          <div *ngIf="fval.descripcion.errors.required">
+         
               Debe detallar una descripción
-          </div>
+        
         </div>
     </div>
     
@@ -52,7 +52,8 @@
         <label for="vigencia"> Vigencia de Promoción: </label>
         <input type="date" formControlName="vigencia" class="form-control" [ngClass]="{ 'is-invalid': submitted && form.control.errors }" />
           <!--(blur)="compareTwoDates()"-->
-        <div *ngIf="submitted && fval.vigencia.errors" class="invalid-feedback">
+          
+        <div *ngIf="submitted && fechaError" class="invalid-feedback">
           
               Se debe definir la fecha y esta debe ser una fecha superior al día de la fecha
           

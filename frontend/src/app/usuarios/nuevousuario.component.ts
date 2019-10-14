@@ -31,7 +31,10 @@ export class NuevousuarioComponent implements OnInit {
   instrumentosSeleccionados = [];
   respuesta : [];
   fechaValida = true;
-  
+  usuarioValido = true;
+  formularioValido = false;
+  dniValido = true;
+  mailValido = true;
   constructor(private usuarioService: UsuarioService,
               private instrumentoService: InstrumentoService,
               private zonaService: ZonaService,
@@ -69,10 +72,7 @@ export class NuevousuarioComponent implements OnInit {
     return this.form.controls;
   }
 
-  zonaElegida (nombreZona){
-    
-    console.log (this.form.zona);
-  }
+
   guardarUsuario() {
     this.form.isArtista = this.isArtista;
     console.log(this.form);
@@ -123,6 +123,61 @@ export class NuevousuarioComponent implements OnInit {
 
   }
 
+  verificarMail(){
+    let email = this.form.email;
+    let pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+    
+    if (email.match(pattern)===null){
+      
+      this.mailValido = false;
+    }else{
+      this.mailValido = true;
+      this.habilitarONoFormulario();
+
+    }
+    
+
+  }
+
+  
+  validarDNI (){
+    this.dniValido = true;
+    let dni : String = new String(this.form.documento);
+   
+    if (dni.length!=8){
+      this.formularioValido = false;
+      this.dniValido = false;
+
+    }else{
+      this.dniValido = true;
+      
+    }
+   
+  }
+  revisarNombreUsuario(){
+    
+   
+    this.usuarioValido=true;
+   
+    
+      
+      this.usuarioService.existeUsuario(this.form.username).subscribe(data => {
+        
+        let result = data;
+        if(result){
+          this.usuarioValido = false;
+          this.formularioValido = false;
+        }
+      },
+          
+      );
+      
+      this.habilitarONoFormulario();
+      
+        
+    
+  }
+
   revisarFecha(){
     
    
@@ -137,6 +192,23 @@ export class NuevousuarioComponent implements OnInit {
     }catch{
       this.fechaValida = false;
     }
+    this.habilitarONoFormulario();
+  }
+
+  habilitarONoFormulario (){
+    
+    
+    if (this.isArtista){
+      if (this.dniValido && this.mailValido && this.fechaValida && this.usuarioValido && this.fechaValida){
+        this.formularioValido = true;
+      }
+    }else{
+      if (this.dniValido && this.mailValido){
+        this.formularioValido = true;
+      }
+    }
+    
+    
   }
   predictivo (evt){
     
