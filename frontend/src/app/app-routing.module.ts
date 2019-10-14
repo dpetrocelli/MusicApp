@@ -46,7 +46,7 @@ const routes: Routes = [
    
       // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'posts/nuevo/:id', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'puntuacion/nuevo/:usuario', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

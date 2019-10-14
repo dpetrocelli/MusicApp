@@ -1,7 +1,7 @@
 import { Component, OnInit, HostBinding, Input, ViewChild, ViewContainerRef, ComponentFactoryResolver, NgModule  } from '@angular/core';
 import { PerfilService } from 'src/app/servicios/perfil.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/modelos/post';
 import { Elemento } from 'src/app/modelos/elemento';
 import { LoginDatos } from 'src/app/modelos/logindatos';
@@ -11,7 +11,6 @@ import { ImgSliderComponent } from './imgSlider/imgSlider.component';
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { YoutubePopupComponent } from './youtubePopup/youtubePopup.component';
 import { environment } from '../../../environments/environment';
-
 
 @Component({
   selector: 'app-post',
@@ -29,6 +28,7 @@ export class PostComponent implements OnInit {
               private router: Router,
               private perfilService: PerfilService,
               public sanitizer: DomSanitizer,
+              private route: ActivatedRoute,
               private componentFactoryResolver: ComponentFactoryResolver,
               private modalService: NgbModal) { }
 
@@ -56,7 +56,7 @@ export class PostComponent implements OnInit {
   }
 
   cargar(){
-    this.nuevoPostComponent = new NuevoPostComponent(this.perfilService, this.usuarioService, this.router);
+    this.nuevoPostComponent = new NuevoPostComponent(this.perfilService, this.usuarioService, this.router, this.route);
     this.nuevoPostForm = false;
     // luego voy a buscar los posts
     this.perfilService.existebiografia (this.userLogged).subscribe(data => {
@@ -73,7 +73,6 @@ export class PostComponent implements OnInit {
   }
   
   receiveMessage(){
-    alert (" LLEGO EL EVENTO");
     this.cargar();
   }
   async obtenerPosts(){
@@ -128,8 +127,8 @@ export class PostComponent implements OnInit {
           post.elementos.forEach(e => {
             if(e.tipoRecurso.includes('img')){
               var obj: object = {
-                image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
-                thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
+                image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
               };
               this.imageObject.push(obj);
               result = true;
@@ -149,8 +148,8 @@ export class PostComponent implements OnInit {
     post.elementos.forEach(e => {
       if(e.tipoRecurso.includes('img')) {
         var obj: object = {
-          image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
-          thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
+          image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
         };
         packImg.push(obj);
       }
@@ -178,11 +177,5 @@ export class PostComponent implements OnInit {
   isEdited(post: Post) : Boolean {
     return post.fechaEdicion == null ? false : true;
   }
-
-  onDelete(id: number): void {
-    if (confirm('¿Estás seguro?')) {
-    }
-  }
-
 }
 

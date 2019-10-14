@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Post } from '../../modelos/post';
 import { PerfilService } from '../../servicios/perfil.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { LoginDatos } from '../../modelos/logindatos';
 import { PostComponent } from './post.component';
@@ -24,14 +24,20 @@ export class NuevoPostComponent implements OnInit {
   idPost: string;
   visible : boolean;
   message: string = "hola mundo!"
+  meLlamanDeRedSocial : boolean = false; 
   @Output() messageEvent = new EventEmitter<string>();
   
 
   constructor(private postService : PerfilService,
               private usuarioService: UsuarioService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    
+    if (this.route.snapshot.params.id === "homeSocialNetwork"){
+      this.meLlamanDeRedSocial = true;
+    }
     this.visible = true;
     console.log("Post nuevo. Visible:",this.visible);
     this.loginDatos = this.usuarioService.getUserLoggedIn();
@@ -98,8 +104,13 @@ export class NuevoPostComponent implements OnInit {
     }, 1500);
     this.visible = false;
   
-    this.messageEvent.emit(this.message);
-    console.log(" TRUE PAPU ", this.message);
+    if (!this.meLlamanDeRedSocial){
+      this.messageEvent.emit(this.message);
+      console.log(" TRUE PAPU ", this.message);
+    }else{
+      window.history.back();
+    }
+    
   
     
     
