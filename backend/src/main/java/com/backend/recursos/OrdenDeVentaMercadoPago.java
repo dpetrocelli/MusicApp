@@ -53,7 +53,7 @@ public class OrdenDeVentaMercadoPago {
 
         try {
             String token=MercadoPago.SDK.getAccessToken();
-            payment = Payment.findById(Long.toString(notificacion.getId()));
+            //payment = Payment.findById(Long.toString(notificacion.getPayload()));
             log.info("Pago obtenido desde MP");
 
             if (payment.getOrder() != null) {

@@ -23,6 +23,7 @@ public class PagoMercadoPago {
             this.accessToken = "APP_USR-2692174750312512-072417-a20187e235c70277c2dba06afaf040c9-53403839";
             try{
                 MercadoPago.SDK.setAccessToken(this.accessToken);
+                Payment pago = new Payment();
                 log.info("SDK MERCADOPAGO SETEADO CORRECTAMENTE");
             }catch (Exception e){
                 log.info("ERROR CON SDK MERCADOPAGO");

@@ -43,7 +43,8 @@ public class MarketPlaceServicio {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private String urlRespuestaVinculacion = "https://localhost:8081/api/marketplace/vueltamp/";
+
+    private String urlRespuestaVinculacion = "https://lacajadepandora.ddns.net:8081/api/marketplace/vueltamp/";
 
     public MarketPlace obtener() {
         log.info(" TOME LOS DATOS DE TOKEN MARKETPLACE POR DEFECTO");
