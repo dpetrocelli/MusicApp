@@ -23,6 +23,8 @@ export class CrearPuntuacionComponent implements OnInit {
   nombreUsuario : string;
   falloCreacion = false;
   creado = false;
+  puntuacionValida = true;
+  isValido = false;
   msjOK = "puntuación generada correctamente";
   msjFallo = '';
   form: any = {};
@@ -33,6 +35,7 @@ export class CrearPuntuacionComponent implements OnInit {
               private bandaService : BandaService) {}
 
   ngOnInit() {
+    
     this.userLogged = this.usuarioService.getUserLoggedIn();
     this.nombreUsuario = this.router.snapshot.paramMap.get("usuario");
     
@@ -41,7 +44,17 @@ export class CrearPuntuacionComponent implements OnInit {
   };
 
  
-
+  verificarPuntuacion(){
+    this.isValido = true;
+    let number = new Number (this.form.puntuacion);
+    if (number > 5 || number <1){
+      this.puntuacionValida = false;
+      this.isValido = false;
+    }else{
+      this.puntuacionValida = true;
+      this.isValido = true;
+    }
+  }
   onCreate(){
 
     //let usuarioPuntuado = this.form.artista;
