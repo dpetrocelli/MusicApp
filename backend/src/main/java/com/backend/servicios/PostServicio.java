@@ -1,14 +1,17 @@
 package com.backend.servicios;
 
-import com.backend.entidades.Biografia;
-import com.backend.entidades.Instrumento;
-import com.backend.entidades.Post;
-import com.backend.entidades.Promocion;
+import com.backend.entidades.*;
+import com.backend.recursos.LoginDatos;
 import com.backend.repositorios.BiografiaRepositorio;
+import com.backend.repositorios.ElementoRepositorio;
 import com.backend.repositorios.InstrumentoRepositorio;
 import com.backend.repositorios.PostRepositorio;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ public class PostServicio {
 
     @Autowired BiografiaRepositorio biografiaRepositorio;
     @Autowired PostRepositorio postRepositorio;
+    @Autowired ElementoRepositorio elementoRepositorio;
     public Optional<Biografia> obtenerPorId(Long id){
         return this.biografiaRepositorio.findById(id);
     }
@@ -32,6 +36,9 @@ public class PostServicio {
     public ArrayList<Post> obtenerPosts (Biografia b){
         return this.postRepositorio.findAllByBiografia(b).get();
     }
+
+    @Autowired
+    UsuarioServicio usuarioServicio;
 
     public Post obtenerPostPorId (Long id) {
         System.out.println(" ID PIOLA: "+id);
@@ -69,5 +76,32 @@ public class PostServicio {
 
         List<Post> test =  this.postRepositorio.FindAllLike(busqueda);
         return test;
+    }
+
+    public boolean validarTokenUsuario (LoginDatos ld ){
+        return this.usuarioServicio.validarTokenUsuario(ld);
+    }
+
+    public Boolean borrarPost(Post post) {
+        Post postABorrar = this.postRepositorio.findById(post.getId()).get();
+/*
+        List<Elemento> elementos = post.getElementos();
+        for (Elemento el: elementos) {
+            elementoRepositorio.delete(el);
+        }
+
+        List<Elemento> elementos = post.getElementos();
+
+        elementoRepositorio.deleteInBatch(elementos);
+        post.setElementos(null);
+        this.postRepositorio.save(post);
+*/
+        //this.postRepositorio.save(postABorrar);
+
+
+        //if (post.getElementos().isEmpty())
+            this.postRepositorio.delete(post);
+
+        return true;
     }
 }

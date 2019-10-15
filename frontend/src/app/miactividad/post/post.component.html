@@ -3,9 +3,6 @@
   <button class="btn btn-success btn-lg" (click)="nuevoPost()">Nuevo Post</button>
   <app-nuevo-post *ngIf="nuevoPostComponent.visible" (messageEvent)="receiveMessage()"></app-nuevo-post>
 </div>
-<div id="editarPost">
-  <app-editar-post (messageEvent)="receiveMessage()"></app-editar-post>
-</div>
 <section id="postContainer" class="col-12">
 
   <div *ngIf="hayPosts" >
@@ -22,7 +19,6 @@
             <button class="btn btn-success" (click)="verImagen(post)">Ver Imagenes</button>
           </div>
           <button class="btn btn-warning" routerLink="/posts/editar/{{post.id}}">Editar</button>
-          <button class="btn btn-warning" (click)="editarPost(post.id)">Editar</button>
           <button class="btn btn-danger" (click)="onDelete(post)">Borrar</button>
         </div>
       </div>

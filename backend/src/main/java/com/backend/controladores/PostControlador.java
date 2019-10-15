@@ -4,6 +4,7 @@ import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
 import com.backend.servicios.*;
 import com.backend.singleton.ConfiguradorSingleton;
+import com.backend.wrappers.PostRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
@@ -320,8 +321,6 @@ public class PostControlador {
     }
 
 
-
-
     @PostMapping("crearPost")
     public ResponseEntity<?> crearPost (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -388,6 +387,28 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("no pude crear post"), HttpStatus.OK);
         }
     }
+
+
+    @PostMapping("borrarPost")
+    public ResponseEntity<?> borrarPost (@RequestBody PostRequest request){
+        LoginDatos ld = request.getLoginDatos();
+        Post post = request.getPost();
+        log.info(" POST -> /borrarPost/ User Logged: " + ld.getNombreUsuario() + " - FROM: " + post.getInformacion() );
+        try{
+            if (postServicio.validarTokenUsuario(ld)){
+
+                this.postServicio.borrarPost(post);
+                log.info(" ELIMINE BD");
+                return new ResponseEntity<Mensaje>(new Mensaje("Borrado correctamente"), HttpStatus.OK);
+
+            }
+            return new ResponseEntity<String>("Token de autenticación no válido", HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            log.info("Estamos saliendo por except "+e.getMessage());
+            return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @PostMapping("subirImagenPerfil")
     public ResponseEntity<?> subirImagenPerfil (@RequestParam("file") MultipartFile file, @RequestParam("login") String login){
