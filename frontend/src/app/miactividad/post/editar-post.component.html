@@ -1,1 +1,40 @@
-<p>editar-post works!</p>
+<div class="container" *ngIf="visible">
+    <p></p>
+    <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="informacion"> Data Post : </label>
+        <input type="text"
+               class="form-control"
+               name="informacion"
+               id="informacion"
+               [(ngModel)]="form.informacion"
+               required
+               autocomplete="off">
+      </div>
+     
+      <div class="form-group">
+        <label for="youtube">Link Video Youtube: </label>
+        <input type="text"
+               class="form-control"
+               name="youtube"
+               id="youtube"
+               [(ngModel)]="form.youtube"
+               autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="uploadfiles"> Subir Imagenes: </label>
+        <input type="file" name="uploadfiles" (change)="cargandoImagen($event.target.files)" multiple enctype="multipart/form-data">     
+      </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" [disabled]="!f.valid">Actualizar</button>
+    </div>
+  </form>
+  <br>
+  <br>
+  <div *ngIf="falloActualizacion" class="float-left">
+    <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+  </div>
+  <div *ngIf="Actualizado" class="float-left">
+    <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+  </div>
+   

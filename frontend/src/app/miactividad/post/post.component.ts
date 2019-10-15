@@ -127,8 +127,8 @@ export class PostComponent implements OnInit {
           post.elementos.forEach(e => {
             if(e.tipoRecurso.includes('img')){
               var obj: object = {
-                image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-                thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+                image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+                thumbImage: environment.urlApiBackend + '/api/archivo/descargar?path=' + e.rutaAcceso
               };
               this.imageObject.push(obj);
               result = true;
@@ -148,8 +148,8 @@ export class PostComponent implements OnInit {
     post.elementos.forEach(e => {
       if(e.tipoRecurso.includes('img')) {
         var obj: object = {
-          image: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso,
-          thumbImage: 'http://localhost:8081/api/archivo/descargar?path=' + e.rutaAcceso
+          image: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso,
+          thumbImage: environment.urlApiBackend + 'api/archivo/descargar?path=' + e.rutaAcceso
         };
         packImg.push(obj);
       }
@@ -177,5 +177,18 @@ export class PostComponent implements OnInit {
   isEdited(post: Post) : Boolean {
     return post.fechaEdicion == null ? false : true;
   }
+
+  onDelete(post: Post): void {
+    if (confirm('¿Estás seguro?')) {
+      this.perfilService.borrarpost(this.userLogged, post).subscribe(data => {
+        this.cargar();
+      });
+    }
+  }
+
+  editarPost(id: number): void {
+    
+  }
+
 }
 

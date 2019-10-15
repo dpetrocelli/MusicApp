@@ -9,7 +9,7 @@
                   id="username"
                   [(ngModel)]="form.username"
                   required
-                  (blur)="revisarNombreUsuario($event)"
+                  (blur)="revisarNombreUsuario()"
                   autocomplete="off">
             
               <div class ="aler alert-danger" [hidden]="usuarioValido" > 
@@ -28,7 +28,7 @@
                   <div class="form-group">
                       
                       <label for ="email">Email</label>
-                        <input type="text" class="form-control" [(ngModel)]="form.email" (blur)="verificarMail($event)"  id="email" name="email" ngModel #email="ngModel">
+                        <input type="text" class="form-control" [(ngModel)]="form.email" (blur)="verificarMail()"  id="email" name="email" ngModel #email="ngModel">
                         
                          <div class ="aler alert-danger" [hidden]="mailValido" > 
                             No es un patrón valido de email
@@ -118,7 +118,7 @@
                                    [(ngModel)]="form.documento"
                                    required
                                    autocomplete="off"
-                                   (blur)="validarDNI($event)"
+                                   (blur)="validarDNI()"
                                    min="0" oninput="validity.valid||(value='');"
                                    autocomplete="off">
                              
@@ -151,7 +151,7 @@
                  
 
                   <label for="zona"> Zona de Trabajo:</label>
-                  <select class="form-control" name="zona" [(ngModel)]="form.zona" (blur)="habilitarONoFormulario($event)" >
+                  <select class="form-control" name="zona" [(ngModel)]="form.zona" (blur)="habilitarONoFormulario()" >
                     <option *ngFor="let zona of zonas" [ngValue]="zona">{{zona.nombreZona}}</option>
                   </select>    
 
@@ -182,7 +182,7 @@
                       [(ngModel)]="form.direccion"
                       required
                       autocomplete="off"
-                      (blur)="habilitarONoFormulario($event)">
+                      (blur)="habilitarONoFormulario()">
               </div>
             </div>
         </div>

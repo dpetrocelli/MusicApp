@@ -15,7 +15,6 @@ export class PerfilService {
   baseURL = environment.urlApiBackend + 'api/post/';
 
   constructor(private httpClient: HttpClient) { 
-
       
   }
 
@@ -65,6 +64,10 @@ export class PerfilService {
   }
   public crearpost (login : LoginDatos, post : Post ): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'crearPost',{login : login, post : post}, cabecera);
+  }
+
+  public borrarpost (login :LoginDatos, post: Post): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'borrarPost/', {login : login, post : post}, cabecera);
   }
 
   public actualizarbiografia (login : LoginDatos, biografia : String ): Observable<any> {
