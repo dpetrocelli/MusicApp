@@ -451,6 +451,21 @@ public class PostControlador {
 
     }
 
+    @PostMapping("buscarLike")
+    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda){
+
+        try{
+
+            List<Post> lp = this.postServicio.buscarLike (busqueda);
+            return new ResponseEntity<List<Post>>(lp, HttpStatus.OK);
+        }catch (Exception e){
+            log.info(" something has failed");
+            return new ResponseEntity<List<Post>>((List<Post>) null, HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
 
     @PostMapping("subirimagen")
     public ResponseEntity<?> subirimagen (@RequestParam("file") MultipartFile file, @RequestParam("id") String id, @RequestParam("login") String login ){

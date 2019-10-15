@@ -93,6 +93,31 @@ public class NotificacionBandaUsuarioControlador {
         }
     }
 
+    @PostMapping("nuevoMensaje")
+    public ResponseEntity<?> artistaEnviarMensaje (@RequestParam("login") String login, @RequestParam("msg") String msg, @RequestParam("artista") String artista ){
+        System.out.println(" HOLA ");
+        int i;
+
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Artista artistaDestino = new Gson().fromJson(artista, Artista.class);
+
+
+            if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
+
+                this.notificacionBandaUsuarioServicio.artistaEnviarMensaje(msg, artistaDestino, ld);
+                return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
+            }
+
+            else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("descartar")
     public ResponseEntity<?> Descartar (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
         try{

@@ -57,7 +57,8 @@ public class NotificacionBandaUsuarioServicio {
         try {
         ArrayList<NotificacionBandaUsuario> notificaciones = new ArrayList<NotificacionBandaUsuario>();
         //notificaciones = this.notificacionBandaUsuarioRepositorio.findAllByNombreDestinoAndTipoDestinoOrderByFechaNotificacionDesc(nombre,1).get();
-        notificaciones = this.notificacionBandaUsuarioRepositorio.findAllByNombreDestinoOrderByFechaNotificacionDesc(nombre).get();
+        notificaciones = this.notificacionBandaUsuarioRepositorio.findAllByNombreDestino(nombre);
+
         // ahora voy a ver si soy admin de alguna banda y me las traigo también
 
             Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombre);
@@ -158,6 +159,21 @@ public class NotificacionBandaUsuarioServicio {
         avisoASolicitante.setFechaNotificacion(new Date());
         this.notificacionBandaUsuarioRepositorio.save(avisoASolicitante);
         return true;
+
+    }
+
+    public void artistaEnviarMensaje(String msg, Artista artistaDestino, LoginDatos ld) {
+            NotificacionBandaUsuario notificacionRespuesta = new NotificacionBandaUsuario();
+            notificacionRespuesta.setEstado("nueva");
+            notificacionRespuesta.setFechaNotificacion(new Date());
+            notificacionRespuesta.setNombreDestino(ld.getNombreUsuario());
+            notificacionRespuesta.setNombreOrigen(artistaDestino.getUsuario().getUsername());
+            notificacionRespuesta.setTipoDeOperacion("msg");
+            notificacionRespuesta.setTipoDestino(1);
+            notificacionRespuesta.setTipoOrigen(1);
+            notificacionRespuesta.setMensaje(msg);
+            this.notificacionBandaUsuarioRepositorio.save(notificacionRespuesta);
+
 
     }
 }

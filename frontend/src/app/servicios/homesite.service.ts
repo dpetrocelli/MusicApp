@@ -13,7 +13,7 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 export class HomeSiteService {
 
   baseURL = environment.urlApiBackend + 'api/post/';
- 
+  alternativeURL = environment.urlApiBackend+"api/";
   constructor(private httpClient: HttpClient) { }
 
   public obtener(login : LoginDatos, inicio : number, fin : number): Observable<any> {
@@ -25,5 +25,13 @@ export class HomeSiteService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerHomeSite', formdata);
   }
 
+
+  public buscar (login : LoginDatos, opcion : String, busqueda: string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('opcion', String (opcion) );
+    formdata.append('busqueda', String (busqueda) );
+    return this.httpClient.post<any>(this.alternativeURL + opcion+"/buscarLike", formdata);
+  }
   
 }

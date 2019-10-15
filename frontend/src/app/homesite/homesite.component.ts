@@ -11,6 +11,10 @@ import { Elemento } from '../modelos/elemento';
 import { YoutubePopupComponent } from '../miactividad/post/youtubePopup/youtubePopup.component';
 import { ImgSliderComponent } from '../miactividad/post/imgSlider/imgSlider.component';
 import { environment } from '../../environments/environment';
+import { Banda } from '../modelos/banda';
+import { Artista } from '../modelos/artista';
+import Swal from 'sweetalert2';
+import { NotificacionService } from '../servicios/notificacion.service';
 
 @Component({
   selector: 'app-homesite',
@@ -20,7 +24,11 @@ import { environment } from '../../environments/environment';
 export class HomesiteComponent implements OnInit {
   userLogged : LoginDatos;
   hayPosts : boolean = false;
+  hayArtistas : boolean = false;
+  hayBandas : boolean = false;
   posts : Post[] = [];
+  artistas : Artista[] = [];
+  bandas : Banda[] = [];
   imageObject: Array<object> =[];
   videoYoutube : String;
   listaDeElementos : String[];
@@ -29,7 +37,7 @@ export class HomesiteComponent implements OnInit {
   form: any = {};
   nuevoPostForm : boolean;
   nuevoPostComponent : NuevoPostComponent;
-  
+  optionSelected : String;
   hayBiografia : boolean = false;
   event_list : Array<object>;
   idImagenAbierta : number;
@@ -38,6 +46,7 @@ export class HomesiteComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
+              private notificacionService: NotificacionService,
               private router: Router,
               private sanitizer: DomSanitizer,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -68,10 +77,60 @@ export class HomesiteComponent implements OnInit {
     
   }
 
-  buscar(){
-
+  async buscar(){
+    
+    this.hayArtistas = false; this.hayBandas = false; this.hayPosts = false;
+    let buscar = (<HTMLInputElement>document.getElementById('buscar')).value;
+    
+    if (this.optionSelected.length>0){
+      if (this.optionSelected == "artista"){
+        
+        this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,buscar ).toPromise();
+        if ((this.artistas != null) && (this.artistas.length>0)){
+          this.hayArtistas = true;
+        }else{
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: "No hay artistas con esos criterios de búsqueda"        
+          });
+        }
+      }else{
+        if (this.optionSelected == "banda"){
+          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",buscar ).toPromise();
+          if ((this.bandas != null) && (this.bandas.length>0)){
+            this.hayBandas = true;
+          }else{
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: "No hay bandas con esos criterios de búsqueda"        
+            });
+          }
+        }else{
+          this.posts = await this.homeSiteService.buscar(this.userLogged, "post",buscar ).toPromise();
+          if ((this.posts != null) && (this.posts.length>0)){
+            this.hayPosts = true;
+          }else{
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: "No hay posts con esos criterios de búsqueda"        
+            });
+          }
+        }
+      }
+     
+   }
+    
   }
 
+  cambioRadioButton(evt){
+    
+    this.optionSelected = new String (evt.target.id);
+    
+
+  }
   hasResource(post : Post, type : string) : Boolean{
     try{
       var result : Boolean = false;
@@ -130,6 +189,41 @@ export class HomesiteComponent implements OnInit {
     });
     const modalRef = this.modalService.open(YoutubePopupComponent, { centered: true , size: 'xl'});
     modalRef.componentInstance.url = safeSrc;
+  }
+
+  async artistaEnviarMensaje(artista){
+    
+     const { value: msg } = await Swal.fire({
+      title: 'Ingrese el mensaje',
+      input: 'text',
+      inputValue: "msg",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Debes ingresar un mensaje!'
+        }
+      }
+    })
+
+    if (msg) {
+      
+      this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, artista).subscribe(data => {
+        console.log ("RESPUESTA:", data);
+        
+          });      
+         
+          //console.log (" CARTEL ", data);
+        
+        (err: any) => {
+          console.log(err.error.mensaje);
+          
+        }
+      
+
+
+      
+      Swal.fire('Mensaje enviado al destinatario '+new String (artista.nombre));
+    }
   }
 
   ocultarImagen(){

@@ -5,6 +5,7 @@ import { Usuario } from '../modelos/usuario';
 import { LoginDatos } from '../modelos/logindatos';
 import { Mensaje } from '../modelos/mensaje';
 import { environment } from '../../environments/environment';
+import { Artista } from '../modelos/artista';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -13,8 +14,8 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
 })
 export class NotificacionService {
 
-  baseURL = environment.urlApiBackend + 'api/banda/';
-
+  baseURL = environment.urlApiBackend + 'api/notificacionesBandaUsuario/';
+  urlUsuario = environment.urlApiBackend + 'api/notificacionesBandaUsuario/';
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();
@@ -58,6 +59,15 @@ export class NotificacionService {
     formdata.append('nombreDestino', nombreDestino);
     formdata.append('id', id);
     return this.httpClient.post<any>(this.baseURL + 'incluirABanda', formdata);
+  }
+
+  public nuevoMensajeNotificacion (login: LoginDatos, msg: string, artista : Artista) : Observable <any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('msg', msg);
+    formdata.append('artista', JSON.stringify(artista));
+   
+    return this.httpClient.post<any>(this.urlUsuario + 'nuevoMensaje', formdata);
   }
   
 }

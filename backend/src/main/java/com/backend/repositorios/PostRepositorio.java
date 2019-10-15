@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public interface PostRepositorio extends JpaRepository<Post, Long> {
     Optional<Post> findById (Long id);
     List<Post> findTop10ByOrderByFechaCreacionDesc();
 
+    @Query("SELECT p FROM Post p WHERE p.informacion like %:informacion%")
+    List<Post> FindAllLike(@Param("informacion") String informacion);
 
 
 

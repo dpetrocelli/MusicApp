@@ -122,6 +122,22 @@ public class UsuarioControlador {
 
     }
 
+    @PostMapping("buscarLike")
+    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda){
+
+        try{
+
+            List<Artista> lp = this.artistaServicio.buscarLike (busqueda);
+            return new ResponseEntity<List<Artista>>(lp, HttpStatus.OK);
+        }catch (Exception e){
+            log.info(" something has failed");
+            return new ResponseEntity<List<Artista>>((List<Artista>) null, HttpStatus.BAD_REQUEST);
+        }
+
+
+
+    }
+
     @PostMapping("obtenerDatosUsuario")
     public ResponseEntity<?> obtenerUsuario (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña

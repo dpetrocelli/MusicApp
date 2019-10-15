@@ -33,7 +33,7 @@ public class Artista implements Serializable {
 
     private String generoMusical;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "instrumento_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "instrumento_id"))
     private Set<Instrumento> instrumento = new HashSet<>();
 

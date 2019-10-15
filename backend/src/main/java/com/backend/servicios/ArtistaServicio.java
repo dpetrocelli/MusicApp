@@ -43,4 +43,8 @@ public class ArtistaServicio {
     }
 
 
+    public List<Artista> buscarLike(String busqueda) {
+        List<Artista> test =  this.artistaRepositorio.FindAllLike(busqueda);
+        return test;
+    }
 }

@@ -2,10 +2,30 @@
 <div> 
   <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
   <input type="text" name="buscar" id="buscar">
-  <button class="btn btn-warning" routerLink="/posts/nuevo/homeSocialNetwork">Nuevo Post</button>
-  
-  
+
+  <button class="btn btn-warning btn-lg d-inline-block mr-2" routerLink="/posts/nuevo/homeSocialNetwork">Nuevo Post</button>
+
 </div>
+ 
+<label  class="d-inline-block mr-2" for="busqueda"><strong> Mecanismo de búsqueda: </strong> </label>
+<div class="d-inline-block mr-2">
+    <div class="d-inline-block mr-2">
+      <input id="artista" type="radio" value="artista" name="busqueda" (change)="cambioRadioButton($event)">
+      <label for="artista">Artista</label>
+    </div>
+    <div class="d-inline-block mr-2">
+      <input id="banda" type="radio" value="banda" name="busqueda" (change)="cambioRadioButton($event)">
+      <label for="banda"> Banda </label>
+    </div>
+    <div class="d-inline-block mr-2">
+      <input id="post" type="radio" value="post" name="busqueda" (change)="cambioRadioButton($event)">
+      <label for="post">Post</label>
+    </div>
+    
+</div>
+
+
+ 
 <section id="homeSiteContainer" class="col-12">
    <div *ngIf="hayPosts" >
     <span></span>
@@ -27,5 +47,32 @@
     </div>
 
   </div>
+
+</section>
+
+<section id="bandaContainer" class="col-12">
+  <div *ngIf="hayArtistas" >
+   <span></span>
+   <div class="post row d-flex justify-content-center" *ngFor="let artista of artistas">
+      <div class="info col-12"> Artista: {{artista.nombre}}</div>
+    <div class="info col-12"> Usuario: {{artista.usuario.username}}</div>
+     <div class="info col-12"> NickName: {{artista.nickname}}</div>
+     <div class="info col-12"> Genero Musical: {{artista.generoMusical}}</div>
+     <div class="info col-12"> Instrumentos que toca</div>
+     <div class="info col-12" *ngFor="let inst of artista.instrumento">
+          <span> {{inst.nombreInstrumento}}</span>
+    </div>
+     <div>
+       <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}">Ver Perfil</button>
+     </div>
+     <div>
+        <button class="btn btn-success" (click)="artistaEnviarMensaje(artista)"> Enviar Mensaje</button>
+      </div>
+      <div>
+          <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}"> Invitar a mi Banda </button>
+        </div>
+   </div>
+   
+ </div>
 
 </section>

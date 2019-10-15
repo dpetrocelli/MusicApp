@@ -64,4 +64,10 @@ public class PostServicio {
         return test;
 
     }
+
+    public List<Post> buscarLike(String busqueda) {
+
+        List<Post> test =  this.postRepositorio.FindAllLike(busqueda);
+        return test;
+    }
 }
