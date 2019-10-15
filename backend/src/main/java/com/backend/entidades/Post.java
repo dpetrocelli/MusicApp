@@ -19,7 +19,7 @@ public class Post {
     private Date fechaCreacion;
     private Date fechaEdicion;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Elemento> elementos;
 
     @ManyToOne (optional = true, fetch = FetchType.LAZY)

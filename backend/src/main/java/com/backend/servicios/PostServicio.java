@@ -26,28 +26,32 @@ import java.util.Optional;
 public class PostServicio {
 
 
-    @Autowired BiografiaRepositorio biografiaRepositorio;
-    @Autowired PostRepositorio postRepositorio;
-    @Autowired ElementoRepositorio elementoRepositorio;
-    public Optional<Biografia> obtenerPorId(Long id){
+    @Autowired
+    BiografiaRepositorio biografiaRepositorio;
+    @Autowired
+    PostRepositorio postRepositorio;
+    @Autowired
+    ElementoRepositorio elementoRepositorio;
+
+    public Optional<Biografia> obtenerPorId(Long id) {
         return this.biografiaRepositorio.findById(id);
     }
 
-    public ArrayList<Post> obtenerPosts (Biografia b){
+    public ArrayList<Post> obtenerPosts(Biografia b) {
         return this.postRepositorio.findAllByBiografia(b).get();
     }
 
     @Autowired
     UsuarioServicio usuarioServicio;
 
-    public Post obtenerPostPorId (Long id) {
-        System.out.println(" ID PIOLA: "+id);
+    public Post obtenerPostPorId(Long id) {
+        System.out.println(" ID PIOLA: " + id);
         Post p = this.postRepositorio.findById(id).get();
-        System.out.println(" INFO "+p.getInformacion());
+        System.out.println(" INFO " + p.getInformacion());
         return p;
-        }
+    }
 
-    public boolean guardar (Post post){
+    public boolean guardar(Post post) {
         this.postRepositorio.save(post);
         return true;
     }
@@ -58,12 +62,12 @@ public class PostServicio {
 
 
         TopTenByAge();*/
-       return null;
+        return null;
     }
 
     public List<Post> obtenerTodos() {
         //return this.postRepositorio.findAll();
-        List<Post> test =  this.postRepositorio.findTop10ByOrderByFechaCreacionDesc();
+        List<Post> test = this.postRepositorio.findTop10ByOrderByFechaCreacionDesc();
        /* String result;
         for (Post post: test) {
             result = post.getBiografia().getArtista().getUsuario().getUsername();
@@ -74,34 +78,16 @@ public class PostServicio {
 
     public List<Post> buscarLike(String busqueda) {
 
-        List<Post> test =  this.postRepositorio.FindAllLike(busqueda);
+        List<Post> test = this.postRepositorio.FindAllLike(busqueda);
         return test;
     }
 
-    public boolean validarTokenUsuario (LoginDatos ld ){
+    public boolean validarTokenUsuario(LoginDatos ld) {
         return this.usuarioServicio.validarTokenUsuario(ld);
     }
 
     public Boolean borrarPost(Post post) {
-        Post postABorrar = this.postRepositorio.findById(post.getId()).get();
-/*
-        List<Elemento> elementos = post.getElementos();
-        for (Elemento el: elementos) {
-            elementoRepositorio.delete(el);
-        }
-
-        List<Elemento> elementos = post.getElementos();
-
-        elementoRepositorio.deleteInBatch(elementos);
-        post.setElementos(null);
-        this.postRepositorio.save(post);
-*/
-        //this.postRepositorio.save(postABorrar);
-
-
-        //if (post.getElementos().isEmpty())
-            this.postRepositorio.delete(post);
-
+        this.postRepositorio.deleteById(post.getId());
         return true;
     }
 }
