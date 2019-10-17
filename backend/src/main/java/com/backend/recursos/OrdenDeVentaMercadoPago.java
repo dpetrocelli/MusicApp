@@ -1,6 +1,6 @@
 package com.backend.recursos;
 
-import com.backend.entidades.Notificacion;
+import com.backend.dto.PagoMercadoPago;
 import com.backend.entidades.Pago;
 import com.backend.entidades.Venta;
 import com.backend.servicios.PagoServicio;
@@ -11,6 +11,7 @@ import com.mercadopago.resources.Payment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class OrdenDeVentaMercadoPago {
 
@@ -48,12 +49,12 @@ public class OrdenDeVentaMercadoPago {
         }
     }
 
-    public Pago obtenerPago(Notificacion notificacion) {
+    public Pago obtenerPago(PagoMercadoPago pagoMercadoPago) {
         Pago pago = null;
 
         try {
             String token=MercadoPago.SDK.getAccessToken();
-            //payment = Payment.findById(Long.toString(notificacion.getPayload()));
+            payment = Payment.findById(pagoMercadoPago.getId());
             log.info("Pago obtenido desde MP");
 
             if (payment.getOrder() != null) {

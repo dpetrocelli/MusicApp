@@ -154,7 +154,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
         if (marketPlaceRepositorio.count()==0){
             // INSERTO LA CONF (Temporal) - MERCADOLIBRE
-            MarketPlace mp = new MarketPlace("5801276810386206", "3KLt51OEOUQHfzG9p2QlKnrkRa1VZ98Y",2.69, (long) 1000000);
+            MarketPlace mp = new MarketPlace("8023447927546095", "pDoIXPLnMSp1aU8epxwhDCOq7ploVm9u",2.69, (long) 1000000);
             marketPlaceRepositorio.save(mp);
         }
 

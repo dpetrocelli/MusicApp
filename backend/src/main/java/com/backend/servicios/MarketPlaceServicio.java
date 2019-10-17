@@ -2,7 +2,7 @@ package com.backend.servicios;
 
 
 import com.backend.entidades.*;
-import com.backend.recursos.OrdenDeVentaMercadoPago;
+import com.backend.recursos.RegistroDePago_Async;
 import com.backend.repositorios.ComercioRepositorio;
 import com.backend.repositorios.MarketPlaceRepositorio;
 
@@ -191,17 +191,16 @@ public class MarketPlaceServicio {
 
         try {
             log.info("Registrando Nueva Notificacion: payload:" + payload);
-
             Notificacion notificacion = new Notificacion(payload);
             notificacionServicio.guardar(notificacion);
             log.info("Nueva Notificacion registrada: payload:" + payload);
 
-            MarketPlace mp = this.obtener();
-            //luego de registrar la notificacion hay que buscar el recurso en MP por el ID y luego registrar el pago
-            OrdenDeVentaMercadoPago ordenDeVentaMercadoPago = new OrdenDeVentaMercadoPago(mp.getAppID(),mp.getClientSecret());
-            Pago pago = ordenDeVentaMercadoPago.obtenerPago(notificacion);
-            pagoServicio.guardar(pago);
-            log.info("pago obtenido");
+            log.info("Iniciando registro asincrono");
+            RegistroDePago_Async registroDePagoAsync = new RegistroDePago_Async(notificacion, this.obtener(), pagoServicio);
+            log.info("Finalizado registro asincrono");
+
+            //registroDePagoAsync.run();
+            registroDePagoAsync.start();
 
             return true;
 
@@ -210,8 +209,7 @@ public class MarketPlaceServicio {
             log.error("Ocurrio un error al intentar guardar la nofiticacion: id:"
                     + payload + " - "
                     + e.getStackTrace());
-
-            return false;
+            throw e;
         }
     }
 

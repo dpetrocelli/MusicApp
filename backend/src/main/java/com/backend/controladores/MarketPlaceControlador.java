@@ -22,7 +22,6 @@ public class MarketPlaceControlador {
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
 
-
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("obtener")
@@ -129,44 +128,4 @@ public class MarketPlaceControlador {
         }
     }
 
-/*
-    @RequestMapping(value = "notificacion", method = RequestMethod.POST)
-    public void notificacion(HttpServletRequest request) throws MalformedURLException {
-
-        log.info("MPAGO envio una notification : " + request.getRequestURI());
-        log.info("MPAGO envio una notification : " + request.getRequestURL());
-
-        for (Enumeration e = request.getParameterNames(); e.hasMoreElements();) {
-
-            log.info("MPAGO envio un parametro : " + e.nextElement() + " - " + request.getParameter());
-        }
-
-        for (Enumeration e = request.getv; e.hasMoreElements();) {
-            log.info("MPAGO envio un parametro : " + e.nextElement());
-        }
-
-    }
- */
-/*
-    @RequestMapping(value = "notificacion", method = RequestMethod.POST)
-    public ResponseEntity<?> notificacion(@RequestParam("topic") String topic, @RequestParam("id") Long id) throws MalformedURLException {
-
-        try {
-            log.info("MPAGO envio una notification topic:" + topic + " id:" + id.toString());
-
-            Boolean notificacionRegistrada = this.marketPlaceServicio.registrarNotificacion(id, topic);
-
-            if (notificacionRegistrada) {
-                return new ResponseEntity<Mensaje>(new Mensaje("Notificacion Registrada"),HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<Mensaje>(new Mensaje("Ocurrio un error"),HttpStatus.BAD_REQUEST);
-            }
-
-        } catch (Exception e) {
-            return new ResponseEntity<Mensaje>(new Mensaje("Ocurrio un error"),HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
- */
 }
