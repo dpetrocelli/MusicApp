@@ -2,6 +2,7 @@ package com.backend.servicios;
 
 import com.backend.entidades.Instrumento;
 import com.backend.entidades.Notificacion;
+import com.backend.recursos.LoginDatos;
 import com.backend.repositorios.NotificacionRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.List;
 public class NotificacionServicio {
 
     @Autowired
+    UsuarioServicio usuarioServicio;
+    @Autowired
     NotificacionRepositorio notificacionRepositorio;
 
     public List<Notificacion> obtenerTodos() {
@@ -25,4 +28,7 @@ public class NotificacionServicio {
         notificacionRepositorio.save(notificacion);
     }
 
+    public boolean validarTokenUsuario(LoginDatos ld) {
+        return this.usuarioServicio.validarTokenUsuario(ld);
+    }
 }

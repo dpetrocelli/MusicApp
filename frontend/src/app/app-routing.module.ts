@@ -23,6 +23,8 @@ import { ComprarPromocionesComponent } from './promociones/comprar-promociones.c
 import { CrearPuntuacionComponent } from './puntuacion/crear-puntuacion.component';
 import { HomesiteComponent } from './homesite/homesite.component';
 import { RedSocialComponent } from './redsocial/redsocial.component';
+import { ListaPagoComponent } from './pagos/lista-pago.component';
+import { ListaNotificacionComponent } from './notificaciones/lista-notificacion.component';
 
 
 
@@ -69,6 +71,10 @@ const routes: Routes = [
    {path: 'instrumento/detalle/:id', component: DetalleInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+
+   // Pago
+   {path: 'notificacion', component: ListaNotificacionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+   {path: 'pago', component: ListaPagoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: '**', redirectTo: 'home', pathMatch: 'full'}
 
 ];

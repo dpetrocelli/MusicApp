@@ -43,6 +43,8 @@ import {ImagenPerfilRedsocialComponent} from './redsocial/imagen-perfil-redsocia
 import {InfoPerfilRedsocialComponent} from './redsocial/info-perfil-redsocial/info-perfil-redsocial.component';
 import {PostRedsocialComponent} from './redsocial/post-redsocial/post-redsocial.component';
 import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/puntuacion-redsocial.component';
+import { ListaPagoComponent } from './pagos/lista-pago.component';
+import { ListaNotificacionComponent } from './notificaciones/lista-notificacion.component';
 
 
 
@@ -83,6 +85,8 @@ import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/pun
       InfoPerfilRedsocialComponent,
       ImagenPerfilRedsocialComponent,
       RedSocialComponent,
+      ListaPagoComponent,
+      ListaNotificacionComponent,
       
      
    ],

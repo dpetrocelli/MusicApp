@@ -45,6 +45,16 @@
           <a class="nav-link" routerLink="instrumento">Instrumentos</a>
         </li>
       </div>
+      <div *ngIf="isAdmin">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="notificacion">Notificaciones MP</a>
+        </li>
+      </div>
+      <div *ngIf="isAdmin">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="pago">Pagos</a>
+        </li>
+      </div>
       <div *ngIf="isComercio && isComercioVinculadoMP">
         <li class="nav-item">
           <a class="nav-link" routerLink="promociones">Promociones</a>
