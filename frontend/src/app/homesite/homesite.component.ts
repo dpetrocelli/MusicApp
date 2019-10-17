@@ -15,6 +15,7 @@ import { Banda } from '../modelos/banda';
 import { Artista } from '../modelos/artista';
 import Swal from 'sweetalert2';
 import { NotificacionService } from '../servicios/notificacion.service';
+import { BandaService } from '../servicios/banda.service';
 
 @Component({
   selector: 'app-homesite',
@@ -25,6 +26,7 @@ export class HomesiteComponent implements OnInit {
   userLogged : LoginDatos;
   hayPosts : boolean = false;
   hayArtistas : boolean = false;
+  soyDuenioBanda : boolean;
   hayBandas : boolean = false;
   posts : Post[] = [];
   artistas : Artista[] = [];
@@ -46,6 +48,7 @@ export class HomesiteComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
+              private bandaServicio: BandaService,
               private notificacionService: NotificacionService,
               private router: Router,
               private sanitizer: DomSanitizer,
@@ -84,10 +87,12 @@ export class HomesiteComponent implements OnInit {
     
     if (this.optionSelected.length>0){
       if (this.optionSelected == "artista"){
+        this.soyDuenioBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged).toPromise();
         
         this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,buscar ).toPromise();
         if ((this.artistas != null) && (this.artistas.length>0)){
           this.hayArtistas = true;
+          
         }else{
           Swal.fire({
             type: 'error',
@@ -207,7 +212,7 @@ export class HomesiteComponent implements OnInit {
 
     if (msg) {
       
-      this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, artista).subscribe(data => {
+      this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, artista, "msg").subscribe(data => {
         console.log ("RESPUESTA:", data);
         
           });      
@@ -225,6 +230,41 @@ export class HomesiteComponent implements OnInit {
       Swal.fire('Mensaje enviado al destinatario '+new String (artista.nombre));
     }
   }
+
+  async artistaInvitarAMiBanda(artista){
+    
+    const { value: msg } = await Swal.fire({
+     title: 'Ingrese el mensaje de invitación',
+     input: 'text',
+     inputValue: "Te quiero invitar a mi banda",
+     showCancelButton: true,
+     inputValidator: (value) => {
+       if (!value) {
+         return 'Debes ingresar un mensaje!'
+       }
+     }
+   })
+
+   if (msg) {
+     
+     this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, artista, "moderacionArtista").subscribe(data => {
+       console.log ("RESPUESTA:", data);
+       
+         });      
+        
+         //console.log (" CARTEL ", data);
+       
+       (err: any) => {
+         console.log(err.error.mensaje);
+         
+       }
+     
+
+
+     
+     Swal.fire('Invitación enviada al artista '+new String (artista.nombre));
+   }
+ }
 
   ocultarImagen(){
     var contenedor : HTMLElement = document.getElementById('post'+this.idImagenAbierta);

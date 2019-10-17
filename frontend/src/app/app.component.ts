@@ -168,6 +168,7 @@ export class AppComponent implements OnInit {
   }
 
   cerrarsesion(){
+    //sessionStorage.clear();
     localStorage.clear();
     this.userLogged = null;
     this.isArtista = false;

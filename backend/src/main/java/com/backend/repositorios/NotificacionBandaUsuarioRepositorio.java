@@ -25,4 +25,11 @@ public interface NotificacionBandaUsuarioRepositorio extends JpaRepository<Notif
     ArrayList<NotificacionBandaUsuario> findAllByNombreDestino(
             @Param("status") String status);
 
+    @Query("SELECT n FROM NotificacionBandaUsuario n WHERE n.nombreDestino = :nombreDestino order by n.fechaNotificacion desc")
+    ArrayList<NotificacionBandaUsuario>  buscarNombreDestino (@Param("nombreDestino") String pepe);
+
+    @Query("SELECT n FROM NotificacionBandaUsuario n WHERE n.nombreDestino = :nombreDestino and n.tipoDestino = :tipoDestino order by n.fechaNotificacion desc")
+    ArrayList<NotificacionBandaUsuario>  buscarPorDuenioBanda (@Param("nombreDestino") String pepe,
+                                                               @Param("tipoDestino") Integer tipo);
+
 }

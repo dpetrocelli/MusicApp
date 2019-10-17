@@ -83,6 +83,7 @@ export class NuevousuarioComponent implements OnInit {
       this.msjOK = data.msg ;
       this.creado = true;
       this.falloCreacion = false;
+      //sessionStorage.clear();
       localStorage.clear();
       Swal.fire({
         type: 'success',

@@ -50,7 +50,7 @@
 
 </section>
 
-<section id="bandaContainer" class="col-12">
+<section id="artistaContainer" class="col-12">
   <div *ngIf="hayArtistas" >
    <span></span>
    <div class="post row d-flex justify-content-center" *ngFor="let artista of artistas">
@@ -68,9 +68,10 @@
      <div>
         <button class="btn btn-success" (click)="artistaEnviarMensaje(artista)"> Enviar Mensaje</button>
       </div>
-      <div>
-          <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}"> Invitar a mi Banda </button>
-        </div>
+      <div *ngIf="soyDuenioBanda">
+        <button class="btn btn-warning" (click)="artistaInvitarAMiBanda(artista)"> Invitar a Banda</button>
+      </div>
+   
    </div>
    
  </div>

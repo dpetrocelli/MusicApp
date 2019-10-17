@@ -28,6 +28,8 @@ public class BandaControlador {
     @Autowired
     UsuarioServicio usuarioServicio;
 
+    @Autowired ArtistaServicio artistaServicio;
+
     @Autowired
     BandaServicio bandaServicio;
 
@@ -57,4 +59,29 @@ public class BandaControlador {
 
     }
 
+    @PostMapping("soyDuenioBanda")
+    public ResponseEntity<?> soyDuenioBanda (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista a = this.artistaServicio.obtenerPorUsuario(u);
+                ArrayList<Banda> rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
+                boolean result = false;
+                if (rest.size()>0){
+                    result = true;
+                }
+
+                return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

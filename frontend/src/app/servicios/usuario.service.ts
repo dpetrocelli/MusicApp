@@ -28,10 +28,13 @@ export class UsuarioService {
     this.isUserLoggedIn = true;
     this.loginDatos = loginDat;
     localStorage.setItem('currentUser', JSON.stringify(this.loginDatos));
+    //sessionStorage.setItem('currentUser', JSON.stringify(this.loginDatos));
+
   }
 
   getUserLoggedIn() {
-  	return JSON.parse(localStorage.getItem('currentUser'));
+    return JSON.parse(localStorage.getItem('currentUser'));
+    //return JSON.parse(sessionStorage.getItem('currentUser'));
   }
 
   public chequearPermisosPorRol(ld : LoginDatos): Observable <Mensaje> {

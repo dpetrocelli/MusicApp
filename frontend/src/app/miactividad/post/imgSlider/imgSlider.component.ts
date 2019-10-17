@@ -15,10 +15,20 @@ export class ImgSliderComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal) {  }
 
   ngOnInit() {
-    this.slider.sliderImageHeight = 400;
-    this.slider.sliderImageWidth = 400;
+    this.slider.sliderImageHeight = 200;
+    this.slider.sliderImageWidth = 200;
     this.slider.imagePopup = true;
     this.slider.autoSlide = true;
+    this.slider.showArrow = false;
   }
+
+  prevImageClick() {
+    this.slider.prev();
+}
+
+nextImageClick() {
+  alert (" HOLA");
+    this.slider.next();
+}
 
 }

@@ -61,12 +61,12 @@ export class NotificacionService {
     return this.httpClient.post<any>(this.baseURL + 'incluirABanda', formdata);
   }
 
-  public nuevoMensajeNotificacion (login: LoginDatos, msg: string, artista : Artista) : Observable <any> {
+  public nuevoMensajeNotificacion (login: LoginDatos, msg: string, artista : Artista, tipomsg : string) : Observable <any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
     formdata.append('msg', msg);
     formdata.append('artista', JSON.stringify(artista));
-   
+    formdata.append('tipomsg', tipomsg);
     return this.httpClient.post<any>(this.urlUsuario + 'nuevoMensaje', formdata);
   }
   

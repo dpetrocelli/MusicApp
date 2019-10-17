@@ -94,7 +94,7 @@ public class NotificacionBandaUsuarioControlador {
     }
 
     @PostMapping("nuevoMensaje")
-    public ResponseEntity<?> artistaEnviarMensaje (@RequestParam("login") String login, @RequestParam("msg") String msg, @RequestParam("artista") String artista ){
+    public ResponseEntity<?> artistaEnviarMensaje (@RequestParam("login") String login, @RequestParam("msg") String msg, @RequestParam("artista") String artista, @RequestParam("tipomsg") String tipomsg ){
         System.out.println(" HOLA ");
         int i;
 
@@ -105,7 +105,7 @@ public class NotificacionBandaUsuarioControlador {
 
             if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
 
-                this.notificacionBandaUsuarioServicio.artistaEnviarMensaje(msg, artistaDestino, ld);
+                this.notificacionBandaUsuarioServicio.artistaEnviarMensaje(msg, artistaDestino, ld, tipomsg);
                 return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
             }
 

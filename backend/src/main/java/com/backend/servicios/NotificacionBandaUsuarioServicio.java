@@ -29,7 +29,7 @@ public class NotificacionBandaUsuarioServicio {
     BandaServicio bandaServicio;
     @Autowired
     ArtistaServicio artistaServicio;
-
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
@@ -57,8 +57,8 @@ public class NotificacionBandaUsuarioServicio {
         try {
         ArrayList<NotificacionBandaUsuario> notificaciones = new ArrayList<NotificacionBandaUsuario>();
         //notificaciones = this.notificacionBandaUsuarioRepositorio.findAllByNombreDestinoAndTipoDestinoOrderByFechaNotificacionDesc(nombre,1).get();
-        notificaciones = this.notificacionBandaUsuarioRepositorio.findAllByNombreDestino(nombre);
-
+        notificaciones = this.notificacionBandaUsuarioRepositorio.buscarNombreDestino(nombre);
+        log.info(" ENCONTRE "+ notificaciones.size()+" NOTIFICACIONES ");
         // ahora voy a ver si soy admin de alguna banda y me las traigo también
 
             Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombre);
@@ -71,7 +71,7 @@ public class NotificacionBandaUsuarioServicio {
                 ArrayList<Banda> bandaLider = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista);
                 if (bandaLider.size() > 0) {
                     for (Banda banda : bandaLider) {
-                        notificaciones.addAll(this.notificacionBandaUsuarioRepositorio.findAllByNombreDestinoAndTipoDestinoOrderByFechaNotificacionDesc(banda.getNombre(), 2).get());
+                        notificaciones.addAll(this.notificacionBandaUsuarioRepositorio.buscarPorDuenioBanda(banda.getNombre(), 2));
 
                     }
                     notificaciones.sort(new NotificacionesBandaUsuarioOrdenador());
@@ -162,13 +162,13 @@ public class NotificacionBandaUsuarioServicio {
 
     }
 
-    public void artistaEnviarMensaje(String msg, Artista artistaDestino, LoginDatos ld) {
+    public void artistaEnviarMensaje(String msg, Artista artistaDestino, LoginDatos ld, String tipomsg) {
             NotificacionBandaUsuario notificacionRespuesta = new NotificacionBandaUsuario();
             notificacionRespuesta.setEstado("nueva");
             notificacionRespuesta.setFechaNotificacion(new Date());
-            notificacionRespuesta.setNombreDestino(ld.getNombreUsuario());
-            notificacionRespuesta.setNombreOrigen(artistaDestino.getUsuario().getUsername());
-            notificacionRespuesta.setTipoDeOperacion("msg");
+            notificacionRespuesta.setNombreDestino(artistaDestino.getUsuario().getUsername());
+            notificacionRespuesta.setNombreOrigen(ld.getNombreUsuario());
+            notificacionRespuesta.setTipoDeOperacion(tipomsg);
             notificacionRespuesta.setTipoDestino(1);
             notificacionRespuesta.setTipoOrigen(1);
             notificacionRespuesta.setMensaje(msg);

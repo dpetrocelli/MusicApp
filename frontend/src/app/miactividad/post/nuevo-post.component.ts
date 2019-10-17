@@ -106,7 +106,7 @@ export class NuevoPostComponent implements OnInit {
   
     if (!this.meLlamanDeRedSocial){
       this.messageEvent.emit(this.message);
-      console.log(" TRUE PAPU ", this.message);
+      //console.log(" emit msg child ", this.message);
     }else{
       window.history.back();
     }
