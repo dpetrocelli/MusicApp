@@ -135,8 +135,8 @@ public class NotificacionBandaUsuarioServicio {
 
     public boolean incluirABanda(String id, String nombreOrigen, String nombreDestino) {
         //[STEP 0] - Incluyo el usuario a la banda, si to do sale bien hago step 1 y 2
-        Banda b = this.bandaServicio.obtenerBandaPorNombre (nombreDestino);
-        Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombreOrigen);
+        Banda b = this.bandaServicio.obtenerBandaPorNombre (nombreOrigen);
+        Usuario usuario = this.usuarioServicio.obtenerPorNombre(nombreDestino);
         Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
         artista.addBanda(b);
         this.artistaServicio.guardar(artista);
@@ -151,8 +151,8 @@ public class NotificacionBandaUsuarioServicio {
         NotificacionBandaUsuario avisoASolicitante = new NotificacionBandaUsuario();
         avisoASolicitante.setEstado("nueva");
         avisoASolicitante.setMensaje(" Ahora forma parte la banda "+nombreDestino);
-        avisoASolicitante.setTipoOrigen(2);
-        avisoASolicitante.setTipoDestino(1);
+        avisoASolicitante.setTipoOrigen(1);
+        avisoASolicitante.setTipoDestino(2);
         avisoASolicitante.setTipoDeOperacion("info");
         avisoASolicitante.setNombreOrigen(nombreDestino);
         avisoASolicitante.setNombreDestino(nombreOrigen);
@@ -163,14 +163,27 @@ public class NotificacionBandaUsuarioServicio {
     }
 
     public void artistaEnviarMensaje(String msg, Artista artistaDestino, LoginDatos ld, String tipomsg) {
+
             NotificacionBandaUsuario notificacionRespuesta = new NotificacionBandaUsuario();
             notificacionRespuesta.setEstado("nueva");
             notificacionRespuesta.setFechaNotificacion(new Date());
+            if (tipomsg.equals("moderacionArtista")){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista a = this.artistaServicio.obtenerPorUsuario(u);
+                ArrayList<Banda> banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
+                Banda b = banda.get(0);
+                notificacionRespuesta.setNombreOrigen(b.getNombre());
+                notificacionRespuesta.setTipoOrigen(2);
+            }else{
+                notificacionRespuesta.setNombreOrigen(ld.getNombreUsuario());
+                notificacionRespuesta.setTipoOrigen(1);
+
+            }
+
             notificacionRespuesta.setNombreDestino(artistaDestino.getUsuario().getUsername());
-            notificacionRespuesta.setNombreOrigen(ld.getNombreUsuario());
             notificacionRespuesta.setTipoDeOperacion(tipomsg);
             notificacionRespuesta.setTipoDestino(1);
-            notificacionRespuesta.setTipoOrigen(1);
+
             notificacionRespuesta.setMensaje(msg);
             this.notificacionBandaUsuarioRepositorio.save(notificacionRespuesta);
 

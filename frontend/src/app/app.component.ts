@@ -108,11 +108,14 @@ export class AppComponent implements OnInit {
 
 
   async aceptar(itemForm: any) {
+    
     // si acepta depende el tipo de operación
-    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+    if (itemForm.tipo!="moderacionArtista"){
       // hago una cosa
+
     }else{
       // hago otra cosa
+      
       console.log ("aceptar e incluir a banda");
       await this.notificacionService.incluirABanda(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
       this.obtener();
