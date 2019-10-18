@@ -1,6 +1,7 @@
 package com.backend.servicios;
 
 import com.backend.entidades.Artista;
+import com.backend.entidades.Banda;
 import com.backend.entidades.Biografia;
 import com.backend.entidades.Usuario;
 import com.backend.repositorios.ArtistaRepositorio;
@@ -47,4 +48,6 @@ public class ArtistaServicio {
         List<Artista> test =  this.artistaRepositorio.FindAllLike(busqueda);
         return test;
     }
+
+
 }

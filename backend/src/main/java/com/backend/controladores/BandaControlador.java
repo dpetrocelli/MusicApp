@@ -68,12 +68,25 @@ public class BandaControlador {
                 Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
                 Artista a = this.artistaServicio.obtenerPorUsuario(u);
                 ArrayList<Banda> rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
+                // por ahora vamos a tener una sola banda duenio
+                Banda b = rest.get(0);
+
+                List<Artista> lista = this.artistaServicio.obtenerTodos();
+                ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
+                for (Artista art: lista) {
+                    Set<Banda> ba = art.getBanda();
+                    if (ba.contains(b)) artistasRespuesta.add(art);
+
+                }
+                /*
                 boolean result = false;
                 if (rest.size()>0){
                     result = true;
                 }
+                */
 
-                return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+
+                return new ResponseEntity<ArrayList<Artista>>(artistasRespuesta, HttpStatus.OK);
 
             }else{
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);

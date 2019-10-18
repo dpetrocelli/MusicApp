@@ -1,8 +1,8 @@
 
 <div> 
-  <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
+  
   <input type="text" name="buscar" id="buscar">
-
+  <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
   <button class="btn btn-warning btn-lg d-inline-block mr-2" routerLink="/posts/nuevo/homeSocialNetwork">Nuevo Post</button>
 
 </div>
@@ -54,6 +54,7 @@
   <div *ngIf="hayArtistas" >
    <span></span>
    <div class="post row d-flex justify-content-center" *ngFor="let artista of artistas">
+    
       <div class="info col-12"> Artista: {{artista.nombre}}</div>
     <div class="info col-12"> Usuario: {{artista.usuario.username}}</div>
      <div class="info col-12"> NickName: {{artista.nickname}}</div>
@@ -68,7 +69,7 @@
      <div>
         <button class="btn btn-success" (click)="artistaEnviarMensaje(artista)"> Enviar Mensaje</button>
       </div>
-      <div *ngIf="soyDuenioBanda">
+      <div *ngIf="!revisionEnBanda(artista)">
         <button class="btn btn-warning" (click)="artistaInvitarAMiBanda(artista)"> Invitar a Banda</button>
       </div>
    

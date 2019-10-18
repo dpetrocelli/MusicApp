@@ -16,6 +16,7 @@ import { Artista } from '../modelos/artista';
 import Swal from 'sweetalert2';
 import { NotificacionService } from '../servicios/notificacion.service';
 import { BandaService } from '../servicios/banda.service';
+import { truncate } from 'fs';
 
 @Component({
   selector: 'app-homesite',
@@ -45,6 +46,7 @@ export class HomesiteComponent implements OnInit {
   idImagenAbierta : number;
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
+  artistasQueSonDeMiBanda : Artista[] = [];
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
@@ -80,6 +82,25 @@ export class HomesiteComponent implements OnInit {
     
   }
 
+  revisionEnBanda(artista : Artista){
+    //alert (" HOLA ");
+    let response : boolean = false;
+    if (this.userLogged.nombreUsuario==artista.usuario.username){
+        //console.log (artista.usuario.username+" soy yo mismo");
+        response = true;
+    }
+    this.artistasQueSonDeMiBanda.forEach(art => {
+      
+      if (art.nombre == artista.nombre){
+        //console.log (artista.usuario.username+" ya estaba en la banda");
+        response = true;
+      }
+    });
+    
+    return response;
+    
+  }
+
   async buscar(){
     
     this.hayArtistas = false; this.hayBandas = false; this.hayPosts = false;
@@ -87,8 +108,13 @@ export class HomesiteComponent implements OnInit {
     
     if (this.optionSelected.length>0){
       if (this.optionSelected == "artista"){
-        this.soyDuenioBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged).toPromise();
-        
+        try{
+          this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged).toPromise();
+          console.log ("LISTA DE ARTISTAS", this.artistasQueSonDeMiBanda);
+          
+        }catch {
+          console.log (" No pude verificar si soy dueño banda");
+        }
         this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,buscar ).toPromise();
         if ((this.artistas != null) && (this.artistas.length>0)){
           this.hayArtistas = true;
