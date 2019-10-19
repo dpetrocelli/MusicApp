@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -45,6 +46,39 @@ public class BandaControlador {
                 Banda banda= this.bandaServicio.obtenerBandaPorNombre(ld.getNombreUsuario());
 
                 return new ResponseEntity<Banda>(banda, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("obtenerArtistasDeBanda")
+    public ResponseEntity<?> obtenerArtistasDeBanda (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista a = this.artistaServicio.obtenerPorUsuario(u);
+                Set<Banda> b = a.getBanda();
+                Iterator<Banda> iterator = b.iterator();
+                Banda banda = iterator.next();
+
+                List<Artista> listaArtista = this.artistaServicio.obtenerTodos();
+                ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
+                for (Artista art: listaArtista) {
+                    Set<Banda> ba = art.getBanda();
+                    if (ba.contains(b)) artistasRespuesta.add(art);
+
+                }
+                log.info(" LISTA DE ARTISTAS DE BANDA "+artistasRespuesta);
+                return new ResponseEntity<ArrayList<Artista>>(artistasRespuesta, HttpStatus.OK);
 
             }else{
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
