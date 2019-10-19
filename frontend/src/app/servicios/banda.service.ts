@@ -26,6 +26,10 @@ export class BandaService {
   public obtenerTodos (ld : LoginDatos) : Observable <any> {
       return this.httpClient.post<any>(this.baseURL + 'obtenerTodos', ld, cabecera);
   }
+
+  public obtenerDatosBanda (ld : LoginDatos) : Observable <any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerDatosBanda', ld, cabecera);
+}
   
 
   public SoyDuenioBanda (ld : LoginDatos) : Observable <any> {

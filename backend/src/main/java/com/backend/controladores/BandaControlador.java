@@ -35,6 +35,27 @@ public class BandaControlador {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+
+    @PostMapping("obtenerDatosBanda")
+    public ResponseEntity<?> obtenerDatosBanda (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Banda banda= this.bandaServicio.obtenerBandaPorNombre(ld.getNombreUsuario());
+
+                return new ResponseEntity<Banda>(banda, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @PostMapping("obtenerTodos")
     public ResponseEntity<?> obtenerTodos (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña

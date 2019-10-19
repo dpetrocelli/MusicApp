@@ -7,6 +7,8 @@ import { Post } from '../../modelos/post';
 import { Elemento } from '../../modelos/elemento';
 import { Usuario } from '../../modelos/usuario';
 import { Artista } from '../../modelos/artista';
+import { BandaService } from 'src/app/servicios/banda.service';
+import { Banda } from 'src/app/modelos/banda';
 
 @Component({
   selector: 'app-info-perfil',
@@ -20,12 +22,16 @@ export class InfoPerfilComponent implements OnInit {
   userLogged : LoginDatos;
   biografia : String;
   artista : Artista;
+  listaDeArtistasEnBanda : Artista[];
+  detalleDeLaBanda : Banda;
   isLoaded : boolean = false;
   form: any = {};
+  bandaActiva = false;
 
   @HostBinding('class')
   @Input() biografiaComponent: InfoPerfilComponent;
   constructor(private usuarioService: UsuarioService,
+              private bandaService: BandaService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private perfilService: PerfilService) { }
@@ -52,6 +58,35 @@ export class InfoPerfilComponent implements OnInit {
                 console.log(err);
                 this.router.navigate(['/accesodenegado']);
             });
+            // nombre y detalle de la banda
+            this.bandaService.obtenerDatosBanda(this.userLogged).subscribe (data => {
+              console.log (data);
+              this.detalleDeLaBanda = data; 
+              if (this.detalleDeLaBanda!= null){
+                
+                this.bandaService.SoyDuenioBanda(this.userLogged).subscribe (data => {
+                console.log (data);
+                this.listaDeArtistasEnBanda = data; 
+                if (this.listaDeArtistasEnBanda.length>0){
+                    this.bandaActiva = true;
+                }         
+                },
+                (err: any) => {
+                  console.log(err);
+                  this.router.navigate(['/accesodenegado']);
+                });
+                
+                this.bandaActiva = true;
+
+              }         
+            },
+            (err: any) => {
+              console.log(err);
+              this.router.navigate(['/accesodenegado']);
+            });
+            
+            
+          
   }
 
   actualizar(){
