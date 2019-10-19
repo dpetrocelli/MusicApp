@@ -144,7 +144,7 @@ public class PublicacionMercadoPago {
             this.preference.setExpirationDateTo(vigencia);
             this.preference.appendItem(this.item);
             log.info("adjuntamos a la preferencia el item");
-            this.preference.setMarketplaceFee((float) ganancia);
+            this.preference.setMarketplaceFee((float) (precio*(ganancia/100)));
             log.info("seteamos la ganancia");
             // Guardar y postear la preferencia
             this.preference.save();
