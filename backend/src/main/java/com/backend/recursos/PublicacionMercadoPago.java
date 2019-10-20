@@ -145,7 +145,7 @@ public class PublicacionMercadoPago {
             this.preference.appendItem(this.item);
             log.info("adjuntamos a la preferencia el item");
             this.preference.setMarketplaceFee((float) (precio*(ganancia/100)));
-            log.info("seteamos la ganancia");
+            log.info("seteamos la ganancia:" + ((float) (precio*(ganancia/100))));
             // Guardar y postear la preferencia
             this.preference.save();
             log.info("guardamos la preferencia en MPago");
