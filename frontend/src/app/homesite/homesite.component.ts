@@ -128,8 +128,11 @@ export class HomesiteComponent implements OnInit {
         }
       }else{
         if (this.optionSelected == "banda"){
-          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",buscar ).toPromise();
+          this.hayBandas = false;
+
+          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda", buscar ).toPromise();
           if ((this.bandas != null) && (this.bandas.length>0)){
+            
             this.hayBandas = true;
           }else{
             Swal.fire({

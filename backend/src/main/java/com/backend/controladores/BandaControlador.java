@@ -37,6 +37,22 @@ public class BandaControlador {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
+    @PostMapping("buscarLike")
+    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda){
+
+        try{
+
+            List<Banda> lp = this.bandaServicio.buscarLike (busqueda);
+            return new ResponseEntity<List<Banda>>(lp, HttpStatus.OK);
+        }catch (Exception e){
+            log.info(" something has failed");
+            return new ResponseEntity<List<Banda>>((List<Banda>) null, HttpStatus.BAD_REQUEST);
+        }
+
+
+
+    }
+
     @PostMapping("obtenerDatosBanda")
     public ResponseEntity<?> obtenerDatosBanda (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña
@@ -74,10 +90,12 @@ public class BandaControlador {
                 ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
                 for (Artista art: listaArtista) {
                     Set<Banda> ba = art.getBanda();
-                    if (ba.contains(b)) artistasRespuesta.add(art);
+
+                    if (ba.contains(banda)) artistasRespuesta.add(art);
 
                 }
                 log.info(" LISTA DE ARTISTAS DE BANDA "+artistasRespuesta);
+
                 return new ResponseEntity<ArrayList<Artista>>(artistasRespuesta, HttpStatus.OK);
 
             }else{

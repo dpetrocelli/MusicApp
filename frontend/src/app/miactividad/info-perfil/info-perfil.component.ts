@@ -79,7 +79,7 @@ export class InfoPerfilComponent implements OnInit {
       this.bandaService.obtenerArtistasDeBanda (this.userLogged).subscribe (data => {
       console.log (" artistas de la banda", data);
       this.listaDeArtistasEnBanda = data;
-      this.listaDeArtistasEnBanda.push(this.artista);
+      //this.listaDeArtistasEnBanda.push(this.artista);
       this.detalleDeLaBanda = this.listaDeArtistasEnBanda[0].banda[0];
       this.bandaActiva = true;
             

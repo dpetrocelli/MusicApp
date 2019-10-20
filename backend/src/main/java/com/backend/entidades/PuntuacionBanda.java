@@ -1,6 +1,7 @@
 package com.backend.entidades;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "puntuacionBanda")
@@ -14,25 +15,14 @@ public class PuntuacionBanda {
 
     double puntuacion;
 
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fkArtistaPuntuador", nullable = true, updatable = true)
-    private Artista artistaPuntuador;
+    private Long artistaPuntuador;
+    private Long bandaPuntuada;
 
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fkBandaPuntuada", nullable = true, updatable = true)
-    private Banda bandaPuntuado;
+    Date fechaPuntuacion;;
 
 
 
     public PuntuacionBanda() {
-    }
-
-
-    public PuntuacionBanda(String comentario, double puntuacion, Artista artistaPuntuador, Banda bandaPuntuado) {
-        this.comentario = comentario;
-        this.puntuacion = puntuacion;
-        this.artistaPuntuador = artistaPuntuador;
-        this.bandaPuntuado = bandaPuntuado;
     }
 
     public Long getId() {
@@ -59,20 +49,28 @@ public class PuntuacionBanda {
         this.puntuacion = puntuacion;
     }
 
-    public Artista getArtistaPuntuador() {
+    public Long getArtistaPuntuador() {
         return artistaPuntuador;
     }
 
-    public void setArtistaPuntuador(Artista artistaPuntuador) {
+    public void setArtistaPuntuador(Long artistaPuntuador) {
         this.artistaPuntuador = artistaPuntuador;
     }
 
-    public Banda getBandaPuntuado() {
-        return bandaPuntuado;
+    public Long getBandaPuntuada() {
+        return bandaPuntuada;
     }
 
-    public void setBandaPuntuado(Banda bandaPuntuado) {
-        this.bandaPuntuado = bandaPuntuado;
+    public void setBandaPuntuada(Long bandaPuntuada) {
+        this.bandaPuntuada = bandaPuntuada;
+    }
+
+    public Date getFechaPuntuacion() {
+        return fechaPuntuacion;
+    }
+
+    public void setFechaPuntuacion(Date fechaPuntuacion) {
+        this.fechaPuntuacion = fechaPuntuacion;
     }
 }
 

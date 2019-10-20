@@ -41,4 +41,8 @@ public class BandaServicio {
     public Banda obtenerBandaPorNombre(String nombreDestino) {
         return this.bandaRepositorio.findByNombre(nombreDestino).get();
     }
+
+    public List<Banda> buscarLike(String busqueda) {
+        return this.bandaRepositorio.FindAllLike(busqueda);
+    }
 }

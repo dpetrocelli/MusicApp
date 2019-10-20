@@ -78,3 +78,32 @@
  </div>
 
 </section>
+
+<section id="bandaContainer" class="col-12">
+  <div *ngIf="hayBandas" >
+   <span></span>
+   <div class="post row d-flex justify-content-center" *ngFor="let banda of bandas">
+    
+    <div class="info col-12"> Banda: {{banda.nombre}}</div>
+    <div class="info col-12"> Artista Lider: {{banda.artistaLider.nombre}}</div>
+    <div class="info col-12"> Genero Musical: {{banda.generoMusical}}</div>
+    <div class="info col-12"> Puntuación</div>
+     <div class="info col-12" *ngFor="let punt of banda.puntuacion">
+          <span> {{punt.comentario}}</span>
+    </div>
+     <div>
+       <button class="btn btn-success" routerLink="/banda/{{banda.nombre}}">Ver Perfil</button>
+     </div>
+     <div>
+        <button class="btn btn-success" (click)="bandaEnviarMensaje(artista)"> Enviar Mensaje</button>
+      </div>
+      <!--
+      <div *ngIf="!revisionEnBanda(artista)">
+        <button class="btn btn-warning" (click)="artistaPideAccesoBanda(artista)"> Pedir ingreso a banda </button>
+      </div>
+      -->
+   </div>
+   
+ </div>
+
+</section>
