@@ -74,31 +74,40 @@ public class BandaControlador {
     }
 
     @PostMapping("obtenerArtistasDeBanda")
-    public ResponseEntity<?> obtenerArtistasDeBanda (@RequestBody LoginDatos ld) {
+    public ResponseEntity<?> obtenerArtistasDeBanda (@RequestParam("login") String login, @RequestParam("artista") String artista) {
         // [STEP 0] - Validar usuario y contraseña
 
         try {
-
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Artista a = new Gson().fromJson(artista, Artista.class);
             if (this.usuarioServicio.validarTokenUsuario(ld)) {
-                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
-                Artista a = this.artistaServicio.obtenerPorUsuario(u);
+                if (a == null) {
+                    Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                    a = this.artistaServicio.obtenerPorUsuario(u);
+                }
                 Set<Banda> b = a.getBanda();
                 Iterator<Banda> iterator = b.iterator();
                 Banda banda = iterator.next();
+                //List<Artista> la = this.bandaServicio.obtenerTodosArtistasDeBanda(b);
 
                 List<Artista> listaArtista = this.artistaServicio.obtenerTodos();
                 ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
-                for (Artista art: listaArtista) {
+                for (Artista art : listaArtista) {
                     Set<Banda> ba = art.getBanda();
 
-                    if (ba.contains(banda)) artistasRespuesta.add(art);
+                    for (Banda bandaInterna: ba) {
+                        if (bandaInterna.getNombre().equals(banda.getNombre())) {
+                            artistasRespuesta.add(art);
+                        }
+                    }
 
                 }
-                log.info(" LISTA DE ARTISTAS DE BANDA "+artistasRespuesta);
+                log.info(" LISTA DE ARTISTAS DE BANDA " + artistasRespuesta);
 
                 return new ResponseEntity<ArrayList<Artista>>(artistasRespuesta, HttpStatus.OK);
 
-            }else{
+
+            } else {
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
             }
 

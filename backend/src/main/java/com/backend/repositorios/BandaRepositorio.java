@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface BandaRepositorio extends JpaRepository<Banda, Long> {
@@ -22,4 +23,6 @@ public interface BandaRepositorio extends JpaRepository<Banda, Long> {
     @Query("SELECT b FROM Banda b WHERE b.nombre like %:status%")
     List<Banda> FindAllLike( @Param("status") String status);
 
+    @Query("SELECT a FROM Artista a WHERE a.banda=:banda")
+    List<Artista> obtenerTodosArtistasDeBanda( @Param("banda") Set<Banda> banda);
 }

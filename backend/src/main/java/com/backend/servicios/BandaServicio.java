@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -44,5 +45,9 @@ public class BandaServicio {
 
     public List<Banda> buscarLike(String busqueda) {
         return this.bandaRepositorio.FindAllLike(busqueda);
+    }
+
+    public List<Artista> obtenerTodosArtistasDeBanda(Set<Banda> banda) {
+       return this.bandaRepositorio.obtenerTodosArtistasDeBanda(banda);
     }
 }

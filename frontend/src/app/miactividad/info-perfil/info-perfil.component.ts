@@ -76,7 +76,7 @@ export class InfoPerfilComponent implements OnInit {
                 */
     if (this.artista.banda.length>0){
       console.log (" caso A, soy integrante de banda");
-      this.bandaService.obtenerArtistasDeBanda (this.userLogged).subscribe (data => {
+      this.bandaService.obtenerArtistasDeBanda (this.userLogged, null).subscribe (data => {
       console.log (" artistas de la banda", data);
       this.listaDeArtistasEnBanda = data;
       //this.listaDeArtistasEnBanda.push(this.artista);
