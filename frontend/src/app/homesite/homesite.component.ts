@@ -73,11 +73,8 @@ export class HomesiteComponent implements OnInit {
    try{
       if (this.posts.length>0){
          this.hayPosts = true;
-         
-         
       }
       }catch{
-
       }
     
   }
@@ -253,9 +250,6 @@ export class HomesiteComponent implements OnInit {
           
         }
       
-
-
-      
       Swal.fire('Mensaje enviado al destinatario '+new String (artista.nombre));
     }
   }
@@ -288,12 +282,13 @@ export class HomesiteComponent implements OnInit {
          
        }
      
-
-
-     
      Swal.fire('Invitación enviada al artista '+new String (artista.nombre));
    }
  }
+
+  bandaEnviarMensaje(){
+
+  }
 
   ocultarImagen(){
     var contenedor : HTMLElement = document.getElementById('post'+this.idImagenAbierta);

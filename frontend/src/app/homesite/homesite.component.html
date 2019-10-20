@@ -95,13 +95,8 @@
        <button class="btn btn-success" routerLink="/banda/{{banda.nombre}}">Ver Perfil</button>
      </div>
      <div>
-        <button class="btn btn-success" (click)="bandaEnviarMensaje(artista)"> Enviar Mensaje</button>
+        <button class="btn btn-success" (click)="bandaEnviarMensaje()"> Enviar Mensaje</button>
       </div>
-      <!--
-      <div *ngIf="!revisionEnBanda(artista)">
-        <button class="btn btn-warning" (click)="artistaPideAccesoBanda(artista)"> Pedir ingreso a banda </button>
-      </div>
-      -->
    </div>
    
  </div>
