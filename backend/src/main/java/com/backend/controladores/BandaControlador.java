@@ -142,13 +142,18 @@ public class BandaControlador {
     }
 
     @PostMapping("soyDuenioBanda")
-    public ResponseEntity<?> soyDuenioBanda (@RequestBody LoginDatos ld) {
+    public ResponseEntity<?> soyDuenioBanda (@RequestParam("login") String login, @RequestParam("artista") String artista) {
         // [STEP 0] - Validar usuario y contraseña
 
         try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Artista a = new Gson().fromJson(artista, Artista.class);
             if (this.usuarioServicio.validarTokenUsuario(ld)) {
-                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
-                Artista a = this.artistaServicio.obtenerPorUsuario(u);
+                if (a == null) {
+                    Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                    a = this.artistaServicio.obtenerPorUsuario(u);
+                }
+
                 ArrayList<Banda> rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
                 // por ahora vamos a tener una sola banda duenio
                 Banda b = rest.get(0);
@@ -157,7 +162,12 @@ public class BandaControlador {
                 ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
                 for (Artista art: lista) {
                     Set<Banda> ba = art.getBanda();
-                    if (ba.contains(b)) artistasRespuesta.add(art);
+                    for (Banda bandita: ba) {
+                        if (bandita.getNombre().equals(b.getNombre())){
+                            artistasRespuesta.add(art);
+                        }
+                    }
+
 
                 }
                 /*

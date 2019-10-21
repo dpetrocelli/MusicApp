@@ -17,6 +17,10 @@ import Swal from 'sweetalert2';
 import { NotificacionService } from '../servicios/notificacion.service';
 import { BandaService } from '../servicios/banda.service';
 import { truncate } from 'fs';
+import { ZonaService } from '../servicios/zona.service';
+import { InstrumentoService } from '../servicios/instrumento.service';
+import { Zona } from '../modelos/zona';
+import { Instrumento } from '../modelos/instrumento';
 
 @Component({
   selector: 'app-homesite',
@@ -35,7 +39,8 @@ export class HomesiteComponent implements OnInit {
   imageObject: Array<object> =[];
   videoYoutube : String;
   listaDeElementos : String[];
-  
+  zonas : Zona[];
+  instrumentos : Instrumento[];
   biografia : String;
   form: any = {};
   nuevoPostForm : boolean;
@@ -52,6 +57,8 @@ export class HomesiteComponent implements OnInit {
               private homeSiteService: HomeSiteService,
               private bandaServicio: BandaService,
               private notificacionService: NotificacionService,
+              private zonaService: ZonaService,
+              private instrumentoService: InstrumentoService,
               private router: Router,
               private sanitizer: DomSanitizer,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -59,6 +66,7 @@ export class HomesiteComponent implements OnInit {
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
+
     this.loadInfo();
 
   }
@@ -66,7 +74,8 @@ export class HomesiteComponent implements OnInit {
   async loadInfo (){
     let inicio = 0;
     let fin = 10;
-    
+    this.zonas = await this.zonaService.lista().toPromise();
+    this.instrumentos = await this.instrumentoService.lista().toPromise();
     this.posts = await this.homeSiteService.obtener(this.userLogged, inicio, fin).toPromise();
     
     
@@ -101,18 +110,20 @@ export class HomesiteComponent implements OnInit {
   async buscar(){
     
     this.hayArtistas = false; this.hayBandas = false; this.hayPosts = false;
-    let buscar = (<HTMLInputElement>document.getElementById('buscar')).value;
-    
+    let textolibre = (<HTMLInputElement>document.getElementById('buscar')).value;
+    let zona = (<HTMLInputElement>document.getElementById('zona')).value;
+    let instrumento = (<HTMLInputElement>document.getElementById('instrumento')).value;
+    let genero = (<HTMLInputElement>document.getElementById('genero')).value;
     if (this.optionSelected.length>0){
       if (this.optionSelected == "artista"){
         try{
-          this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged).toPromise();
+          this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged, null).toPromise();
           console.log ("LISTA DE ARTISTAS", this.artistasQueSonDeMiBanda);
           
         }catch {
           console.log (" No pude verificar si soy dueño banda");
         }
-        this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,buscar ).toPromise();
+        this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,textolibre, zona, instrumento, genero ).toPromise();
         if ((this.artistas != null) && (this.artistas.length>0)){
           this.hayArtistas = true;
           
@@ -127,7 +138,7 @@ export class HomesiteComponent implements OnInit {
         if (this.optionSelected == "banda"){
           this.hayBandas = false;
 
-          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda", buscar ).toPromise();
+          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
           if ((this.bandas != null) && (this.bandas.length>0)){
             
             this.hayBandas = true;
@@ -139,7 +150,7 @@ export class HomesiteComponent implements OnInit {
             });
           }
         }else{
-          this.posts = await this.homeSiteService.buscar(this.userLogged, "post",buscar ).toPromise();
+          this.posts = await this.homeSiteService.buscar(this.userLogged, "post",textolibre, zona, instrumento, genero ).toPromise();
           if ((this.posts != null) && (this.posts.length>0)){
             this.hayPosts = true;
           }else{

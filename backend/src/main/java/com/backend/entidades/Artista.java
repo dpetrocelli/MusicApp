@@ -1,5 +1,7 @@
 package com.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -37,9 +39,10 @@ public class Artista implements Serializable {
     @JoinTable(name = "instrumento_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "instrumento_id"))
     private Set<Instrumento> instrumento = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "zona_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "zona_id"))
-    private Set<Zona> zona = new HashSet<>();
+    @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
+    private Zona zona;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRealizadas;
@@ -173,14 +176,11 @@ public class Artista implements Serializable {
         this.banda.add(banda);
     }
 
-    public Set<Zona> getZona() {
+    public Zona getZona() {
         return zona;
     }
 
-    public void addZona (Zona zona){
-        this.zona.add(zona);
-    }
-    public void setZona(Set<Zona> zona) {
+    public void setZona(Zona zona) {
         this.zona = zona;
     }
 

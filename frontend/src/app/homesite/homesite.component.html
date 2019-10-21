@@ -1,9 +1,6 @@
 
 <div> 
-  
-  <input type="text" name="buscar" id="buscar">
-  <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
-  <button class="btn btn-warning btn-lg d-inline-block mr-2" routerLink="/posts/nuevo/homeSocialNetwork">Nuevo Post</button>
+    <button class="btn btn-warning btn-lg d-inline-block mr-2" routerLink="/posts/nuevo/homeSocialNetwork">Nuevo Post</button>
 
 </div>
  
@@ -24,7 +21,31 @@
     
 </div>
 
+<div name="filtros" id="filtros">
+    <label for="buscar">Texto Libre </label>
+    <input type="text" name="buscar" id="buscar">
+  <label for="zona">Zona Geográfica</label>
+  <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="zona">
+    <option value=""></option>
+    <option *ngFor="let zona of zonas" value= {{zona.id}}>
+      {{zona.nombreZona}}
+    </option>
+  </select>
 
+  <label for="insrumento">Instrumentos </label>
+  <select class="col-md-1 custom-select d-inline-block mr-2" id="insrumento">
+    <option value=""></option>
+    <option *ngFor="let instrumento of instrumentos" value= {{instrumento.id}}>
+      {{instrumento.nombreInstrumento}}
+    </option>
+  </select>
+
+  <label for="genero">Género Musical </label>
+  <input type="text" name="genero" id="genero">
+
+</div>
+
+<button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
  
 <section id="homeSiteContainer" class="col-12">
    <div *ngIf="hayPosts" >

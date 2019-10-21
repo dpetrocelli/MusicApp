@@ -72,7 +72,7 @@ public class UsuarioServicio {
             artista.setNickname(formulario.get("nickname").getAsString());
             artista.setGenero(formulario.get("genero").getAsString());
             Zona zona = new Gson().fromJson(formulario.get("zona"), Zona.class);
-            artista.addZona(zona);
+            artista.setZona(zona);
             try{
                 artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
             }catch (Exception e){

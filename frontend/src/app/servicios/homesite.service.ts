@@ -26,11 +26,14 @@ export class HomeSiteService {
   }
 
 
-  public buscar (login : LoginDatos, opcion : String, busqueda: string): Observable<any> {
+  public buscar (login : LoginDatos, opcion : String, textolibre: string, zona: string, instrumento: string, genero: string): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
     formdata.append('opcion', String (opcion) );
-    formdata.append('busqueda', String (busqueda) );
+    formdata.append('busqueda', String (textolibre) );
+    formdata.append('zona', String (zona) );
+    formdata.append('instrumento', String (instrumento) );
+    formdata.append('genero', String (genero) );
     return this.httpClient.post<any>(this.alternativeURL + opcion+"/buscarLike", formdata);
   }
   

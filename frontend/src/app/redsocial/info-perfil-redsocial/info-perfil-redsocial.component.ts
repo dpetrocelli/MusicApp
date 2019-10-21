@@ -68,7 +68,7 @@ export class InfoPerfilRedsocialComponent implements OnInit {
                   -> soy yo como artita duenio, no necesito nada
                   -> tengo que ir a buscar todos los artistas de la banda
                 */
-               console.log (" algo hizo algo", this.artista);
+               
                if (this.artista.banda.length>0){
                 console.log (" caso A, soy integrante de banda");
                 this.bandaService.obtenerArtistasDeBanda (this.loginDatos, this.artista).subscribe (data => {
@@ -87,8 +87,8 @@ export class InfoPerfilRedsocialComponent implements OnInit {
                 
               }else{
                 // puedo ser de tipo B o C
-                /*
-                this.bandaService.SoyDuenioBanda(this.userLogged).subscribe (data => {
+                
+                this.bandaService.SoyDuenioBanda(this.loginDatos, this.artista).subscribe (data => {
                 console.log ("  caso B, soy duenio de banda ", data);
                 this.listaDeArtistasEnBanda = data; 
                 //let index = this.listaDeArtistasEnBanda.indexOf(this.artista);
@@ -109,7 +109,7 @@ export class InfoPerfilRedsocialComponent implements OnInit {
                   console.log(err);
                   //this.router.navigate(['/accesodenegado']);
                 });
-                */
+                
               }
 
 

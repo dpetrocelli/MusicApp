@@ -123,7 +123,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("buscarLike")
-    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda){
+    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda, @RequestParam("zona") String zona, @RequestParam("instrumento") String instrumento, @RequestParam("genero") String genero){
 
         try{
 

@@ -93,7 +93,7 @@ export class InfoPerfilComponent implements OnInit {
     }else{
       // puedo ser de tipo B o C
       
-      this.bandaService.SoyDuenioBanda(this.userLogged).subscribe (data => {
+      this.bandaService.SoyDuenioBanda(this.userLogged, null).subscribe (data => {
       console.log ("  caso B, soy duenio de banda ", data);
       this.listaDeArtistasEnBanda = data; 
       //let index = this.listaDeArtistasEnBanda.indexOf(this.artista);
