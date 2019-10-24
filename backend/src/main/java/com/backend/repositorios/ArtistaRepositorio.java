@@ -19,6 +19,8 @@ public interface ArtistaRepositorio extends JpaRepository<Artista, Long> {
 
     Artista findByNombre(String nombre);
 
-    @Query("SELECT a FROM Artista a WHERE a.nombre like %:status%")
-    List<Artista> FindAllLike( @Param("status") String status);
+    @Query("SELECT a FROM Artista a WHERE a.nombre like %:status% and a.generoMusical like %:genero%")
+    List<Artista> FindAllLike( @Param("status") String status, @Param("genero") String genero);
+
+
 }

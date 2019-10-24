@@ -34,6 +34,7 @@ export class HomeSiteService {
     formdata.append('zona', String (zona) );
     formdata.append('instrumento', String (instrumento) );
     formdata.append('genero', String (genero) );
+    console.log (" LLAMAMOS AL BEND USUARIO");
     return this.httpClient.post<any>(this.alternativeURL + opcion+"/buscarLike", formdata);
   }
   

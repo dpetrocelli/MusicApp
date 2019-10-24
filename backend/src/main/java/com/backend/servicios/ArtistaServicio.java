@@ -1,15 +1,15 @@
 package com.backend.servicios;
 
-import com.backend.entidades.Artista;
-import com.backend.entidades.Banda;
-import com.backend.entidades.Biografia;
-import com.backend.entidades.Usuario;
+import com.backend.entidades.*;
 import com.backend.repositorios.ArtistaRepositorio;
 import com.backend.repositorios.BiografiaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +19,9 @@ public class ArtistaServicio {
 
     @Autowired
     ArtistaRepositorio artistaRepositorio;
+
+    @Autowired
+    ZonaGeograficaServicio zonaServicio;
 
     public Artista obtener (Long id){
         return this.artistaRepositorio.findById(id).get();
@@ -44,9 +47,17 @@ public class ArtistaServicio {
     }
 
 
-    public List<Artista> buscarLike(String busqueda) {
-        List<Artista> test =  this.artistaRepositorio.FindAllLike(busqueda);
-        return test;
+    public List<Artista> buscarLike(String busqueda, String zona, String instrumento, String genero) {
+        //if (zona!=null){
+           //Zona zonex =  this.zonaServicio.obtenerPorNombre(zona).get();
+           List<Artista> test =  this.artistaRepositorio.FindAllLike(busqueda, genero);
+          //  for (Artista art: test) {
+             //   art.ge
+           // }
+           return test;
+        //}
+
+
     }
 
 

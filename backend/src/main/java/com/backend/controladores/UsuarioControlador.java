@@ -124,10 +124,10 @@ public class UsuarioControlador {
 
     @PostMapping("buscarLike")
     public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda, @RequestParam("zona") String zona, @RequestParam("instrumento") String instrumento, @RequestParam("genero") String genero){
-
+        log.error( " ENTRAMOS A LA BUSUQEDA LIKE ");
         try{
 
-            List<Artista> lp = this.artistaServicio.buscarLike (busqueda);
+            List<Artista> lp = this.artistaServicio.buscarLike (busqueda, zona, instrumento, genero);
             return new ResponseEntity<List<Artista>>(lp, HttpStatus.OK);
         }catch (Exception e){
             log.info(" something has failed");

@@ -109,13 +109,29 @@ export class HomesiteComponent implements OnInit {
 
   async buscar(){
     
-    this.hayArtistas = false; this.hayBandas = false; this.hayPosts = false;
-    let textolibre = (<HTMLInputElement>document.getElementById('buscar')).value;
-    let zona = (<HTMLInputElement>document.getElementById('zona')).value;
-    let instrumento = (<HTMLInputElement>document.getElementById('instrumento')).value;
-    let genero = (<HTMLInputElement>document.getElementById('genero')).value;
-    if (this.optionSelected.length>0){
-      if (this.optionSelected == "artista"){
+    this.hayArtistas = false; 
+    this.hayBandas = false; 
+    this.hayPosts = false;
+    let textolibre : any;
+    let zona : any;
+    let instrumento : any;
+    let genero: any;
+    try{
+      textolibre = (<HTMLInputElement>document.getElementById('buscar')).value;
+      zona = (<HTMLInputElement>document.getElementById('zona')).value;
+      instrumento = (<HTMLInputElement>document.getElementById('instrumento')).value;
+      genero = (<HTMLInputElement>document.getElementById('genero')).value;
+    }catch{
+
+    }
+    
+    alert ("opt selected"+this.optionSelected);
+    
+    if (this.optionSelected.length >0){
+      
+      if (this.optionSelected.startsWith ("ar")){
+        console.log (" ARTISTA");
+        
         try{
           this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged, null).toPromise();
           console.log ("LISTA DE ARTISTAS", this.artistasQueSonDeMiBanda);
@@ -123,7 +139,7 @@ export class HomesiteComponent implements OnInit {
         }catch {
           console.log (" No pude verificar si soy dueño banda");
         }
-        this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,textolibre, zona, instrumento, genero ).toPromise();
+        this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,textolibre, zona, instrumento, genero).toPromise();
         if ((this.artistas != null) && (this.artistas.length>0)){
           this.hayArtistas = true;
           
@@ -134,34 +150,38 @@ export class HomesiteComponent implements OnInit {
             text: "No hay artistas con esos criterios de búsqueda"        
           });
         }
+        
       }else{
-        if (this.optionSelected == "banda"){
-          this.hayBandas = false;
-
-          this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
-          if ((this.bandas != null) && (this.bandas.length>0)){
-            
-            this.hayBandas = true;
+        console.log (" BANDA");{
+          if (this.optionSelected == "banda"){
+            this.hayBandas = false;
+  
+            this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
+            if ((this.bandas != null) && (this.bandas.length>0)){
+              
+              this.hayBandas = true;
+            }else{
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: "No hay bandas con esos criterios de búsqueda"        
+              });
+            }
           }else{
-            Swal.fire({
-              type: 'error',
-              title: 'Oops...',
-              text: "No hay bandas con esos criterios de búsqueda"        
-            });
+            this.posts = await this.homeSiteService.buscar(this.userLogged, "post",textolibre, zona, instrumento, genero ).toPromise();
+            if ((this.posts != null) && (this.posts.length>0)){
+              this.hayPosts = true;
+            }else{
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: "No hay posts con esos criterios de búsqueda"        
+              });
+            }
           }
-        }else{
-          this.posts = await this.homeSiteService.buscar(this.userLogged, "post",textolibre, zona, instrumento, genero ).toPromise();
-          if ((this.posts != null) && (this.posts.length>0)){
-            this.hayPosts = true;
-          }else{
-            Swal.fire({
-              type: 'error',
-              title: 'Oops...',
-              text: "No hay posts con esos criterios de búsqueda"        
-            });
-          }
+   
         }
-      }
+             }
      
    }
     
