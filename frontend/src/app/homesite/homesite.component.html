@@ -24,6 +24,8 @@
 <div name="filtros" id="filtros">
     <label for="buscar">Texto Libre </label>
     <input type="text" name="buscar" id="buscar">
+    <label for="generomusical"> Genero Musical  </label>
+    <input type="text" name="generomusical" id="generomusical">
   <label for="zona">Zona Geográfica</label>
   <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="zona">
     <option value=""></option>
@@ -32,16 +34,15 @@
     </option>
   </select>
 
-  <label for="insrumento">Instrumentos </label>
-  <select class="col-md-1 custom-select d-inline-block mr-2" id="insrumento">
+  <label for="instrumento">Instrumentos </label>
+  <select class="col-md-1 custom-select d-inline-block mr-2" id="instrumento">
     <option value=""></option>
     <option *ngFor="let instrumento of instrumentos" value= {{instrumento.id}}>
       {{instrumento.nombreInstrumento}}
     </option>
   </select>
 
-  <label for="genero">Género Musical </label>
-  <input type="text" name="genero" id="genero">
+ 
 
 </div>
 

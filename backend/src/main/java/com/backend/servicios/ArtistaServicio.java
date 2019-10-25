@@ -4,14 +4,21 @@ import com.backend.entidades.*;
 import com.backend.repositorios.ArtistaRepositorio;
 import com.backend.repositorios.BiografiaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -23,6 +30,9 @@ public class ArtistaServicio {
     @Autowired
     ZonaGeograficaServicio zonaServicio;
 
+    @Autowired
+    InstrumentoServicio instrumentoServicio;
+
     public Artista obtener (Long id){
         return this.artistaRepositorio.findById(id).get();
     }
@@ -30,6 +40,7 @@ public class ArtistaServicio {
     public Artista obtenerPorUsuario (Usuario usuario) {
         if (this.artistaRepositorio.existsByUsuario(usuario)){
             return this.artistaRepositorio.findByUsuario(usuario).get();
+
         }else{
             return new Artista();
         }
@@ -47,17 +58,82 @@ public class ArtistaServicio {
     }
 
 
-    public List<Artista> buscarLike(String busqueda, String zona, String instrumento, String genero) {
-        //if (zona!=null){
-           //Zona zonex =  this.zonaServicio.obtenerPorNombre(zona).get();
-           List<Artista> test =  this.artistaRepositorio.FindAllLike(busqueda, genero);
-          //  for (Artista art: test) {
-             //   art.ge
-           // }
-           return test;
-        //}
+    public ArrayList<Artista> buscarLike(String busqueda, String zona, String instrumento, String genero) {
+
+        System.out.println(" HOLA ");
+        Zona zonaObjeto = null;
+        try{
+            if (this.zonaServicio.existePorId(Long.parseLong(zona))){
+                zonaObjeto = this.zonaServicio.obtenerPorId(Long.parseLong(zona)).get();
+            }
+        }catch (Exception e){
+
+        }
+        List<Artista> test = this.findByLikeCriteria(busqueda, genero, zonaObjeto);
+        ArrayList<Artista> resultado=new ArrayList<Artista>();
+        try{
+            if (this.instrumentoServicio.existePorId(Long.parseLong(instrumento))){
+                Instrumento instrumentoObjeto = this.instrumentoServicio.obtenerPorId(Long.parseLong(instrumento)).get();
 
 
+                for (Artista art: test
+                ) {
+                    Set<Instrumento> instrumentos = art.getInstrumento();
+                    for (Instrumento ins: instrumentos
+                    ) {
+                        if (ins.getId().equals(instrumentoObjeto.getId())){
+                            resultado.add(art);
+                        }
+
+                    }
+
+                }
+
+            }
+        }catch (Exception e){
+            resultado = new ArrayList<Artista>(test);
+        }
+
+        return resultado;
+
+
+
+
+
+
+    }
+
+    public List<Artista> findByLikeCriteria(String busqueda, String genero, Zona zona){
+        return this.artistaRepositorio.findAll(new Specification<Artista>() {
+            @Override
+            public Predicate toPredicate(Root<Artista> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if(busqueda.length()>0) {
+                    predicates.add(criteriaBuilder.and(
+                            criteriaBuilder.like(root.get("nombre"), "%" + busqueda + "%"))
+
+                    );
+                }
+
+                if(genero.length()>0) {
+                    predicates.add(criteriaBuilder.and(
+                            criteriaBuilder.like(root.get("generoMusical"), "%" + genero + "%"))
+
+                    );
+                }
+
+                if(zona!=null) {
+
+                    predicates.add(criteriaBuilder.and(
+                            criteriaBuilder.equal(root.get("zona"), zona))
+
+                    );
+                }
+
+
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
     }
 
 
