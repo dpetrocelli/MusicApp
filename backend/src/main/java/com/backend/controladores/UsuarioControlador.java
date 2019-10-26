@@ -59,37 +59,47 @@ public class UsuarioControlador {
             //log.info( "Objeto 1: LoginDatos, Objeto 2: Formulario (String), 3: String[+ ");
             Usuario usuario = new Gson().fromJson(json.get("usuario"), Usuario.class);
             JsonObject formulario = new Gson().fromJson(json.get("formulario"), JsonObject.class);
-            log.info ("FORM: "+formulario.toString());
+            log.info("FORM: " + formulario.toString());
             boolean artista = formulario.get("isArtista").getAsBoolean();
 
-            if (artista){
+            if (artista) {
                 String instrumentos = new Gson().fromJson(json.get("instrumentos"), String.class);
                 this.usuarioServicio.guardarArtista(usuario, formulario, instrumentos);
                 return new ResponseEntity(new Mensaje(" El usuario ARTISTA se creó correctamente"), HttpStatus.OK);
-            }else{
+            } else {
                 this.usuarioServicio.guardarComercio(usuario, formulario);
                 return new ResponseEntity(new Mensaje(" El usuario COMERCIO se creó correctamente"), HttpStatus.OK);
 
             }
-
 
         } catch (Exception e) {
             return new ResponseEntity(new Mensaje(" El uNOOOOOOOOOOOOOOOOOOOO se creó correctamente"), HttpStatus.BAD_REQUEST);
         }
     }
 
+    @PostMapping("actualizarArtista")
+    public ResponseEntity<?> actualizarArtista(@RequestBody String payload) {
+
+        return new ResponseEntity(new Mensaje("rer"), HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("actualizarComercio")
+    public ResponseEntity<?> actualizarComercio(@RequestBody String payload) {
+
+        return new ResponseEntity(new Mensaje("rer"), HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("existeUsuario")
-    public ResponseEntity<?> existeUsuario (@RequestBody String nombreUsuario) {
+    public ResponseEntity<?> existeUsuario(@RequestBody String nombreUsuario) {
         // [STEP 0] - Validar usuario y contraseña
-        log.info( " HOLI");
+        log.info(" HOLI");
         try {
 
-                boolean existe = this.usuarioServicio.existeUsuarioPorNombre(nombreUsuario);
-                ArrayList<String> listaRespuesta = new ArrayList<String>();
+            boolean existe = this.usuarioServicio.existeUsuarioPorNombre(nombreUsuario);
+            ArrayList<String> listaRespuesta = new ArrayList<String>();
 
-                log.info(" USER existe" + existe);
-                return new ResponseEntity<Boolean>(existe, HttpStatus.OK);
-
+            log.info(" USER existe" + existe);
+            return new ResponseEntity<Boolean>(existe, HttpStatus.OK);
 
 
         } catch (Exception e) {
@@ -99,7 +109,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("obtenerTodos")
-    public ResponseEntity<?> obtenerTodos (@RequestBody LoginDatos ld) {
+    public ResponseEntity<?> obtenerTodos(@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña
 
         try {
@@ -107,12 +117,12 @@ public class UsuarioControlador {
                 List<Artista> listArtista = this.artistaServicio.obtenerTodos();
                 ArrayList<String> listaRespuesta = new ArrayList<String>();
 
-                for (Artista artista : listArtista){
-                    listaRespuesta.add( artista.getUsuario().getUsername());
+                for (Artista artista : listArtista) {
+                    listaRespuesta.add(artista.getUsuario().getUsername());
                 }
                 return new ResponseEntity<ArrayList<String>>(listaRespuesta, HttpStatus.OK);
 
-            }else{
+            } else {
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
             }
 
@@ -125,21 +135,20 @@ public class UsuarioControlador {
     @PostMapping("buscarLike")
     public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda, @RequestParam("zona") String zona, @RequestParam("instrumento") String instrumento, @RequestParam("genero") String genero){
 
-        try{
+        try {
 
-            List<Artista> lp = this.artistaServicio.buscarLike (busqueda);
+            List<Artista> lp = this.artistaServicio.buscarLike(busqueda);
             return new ResponseEntity<List<Artista>>(lp, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(" something has failed");
             return new ResponseEntity<List<Artista>>((List<Artista>) null, HttpStatus.BAD_REQUEST);
         }
 
 
-
     }
 
     @PostMapping("obtenerDatosUsuario")
-    public ResponseEntity<?> obtenerUsuario (@RequestBody LoginDatos ld) {
+    public ResponseEntity<?> obtenerUsuario(@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña
 
         try {
@@ -148,7 +157,7 @@ public class UsuarioControlador {
                 Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
                 return new ResponseEntity<Artista>(artista, HttpStatus.OK);
 
-            }else{
+            } else {
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
             }
 
@@ -160,14 +169,14 @@ public class UsuarioControlador {
 
 
     @PostMapping("obtenerDatosUsuarioPorId")
-    public ResponseEntity<?> obtenerDatosUsuarioPorId (@RequestParam("login") String login, @RequestParam("id") String id){
+    public ResponseEntity<?> obtenerDatosUsuarioPorId(@RequestParam("login") String login, @RequestParam("id") String id) {
         try {
             LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
             if (this.usuarioServicio.validarTokenUsuario(ld)) {
                 Artista artista = this.artistaServicio.obtener(Long.parseLong(id));
                 return new ResponseEntity<Artista>(artista, HttpStatus.OK);
 
-            }else{
+            } else {
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
             }
 
@@ -178,7 +187,7 @@ public class UsuarioControlador {
     }
 
     @PostMapping("RedSocialObtenerDatosUsuario")
-    public ResponseEntity<?> RedSocialObtenerDatosUsuario (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+    public ResponseEntity<?> RedSocialObtenerDatosUsuario(@RequestParam("login") String login, @RequestParam("nombre") String nombre) {
         try {
             LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
 
@@ -187,7 +196,7 @@ public class UsuarioControlador {
                 Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
                 return new ResponseEntity<Artista>(artista, HttpStatus.OK);
 
-            }else{
+            } else {
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
             }
 
@@ -199,21 +208,21 @@ public class UsuarioControlador {
 
 
     @PostMapping("ingresar")
-    public ResponseEntity<?> ingresar(@RequestBody Usuario usuarioFrontEnd){
+    public ResponseEntity<?> ingresar(@RequestBody Usuario usuarioFrontEnd) {
         // [STEP 0] - Validar usuario y contraseña
         log.info("Usuario : " + usuarioFrontEnd.getUsername() + " Está ingresando al sistema");
-        if (!this.usuarioServicio.existe (usuarioFrontEnd)){
+        if (!this.usuarioServicio.existe(usuarioFrontEnd)) {
             return new ResponseEntity("Usuario o contraseña incorrectos", HttpStatus.BAD_REQUEST); //No existe dicho usuario
-        }else{
+        } else {
             // SI NO HAY USUARIO SALE X EXCEPT QUE NO EXISTE
             String username = usuarioFrontEnd.getUsername();
             // Validar
-            if (!usuarioServicio.validarCredenciales (usuarioFrontEnd)){
-                log.info("La contraseña del usuario no es válida para el usuario: "+ usuarioFrontEnd.getUsername());
+            if (!usuarioServicio.validarCredenciales(usuarioFrontEnd)) {
+                log.info("La contraseña del usuario no es válida para el usuario: " + usuarioFrontEnd.getUsername());
                 return new ResponseEntity("Usuario o contraseña incorrectos", HttpStatus.BAD_REQUEST);
-            }else{
+            } else {
                 Usuario usuarioBackend = this.usuarioServicio.obtenerPorNombre(username);
-                log.info("Usuario y Password OK: "+usuarioBackend.getUsername()+" |Rol:"+usuarioBackend.rolesToString());
+                log.info("Usuario y Password OK: " + usuarioBackend.getUsername() + " |Rol:" + usuarioBackend.rolesToString());
 
                 // [STEP 1] - Cómo es el ingreso del usuario - Vamos a GENERAR Token (1st) ingreso
                 //           o ACTUALIZAR EL TOKEN de algún login
@@ -224,10 +233,10 @@ public class UsuarioControlador {
                 ld.setNombreUsuario(usuarioBackend.getUsername());
                 Set<Rol> lr = usuarioBackend.getRoles();
                 String roles = "";
-                for (Rol rol: lr) {
-                    roles+=rol.getNombre()+"-";
+                for (Rol rol : lr) {
+                    roles += rol.getNombre() + "-";
                 }
-                roles = roles.substring(0,roles.length()-1);
+                roles = roles.substring(0, roles.length() - 1);
                 ld.setRoles(roles);
                 ld.setTokenUsuario(tu.getToken());
 
@@ -238,112 +247,62 @@ public class UsuarioControlador {
     }
 
     @PostMapping("comercio_esta_activado")
-    public ResponseEntity<Boolean> comercio_esta_activado (@RequestBody LoginDatos loginDatos){
+    public ResponseEntity<Boolean> comercio_esta_activado(@RequestBody LoginDatos loginDatos) {
         log.info(" LLEGO A COMERCIO:ESTA:ACTIVADO");
 
-        log.info ( " USUARIO: "+loginDatos.getIdUsuario());
+        log.info(" USUARIO: " + loginDatos.getIdUsuario());
         Usuario u = this.usuarioServicio.obtenerPorNombre(loginDatos.getNombreUsuario());
         Comercio c = this.comercioServicio.obtener(u);
         log.info(" Obtuve el comercio");
-        if (c.getAccessToken()!= null) {
+        if (c.getAccessToken() != null) {
             log.info(" hay vinculación a MP ");
             return new ResponseEntity(true, HttpStatus.OK);
-        }
-        else {
+        } else {
             log.info(" no hay vinculación a mp");
             return new ResponseEntity(false, HttpStatus.OK);
         }
 
 
-
     }
-    @PostMapping("validar")
-    public ResponseEntity<Boolean> validar (@RequestBody LoginDatos loginDatos){
 
-        try{
+    @PostMapping("validar")
+    public ResponseEntity<Boolean> validar(@RequestBody LoginDatos loginDatos) {
+
+        try {
             //log.info(" VALIDANDO TOKEN USUARIO "+loginDatos.getNombreUsuario());
 
             boolean result = this.usuarioServicio.validarTokenUsuario(loginDatos);
 
             // RESULT TRUE -> Credenciales OK y Token revalidado
             // RESULT FALSE -> Credenciales NOK o TOKEN No  OK
-            if (result){
+            if (result) {
                 log.info(" VALI OK");
                 return new ResponseEntity(true, HttpStatus.OK);
-            }else{
+            } else {
                 log.info(" VALI NO OK ");
                 return new ResponseEntity(false, HttpStatus.OK);
             }
-        }catch (Exception e ){
-            log.info(" ERROR PORQUE: "+e.getMessage());
+        } catch (Exception e) {
+            log.info(" ERROR PORQUE: " + e.getMessage());
             return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("chequear_permisos_por_rol")
-    public ResponseEntity<?> permisosgeneral(@RequestBody LoginDatos loginDatos){
+    public ResponseEntity<?> permisosgeneral(@RequestBody LoginDatos loginDatos) {
         //log.info(" Chequear -> permisos -> ROL");
-        try{
+        try {
             Usuario u = this.usuarioServicio.obtener(loginDatos.getIdUsuario());
             String rolResponse = "";
-            for(Rol rol: u.getRoles()) {
+            for (Rol rol : u.getRoles()) {
                 rolResponse = rol.getNombre();
                 break;
             }
             //log.info(" ROL de USER: "+rolResponse);
             return new ResponseEntity<Mensaje>(new Mensaje(rolResponse), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.info(" ESPLOTE");
             return new ResponseEntity<Mensaje>(new Mensaje(" NOOK "), HttpStatus.UNAUTHORIZED);
         }
-
-
-
-
     }
-/*
-    @PostMapping("chequear_permisos_por_subsite")
-    public ResponseEntity<?> permisos(@RequestBody String payload){
-		// Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
-        // esto aplica a cualquier tipo de mensaje
-
-        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
-		try{
-			log.info("Pude crear el objeto básico JSON ");
-			log.info ("siendo: "+payload.toString());
-			log.info( " Como yo se los objetos que vienen, puedo castear los wrappers por parte");
-			log.info( "Objeto 1: LoginDatos, Objeto 2: String");
-			LoginDatos ld = new Gson().fromJson(json.get("ld"), LoginDatos.class);
-			String funcionSistema = json.get("sitio").getAsString();
-			log.info("/Check Permisos/ -> User:"+ld.getNombreUsuario()+" Sitio: "+funcionSistema);
-
-            try {
-                log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
-                boolean result = this.usuarioServicio.validarTokenUsuario(ld);
-                // SI DATOS OK
-                if (result){
-                    log.info(" MI USUARIO Y TOKEN TIENEN PERMISO, SIGO a 'DISPONE PERMISO' ");
-                    // tengo que validar si dispone la funcion habilitada (es decir el string)
-                    boolean permisos = this.usuarioServicio.disponePermisos(ld,funcionSistema);
-                    log.error(" PERMISO ?:  "+permisos);
-                    if (permisos) return new ResponseEntity<Mensaje>(new Mensaje("Tiene permiso"), HttpStatus.OK);
-                    else  return new ResponseEntity<Mensaje>(new Mensaje("No tiene permisos su usuario"), HttpStatus.FORBIDDEN);
-
-                }else{
-                    return new ResponseEntity<Mensaje>(new Mensaje("Token de usuario alterado o inválido"), HttpStatus.FORBIDDEN);
-                }
-            }catch (Exception e){
-                return new ResponseEntity<Mensaje>(new Mensaje("Excepcion en token de usuario"), HttpStatus.FORBIDDEN);
-            }
-
-
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			return new ResponseEntity<Mensaje>(new Mensaje("Error de comunicacion entre servidor/cliente"), HttpStatus.NOT_FOUND);
-		}
-
-
-    }
-    */
-
 }

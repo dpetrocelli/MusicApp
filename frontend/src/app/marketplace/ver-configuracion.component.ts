@@ -4,6 +4,7 @@ import {MarketplaceService} from '../servicios/marketplace.service';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import { $ } from 'protractor';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-configuracion',
@@ -45,12 +46,28 @@ export class VerConfiguracionComponent implements OnInit {
   }
 
   onDelete() {
-    if (confirm('¿Estás seguro?')) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "La eliminacion es permanente !",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'eliminar!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((confirmado) => {
+      if (confirmado.value) {
 
-       this.marketPlaceService.borrar().subscribe(data => {
-        this.obtenerConfiguracion();
-      });
-
-   }
+        this.marketPlaceService.borrar().subscribe(data => {
+          this.obtenerConfiguracion();
+        });
+  
+        Swal.fire(
+          'Eliminado!',
+          '.',
+          'success'
+        );
+      }
+    });
   }
 }

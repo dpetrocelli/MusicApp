@@ -11,6 +11,7 @@ import { ImgSliderComponent } from '../../miactividad/post/imgSlider/imgSlider.c
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { YoutubePopupComponent } from '../../miactividad/post/youtubePopup/youtubePopup.component';
 import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-redsocial',
@@ -138,7 +139,26 @@ export class PostRedsocialComponent implements OnInit {
   }
 
   onDelete(id: number): void {
-    if (confirm('¿Estás seguro?')) {
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "La eliminacion es permanente !",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'eliminar!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((confirmado) => {
+      if (confirmado.value) {
+
+        ///ACA EL CODIGO DE ELIMINACION
+
+        Swal.fire(
+          'Eliminado!',
+          '.',
+          'success'
+        );
+      }
+    });
   }
 }

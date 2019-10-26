@@ -45,6 +45,13 @@ import {PostRedsocialComponent} from './redsocial/post-redsocial/post-redsocial.
 import {PuntuacionRedsocialComponent} from './redsocial/puntuacion-redsocial/puntuacion-redsocial.component';
 import { ListaPagoComponent } from './pagos/lista-pago.component';
 import { ListaNotificacionComponent } from './notificaciones/lista-notificacion.component';
+import { EditarUsuarioComponent } from './usuarios/editar-usuario.component';
+import { ListaGeneroMusicalComponent } from './generosMusicales/lista-genero-musical.component';
+import { NuevoGeneroMusicalComponent } from './generosMusicales/nuevo-genero-musical.component';
+import { EditarGeneroMusicalComponent } from './generosMusicales/editar-genero-musical.component';
+import { ListaZonaComponent } from './zonas/lista-zona.component';
+import { NuevaZonaComponent } from './zonas/nueva-zona.component';
+import { EditarZonaComponent } from './zonas/editar-zona.component';
 
 
 
@@ -87,6 +94,13 @@ import { ListaNotificacionComponent } from './notificaciones/lista-notificacion.
       RedSocialComponent,
       ListaPagoComponent,
       ListaNotificacionComponent,
+      EditarUsuarioComponent,
+      ListaGeneroMusicalComponent,
+      NuevoGeneroMusicalComponent,
+      EditarGeneroMusicalComponent,
+      ListaZonaComponent,
+      NuevaZonaComponent,
+      EditarZonaComponent,
       
      
    ],

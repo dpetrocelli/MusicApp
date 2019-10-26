@@ -1,18 +1,18 @@
 <div class="container" layout-align="center center">
-    <table class="table table-dark">
-      <thead>
+  <table class="table table-dark">
+    <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col" >Mensaje Recibido</th>
+        <th scope="col">Mensaje Recibido</th>
         <th scope="col">Registrado</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr *ngFor="let notificacion of notificacionesMP">
         <td>{{notificacion.id}}</td>
         <td>{{notificacion.payload}}</td>
         <td>{{notificacion.registrado}}</td>
       </tr>
-      </tbody>
-    </table>
-  </div>
+    </tbody>
+  </table>
+</div>

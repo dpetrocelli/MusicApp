@@ -4,6 +4,7 @@ import { PromocionService } from '../servicios/promocion.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { LoginDatos } from '../modelos/logindatos';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listarpromociones',
@@ -39,10 +40,28 @@ export class ListarpromocionesComponent implements OnInit {
   }
 
   onDelete(promocion: Promocion): void {
-    if (confirm('¿Estás seguro?')) {
-      this.promocionService.borrar(promocion, this.userLogged).subscribe(data => {
-        this.cargarpromociones();
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "La eliminacion es permanente !",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'eliminar!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((confirmado) => {
+      if (confirmado.value) {
+
+        this.promocionService.borrar(promocion, this.userLogged).subscribe(data => {
+          this.cargarpromociones();
+        });
+  
+        Swal.fire(
+          'Eliminado!',
+          '.',
+          'success'
+        );
+      }
+    });
   }
 }

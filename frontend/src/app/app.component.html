@@ -1,9 +1,11 @@
 <!-- <div *ngIf="isArtista || isAdmin || isComercio"> -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-    <a class="navbar-brand" routerLink=""> <img src="https://i.ibb.co/st1tZzT/grafmiusic-sin-Fondo.png" height="42" width="150" alt="miusicapp"> </a>
+  <a class="navbar-brand" routerLink=""> <img src="https://i.ibb.co/st1tZzT/grafmiusic-sin-Fondo.png" height="42"
+      width="150" alt="miusicapp"> </a>
   <!--<a class="navbar-brand" routerLink="">MiusicApp-->
-      
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -34,7 +36,7 @@
           <a class="nav-link" routerLink="promociones/comprar">Promociones</a>
         </li>
       </div>
-      
+
       <div *ngIf="isAdmin">
         <li class="nav-item">
           <a class="nav-link" routerLink="marketplace">MarketPlace</a>
@@ -43,6 +45,16 @@
       <div *ngIf="isAdmin">
         <li class="nav-item">
           <a class="nav-link" routerLink="instrumento">Instrumentos</a>
+        </li>
+      </div>
+      <div *ngIf="isAdmin">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="generoMusical">Generos Musicales</a>
+        </li>
+      </div>
+      <div *ngIf="isAdmin">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="zona">Zonas Geograficas</a>
         </li>
       </div>
       <div *ngIf="isAdmin">
@@ -60,98 +72,117 @@
           <a class="nav-link" routerLink="promociones">Promociones</a>
         </li>
       </div>
-      <div *ngIf="isComercio && !isComercioVinculadoMP" >
+      <div *ngIf="isComercio && !isComercioVinculadoMP">
         <li class="nav-item">
           <a class="nav-link" routerLink="activarComercio">Activar comercio</a>
         </li>
       </div>
       <!-- <div *ngIf="hayNotificaciones"> -->
-    <!--  Recurso url: https://stackblitz.com/edit/angular-v55ace-dropdown?file=app%2Fapp.component.ts-->
+      <!--  Recurso url: https://stackblitz.com/edit/angular-v55ace-dropdown?file=app%2Fapp.component.ts-->
       <div class="notificaciones" *ngIf="isArtista">
-          <div class="row">
-            <div class="col">
-              <div ngbDropdown class="d-inline-block">
-                <img src="https://cdn0.iconfinder.com/data/icons/shopping-and-ecommerce-batch-2/512/sale_lineal_color_cnvrt-28-512.png" height="42" width="42" id="dropdownBasic1" ngbDropdownToggle> 
-                
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="min-width: 430px;">
-                  <h6 class="dropdown-header">Notificaciones usuario: <strong> {{userLogged.nombreUsuario}} </strong></h6>
-                  <div *ngFor="let item of items" class="dropdown-item">
-                    <strong class="text-danger m-1">{{item.origen}}</strong> <strong class="text-danger m-1">{{item.fecha | date: 'dd/MM/yyyy HH:mm:SS'}}</strong> 
-                    <!--<br><strong>Tipo {{item.tipo}}</strong>-->
-                    <div class="p-0 m-0"><small>{{ item.cliente | uppercase }}</small></div>
-                    <div class="botones">
-                      <div *ngIf="item.tipo==='moderacionArtista' || item.tipo==='moderacionBanda'; else tipomsg">
-                        <!-- Si es msg, solo puedo poner reply--> 
-                            <div class="noprocesado" *ngIf="item.estado!='moderado'; else moderacionprocesada">
-                              <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42" (click)="aceptar(item)">
-                              <img src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png" height="42" width="42" (click)="descartar(item)">
-                              <img src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" height="42" width="42" (click)="verperfil(item)">
-                              <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">                             
-                            </div>
-                            <ng-template #moderacionprocesada>
-                               <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">  
-                            </ng-template>
-                              
+        <div class="row">
+          <div class="col">
+            <div ngbDropdown class="d-inline-block">
+              <img
+                src="https://cdn0.iconfinder.com/data/icons/shopping-and-ecommerce-batch-2/512/sale_lineal_color_cnvrt-28-512.png"
+                height="42" width="42" id="dropdownBasic1" ngbDropdownToggle>
+
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="min-width: 430px;">
+                <h6 class="dropdown-header">Notificaciones usuario: <strong> {{userLogged.nombreUsuario}} </strong></h6>
+                <div *ngFor="let item of items" class="dropdown-item">
+                  <strong class="text-danger m-1">{{item.origen}}</strong> <strong
+                    class="text-danger m-1">{{item.fecha | date: 'dd/MM/yyyy HH:mm:SS'}}</strong>
+                  <!--<br><strong>Tipo {{item.tipo}}</strong>-->
+                  <div class="p-0 m-0"><small>{{ item.cliente | uppercase }}</small></div>
+                  <div class="botones">
+                    <div *ngIf="item.tipo==='moderacionArtista' || item.tipo==='moderacionBanda'; else tipomsg">
+                      <!-- Si es msg, solo puedo poner reply-->
+                      <div class="noprocesado" *ngIf="item.estado!='moderado'; else moderacionprocesada">
+                        <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42"
+                          (click)="aceptar(item)">
+                        <img
+                          src="https://www.freeiconspng.com/uploads/youtube-dislike-facebook-thumbs-down-not-like-png-16.png"
+                          height="42" width="42" (click)="descartar(item)">
+                        <img src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png"
+                          height="42" width="42" (click)="verperfil(item)">
+                        <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42"
+                          (click)="eliminar(item)">
                       </div>
-                      <!-- Si no es mensaje, es decir es autorizaciones tengo que habilitar las opciones -->
-                      
-                        <ng-template #tipomsg>
-                          <div *ngIf="item.tipo==='msg'; else msginfo">
-                            <div class="noprocesado" *ngIf="item.estado!='msgModerado'; else msgModerado">
-                              
-                              <img src="https://image.flaticon.com/icons/png/512/63/63365.png" height="42" width="42" (click)="openModal(true, item.origen, item.id)">
-                              <img src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" height="42" width="42" (click)="verperfil(item)">
-                              <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">
-                            </div>
-                            
-                            <ng-template #msgModerado>
-                                <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">
-                            </ng-template>
-                          </div>
-                        <ng-template #msginfo> 
-                            <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42" (click)="eliminar(item)">
-                        </ng-template> 
-                        </ng-template>
+                      <ng-template #moderacionprocesada>
+                        <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42"
+                          (click)="eliminar(item)">
+                      </ng-template>
+
                     </div>
+                    <!-- Si no es mensaje, es decir es autorizaciones tengo que habilitar las opciones -->
+
+                    <ng-template #tipomsg>
+                      <div *ngIf="item.tipo==='msg'; else msginfo">
+                        <div class="noprocesado" *ngIf="item.estado!='msgModerado'; else msgModerado">
+
+                          <img src="https://image.flaticon.com/icons/png/512/63/63365.png" height="42" width="42"
+                            (click)="openModal(true, item.origen, item.id)">
+                          <img
+                            src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png"
+                            height="42" width="42" (click)="verperfil(item)">
+                          <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42"
+                            (click)="eliminar(item)">
+                        </div>
+
+                        <ng-template #msgModerado>
+                          <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42"
+                            (click)="eliminar(item)">
+                        </ng-template>
+                      </div>
+                      <ng-template #msginfo>
+                        <img src="https://image.flaticon.com/icons/png/512/61/61848.png" height="42" width="42"
+                          (click)="eliminar(item)">
+                      </ng-template>
+                    </ng-template>
                   </div>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-center" href="#">See more</a>
                 </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-center" href="#">See more</a>
               </div>
             </div>
           </div>
-        </div>   
-      
+        </div>
+      </div>
+
     </ul>
-    
+
   </div>
 
-  
-    <div class="usuarioLogged" *ngIf="isArtista || isComercio || isAdmin">
-        <label for="cerrarsesion"> <strong class="usuario">  Usuario: {{userLogged.nombreUsuario}}  </strong> </label>
-      </div>
-  <div class="usuarioLogged" *ngIf="isArtista || isComercio || isAdmin"> 
-      <img src="https://www.iconshock.com/image/Beta/Communications/close_session" height="42" width="42" id="cerrarsesion" (click)="cerrarsesion()" >
-  </div>  
-</nav> 
+
+  <div class="usuarioLogged" *ngIf="isArtista || isComercio || isAdmin">
+    <label for="cerrarsesion"> <strong class="usuario"> Usuario: {{userLogged.nombreUsuario}} </strong> </label>
+  </div>
+  <div class="usuarioLogged" *ngIf="isArtista || isComercio || isAdmin">
+    <img src="https://www.iconshock.com/image/Beta/Communications/close_session" height="42" width="42"
+      id="cerrarsesion" (click)="cerrarsesion()">
+  </div>
+</nav>
 <router-outlet></router-outlet>
-<!-- </div> -->  
+<!-- </div> -->
 
 <!-- MODAL POPUP PARA RESPUESTA-->
-    
-<div id="modalPopupResponse" class="modal fade" role="dialog" [ngStyle]="{'display': modalPopupResponseIsOpen ? 'block' : 'none', 'opacity': 1}">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title"> Responder a usuario <strong> {{modalPopupUsuario}} </strong> </h4>
-          </div>
-        <div class="modal-body">
-            <input class="form-control" type="text" id="respuestaPopup" name="respuestaPopup" required autocomplete="off">
-        </div>
-        <div class="modal-footer" >
-          <button type="button" id="btnOK" class="btn btn-success" (click)="botonRespuesta()"><i class="fa fa-check fa-fw"></i> Ok</button>
-          <button type="button" id="btnClose" class="btn btn-danger" (click)="openModal(false,'','')"><i class="fa fa-times fa-fw"></i> Cancel</button>
-        </div>
+
+<div id="modalPopupResponse" class="modal fade" role="dialog"
+  [ngStyle]="{'display': modalPopupResponseIsOpen ? 'block' : 'none', 'opacity': 1}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"> Responder a usuario <strong> {{modalPopupUsuario}} </strong> </h4>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" type="text" id="respuestaPopup" name="respuestaPopup" required autocomplete="off">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnOK" class="btn btn-success" (click)="botonRespuesta()"><i
+            class="fa fa-check fa-fw"></i> Ok</button>
+        <button type="button" id="btnClose" class="btn btn-danger" (click)="openModal(false,'','')"><i
+            class="fa fa-times fa-fw"></i> Cancel</button>
+      </div>
     </div>
-    </div>
+  </div>
 </div>
