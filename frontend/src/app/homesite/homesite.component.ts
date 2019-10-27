@@ -95,7 +95,16 @@ export class HomesiteComponent implements OnInit {
   }
 
   tienePuntuacionArtista(artista : Artista){
-    let puntuacion : PuntuacionArtista = artista.puntuacionesRecibidas;
+    console.log ("Artista : ", artista);
+    let puntuacion : PuntuacionArtista[] = artista.puntuacionesRecibidas;
+    let valor : number = 0;
+    puntuacion.forEach(element => {
+      console.log ("Puntuacion : ", element.puntuacion);
+      valor= valor + element.puntuacion;
+    });
+    
+    
+    return valor;
   }
 
   revisionEnBanda(artista : Artista){

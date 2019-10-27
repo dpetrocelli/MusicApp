@@ -94,7 +94,10 @@
           </div>
         </div>
 
-        
+        <div class="info col-12" *ngIf="tienePuntuacionArtista(artista)">
+            
+            <div class="info col-12"> Puntuacion: {{valor}}</div>
+        </div>
      <div>
         
        <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}">Ver Perfil</button>
