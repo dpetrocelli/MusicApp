@@ -22,7 +22,7 @@
 </div>
 
 <div name="filtros" id="filtros">
-    <label for="buscar">Texto Libre </label>
+    <label for="buscar"> Texto Libre </label>
     <input type="text" name="buscar" id="buscar">
     <label for="generomusical">Género Musical </label>
   <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="generomusical">
@@ -85,12 +85,16 @@
       <div class="info col-12"> Artista: {{artista.nombre}}</div>
     <div class="info col-12"> Usuario: {{artista.usuario.username}}</div>
      <div class="info col-12"> NickName: {{artista.nickname}}</div>
-     <div class="info col-12"> Genero Musical: {{artista.generoMusical}}</div>
-     <div class="info col-12"> Instrumentos que toca</div>
-     <div class="info col-12" *ngFor="let inst of artista.instrumento">
-          <span> {{inst.nombreInstrumento}}</span>
-    </div>
+     <div class="info col-12"> Genero Musical: {{artista.generoMusical.nombre}}</div>
+     <div class="info col-12"> Zona Geográfica: {{artista.zona.nombreZona}}</div>
+        <div class="info col-12" *ngIf="tieneInstrumentos(artista)">
+          <div > Instrumentos que toca</div>
+          <div  *ngFor="let inst of artista.instrumento">
+                <span> {{inst.nombreInstrumento}}</span>
+          </div>
+        </div>
      <div>
+        
        <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}">Ver Perfil</button>
      </div>
      <div>
@@ -113,7 +117,8 @@
     
     <div class="info col-12"> Banda: {{banda.nombre}}</div>
     <div class="info col-12"> Artista Lider: {{banda.artistaLider.nombre}}</div>
-    <div class="info col-12"> Genero Musical: {{banda.generoMusical}}</div>
+    <div class="info col-12"> Genero Musical: {{banda.generoMusical.nombre}}</div>
+    <div class="info col-12"> Zona Geográfica: {{banda.zona.nombreZona}}</div>
     <div class="info col-12"> Puntuación</div>
      <div class="info col-12" *ngFor="let punt of banda.puntuacion">
           <span> {{punt.comentario}}</span>

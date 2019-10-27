@@ -30,6 +30,10 @@ public class Banda implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRecibidas;
 
+    @ManyToOne (optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
+
+    private Zona zona;
 
     public Banda() {
 
@@ -75,5 +79,13 @@ public class Banda implements Serializable {
 
     public void setPuntuacionesRecibidas(List<PuntuacionArtista> puntuacionesRecibidas) {
         this.puntuacionesRecibidas = puntuacionesRecibidas;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
     }
 }

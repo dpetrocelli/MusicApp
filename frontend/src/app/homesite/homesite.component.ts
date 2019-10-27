@@ -200,6 +200,15 @@ export class HomesiteComponent implements OnInit {
     
   }
 
+  tieneInstrumentos(artista : Artista){
+    if (artista.instrumento.length>0){
+      return true;
+    }else{
+      return false;
+    }
+   
+  }
+
   cambioRadioButton(evt){
     
     this.optionSelected = new String (evt.target.id);
