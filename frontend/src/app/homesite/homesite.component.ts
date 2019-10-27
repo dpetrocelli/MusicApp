@@ -24,6 +24,7 @@ import { Zona } from '../modelos/zona';
 import { Instrumento } from '../modelos/instrumento';
 import { GeneroMusicalService } from '../servicios/generoMusical.service';
 import { GeneroMusical } from '../modelos/generoMusical';
+import { PuntuacionService } from '../servicios/puntuacion.service';
 
 @Component({
   selector: 'app-homesite',
@@ -56,6 +57,9 @@ export class HomesiteComponent implements OnInit {
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
   artistasQueSonDeMiBanda : Artista[] = [];
+  listaPuntuacion : PuntuacionArtista[] = [];
+  promedio : number = 0;
+  promedioCargado : boolean = false;
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
@@ -66,6 +70,7 @@ export class HomesiteComponent implements OnInit {
               private instrumentoService: InstrumentoService,
               private router: Router,
               private sanitizer: DomSanitizer,
+              private puntuacionService : PuntuacionService,
               private componentFactoryResolver: ComponentFactoryResolver,
               private modalService: NgbModal) { }
 
@@ -94,17 +99,34 @@ export class HomesiteComponent implements OnInit {
     
   }
 
-  tienePuntuacionArtista(artista : Artista){
-    console.log ("Artista : ", artista);
-    let puntuacion : PuntuacionArtista[] = artista.puntuacionesRecibidas;
-    let valor : number = 0;
-    puntuacion.forEach(element => {
-      console.log ("Puntuacion : ", element.puntuacion);
-      valor= valor + element.puntuacion;
-    });
+  async tienePuntuacionArtista(artista : Artista){
     
+      this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionRedSocial(this.userLogged, artista.usuario.username).toPromise();
+      //this.promedio = 0;
+      let promedio = 0;
+      let contador = 0;
+  
+      if (this.listaPuntuacion.length> 0){
+        this.listaPuntuacion.forEach(puntuacion => {
+         
+          promedio+=puntuacion.puntuacion;
+          contador+=1;
+          //console.log (" OBJETO", puntuacion);
+        });
+        promedio = promedio / contador;
+        console.log (" PROM PUNT : "+promedio);
+        
+      }else{
+        promedio = 0;
+        
+      }
+      
+      
+     
+      this.promedioCargado = true;
+      return promedio;
     
-    return valor;
+   
   }
 
   revisionEnBanda(artista : Artista){
@@ -160,6 +182,32 @@ export class HomesiteComponent implements OnInit {
           }
           this.artistas = await this.homeSiteService.buscar(this.userLogged, "usuario" ,textolibre, zona, instrumento, genero).toPromise();
           if ((this.artistas != null) && (this.artistas.length>0)){
+            for (const artista of this.artistas){
+              
+              this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionRedSocial(this.userLogged, artista.usuario.username).toPromise();
+              //this.promedio = 0;
+              let promedio = 0;
+              let contador = 0;
+          
+              if (this.listaPuntuacion.length> 0){
+                this.listaPuntuacion.forEach(puntuacion => {
+                
+                  promedio+=puntuacion.puntuacion;
+                  contador+=1;
+                  //console.log (" OBJETO", puntuacion);
+                });
+                promedio = promedio / contador;
+                console.log (" PROM PUNT : "+promedio);
+                
+              }else{
+                promedio = 0;
+                
+              }
+              artista.promedio = promedio;
+              
+            };
+            
+            
             this.hayArtistas = true;
             
           }else{

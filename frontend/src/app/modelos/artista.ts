@@ -19,5 +19,6 @@ export class Artista {
   puntuacionesRecibidas : PuntuacionArtista[];
   puntuacionesRealizadas: PuntuacionArtista[];
   zona : Zona;
+  promedio : number;
 }
 
