@@ -1,24 +1,22 @@
 <div class="container">
   <table class="table table-dark">
     <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Tipo</th>
-      <th scope="col">Ver</th>
-      <th scope="col">Editar</th>
-      <th scope="col">Borrar</th>
-    </tr>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Borrar</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let instrumento of instrumentos">
-      <td>{{instrumento.id}}</td>
-      <td>{{instrumento.nombreInstrumento}}</td>
-      <td>{{instrumento.tipoInstrumento}}</td>
-      <td><button class="btn btn-primary" routerLink="/instrumento/detalle/{{instrumento.id}}">Ver</button></td>
-      <td><button class="btn btn-warning" routerLink="/instrumento/editar/{{instrumento.id}}">Editar</button></td>
-      <td><button class="btn btn-danger" (click)="onDelete(instrumento.id)">Borrar</button></td>
-    </tr>
+      <tr *ngFor="let instrumento of instrumentos">
+        <td>{{instrumento.id}}</td>
+        <td>{{instrumento.nombreInstrumento}}</td>
+        <td>{{instrumento.tipoInstrumento}}</td>
+        <td><button class="btn btn-warning" routerLink="/instrumento/editar/{{instrumento.id}}">Editar</button></td>
+        <td><button class="btn btn-danger" (click)="onDelete(instrumento.id)">Borrar</button></td>
+      </tr>
     </tbody>
   </table>
   <div><button class="btn btn-success btn-lg" routerLink="/instrumento/nuevo">Nuevo Instrumento</button></div>

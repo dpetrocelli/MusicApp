@@ -1,0 +1,108 @@
+<div class="container" *ngIf="!fallaInit">
+    <h5>Editar Artista</h5>
+    <form name="actualizar" #f="ngForm" novalidate>
+        <div class="form-group">
+
+            <div class="form-group">
+                <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
+            </div>
+            <div class="form-group">
+                <span id="email"> Email: {{artista.usuario.email}}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre"> Nombre: </label><input #nombre class="form-control" type="text" name="nombre" id="nombre" [(ngModel)]="form.nombre" value="{{artista.nombre}}"
+                    required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="apellido"> Apellido: </label>
+                <input class="form-control" type="text" name="apellido" id="apellido" [(ngModel)]="form.apellido" value="{{artista.apellido}}"
+                    required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="nickname"> NickName: </label>
+                <input class="form-control" type="text" name="nickname" id="nickname" [(ngModel)]="form.nickname" value="{{artista.nickname}}"
+                    required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <!-- USING HTML 5 DATALIST-->
+                <label for="instrumento"> Instrumento que toca: </label>
+                <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off" value="{{artista.instrumento[0].nombreInstrumento}}"
+                    id="instrumento" list="dinamicInstrumento" />
+                <datalist id="dinamicInstrumento">
+                    <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
+                </datalist>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Instrumento</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let seleccionado of instrumentosSeleccionados">
+                            <td>{{seleccionado}}</td>
+                            <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25"
+                                width="25" (click)="borrarLinea($event)" />
+                        </tr>
+                    </tbody>
+                </table>
+                <!--  -->
+            </div>
+
+            <div class="form-group">
+                <label for="documento"> Nro Documento: </label>
+                <input class="form-control" type="number" name="documento" id="documento" [(ngModel)]="form.documento" value="{{artista.documentoIdentidad}}"
+                    required autocomplete="off" (blur)="validarDNI()" min="0" oninput="validity.valid||(value='');"
+                    autocomplete="off">
+                <div class="aler alert-danger" [hidden]="dniValido">
+                    El dni debe tener de 8 números
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fechanacimiento"> Fecha Nacimiento: </label>
+                <input type="date" class="form-control" name="fechanacimiento" id="fechanacimiento" value="{{artista.fechaNacimiento | date: 'yyyy-MM-dd'}}"
+                    [(ngModel)]="form.fechanacimiento" required autocomplete="off" (blur)="revisarFecha()">
+                <div class="aler alert-danger" [hidden]="fechaValida">
+                    No es una fecha de nacimiento válida
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="genero"> Género: </label>
+                <select class="form-control" name="genero" [(ngModel)]="form.genero">
+                    <option *ngFor="let genero of generos" [ngValue]="genero" selected="{{artista.genero}}">{{genero.nombreGenero}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="zona"> Zona de Trabajo: </label>
+                <select class="form-control" name="zona" [(ngModel)]="form.zona" (blur)="habilitarONoFormulario()">
+                    <option *ngFor="let zona of zonas" [ngValue]="zona" selected="{{artista.zona}}">{{zona.nombreZona}}</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" [disabled]="!formularioValido"> Actualizar Usuario</button>
+        </div>
+    </form>
+    <div>
+        <button class="btn btn-primary float-left mr-3" routerLink="/perfil">Volver</button>
+    </div>
+
+    <br>
+
+    <br>
+    <div *ngIf="falloActualizacion" class="float-left">
+        <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+    </div>
+    <div *ngIf="actualizado" class="float-left">
+        <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+    </div>
+</div>

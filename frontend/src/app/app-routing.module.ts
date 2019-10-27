@@ -25,6 +25,13 @@ import { HomesiteComponent } from './homesite/homesite.component';
 import { RedSocialComponent } from './redsocial/redsocial.component';
 import { ListaPagoComponent } from './pagos/lista-pago.component';
 import { ListaNotificacionComponent } from './notificaciones/lista-notificacion.component';
+import { EditarUsuarioComponent } from './usuarios/editar-usuario.component';
+import { ListaGeneroMusicalComponent } from './generosMusicales/lista-genero-musical.component';
+import { NuevoGeneroMusicalComponent } from './generosMusicales/nuevo-genero-musical.component';
+import { EditarGeneroMusicalComponent } from './generosMusicales/editar-genero-musical.component';
+import { ListaZonaComponent } from './zonas/lista-zona.component';
+import { NuevaZonaComponent } from './zonas/nueva-zona.component';
+import { EditarZonaComponent } from './zonas/editar-zona.component';
 
 
 
@@ -52,6 +59,7 @@ const routes: Routes = [
    {path: 'posts/editar/:id', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'puntuacion/nuevo/:usuario', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'usuario/editar/:id', component: EditarUsuarioComponent},
 
     // Opciones de Comercio
     // Promociones/
@@ -72,7 +80,17 @@ const routes: Routes = [
    {path: 'instrumento/nuevo', component: NuevoInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'instrumento/editar/:id', component: EditarInstrumentoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
 
-   // Pago
+    // genero musical
+    {path: 'generoMusical', component: ListaGeneroMusicalComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'generoMusical/nuevo', component: NuevoGeneroMusicalComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'generoMusical/editar/:id', component: EditarGeneroMusicalComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+
+    // zona geografica
+    {path: 'zona', component: ListaZonaComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'zona/nuevo', component: NuevaZonaComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+    {path: 'zona/editar/:id', component: EditarZonaComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+
+    // Pago
    {path: 'notificacion', component: ListaNotificacionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'pago', component: ListaPagoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: '**', redirectTo: 'home', pathMatch: 'full'}

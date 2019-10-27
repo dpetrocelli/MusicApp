@@ -1,15 +1,10 @@
-<div class="container" *ngIf="form.nombreInstrumento && !fallaInit">
+<div class="container" *ngIf="form.nombre && !fallaInit">
   <h5>Actualizar Instrumento</h5>
   <form (ngSubmit)="onUpdate()" #f="ngForm" novalidate>
     <div class="form-group">
-      <label for="nombreInstrumento">Nombre:</label>
-      <input class="form-control" type="text" name="nombreInstrumento" id="nombreInstrumento"
-        [(ngModel)]="form.nombreInstrumento" required autocomplete="off">
-    </div>
-    <div class="form-group">
-      <label for="tipoInstrumento">Tipo:</label>
-      <input class="form-control" type="text" name="tipoInstrumento" id="tipoInstrumento"
-        [(ngModel)]="form.tipoInstrumento" required autocomplete="off">
+      <label for="nombre">Nombre:</label>
+      <input class="form-control" type="text" name="nombre" id="nombre" [(ngModel)]="form.nombre" required
+        autocomplete="off">
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">Actualizar</button>

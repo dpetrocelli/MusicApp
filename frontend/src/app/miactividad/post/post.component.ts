@@ -11,6 +11,7 @@ import { ImgSliderComponent } from './imgSlider/imgSlider.component';
 import { NgbModalModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { YoutubePopupComponent } from './youtubePopup/youtubePopup.component';
 import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post',
@@ -179,11 +180,29 @@ export class PostComponent implements OnInit {
   }
 
   onDelete(post: Post): void {
-    if (confirm('¿Estás seguro?')) {
-      this.perfilService.borrarpost(this.userLogged, post).subscribe(data => {
-        this.cargar();
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "La eliminacion es permanente !",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'eliminar!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((confirmado) => {
+      if (confirmado.value) {
+
+        this.perfilService.borrarpost(this.userLogged, post).subscribe(data => {
+          this.cargar();
+        });
+    
+        Swal.fire(
+          'Eliminado!',
+          '.',
+          'success'
+        );
+      }
+    });
   }
 
   editarPost(id: number): void {
@@ -191,4 +210,3 @@ export class PostComponent implements OnInit {
   }
 
 }
-

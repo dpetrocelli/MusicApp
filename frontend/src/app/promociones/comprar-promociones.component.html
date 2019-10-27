@@ -1,6 +1,6 @@
 <div class="container">
-    <table class="table table-dark">
-      <thead>
+  <table class="table table-dark">
+    <thead>
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Titulo</th>
@@ -11,8 +11,8 @@
         <th scope="col">init_point_mercadopago</th>
         <th scope="col"></th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr *ngFor="let promocion of promociones">
         <td>{{promocion.id}}</td>
         <td>{{promocion.titulo}}</td>
@@ -23,7 +23,6 @@
         <td>{{promocion.init_point_mercadopago}}</td>
         <td><button class="btn btn-success" (click)="comprar(promocion)">Comprar</button></td>
       </tr>
-      </tbody>
-    </table>
-  </div>
-  
+    </tbody>
+  </table>
+</div>

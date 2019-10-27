@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -78,8 +80,14 @@ public class UsuarioServicio {
             }catch (Exception e){
                 artista.setDocumentoIdentidad(0);
             }
-            //artista.setFechaNacimiento(formulario.get("fechanacimiento").getasd);
 
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date fechanacimiento = format.parse ( formulario.get("fechanacimiento").getAsString() );
+                artista.setFechaNacimiento(fechanacimiento);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             ArrayList<String> listaInstrumentos = new ArrayList<String>();
             Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
@@ -115,13 +123,6 @@ public class UsuarioServicio {
                 log.error(" NO PUDE GUARDAR ALGO ");
                 return false;
             }
-
-
-
-
-
-
-
 
         }
     }
@@ -220,10 +221,6 @@ public class UsuarioServicio {
             return false;
         }
 
-
-
-
 	}
-
 
 }
