@@ -5,7 +5,8 @@
     <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
     <span> NickName: {{artista.nickname}}</span>
     <span> Sexo: {{artista.genero}}</span>
-    <span> Género Musical: {{artista.generomusical}}</span>
+    
+    <!-- <span> Género Musical: {{artista.generoMusical.nombre}}</span> --> 
     <span> Fecha de Nacimiento: {{artista.fechaNacimiento | date: "dd-MM-yyyy"}}</span>
     <span><button class="btn btn-warning" routerLink="/usuario/editar/{{artista.id}}">Editar</button></span>
   

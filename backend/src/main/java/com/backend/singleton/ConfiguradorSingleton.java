@@ -55,6 +55,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
 
     @Autowired BiografiaServicio biografiaServicio;
 
+    @Autowired GeneroMusicalServicio generoMusicalServicio;
     public ArrayList<String> permisosDelComercio;
     public ArrayList<String> permisosDelArtista;
     public String baseURLSistema;
@@ -114,7 +115,23 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             log.info("Usuario comercio almacenado con exito");
 
             // USUARIO ARTISTA
+            // PRIMERO le clavo el genero musical básico y las zonas
+            if ((this.zonaGeograficaServicio.obtenerTodos()).size()==0){
+                this.zonaGeograficaServicio.guardar(new Zona ("sur" ));
+                this.zonaGeograficaServicio.guardar(new Zona ("norte" ));
+                this.zonaGeograficaServicio.guardar(new Zona ("este" ));
+                this.zonaGeograficaServicio.guardar(new Zona ("oeste" ));
+            }
 
+            if  ((this.generoMusicalServicio.obtenerTodos()).size()==0){
+                this.generoMusicalServicio.guardar(new GeneroMusical("rock"));
+                this.generoMusicalServicio.guardar(new GeneroMusical("pop"));
+                this.generoMusicalServicio.guardar(new GeneroMusical("metal"));
+            }
+
+
+
+            log.error("guarde el genero musical");
             log.info("HAY QUE AGREGAR USUARIO ARTISTa ");
             r = rolRepositorio.findByNombre("artista");
             Usuario usuarioArtista = new Usuario();
@@ -131,8 +148,14 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             artista.setNickname("nickname");
             artista.setNombre("nombre");
             artista.setApellido("apellido");
-            artista.setGeneroMusical("raro");
+            artista.setFechaNacimiento(new Date());
 
+            GeneroMusical generoMusical = this.generoMusicalServicio.obtenerPorId(Long.valueOf(1)).get();
+            artista.setGeneroMusical(generoMusical);
+
+            Zona zona = this.zonaGeograficaServicio.obtenerPorId(Long.valueOf(1)).get();
+
+            artista.setZona(zona);
             Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
             Set<Banda> setBanda = new HashSet<>();
             artista.setInstrumento(setInstrumento);
@@ -174,12 +197,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
         }
 
-        if ((this.zonaGeograficaServicio.obtenerTodos()).size()==0){
-            this.zonaGeograficaServicio.guardar(new Zona ("sur" ));
-            this.zonaGeograficaServicio.guardar(new Zona ("norte" ));
-            this.zonaGeograficaServicio.guardar(new Zona ("este" ));
-            this.zonaGeograficaServicio.guardar(new Zona ("oeste" ));
-        }
+
         /*
         this.listPost = new ArrayList<Post>();
         while (true){

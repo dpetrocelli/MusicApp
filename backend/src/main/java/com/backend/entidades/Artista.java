@@ -33,13 +33,16 @@ public class Artista implements Serializable {
     @JoinTable(name = "banda_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "banda_id"))
     private Set<Banda> banda = new HashSet<>();
 
-    private String generoMusical;
+    @ManyToOne (optional = true, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = false)
+    private GeneroMusical generoMusical;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "instrumento_artista", joinColumns = @JoinColumn(name = "artista_id"), inverseJoinColumns = @JoinColumn(name = "instrumento_id"))
     private Set<Instrumento> instrumento = new HashSet<>();
 
-    @ManyToOne (optional = true, fetch = FetchType.LAZY)
+    @ManyToOne (optional = true, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
     private Zona zona;
@@ -54,20 +57,6 @@ public class Artista implements Serializable {
     public Artista() {
     }
 
-    public Artista(Usuario usuario, String nombre, String apellido, String nickname, int documentoIdentidad, Date fechaNacimiento, String genero, Set<Banda> banda, String generoMusical, Set<Instrumento> instrumento, List<PuntuacionArtista> puntuacionesRealizadas, List<PuntuacionArtista> puntuacionesRecibidas) {
-        this.usuario = usuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.nickname = nickname;
-        this.documentoIdentidad = documentoIdentidad;
-        this.fechaNacimiento = fechaNacimiento;
-        this.genero = genero;
-        this.banda = banda;
-        this.generoMusical = generoMusical;
-        this.instrumento = instrumento;
-        this.puntuacionesRealizadas = puntuacionesRealizadas;
-        this.puntuacionesRecibidas = puntuacionesRecibidas;
-    }
 
     public Long getId() {
         return id;
@@ -141,11 +130,11 @@ public class Artista implements Serializable {
         this.banda = banda;
     }
 
-    public String getGeneroMusical() {
+    public GeneroMusical getGeneroMusical() {
         return generoMusical;
     }
 
-    public void setGeneroMusical(String generoMusical) {
+    public void setGeneroMusical(GeneroMusical generoMusical) {
         this.generoMusical = generoMusical;
     }
 

@@ -152,39 +152,37 @@ export class HomesiteComponent implements OnInit {
           }
           
         }else{
-          console.log (" BANDA");{
-            if (this.optionSelected == "banda"){
-              this.hayBandas = false;
+          if (this.optionSelected.startsWith ("band")){
+            this.hayBandas = false;
     
-              this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
-              if ((this.bandas != null) && (this.bandas.length>0)){
-                
-                this.hayBandas = true;
-              }else{
-                Swal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text: "No hay bandas con esos criterios de búsqueda"        
-                });
-              }
+            this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
+            if ((this.bandas != null) && (this.bandas.length>0)){
+              
+              this.hayBandas = true;
             }else{
-              this.posts = await this.homeSiteService.buscar(this.userLogged, "post",textolibre, zona, instrumento, genero ).toPromise();
-              if ((this.posts != null) && (this.posts.length>0)){
-                this.hayPosts = true;
-              }else{
-                Swal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text: "No hay posts con esos criterios de búsqueda"        
-                });
-              }
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: "No hay bandas con esos criterios de búsqueda"        
+              });
             }
-     
+          }else{
+            this.posts = await this.homeSiteService.buscar(this.userLogged, "post",textolibre, zona, instrumento, genero ).toPromise();
+            if ((this.posts != null) && (this.posts.length>0)){
+              this.hayPosts = true;
+            }else{
+              Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: "No hay posts con esos criterios de búsqueda"        
+              });
+            }
           }
-               }
-       
-     }
-    }catch{
+        }
+          
+     
+    }
+  }catch{
       Swal.fire({
         type: 'error',
         title: 'Oops...',

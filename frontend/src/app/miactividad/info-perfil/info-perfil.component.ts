@@ -57,9 +57,9 @@ export class InfoPerfilComponent implements OnInit {
   }
 
   async obtenerDatosUsuario(){
-    this.artista = await this.usuarioService.obtenerDatosUsuario (this.userLogged).toPromise()
+    this.artista = await this.usuarioService.obtenerDatosUsuario (this.userLogged).toPromise();
     
-    console.log (" ARTISTA logueado",this.artista.banda);
+    console.log (" ARTISTA logueado -> IUPU",this.artista);
     this.isLoaded = true;
      /*
              Una vez que cargue los datos del usuario voy a validar
