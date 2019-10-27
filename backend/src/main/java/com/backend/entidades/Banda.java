@@ -23,8 +23,9 @@ public class Banda implements Serializable {
     @Column(unique = true)
     private String nombre;
 
-    @NotBlank
-    private String generoMusical;
+    @ManyToOne (optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = false)
+    private GeneroMusical generoMusical;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRecibidas;
@@ -34,11 +35,7 @@ public class Banda implements Serializable {
 
     }
 
-    public Banda(Artista artistaLider, @NotBlank String nombre, @NotBlank String generoMusical) {
-        this.artistaLider = artistaLider;
-        this.nombre = nombre;
-        this.generoMusical = generoMusical;
-    }
+
 
     public Long getId() {
         return id;
@@ -64,11 +61,11 @@ public class Banda implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getGeneroMusical() {
+    public GeneroMusical getGeneroMusical() {
         return generoMusical;
     }
 
-    public void setGeneroMusical(String generoMusical) {
+    public void setGeneroMusical(GeneroMusical generoMusical) {
         this.generoMusical = generoMusical;
     }
 

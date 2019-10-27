@@ -21,6 +21,8 @@ import { ZonaService } from '../servicios/zona.service';
 import { InstrumentoService } from '../servicios/instrumento.service';
 import { Zona } from '../modelos/zona';
 import { Instrumento } from '../modelos/instrumento';
+import { GeneroMusicalService } from '../servicios/generoMusical.service';
+import { GeneroMusical } from '../modelos/generoMusical';
 
 @Component({
   selector: 'app-homesite',
@@ -41,6 +43,7 @@ export class HomesiteComponent implements OnInit {
   listaDeElementos : String[];
   zonas : Zona[];
   instrumentos : Instrumento[];
+  generosmusicales : GeneroMusical[];
   biografia : String;
   form: any = {};
   nuevoPostForm : boolean;
@@ -58,6 +61,7 @@ export class HomesiteComponent implements OnInit {
               private bandaServicio: BandaService,
               private notificacionService: NotificacionService,
               private zonaService: ZonaService,
+              private generoMusicalService : GeneroMusicalService,
               private instrumentoService: InstrumentoService,
               private router: Router,
               private sanitizer: DomSanitizer,
@@ -76,6 +80,7 @@ export class HomesiteComponent implements OnInit {
     let fin = 10;
     this.zonas = await this.zonaService.lista().toPromise();
     this.instrumentos = await this.instrumentoService.lista().toPromise();
+    this.generosmusicales = await this.generoMusicalService.lista().toPromise();
     this.posts = await this.homeSiteService.obtener(this.userLogged, inicio, fin).toPromise();
     
     
@@ -118,7 +123,7 @@ export class HomesiteComponent implements OnInit {
     let genero: any;
     
       textolibre = (<HTMLInputElement>document.getElementById('buscar')).value;
-      genero = (<HTMLInputElement>document.getElementById('generomusical')).value;
+      genero = (<HTMLSelectElement>document.getElementById('generomusical')).value;
       zona = (<HTMLSelectElement>document.getElementById('zona')).value;
       instrumento = (<HTMLSelectElement>document.getElementById('instrumento')).value;
      
@@ -198,7 +203,25 @@ export class HomesiteComponent implements OnInit {
   cambioRadioButton(evt){
     
     this.optionSelected = new String (evt.target.id);
-    
+    if (this.optionSelected.startsWith("ar")) {
+      (<HTMLSelectElement>document.getElementById('instrumento')).disabled = false;
+      (<HTMLSelectElement>document.getElementById('zona')).disabled = false;
+      (<HTMLInputElement>document.getElementById('buscar')).disabled = false;
+      (<HTMLSelectElement>document.getElementById('generomusical')).disabled = false;
+    }
+    if (this.optionSelected.startsWith("ban")) {
+      (<HTMLSelectElement>document.getElementById('instrumento')).disabled = true;
+      (<HTMLSelectElement>document.getElementById('zona')).disabled = false;
+      (<HTMLInputElement>document.getElementById('buscar')).disabled = false;
+      (<HTMLSelectElement>document.getElementById('generomusical')).disabled = false;
+      
+    }
+    if (this.optionSelected.startsWith("post")) {
+      (<HTMLSelectElement>document.getElementById('instrumento')).disabled = true;
+      (<HTMLSelectElement>document.getElementById('zona')).disabled = true;
+      (<HTMLInputElement>document.getElementById('buscar')).disabled = false;
+      (<HTMLSelectElement>document.getElementById('generomusical')).disabled = true;
+    }
 
   }
   hasResource(post : Post, type : string) : Boolean{

@@ -24,8 +24,13 @@
 <div name="filtros" id="filtros">
     <label for="buscar">Texto Libre </label>
     <input type="text" name="buscar" id="buscar">
-    <label for="generomusical"> Genero Musical  </label>
-    <input type="text" name="generomusical" id="generomusical">
+    <label for="generomusical">Género Musical </label>
+  <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="generomusical">
+    <option value=""></option>
+    <option *ngFor="let generomusical of generosmusicales" value= {{generomusical.id}}>
+      {{generomusical.nombre}}
+    </option>
+  </select>
   <label for="zona">Zona Geográfica</label>
   <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="zona">
     <option value=""></option>

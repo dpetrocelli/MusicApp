@@ -38,11 +38,11 @@ public class BandaControlador {
 
 
     @PostMapping("buscarLike")
-    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda){
+    public ResponseEntity<?> buscarLike (@RequestParam("login") String login, @RequestParam("opcion") String opcion, @RequestParam("busqueda") String busqueda, @RequestParam("zona") String zona, @RequestParam("instrumento") String instrumento, @RequestParam("genero") String genero){
 
         try{
 
-            List<Banda> lp = this.bandaServicio.buscarLike (busqueda);
+            List<Banda> lp = this.bandaServicio.buscarLike (busqueda, zona, genero);
             return new ResponseEntity<List<Banda>>(lp, HttpStatus.OK);
         }catch (Exception e){
             log.info(" something has failed");

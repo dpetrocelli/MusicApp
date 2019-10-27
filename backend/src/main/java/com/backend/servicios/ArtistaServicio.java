@@ -29,6 +29,8 @@ public class ArtistaServicio {
 
     @Autowired
     ZonaGeograficaServicio zonaServicio;
+    @Autowired
+    GeneroMusicalServicio generoMusicalServicio;
 
     @Autowired
     InstrumentoServicio instrumentoServicio;
@@ -62,6 +64,7 @@ public class ArtistaServicio {
 
         System.out.println(" HOLA ");
         Zona zonaObjeto = null;
+        GeneroMusical generoMusical = null;
         try{
             if (this.zonaServicio.existePorId(Long.parseLong(zona))){
                 zonaObjeto = this.zonaServicio.obtenerPorId(Long.parseLong(zona)).get();
@@ -69,7 +72,16 @@ public class ArtistaServicio {
         }catch (Exception e){
 
         }
-        List<Artista> test = this.findByLikeCriteria(busqueda, genero, zonaObjeto);
+        try{
+
+            if (this.generoMusicalServicio.existePorId(Long.parseLong(genero))){
+                generoMusical = this.generoMusicalServicio.obtenerPorId(Long.parseLong(genero)).get();
+            }
+
+        }catch (Exception e){
+
+        }
+        List<Artista> test = this.findByLikeCriteria(busqueda, generoMusical, zonaObjeto);
         ArrayList<Artista> resultado=new ArrayList<Artista>();
         try{
             if (this.instrumentoServicio.existePorId(Long.parseLong(instrumento))){
@@ -103,7 +115,7 @@ public class ArtistaServicio {
 
     }
 
-    public List<Artista> findByLikeCriteria(String busqueda, String genero, Zona zona){
+    public List<Artista> findByLikeCriteria(String busqueda, GeneroMusical generoMusical, Zona zona){
         return this.artistaRepositorio.findAll(new Specification<Artista>() {
             @Override
             public Predicate toPredicate(Root<Artista> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -115,9 +127,9 @@ public class ArtistaServicio {
                     );
                 }
 
-                if(genero.length()>0) {
+                if(generoMusical!=null) {
                     predicates.add(criteriaBuilder.and(
-                            criteriaBuilder.like(root.get("generoMusical"), "%" + genero + "%"))
+                            criteriaBuilder.equal(root.get("generoMusical"), generoMusical))
 
                     );
                 }
