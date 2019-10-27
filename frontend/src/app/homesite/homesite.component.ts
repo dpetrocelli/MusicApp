@@ -57,9 +57,11 @@ export class HomesiteComponent implements OnInit {
   temporalElementos: Elemento[];
   safeSrc: SafeResourceUrl;
   artistasQueSonDeMiBanda : Artista[] = [];
+  integrantes : Artista[] = [];
   listaPuntuacion : PuntuacionArtista[] = [];
   promedio : number = 0;
   promedioCargado : boolean = false;
+
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
@@ -225,6 +227,32 @@ export class HomesiteComponent implements OnInit {
             this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
             if ((this.bandas != null) && (this.bandas.length>0)){
               
+              for (const banda of this.bandas){
+                
+                this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged, banda.nombre).toPromise();
+                //this.promedio = 0;
+                let promedio = 0;
+                let contador = 0;
+            
+                if (this.listaPuntuacion.length> 0){
+                  this.listaPuntuacion.forEach(puntuacion => {
+                  
+                    promedio+=puntuacion.puntuacion;
+                    contador+=1;
+                    //console.log (" OBJETO", puntuacion);
+                  });
+                  promedio = promedio / contador;
+                  console.log (" PROM PUNT : "+promedio);
+                  
+                }else{
+                  promedio = 0;
+                  
+                }
+                banda.promedio = promedio;
+                
+              };
+              
+
               this.hayBandas = true;
             }else{
               Swal.fire({

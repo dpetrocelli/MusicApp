@@ -5,6 +5,7 @@ import com.backend.recursos.LoginDatos;
 import com.backend.recursos.PublicacionMercadoPago;
 import com.backend.repositorios.PromocionRepositorio;
 import com.backend.repositorios.PuntuacionRepositorio;
+import com.backend.repositorios.PuntuacionRepositorioBanda;
 import com.backend.singleton.ConfiguradorSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,10 @@ public class PuntuacionServicio {
 
     @Autowired
     PuntuacionRepositorio puntuacionRepositorio;
+
+    @Autowired
+    PuntuacionRepositorioBanda puntuacionRepositorioBanda;
+
     @Autowired
     UsuarioServicio usuarioServicio;
     @Autowired
@@ -83,5 +88,10 @@ public class PuntuacionServicio {
 
     public List<PuntuacionArtista> obtenerPuntuacionArtistaByArtista (Artista art){
         return this.puntuacionRepositorio.findAllByArtistaPuntuado(art.getId());
+    }
+
+    public List<PuntuacionBanda> obtenerPuntuacionBandaByBanda(Banda banda) {
+        return this.puntuacionRepositorioBanda.findAllByBandaPuntuada(banda.getId());
+
     }
 }

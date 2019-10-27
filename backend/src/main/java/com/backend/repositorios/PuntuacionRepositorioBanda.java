@@ -1,18 +1,15 @@
 package com.backend.repositorios;
 
-import com.backend.entidades.Artista;
-import com.backend.entidades.Banda;
 import com.backend.entidades.PuntuacionArtista;
 import com.backend.entidades.PuntuacionBanda;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface PuntuacionRepositorio extends JpaRepository<PuntuacionArtista, Long> {
-    List<PuntuacionArtista> findAllByArtistaPuntuado(Long id);
+public interface PuntuacionRepositorioBanda extends JpaRepository<PuntuacionBanda, Long> {
+    List<PuntuacionBanda> findAllByBandaPuntuada(Long id);
 
 
 

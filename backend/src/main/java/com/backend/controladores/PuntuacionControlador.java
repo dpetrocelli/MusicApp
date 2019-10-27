@@ -4,6 +4,7 @@ import com.backend.dto.Mensaje;
 import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
 import com.backend.servicios.ArtistaServicio;
+import com.backend.servicios.BandaServicio;
 import com.backend.servicios.PuntuacionServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.google.gson.Gson;
@@ -23,6 +24,8 @@ import java.util.List;
 public class PuntuacionControlador {
     @Autowired UsuarioServicio usuarioServicio;
     @Autowired ArtistaServicio artistaServicio;
+    @Autowired
+    BandaServicio bandaServicio;
     @Autowired PuntuacionServicio puntuacionServicio;
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -110,5 +113,16 @@ public class PuntuacionControlador {
         log.info(" Obteniendo lista de puntuaciones");
         return new ResponseEntity<List<PuntuacionArtista>>(lista, HttpStatus.OK);
     }
+
+    @PostMapping("ObtenerPuntuacionBanda")
+    public ResponseEntity<?> ObtenerPuntuacionBanda (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        Banda banda = this.bandaServicio.obtenerBandaPorNombre(nombre);
+
+        List<PuntuacionBanda> lista = this.puntuacionServicio.obtenerPuntuacionBandaByBanda(banda);
+        log.info(" Obteniendo lista de puntuaciones");
+        return new ResponseEntity<List<PuntuacionBanda>>(lista, HttpStatus.OK);
+    }
+
+
 
 }

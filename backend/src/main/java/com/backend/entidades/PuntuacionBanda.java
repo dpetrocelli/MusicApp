@@ -18,7 +18,7 @@ public class PuntuacionBanda {
     private Long artistaPuntuador;
     private Long bandaPuntuada;
 
-    Date fechaPuntuacion;;
+    Date fechaPuntuacion;
 
 
 

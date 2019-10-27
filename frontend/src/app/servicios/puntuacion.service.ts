@@ -14,7 +14,7 @@ const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})
 export class PuntuacionService {
 
   baseURL = environment.urlApiBackend + 'api/puntuacion/';
-
+  
   constructor(private httpClient: HttpClient) { }
 
   public crear(ld : LoginDatos, usuarioPuntuado : string, comentario : string, puntuacion: string): Observable<any> {
@@ -42,6 +42,13 @@ export class PuntuacionService {
     formdata.append('login', JSON.stringify(login));
     formdata.append('nombre', nombre);
     return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerPuntuacion',formdata);
+  }
+  
+  public obtenerPuntuacionBanda(login : LoginDatos, nombre : String): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre.toString());
+    return this.httpClient.post<any>(this.baseURL + 'ObtenerPuntuacionBanda',formdata);
   }
   
 /*

@@ -124,9 +124,13 @@
     <div class="info col-12"> Artista Lider: {{banda.artistaLider.nombre}}</div>
     <div class="info col-12"> Genero Musical: {{banda.generoMusical.nombre}}</div>
     <div class="info col-12"> Zona Geográfica: {{banda.zona.nombreZona}}</div>
-    <div class="info col-12"> Puntuación</div>
-     <div class="info col-12" *ngFor="let punt of banda.puntuacion">
-          <span> {{punt.comentario}}</span>
+    <div class="info col-12"> Integrantes</div>
+     <div class="info col-12" *ngFor="let integrante of integrantes">
+          <span> {{integrante.nombre}} - {{integrante.instrumento}}</span>
+    </div>
+    <div class="info col-12">
+            
+        Puntuacion: {{banda.promedio}}
     </div>
      <div>
        <button class="btn btn-success" routerLink="/banda/{{banda.nombre}}">Ver Perfil</button>
