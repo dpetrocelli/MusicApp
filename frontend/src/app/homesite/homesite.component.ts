@@ -6,6 +6,7 @@ import { LoginDatos } from '../modelos/logindatos';
 import { HomeSiteService } from '../servicios/homesite.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Post } from '../modelos/post';
+import { PuntuacionArtista } from '../modelos/puntuacion';
 import { NuevoPostComponent } from '../miactividad/post/nuevo-post.component';
 import { Elemento } from '../modelos/elemento';
 import { YoutubePopupComponent } from '../miactividad/post/youtubePopup/youtubePopup.component';
@@ -91,6 +92,10 @@ export class HomesiteComponent implements OnInit {
       }catch{
       }
     
+  }
+
+  tienePuntuacionArtista(artista : Artista){
+    let puntuacion : PuntuacionArtista = artista.puntuacionesRecibidas;
   }
 
   revisionEnBanda(artista : Artista){
