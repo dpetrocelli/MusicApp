@@ -19,7 +19,6 @@ public class Biografia {
     private Artista artista;
 
 
-    @Column(unique = true)
     private String biografiaBasica;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "biografia")

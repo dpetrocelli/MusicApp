@@ -19,9 +19,9 @@ export class GeneroService {
     var femenino: Genero = new Genero();
 
     masculino.id = 1;
-    masculino.nombreGenero = "masculino";
+    masculino.nombreGenero = "Masculino";
     femenino.id = 2;
-    femenino.nombreGenero = "femenino";
+    femenino.nombreGenero = "Femenino";
 
     generos.push(masculino);
     generos.push(femenino);

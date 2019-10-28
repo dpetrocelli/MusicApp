@@ -29,7 +29,7 @@ public class GeneroMusicalControlador {
     public ResponseEntity<GeneroMusical> getOne(@PathVariable Long id){
         if(!generoMusicalServicio.existePorId(id))
             return new ResponseEntity(new Mensaje("no existe esa genero musical"), HttpStatus.NOT_FOUND);
-        GeneroMusical generoMusical = generoMusicalServicio.obtenerPorId(id).get();
+        GeneroMusical generoMusical = generoMusicalServicio.obtenerPorId(id);
         return new ResponseEntity<GeneroMusical>(generoMusical, HttpStatus.OK);
     }
 
@@ -52,7 +52,7 @@ public class GeneroMusicalControlador {
         if(generoMusicalServicio.existePorNombre(generoMusical.getNombre()) &&
                 (generoMusical.getId() != id))
             return new ResponseEntity(new Mensaje("ese nombre de genero musical ya existe"), HttpStatus.BAD_REQUEST);
-        GeneroMusical baseGeneroMusical = generoMusicalServicio.obtenerPorId(id).get();
+        GeneroMusical baseGeneroMusical = generoMusicalServicio.obtenerPorId(id);
         baseGeneroMusical.setNombre(generoMusical.getNombre());
         generoMusicalServicio.guardar(baseGeneroMusical);
         return new ResponseEntity(new Mensaje("GeneroMusical actualizada"), HttpStatus.CREATED);

@@ -64,7 +64,7 @@ public class BandaServicio {
         }
         try {
             if (this.generoMusicalServicio.existePorId(Long.parseLong(genero))) {
-                generoMusical = this.generoMusicalServicio.obtenerPorId(Long.parseLong(genero)).get();
+                generoMusical = this.generoMusicalServicio.obtenerPorId(Long.parseLong(genero));
             }
 
         }catch (Exception e){

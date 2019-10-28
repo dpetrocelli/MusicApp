@@ -1,11 +1,10 @@
 <div class="container">
   <!-- escucha fin guardarUsuario -->
-  <form name="registrar" (ngSubmit)="guardarUsuario()" #f="ngForm" validate>
+  <form name="registrar" #f="ngForm" validate>
     <div class="form-group">
       <label for="username">Username:</label>
       <input class="form-control" type="username" name="username" id="username" [(ngModel)]="form.username" required
         (blur)="revisarNombreUsuario()" autocomplete="off">
-
       <div class="aler alert-danger" [hidden]="usuarioValido">
         Ese usuario ya está siendo utilizado
       </div>
@@ -15,18 +14,13 @@
         autocomplete="off">
 
       <div class="form-group">
-
         <label for="email">Email</label>
         <input type="text" class="form-control" [(ngModel)]="form.email" (blur)="verificarMail()" id="email"
           name="email" ngModel #email="ngModel">
-
         <div class="aler alert-danger" [hidden]="mailValido">
           No es un patrón valido de email
         </div>
-
       </div>
-
-
 
       <label for="tipousuario">Tipo de usuario:</label>
       <div>
@@ -66,11 +60,10 @@
             No es una fecha de nacimiento válida
           </div>
 
-          <label for="genero"> Género:</label>
-          <select class="form-control" name="genero" [(ngModel)]="form.genero">
-            <option value="masculino"> Masculino</option>
-            <option value="femenino"> Femenino</option>
-          </select>
+          <label for="genero"> Género: </label>
+            <select class="form-control" name="genero" [(ngModel)]="form.genero">
+                <option *ngFor="let genero of generos" [ngValue]="genero.nombreGenero" >{{genero.nombreGenero}}</option>
+            </select>
 
           <label for="nickname"> NickName:</label>
           <input class="form-control" type="text" name="nickname" id="nickname" [(ngModel)]="form.nickname" required
@@ -82,14 +75,13 @@
           <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off"
             id="instrumento" list="dinamicInstrumento" />
           <datalist id="dinamicInstrumento">
-            <option *ngFor="let instrumento of respuesta" [value]="instrumento">{{instrumento}}</option>
+            <option *ngFor="let instrumento of respuesta" selected="guardarEnLista(instrumento.nombreInstrumento)" [value]="instrumento">{{instrumento}}</option>
           </datalist>
           <table>
             <thead>
               <tr>
                 <th scope="col">Instrumento</th>
                 <th scope="col">Acción</th>
-
               </tr>
             </thead>
             <tbody>
@@ -97,16 +89,15 @@
                 <td>{{seleccionado}}</td>
                 <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25"
                   (click)="borrarLinea($event)" />
-
               </tr>
-
             </tbody>
-
           </table>
 
-          <label for="zona"> Género Musical:</label>
-          <select class="form-control" name="generoMusical" [(ngModel)]="form.zona" (blur)="habilitarONoFormulario()">
-            <option *ngFor="let generoMusical of generosMusicales" [ngValue]="generoMusical">{{generoMusical.nombre}}</option>
+          <label for="generoMusical"> Género Musical:</label>
+          <select class="form-control" name="generoMusical" [(ngModel)]="form.generoMusical"
+            (blur)="habilitarONoFormulario()">
+            <option *ngFor="let generoMusical of generosMusicales" [ngValue]="generoMusical.id">{{generoMusical.nombre}}
+            </option>
           </select>
 
           <label for="zona"> Zona de Trabajo:</label>
@@ -127,13 +118,13 @@
           <label for="genero">Direccion:</label>
           <input class="form-control" type="text" name="direccion" id="direccion" [(ngModel)]="form.direccion" required
             autocomplete="off" (blur)="habilitarONoFormulario()">
+
         </div>
       </div>
     </div>
 
     <div class="form-group">
-
-      <button type="submit" class="btn btn-success" [disabled]="!formularioValido"> Registrar Usuario</button>
+      <button type="button" class="btn btn-success" (click)="guardarUsuario()" [disabled]="!formularioValido"> Registrar Usuario</button>
     </div>
 
   </form>

@@ -36,6 +36,7 @@ public class UsuarioServicio {
     @Autowired ComercioServicio comercioServicio;
     @Autowired ComercioServicio artistaServicio;
     @Autowired InstrumentoServicio instrumentoServicio;
+    @Autowired GeneroMusicalServicio generoMusicalServicio;
     @Autowired ConfiguradorSingleton configuradorSingleton;
     @Autowired BiografiaServicio biografiaServicio;
     public boolean validarCredenciales(Usuario usuarioFrontend){
@@ -111,6 +112,13 @@ public class UsuarioServicio {
             }
 
             artista.setInstrumento(setInstrumento);
+
+            GeneroMusical generoMusical =
+                    this.generoMusicalServicio.obtenerPorId(
+                            Long.parseLong(formulario.get("generoMusical").getAsString()));
+
+            artista.setGeneroMusical(generoMusical);
+
             artista.setUsuario(usuarioFrontEnd);
             Biografia biografia = new Biografia();
             biografia.setArtista(artista);

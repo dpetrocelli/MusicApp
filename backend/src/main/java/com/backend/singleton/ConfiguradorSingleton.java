@@ -150,7 +150,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             artista.setApellido("apellido");
             artista.setFechaNacimiento(new Date());
 
-            GeneroMusical generoMusical = this.generoMusicalServicio.obtenerPorId(Long.valueOf(1)).get();
+            GeneroMusical generoMusical = this.generoMusicalServicio.obtenerPorId(Long.valueOf(1));
             artista.setGeneroMusical(generoMusical);
 
             Zona zona = this.zonaGeograficaServicio.obtenerPorId(Long.valueOf(1)).get();

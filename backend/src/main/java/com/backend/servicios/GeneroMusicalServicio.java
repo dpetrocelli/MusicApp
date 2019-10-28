@@ -21,8 +21,8 @@ public class GeneroMusicalServicio {
         return generosMusicales;
     }
 
-    public Optional<GeneroMusical> obtenerPorId(Long id){
-        return generoMusicalRepositorio.findById(id);
+    public GeneroMusical obtenerPorId(Long id){
+        return generoMusicalRepositorio.findById(id).get();
     }
 
     public void guardar(GeneroMusical generoMusical){
