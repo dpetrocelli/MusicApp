@@ -22,8 +22,12 @@ public interface PostRepositorio extends JpaRepository<Post, Long> {
     Optional<Post> findById (Long id);
     List<Post> findTop10ByOrderByFechaCreacionDesc();
 
-    @Query("SELECT p FROM Post p WHERE p.informacion like %:informacion%")
+    @Query("SELECT p FROM Post p WHERE p.informacion like %:informacion% or p.username like %:informacion%")
     List<Post> FindAllLike(@Param("informacion") String informacion);
+
+    @Query("SELECT p FROM Post p WHERE p.informacion like %:informacion% or p.username like %:username%")
+    List<Post> FindAllLike2(@Param("informacion") String informacion, @Param("username") String username);
+
 
 
 

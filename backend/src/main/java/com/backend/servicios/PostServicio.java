@@ -77,8 +77,14 @@ public class PostServicio {
     }
 
     public List<Post> buscarLike(String busqueda) {
+        List<Post> test = null;
+        if (this.usuarioServicio.existeUsuarioPorNombre(busqueda)){
+            Usuario usuario = this.usuarioServicio.obtenerPorNombre(busqueda);
+            test = this.postRepositorio.FindAllLike2(busqueda, usuario.getUsername());
+        }else{
+            test = this.postRepositorio.FindAllLike(busqueda);
+        }
 
-        List<Post> test = this.postRepositorio.FindAllLike(busqueda);
         return test;
     }
 
