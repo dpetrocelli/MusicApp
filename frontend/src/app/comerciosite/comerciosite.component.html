@@ -1,3 +1,4 @@
+<!-- Esto lo ve el artista cuando quiere filtrar "las salas de ensayo" -->
 <div name="filtros" id="filtros">
     <label for="buscar"> Texto Libre </label>
     <input type="text" name="buscar" id="buscar">
@@ -15,10 +16,10 @@
 
 <button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
  
-<section id="comercioContainer" class="col-12">
-   <div *ngIf="hayComercios" >
+<section id="lugaresContainer" class="col-12">
+   <div *ngIf="hayLugares" >
     <span></span>
-    <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
+    <div class="post row d-flex justify-content-center" *ngFor="let lugar of lugares">
       <div class="info col-12"> Comercio: {{comercio.username}}</div>
       <div class="info col-12"> Promociones: {{post.nickname}}</div>
       

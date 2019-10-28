@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lugar } from '../modelos/lugar';
 import { environment } from '../../environments/environment';
+import { LoginDatos } from '../modelos/logindatos';
 
 const cabecera = {headers: new HttpHeaders({'Content-TYpe': 'application/json'})};
 
@@ -33,5 +34,15 @@ export class LugarService {
 
   public borrar(id: number): Observable<any> {
     return this.httpClient.delete<any>(this.baseURL + `borrar/${id}`, cabecera);
+  }
+
+  public buscar (login : LoginDatos, textolibre: string, zona: string): Observable<any> {
+    
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('busqueda', String (textolibre) );
+    formdata.append('zona', String (zona) );
+    
+    return this.httpClient.post<any>(this.baseURL+"/buscar", formdata);
   }
 }
