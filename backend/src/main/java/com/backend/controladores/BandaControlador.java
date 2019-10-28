@@ -189,4 +189,37 @@ public class BandaControlador {
         }
 
     }
+
+
+    @PostMapping("eliminarArtistaDeBanda")
+    public ResponseEntity<?> eliminarArtistaDeBanda (@RequestParam("login") String login, @RequestParam("banda") String banda, @RequestParam("artista") String artista) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Banda b = new Gson().fromJson(banda, Banda.class);
+            Artista a = new Gson().fromJson(artista, Artista.class);
+
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                if (a == null) {
+                    Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                    a = this.artistaServicio.obtenerPorUsuario(u);
+                }
+
+               a.removeBanda();
+                this.artistaServicio.guardar(a);
+
+
+                return new ResponseEntity<String>(" ELIMINADO ", HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 }

@@ -47,6 +47,15 @@ public obtenerArtistasDeBanda (ld : LoginDatos, artista: Artista) : Observable <
     return this.httpClient.post<any>(this.baseURL + 'soyDuenioBanda', formdata);
     
 }
+
+public eliminarArtistaDeBanda (ld : LoginDatos, banda: Banda, artista: Artista) : Observable <any> {
+  var formdata: FormData = new FormData();
+  formdata.append('login', JSON.stringify(ld));
+  formdata.append('banda', JSON.stringify(banda) );
+  formdata.append('artista', JSON.stringify(artista) );
+  return this.httpClient.post<any>(this.baseURL + 'eliminarArtistaDeBanda', formdata);
+  
+}
   
   
   

@@ -15,11 +15,15 @@
   <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva else elseBlock"> 
     
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
-    <span> Género Musical: {{detalleDeLaBanda.generoMusical}}</span>
+    <span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>
     <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}</span>
     Artistas Integrantes:
     <div *ngFor="let integrante of listaDeArtistasEnBanda"> 
-      <span> {{integrante.nombre}}</span>
+      <span> {{integrante.nombre}}
+
+          <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25"
+          (click)="borrarIntegranteBanda(detalleDeLaBanda, integrante)" />
+      </span>
     </div>
     
     <p></p>

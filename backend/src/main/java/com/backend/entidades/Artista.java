@@ -172,7 +172,7 @@ public class Artista implements Serializable {
         this.zona = zona;
     }
 
-    public void removeBanda (Banda banda){
-        this.banda.remove(banda);
+    public void removeBanda (){
+        this.banda = null;
     }
 }

@@ -9,6 +9,8 @@ import { Usuario } from '../../modelos/usuario';
 import { Artista } from '../../modelos/artista';
 import { BandaService } from 'src/app/servicios/banda.service';
 import { Banda } from 'src/app/modelos/banda';
+import Swal from 'sweetalert2';
+import { NotificacionService } from 'src/app/servicios/notificacion.service';
 
 @Component({
   selector: 'app-info-perfil',
@@ -31,6 +33,7 @@ export class InfoPerfilComponent implements OnInit {
   @HostBinding('class')
   @Input() biografiaComponent: InfoPerfilComponent;
   constructor(private usuarioService: UsuarioService,
+            private notificacionService : NotificacionService,
               private bandaService: BandaService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -55,6 +58,34 @@ export class InfoPerfilComponent implements OnInit {
               
             
   }
+
+  async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista){
+    let header = "Estás seguro de eliminar a: ";
+    header+= integrante.usuario.username;
+    Swal.fire({
+      title: header ,
+      text: "No podrás revertir esto",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si quiero!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((result) => {
+      if (result.value) {
+        this.bandaService.eliminarArtistaDeBanda(this.userLogged, detalleDeLaBanda, integrante).toPromise();
+        
+        this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Te he eliminado de mi banda", integrante, "msg").toPromise();
+        Swal.fire(
+          'Eliminado corretamente!',
+          '',
+          'success'
+        )
+        this.obtenerDatosUsuario();
+      }
+    })
+  }
+
 
   async obtenerDatosUsuario(){
     this.artista = await this.usuarioService.obtenerDatosUsuario (this.userLogged).toPromise();
