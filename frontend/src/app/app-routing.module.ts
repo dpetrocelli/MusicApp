@@ -32,6 +32,7 @@ import { EditarGeneroMusicalComponent } from './generosMusicales/editar-genero-m
 import { ListaZonaComponent } from './zonas/lista-zona.component';
 import { NuevaZonaComponent } from './zonas/nueva-zona.component';
 import { EditarZonaComponent } from './zonas/editar-zona.component';
+import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
 
 
 
@@ -67,6 +68,7 @@ const routes: Routes = [
    {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+   {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
 
   // Opciones de Admin
     // DATOS MarketPlace

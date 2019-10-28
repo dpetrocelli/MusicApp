@@ -72,6 +72,11 @@
           <a class="nav-link" routerLink="promociones">Promociones</a>
         </li>
       </div>
+      <div *ngIf="isComercio">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="comercioSite"> Sitio Comercio </a>
+        </li>
+      </div>
       <div *ngIf="isComercio && !isComercioVinculadoMP">
         <li class="nav-item">
           <a class="nav-link" routerLink="activarComercio">Activar comercio</a>

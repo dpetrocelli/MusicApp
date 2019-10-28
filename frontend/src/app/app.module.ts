@@ -38,6 +38,8 @@ import { ImgSliderComponent } from './miactividad/post/imgSlider/imgSlider.compo
 import { YoutubePopupComponent } from './miactividad/post/youtubePopup/youtubePopup.component';
 
 import { HomesiteComponent } from './homesite/homesite.component';
+import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
+
 import { RedSocialComponent } from './redsocial/redsocial.component';
 import {ImagenPerfilRedsocialComponent} from './redsocial/imagen-perfil-redsocial/imagen-perfil-redsocial.component';
 import {InfoPerfilRedsocialComponent} from './redsocial/info-perfil-redsocial/info-perfil-redsocial.component';
@@ -76,6 +78,7 @@ import { EditarZonaComponent } from './zonas/editar-zona.component';
       EditarpromocionComponent,
       AccesodenegadoComponent,
       HomesiteComponent,
+      ComercioSiteComponent,
       NuevoPostComponent,
       EditarPostComponent,
       PerfilComponent,

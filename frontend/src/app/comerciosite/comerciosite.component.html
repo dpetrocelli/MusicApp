@@ -1,0 +1,32 @@
+<div name="filtros" id="filtros">
+    <label for="buscar"> Texto Libre </label>
+    <input type="text" name="buscar" id="buscar">
+    
+  
+  <label for="zona">Zona Geográfica</label>
+  <select class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" id="zona">
+    <option value=""></option>
+    <option *ngFor="let zona of zonas" value= {{zona.id}}>
+      {{zona.nombreZona}}
+    </option>
+  </select>
+
+</div>
+
+<button class="btn btn-success btn-lg" (click)="buscar()">Buscar en la Red </button>
+ 
+<section id="comercioContainer" class="col-12">
+   <div *ngIf="hayComercios" >
+    <span></span>
+    <div class="post row d-flex justify-content-center" *ngFor="let post of posts">
+      <div class="info col-12"> Comercio: {{comercio.username}}</div>
+      <div class="info col-12"> Promociones: {{post.nickname}}</div>
+      
+    </div>
+  
+  </div>
+
+  
+
+</section>
+

@@ -3,6 +3,7 @@ package com.backend.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "comercio")
@@ -30,6 +31,9 @@ public class Comercio {
     private String direccion;
 
     private String razonsocial;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugares")
+    private List<Lugar> lugares;
     
     public Comercio() {
     }

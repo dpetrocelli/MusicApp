@@ -1,0 +1,29 @@
+<div class="container" *ngIf="form.nombreInstrumento && !fallaInit">
+  <h5>Actualizar Instrumento</h5>
+  <form (ngSubmit)="onUpdate()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="nombreInstrumento">Nombre:</label>
+      <input class="form-control" type="text" name="nombreInstrumento" id="nombreInstrumento"
+        [(ngModel)]="form.nombreInstrumento" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="tipoInstrumento">Tipo:</label>
+      <input class="form-control" type="text" name="tipoInstrumento" id="tipoInstrumento"
+        [(ngModel)]="form.tipoInstrumento" required autocomplete="off">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success" [disabled]="!f.valid">Actualizar</button>
+    </div>
+  </form>
+  <div>
+    <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>
+  </div>
+  <br>
+  <br>
+  <div *ngIf="falloActualizacion" class="float-left">
+    <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
+  </div>
+  <div *ngIf="actualizado" class="float-left">
+    <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
+  </div>
+</div>
