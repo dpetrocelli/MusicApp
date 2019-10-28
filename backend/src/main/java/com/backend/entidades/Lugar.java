@@ -23,6 +23,10 @@ public class Lugar implements Serializable {
     @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
     private Zona zona;
 
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_comercio", nullable = false, updatable = false)
+    private Comercio comercio;
+
     public Lugar() {
 
     }
@@ -81,5 +85,13 @@ public class Lugar implements Serializable {
 
     public void setZona(Zona zona) {
         this.zona = zona;
+    }
+
+    public Comercio getComercio() {
+        return comercio;
+    }
+
+    public void setComercio(Comercio comercio) {
+        this.comercio = comercio;
     }
 }

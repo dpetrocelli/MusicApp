@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface LugarRepositorio extends JpaRepository<Lugar, Long>, JpaSpecificationExecutor<Lugar> {
-    Optional<Lugar> findByNombreLugar(String ni);
-    boolean existsByNombreLugar(String ni);
+    Optional<Lugar> findByNombre(String ni);
+    boolean existsByNombre(String ni);
 }

@@ -32,9 +32,9 @@ public class Comercio {
 
     private String razonsocial;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugares")
+   /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugar")
     private List<Lugar> lugares;
-    
+    */
     public Comercio() {
     }
 

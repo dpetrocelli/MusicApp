@@ -37,7 +37,7 @@ public class LugarServicio {
     }
 
     public Optional<Lugar> obtenerPorNombre(String ni) {
-        return LugarRepositorio.findByNombreLugar(ni);
+        return LugarRepositorio.findByNombre(ni);
     }
 
     public void guardar(Lugar Lugar) {
@@ -49,7 +49,7 @@ public class LugarServicio {
     }
 
     public boolean existePorNombre(String ni) {
-        return LugarRepositorio.existsByNombreLugar(ni);
+        return LugarRepositorio.existsByNombre(ni);
     }
 
     public boolean existePorId(Long id) {
