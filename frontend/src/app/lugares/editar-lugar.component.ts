@@ -23,8 +23,8 @@ export class EditarLugarComponent implements OnInit {
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
     this.lugarService.detalle(id).subscribe(data => {
-        this.form.nombreLugar = data.nombreLugar;
-        this.form.tipoLugar = data.tipoLugar;
+//        this.form.nombreLugar = data.nombre;
+//        this.form.tipoLugar = data.tipoLugar;
       },
       (err: any) => {
         this.fallaInit = true;
