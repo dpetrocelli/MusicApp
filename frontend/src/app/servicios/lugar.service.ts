@@ -43,6 +43,6 @@ export class LugarService {
     formdata.append('busqueda', String (textolibre) );
     formdata.append('zona', String (zona) );
     
-    return this.httpClient.post<any>(this.baseURL+"/buscar", formdata);
+    return this.httpClient.post<any>(this.baseURL+"/buscarLike", formdata);
   }
 }

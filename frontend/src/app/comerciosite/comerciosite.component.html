@@ -20,8 +20,13 @@
    <div *ngIf="hayLugares" >
     <span></span>
     <div class="post row d-flex justify-content-center" *ngFor="let lugar of lugares">
-      <div class="info col-12"> Comercio: {{comercio.username}}</div>
-      <div class="info col-12"> Promociones: {{post.nickname}}</div>
+      <div class="info col-12"> Nombre: {{lugar.nombre}}</div>
+      <div class="info col-12"> Foto: {{lugar.foto}}</div>
+      <div class="info col-12"> Descripcion: {{lugar.descripcion}}</div>
+      <div class="info col-12"> Telefono: {{lugar.telefono}}</div>
+      <div class="info col-12"> direccion: {{lugar.direccion}}</div>
+      <div class="info col-12"> Zona: {{lugar.zona.nombreZona}}</div>
+     
       
     </div>
   

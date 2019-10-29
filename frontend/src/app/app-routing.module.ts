@@ -52,7 +52,7 @@ const routes: Routes = [
    {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   
+   {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    
       // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
@@ -68,7 +68,7 @@ const routes: Routes = [
    {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
-   {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+   
 
   // Opciones de Admin
     // DATOS MarketPlace
