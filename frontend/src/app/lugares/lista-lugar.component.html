@@ -15,12 +15,17 @@
     <tbody>
       <tr *ngFor="let lugar of lugares">
         <td>{{lugar.id}}</td>
-        <td>{{lugar.nombrelugar}}</td>
-        <td>{{lugar.tipolugar}}</td>
+        <td>{{lugar.nombre}}</td>
+        <td>{{lugar.foto}}</td>
+        <td>{{lugar.descripcion}}</td>
+        <td>{{lugar.telefono}}</td>
+        <td>{{lugar.direccion}}</td>
+        <td>{{lugar.zona.nombreZona}}</td>
+
         <td><button class="btn btn-warning" routerLink="/lugar/editar/{{lugar.id}}">Editar</button></td>
         <td><button class="btn btn-danger" (click)="onDelete(lugar.id)">Borrar</button></td>
       </tr>
     </tbody>
   </table>
-  <div><button class="btn btn-success btn-lg" routerLink="/lugar/nuevo">Nuevo lugar</button></div>
+  <div><button class="btn btn-success btn-lg" routerLink="/lugares/nuevo">Nuevo lugar</button></div>
 </div>

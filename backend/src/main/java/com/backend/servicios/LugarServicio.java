@@ -1,6 +1,7 @@
 package com.backend.servicios;
 
 import com.backend.entidades.*;
+import com.backend.recursos.LoginDatos;
 import com.backend.repositorios.LugarRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,6 +27,11 @@ public class LugarServicio {
     ZonaGeograficaServicio zonaServicio;
     @Autowired
     LugarRepositorio lugarRepositorio;
+    @Autowired
+    UsuarioServicio usuarioServicio;
+    @Autowired
+    ComercioServicio comercioServicio;
+
 
     public List<Lugar> obtenerTodos() {
         List<Lugar> lista = LugarRepositorio.findAll();
@@ -103,4 +109,9 @@ public class LugarServicio {
         });
     }
 
+    public List<Lugar> obtenerTodosMisLugares(Comercio comercio) {
+
+        List<Lugar> lista = LugarRepositorio.findAllByComercio(comercio);
+        return lista;
+    }
 }

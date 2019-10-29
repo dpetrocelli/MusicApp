@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Lugar } from '../modelos/lugar';
 import { LugarService } from '../servicios/lugar.service';
+import { UsuarioService } from '../servicios/usuario.service';
+import { LoginDatos } from '../modelos/logindatos';
 
 @Component({
   selector: 'app-lista-lugar',
@@ -13,15 +15,18 @@ import { LugarService } from '../servicios/lugar.service';
 export class ListaLugarComponent implements OnInit {
 
   lugares: Lugar[] = [];
-
-  constructor(private lugarService: LugarService, private router: Router) { }
+  userLogged: LoginDatos;
+  constructor(private lugarService: LugarService, private router: Router, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
+    
+    this.userLogged = this.usuarioService.getUserLoggedIn();
     this.cargarLugares();
   }
 
   cargarLugares(): void {
-    this.lugarService.lista().subscribe(data => {
+    this.lugarService.listarLosMios(this.userLogged).subscribe(data => {
+    //this.lugarService.lista().subscribe(data => {
       this.lugares = data;
     },
       (err: any) => {

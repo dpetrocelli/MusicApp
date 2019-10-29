@@ -20,11 +20,11 @@ public class Lugar implements Serializable {
     private String direccion;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_zona")
     private Zona zona;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_comercio", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_comercio")
     private Comercio comercio;
 
     public Lugar() {

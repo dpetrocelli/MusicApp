@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {InstrumentoService} from '../servicios/instrumento.service';
+import {LugarService} from '../servicios/lugar.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-editar-instrumento',
-  templateUrl: './editar-instrumento.component.html',
-  styleUrls: ['./editar-instrumento.component.css']
+  selector: 'app-editar-lugar',
+  templateUrl: './editar-lugar.component.html',
+  styleUrls: ['./editar-lugar.component.css']
 })
-export class EditarInstrumentoComponent implements OnInit {
+export class EditarLugarComponent implements OnInit {
   form: any = {};
   actualizado = false;
   falloActualizacion = false;
@@ -16,15 +16,15 @@ export class EditarInstrumentoComponent implements OnInit {
 
   fallaInit = false;
 
-  constructor(private instrumentoService: InstrumentoService,
+  constructor(private lugarService: LugarService,
               private activatedRoute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params.id;
-    this.instrumentoService.detalle(id).subscribe(data => {
-        this.form.nombreInstrumento = data.nombreInstrumento;
-        this.form.tipoInstrumento = data.tipoInstrumento;
+    this.lugarService.detalle(id).subscribe(data => {
+        this.form.nombreLugar = data.nombreLugar;
+        this.form.tipoLugar = data.tipoLugar;
       },
       (err: any) => {
         this.fallaInit = true;
@@ -35,7 +35,7 @@ export class EditarInstrumentoComponent implements OnInit {
 
   onUpdate(): void {
     const id = this.activatedRoute.snapshot.params.id;
-    this.instrumentoService.editar(this.form, id).subscribe(data => {
+    this.lugarService.editar(this.form, id).subscribe(data => {
         this.actualizado = true;
         this.falloActualizacion = false;
         this.msjOK = data.mensaje;

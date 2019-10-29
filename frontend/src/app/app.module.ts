@@ -54,6 +54,9 @@ import { EditarGeneroMusicalComponent } from './generosMusicales/editar-genero-m
 import { ListaZonaComponent } from './zonas/lista-zona.component';
 import { NuevaZonaComponent } from './zonas/nueva-zona.component';
 import { EditarZonaComponent } from './zonas/editar-zona.component';
+import { ListaLugarComponent } from './lugares/lista-lugar.component';
+import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
+import { EditarLugarComponent } from './lugares/editar-lugar.component';
 
 
 
@@ -84,12 +87,14 @@ import { EditarZonaComponent } from './zonas/editar-zona.component';
       PerfilComponent,
       PostComponent,
       ImagenPerfilComponent,
+      ListaLugarComponent,
       InfoPerfilComponent,
       PuntuacionComponent,
       ImgSliderComponent,
       YoutubePopupComponent,
       ComprarPromocionesComponent,
       CrearPuntuacionComponent,
+      EditarLugarComponent,
       PuntuacionRedsocialComponent,
       PostRedsocialComponent,
       InfoPerfilRedsocialComponent,
@@ -102,6 +107,7 @@ import { EditarZonaComponent } from './zonas/editar-zona.component';
       NuevoGeneroMusicalComponent,
       EditarGeneroMusicalComponent,
       ListaZonaComponent,
+      NuevoLugarComponent,
       NuevaZonaComponent,
       EditarZonaComponent,
       

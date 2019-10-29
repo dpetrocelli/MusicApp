@@ -1,26 +1,57 @@
 <div class="container">
-  <h5>Nuevo Instrumento</h5>
+  <h5>Nuevo Lugar del Comercio</h5>
   <form (ngSubmit)="onCreate()" #f="ngForm" novalidate>
     <div class="form-group">
-      <label for="nombreInstrumento">Nombre: </label>
+      <label for="nombre">Nombre: </label>
       <input type="text"
              class="form-control"
-             name="nombreInstrumento"
-             id="nombreInstrumento"
-             [(ngModel)]="form.nombreInstrumento"
+             name="nombre"
+             id="nombre"
+             [(ngModel)]="form.nombre"
              required
              autocomplete="off">
     </div>
     <div class="form-group">
-      <label for="tipoInstrumento">Tipo: </label>
+      <label for="descripcion">Descripcion: </label>
       <input type="text"
              class="form-control"
-             name="tipoInstrumento"
-             id="tipoInstrumento"
-             [(ngModel)]="form.tipoInstrumento"
+             name="descripcion"
+             id="descripcion"
+             [(ngModel)]="form.descripcion"
              required
              autocomplete="off">
     </div>
+
+    <div class="form-group">
+      <label for="telefono">Telefono: </label>
+      <input type="text"
+             class="form-control"
+             name="telefono"
+             id="telefono"
+             [(ngModel)]="form.telefono"
+             required
+             autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección: </label>
+      <input type="text"
+             class="form-control"
+             name="direccion"
+             id="direccion"
+             [(ngModel)]="form.direccion"
+             required
+             autocomplete="off">
+    </div>
+
+    <label for="zona">Zona Geográfica</label>
+    <select  [(ngModel)]="form.zona" class="col-md-1 custom-select d-inline-block mr-2" data-live-search="true" name="zona" id="zona">
+      <option value=""></option>
+      <option *ngFor="let zona of zonas" value= {{zona.id}}>
+        {{zona.nombreZona}}
+      </option>
+    </select>
+
     <div class="form-group">
       <button type="submit" class="btn btn-success" [disabled]="!f.valid">Crear</button>
     </div>

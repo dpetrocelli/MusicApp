@@ -33,6 +33,8 @@ import { ListaZonaComponent } from './zonas/lista-zona.component';
 import { NuevaZonaComponent } from './zonas/nueva-zona.component';
 import { EditarZonaComponent } from './zonas/editar-zona.component';
 import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
+import { ListaLugarComponent } from './lugares/lista-lugar.component';
+import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 
 
 
@@ -61,12 +63,19 @@ const routes: Routes = [
    {path: 'puntuacion/nuevo/:usuario', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'usuario/editar/:id', component: EditarUsuarioComponent},
-
+   
     // Opciones de Comercio
     // Promociones/
+   {path: 'lugares', component: ListaLugarComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+   {path: 'lugares/nuevo', component: NuevoLugarComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+
    {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+   
+   
+   
+   
    {path: 'activarComercio', component: ActivarComercioComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    
 

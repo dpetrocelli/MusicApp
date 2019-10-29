@@ -78,6 +78,12 @@
           <a class="nav-link" routerLink="promociones">Promociones</a>
         </li>
       </div>
+
+      <div *ngIf="isComercio">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="lugares">Info Comercio</a>
+        </li>
+      </div>
       
       <div *ngIf="isComercio && !isComercioVinculadoMP">
         <li class="nav-item">

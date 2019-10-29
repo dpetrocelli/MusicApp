@@ -20,12 +20,20 @@ export class LugarService {
     return this.httpClient.get<Lugar[]>(this.baseURL + 'listar', cabecera);
   }
 
+  public listarLosMios(login : LoginDatos): Observable<Lugar[]> {
+    return this.httpClient.get<Lugar[]>(this.baseURL + `listarLosMios/${login.idUsuario}`, cabecera);
+  }
+  
   public detalle(id: number): Observable<Lugar> {
     return this.httpClient.get<Lugar>(this.baseURL + `detalle/${id}`, cabecera);
   }
 
-  public crear(Lugar: Lugar): Observable<any> {
-    return this.httpClient.post<any>(this.baseURL + 'nuevo', Lugar, cabecera);
+  public crear(login : LoginDatos, Lugar: Lugar): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('lugar', JSON.stringify (Lugar) );
+    
+    return this.httpClient.post<any>(this.baseURL + 'nuevo', formdata);
   }
 
   public editar(Lugar: Lugar, id: number): Observable<any> {
@@ -36,7 +44,7 @@ export class LugarService {
     return this.httpClient.delete<any>(this.baseURL + `borrar/${id}`, cabecera);
   }
 
-  public buscar (login : LoginDatos, textolibre: string, zona: string): Observable<any> {
+  public buscar (login : LoginDatos, zona: string, textolibre: string): Observable<any> {
     
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));

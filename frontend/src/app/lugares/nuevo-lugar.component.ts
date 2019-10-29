@@ -1,27 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import {Instrumento} from '../modelos/instrumento';
-import {InstrumentoService} from '../servicios/instrumento.service';
+import {Lugar} from '../modelos/lugar';
+import {LugarService} from '../servicios/lugar.service';
+import { ZonaService } from '../servicios/zona.service';
+import { Zona } from '../modelos/zona';
+import { LoginDatos } from '../modelos/logindatos';
+import { UsuarioService } from '../servicios/usuario.service';
 
 @Component({
-  selector: 'app-nuevo-instrumento',
-  templateUrl: './nuevo-instrumento.component.html',
-  styleUrls: ['./nuevo-instrumento.component.css']
+  selector: 'app-nuevo-lugar',
+  templateUrl: './nuevo-lugar.component.html',
+  styleUrls: ['./nuevo-lugar.component.css']
 })
-export class NuevoInstrumentoComponent implements OnInit {
+export class NuevoLugarComponent implements OnInit {
   form: any = {};
-  instrumento: Instrumento;
+  userLogged: LoginDatos;
+  lugar: Lugar;
   creado = false;
   falloCreacion = false;
   msjFallo = '';
   msjOK = '';
+  zonas: Zona[];
 
-  constructor(private instrumentoService: InstrumentoService) { }
+  constructor(private lugarService: LugarService, private zonaService : ZonaService, private usuarioService: UsuarioService) { }
 
   ngOnInit() {
+   this.loadZonas();
+   this.userLogged = this.usuarioService.getUserLoggedIn();
+  }
+
+  async loadZonas(){
+    this.zonas = await this.zonaService.lista().toPromise();
   }
 
   onCreate(): void {
-    this.instrumentoService.crear(this.form).subscribe(data => {
+    this.lugar = new Lugar;
+    this.lugar = this.form;
+    this.zonas.forEach(zonita => {
+      if (zonita.id==this.form.zona){
+        this.lugar.zona=zonita;
+      }
+    });
+    
+    this.lugar.foto = "nada";
+    console.log (" VOY A GUARDAR EL OBJ ", this.lugar);
+    
+    this.lugarService.crear(this.userLogged, this.lugar).subscribe(data => {
         this.msjOK = data.mensaje;
         this.creado = true;
         this.falloCreacion = false;
