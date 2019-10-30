@@ -4,36 +4,36 @@
         <div class="form-group">
 
             <div class="form-group">
-                <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
+                <label id="lbl_usuario"> Usuario: {{username}}</label>
             </div>
             <div class="form-group">
-                <span id="email"> Email: {{artista.usuario.email}}</span>
+                <label id="lbl_email"> Email: {{email}}</label>
             </div>
 
             <div class="form-group">
-                <label for="nombre"> Nombre: </label><input #nombre class="form-control" type="text" name="nombre" id="nombre" [(ngModel)]="form.nombre" value="{{artista.nombre}}"
+                <label for="tx_nombre"> Nombre: </label><input class="form-control" type="text" id="tx_nombre"
+                    [(ngModel)]="frm_nombre" name="frm_nombre" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="tx_apellido"> Apellido: </label>
+                <input class="form-control" type="text" id="tx_apellido" [(ngModel)]="frm_apellido" name="frm_apellido"
                     required autocomplete="off">
             </div>
 
             <div class="form-group">
-                <label for="apellido"> Apellido: </label>
-                <input class="form-control" type="text" name="apellido" id="apellido" [(ngModel)]="form.apellido" value="{{artista.apellido}}"
-                    required autocomplete="off">
-            </div>
-
-            <div class="form-group">
-                <label for="nickname"> NickName: </label>
-                <input class="form-control" type="text" name="nickname" id="nickname" [(ngModel)]="form.nickname" value="{{artista.nickname}}"
+                <label for="tx_nickname"> NickName: </label>
+                <input class="form-control" type="text" id="tx_nickname" [(ngModel)]="frm_nickname" name="frm_nickname"
                     required autocomplete="off">
             </div>
 
             <div class="form-group">
                 <!-- USING HTML 5 DATALIST-->
-                <label for="instrumento"> Instrumento que toca: </label>
-                <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off" value="{{artista.instrumento[0].nombreInstrumento}}"
-                    id="instrumento" list="dinamicInstrumento" />
+                <label for="dl_instrumento"> Instrumento que toca: </label>
+                <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off"
+                    name="dl_instrumento" id="dl_instrumento" list="dinamicInstrumento" />
                 <datalist id="dinamicInstrumento">
-                    <option *ngFor="let instrumento of respuesta" [value]="instrumento" >{{instrumento}}</option>
+                    <option *ngFor="let instrumento of respuesta" [value]="instrumento">{{instrumento}}</option>
                 </datalist>
                 <table>
                     <thead>
@@ -55,18 +55,18 @@
 
             <div class="form-group">
                 <label for="documento"> Nro Documento: </label>
-                <input class="form-control" type="number" name="documento" id="documento" [(ngModel)]="form.documento" value="{{artista.documentoIdentidad}}"
-                    required autocomplete="off" (blur)="validarDNI()" min="0" oninput="validity.valid||(value='');"
-                    autocomplete="off">
+                <input class="form-control" type="number" id="nu_documento" [(ngModel)]="frm_documento"
+                    name="frm_documento" required autocomplete="off" (blur)="validarDNI()" min="0"
+                    oninput="validity.valid||(value='');" autocomplete="off">
                 <div class="aler alert-danger" [hidden]="dniValido">
                     El dni debe tener de 8 números
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="fechanacimiento"> Fecha Nacimiento: </label>
-                <input type="date" class="form-control" name="fechanacimiento" id="fechanacimiento" value="{{artista.fechaNacimiento | date: 'yyyy-MM-dd'}}"
-                    [(ngModel)]="form.fechanacimiento" required autocomplete="off" (blur)="revisarFecha()">
+                <label for="fc_fechanacimiento"> Fecha Nacimiento: </label>
+                <input type="date" class="form-control" name="frm_fechanacimiento" id="fc_fechanacimiento"
+                    [(ngModel)]="frm_fechanacimiento" value="{{artista.fechaNacimiento | date: 'yyyy-MM-dd'}}" required autocomplete="off" (blur)="revisarFecha()">
                 <div class="aler alert-danger" [hidden]="fechaValida">
                     No es una fecha de nacimiento válida
                 </div>
@@ -74,15 +74,17 @@
 
             <div class="form-group">
                 <label for="genero"> Género: </label>
-                <select class="form-control" name="genero" [(ngModel)]="form.genero">
-                    <option *ngFor="let genero of generos" [ngValue]="genero" selected="{{artista.genero}}">{{genero.nombreGenero}}</option>
+                <select class="form-control" id="sl_genero" name="frm_genero" [(ngModel)]="frm_genero" [compareWith]="compararGenero">
+                    <option *ngFor="let itemGenero of generos" [ngValue]="itemGenero">
+                        {{itemGenero.nombreGenero}}</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="zona"> Zona de Trabajo: </label>
-                <select class="form-control" name="zona" [(ngModel)]="form.zona" (blur)="habilitarONoFormulario()">
-                    <option *ngFor="let zona of zonas" [ngValue]="zona" selected="{{artista.zona}}">{{zona.nombreZona}}</option>
+                <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona" [compareWith]="compararZona" (blur)="habilitarONoFormulario()">
+                    <option *ngFor="let itemZona of zonas" [ngValue]="itemZona">{{itemZona.nombreZona}}
+                    </option>
                 </select>
             </div>
 

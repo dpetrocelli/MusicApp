@@ -90,12 +90,13 @@ public class UsuarioServicio {
                 e.printStackTrace();
             }
 
+
             ArrayList<String> listaInstrumentos = new ArrayList<String>();
             Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
 
             try{
                 String[] splitter = instrumentos.split(Pattern.quote(","));
-                listaInstrumentos = (ArrayList<String>) Arrays.asList(splitter);
+                listaInstrumentos = new ArrayList<String>(Arrays.asList(splitter));
             }catch (Exception e){
                 listaInstrumentos.add(instrumentos);
             }

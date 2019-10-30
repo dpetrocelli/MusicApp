@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { LOCALE_ID, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { ZonaService } from '../servicios/zona.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { LoginDatos } from '../modelos/logindatos';
 import { Artista } from '../modelos/artista';
 import { Genero } from '../modelos/genero';
 import { GeneroService } from '../servicios/genero.service';
+import { Usuario } from '../modelos/usuario';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -18,8 +19,8 @@ import { GeneroService } from '../servicios/genero.service';
   styleUrls: ['./editar-usuario.component.css']
 })
 export class EditarUsuarioComponent implements OnInit {
-  @ViewChild('nombre', null) nombreInput: ElementRef; 
-  @ViewChild('instrumento', null) instrumentoInput: ElementRef; 
+  @ViewChild('nombre', null) nombreInput: ElementRef;
+  @ViewChild('instrumento', null) instrumentoInput: ElementRef;
   form: any = {};
   formCompleto: false;
   msjFallo = '';
@@ -30,30 +31,40 @@ export class EditarUsuarioComponent implements OnInit {
   isChecked = false;
   isArtista = false;
   isComercio = false;
-  listaInstrumento : Instrumento[]; 
-  zonas : Zona[];
+  listaInstrumento: Instrumento[];
+  zonas: Zona[];
   instrumentosSeleccionados = [];
-  respuesta : [];
-  generos : Genero[];
+  respuesta: [];
+  generos: Genero[];
   fechaValida = true;
   usuarioValido = true;
   formularioValido = false;
   dniValido = true;
   mailValido = true;
 
-  userLogged : LoginDatos;
-  artista : Artista;
+  userLogged: LoginDatos;
+  artista: Artista;
+  username: String;
+  email: String;
+
+  frm_nombre: String;
+  frm_apellido: String;
+  frm_nickname: String;
+  frm_documento: number;
+  frm_fechanacimiento: Date;
+  frm_genero: Genero;
+  frm_zona: Zona;
 
   fallaInit = false;
   isLoaded: boolean;
   datePipe: DatePipe;
 
   constructor(private usuarioService: UsuarioService,
-              private instrumentoService: InstrumentoService,
-              private zonaService: ZonaService,
-              private generoService: GeneroService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+    private instrumentoService: InstrumentoService,
+    private zonaService: ZonaService,
+    private generoService: GeneroService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -61,7 +72,9 @@ export class EditarUsuarioComponent implements OnInit {
     this.userLogged = this.usuarioService.getUserLoggedIn();
 
     this.obtenerDatosUsuario();
-    
+
+    this.datePipe = new DatePipe('en-US');
+
     // [STEP 0] - Voy a buscar al backend la lista de los instrumentos que tengo almacenados
     this.zonaService.lista().subscribe(data => {
       this.zonas = data;
@@ -85,19 +98,37 @@ export class EditarUsuarioComponent implements OnInit {
     this.generos = this.generoService.obtenerTodos();
   }
 
-  async obtenerDatosUsuario(){
-    this.artista = await this.usuarioService.obtenerDatosUsuario (this.userLogged).toPromise()
+  async obtenerDatosUsuario() {
+    this.artista = await this.usuarioService.obtenerDatosUsuario(this.userLogged).toPromise()
 
-    console.log (" ARTISTA logueado",this.artista.banda);
+    this.username = this.artista.usuario.username;
+    this.email = this.artista.usuario.email;
 
-    console.log (" ARTISTA CARGADO",this.artista);
+    this.frm_nombre = this.artista.nombre;
+    this.frm_apellido = this.artista.apellido;
+    this.frm_nickname = this.artista.nickname;
+    this.frm_documento = this.artista.documentoIdentidad;
 
-    console.log (" Esta es la zona", this.artista.zona);
+    if (this.artista.instrumento.length > 0) {
+      let instrumentoDeArtista: Instrumento;
+      for (let i = 0; i < this.artista.instrumento.length; i++) {
+        instrumentoDeArtista = this.artista.instrumento[i];
+        console.log(" agregue en la lista el instrumento: ", instrumentoDeArtista.nombreInstrumento)
+        this.guardarEnLista(instrumentoDeArtista.nombreInstrumento);
+      }
+    }
 
-    this.isLoaded = true;
+    this.frm_genero = this.generoService.obtenerPorNombre(this.artista.genero);
+    this.frm_zona = this.artista.zona;
 
-    this.guardarEnLista(this.artista.instrumento[0].nombreInstrumento);
+  }
 
+  compararGenero(optionOne: Genero, optionTwo: Genero): boolean {
+    return optionOne && optionTwo ? optionOne.nombreGenero === optionTwo.nombreGenero : optionOne === optionTwo;
+  }
+
+  compararZona(optionOne: Zona, optionTwo: Zona): boolean {
+    return optionOne && optionTwo ? optionOne.id === optionTwo.id : optionOne === optionTwo;
   }
 
   get fval() {
@@ -108,9 +139,9 @@ export class EditarUsuarioComponent implements OnInit {
   actualizarUsuario() {
     this.form.isArtista = this.isArtista;
     console.log(this.form);
-    
+
     this.submitted = true;
-    
+
     //this.usuarioService.registrar(this.form, this.isArtista, this.instrumentosSeleccionados).subscribe(data => {
     //  this.msjOK = data.msg ;
     //  this.actualizado = true;
@@ -136,144 +167,151 @@ export class EditarUsuarioComponent implements OnInit {
     //);
   }
 
-  verificarMail(){
+  verificarMail() {
     let email = this.form.email;
-    let pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-    
-    if (email.match(pattern)===null){
+    let pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+
+    if (email.match(pattern) === null) {
       this.mailValido = false;
-    }else{
+    } else {
       this.mailValido = true;
       this.habilitarONoFormulario();
     }
   }
 
-  validarDNI (){
+  validarDNI() {
     this.dniValido = true;
-    let dni : String = new String(this.form.documento);
-   
-    if (dni.length!=8){
+    let dni: String = new String(this.form.documento);
+
+    if (dni.length != 8) {
       this.formularioValido = false;
       this.dniValido = false;
-    }else{
+    } else {
       this.dniValido = true;
     }
   }
 
-  revisarNombreUsuario(){
-    this.usuarioValido=true;
-   
-      this.usuarioService.existeUsuario(this.form.username).subscribe(data => {
-        
-        let result = data;
-        if(result){
-          this.usuarioValido = false;
-          this.formularioValido = false;
-        }
-      },
-      );
-      this.habilitarONoFormulario();
-    }
+  revisarNombreUsuario() {
+    this.usuarioValido = true;
 
-  revisarFecha(){
-    this.fechaValida=true;
-    try{
+    this.usuarioService.existeUsuario(this.form.username).subscribe(data => {
+
+      let result = data;
+      if (result) {
+        this.usuarioValido = false;
+        this.formularioValido = false;
+      }
+    },
+    );
+    this.habilitarONoFormulario();
+  }
+
+  revisarFecha() {
+    this.fechaValida = true;
+    try {
       let currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
       let fechanac = formatDate(this.form.fechanacimiento, 'yyyy-MM-dd', 'en');
-       if(fechanac > currentDate ){
+      if (fechanac > currentDate) {
         this.fechaValida = false;
-       }
-    }catch{
+      }
+    } catch{
       this.fechaValida = false;
     }
     this.habilitarONoFormulario();
   }
 
-  habilitarONoFormulario (){
-    if (this.isArtista){
-      if (this.dniValido && this.mailValido && this.fechaValida && this.usuarioValido && this.fechaValida){
+  habilitarONoFormulario() {
+    if (this.isArtista) {
+      if (this.dniValido && this.mailValido && this.fechaValida && this.usuarioValido && this.fechaValida) {
         this.formularioValido = true;
       }
-    }else{
-      if (this.dniValido && this.mailValido){
+    } else {
+      if (this.dniValido && this.mailValido) {
         this.formularioValido = true;
       }
     }
   }
 
-  predictivo (evt){
-    
-      // [STEP 2] -> en la parte de -> texto.length > 2) voy a buscar para autocompletar
-      // [STEP 3] -> en la parte de -> key = 13 -> estoy tomando el enter para agregar a lista
-      document.getElementById("instrumento").focus()
-      try{
-       var texto = (<HTMLInputElement>document.getElementById('instrumento')).value;
-        // PARTE ENTER
-        if (evt.keyCode == 13){
-          //this.myInput.nativeElement.focus(); 
-          this.guardarEnLista(texto);
-        }else{
-          // PARTE DE AUTOCOMPLETAR
-            if (texto.length > 2){
-              this.respuesta = this.buscarTextoEnArray(texto);
-              console.log ("predictivo: ", this.respuesta);
-            }
+  predictivo(evt) {
+
+    // [STEP 2] -> en la parte de -> texto.length > 2) voy a buscar para autocompletar
+    // [STEP 3] -> en la parte de -> key = 13 -> estoy tomando el enter para agregar a lista
+    document.getElementById("instrumento").focus()
+    try {
+      var texto = (<HTMLInputElement>document.getElementById('instrumento')).value;
+      // PARTE ENTER
+      if (evt.keyCode == 13) {
+        //this.myInput.nativeElement.focus(); 
+        this.guardarEnLista(texto);
+      } else {
+        // PARTE DE AUTOCOMPLETAR
+        if (texto.length > 2) {
+          this.respuesta = this.buscarTextoEnArray(texto);
+          console.log("predictivo: ", this.respuesta);
         }
-        this.instrumentoInput.nativeElement.focus(); 
-      }catch {
-        // ERROR 
-        console.log (evt);
       }
+      this.instrumentoInput.nativeElement.focus();
+    } catch {
+      // ERROR 
+      console.log(evt);
+    }
   }
-    
-  guardarEnLista (texto : string){
+
+  guardarEnLista(texto: string) {
     var found = false;
     // Si el texto que pasé está permitido por lo que habia en la base de datos
     // -> lo marco como found
-    this.listaInstrumento.forEach(instrumento => {
-      if ((instrumento.nombreInstrumento.length == texto.length) && (instrumento.nombreInstrumento.includes(texto))){
-         found=true;
-      }
-    });
-    if (found){
-      var estaEnSeleccionado = false;
-      if (this.instrumentosSeleccionados.length>0){
-        this.instrumentosSeleccionados.forEach(seleccionado => {
-          if ((seleccionado.includes(texto))){
-            estaEnSeleccionado = true;          }
-        });
 
-        if (!estaEnSeleccionado){
-          console.log ("Se agrega", texto);
-          this.instrumentosSeleccionados.push(texto);  
+    if (this.artista.instrumento.length > 0) {
+      let instrumentoDeArtista: Instrumento;
+      for (let i = 0; i < this.artista.instrumento.length; i++) {
+        instrumentoDeArtista = this.artista.instrumento[i];
+        if ((instrumentoDeArtista.nombreInstrumento.length == texto.length) && (instrumentoDeArtista.nombreInstrumento.includes(texto))) {
+          found = true;
         }
-      }else{
-        this.instrumentosSeleccionados.push (texto);
       }
-    }else{
-      console.log (" Instrumento inválido, no permito agregar a la lista de seleccionados");
+
+      if (found) {
+        var estaEnSeleccionado = false;
+        if (this.instrumentosSeleccionados.length > 0) {
+          this.instrumentosSeleccionados.forEach(seleccionado => {
+            if ((seleccionado.includes(texto))) {
+              estaEnSeleccionado = true;
+            }
+          });
+
+          if (!estaEnSeleccionado) {
+            console.log("Se agrega", texto);
+            this.instrumentosSeleccionados.push(texto);
+          }
+        } else {
+          this.instrumentosSeleccionados.push(texto);
+        }
+      } else {
+        console.log(" Instrumento inválido, no permito agregar a la lista de seleccionados");
+      }
     }
   }
-  
-  buscarTextoEnArray (texto: string) : any {
-      var resp = [];
 
-      this.listaInstrumento.forEach(instrumento => {
-          if (instrumento.nombreInstrumento.includes(texto)){
-             resp.push (instrumento.nombreInstrumento);
-          }
-      });
-      return resp;
+  buscarTextoEnArray(texto: string): any {
+    var resp = [];
+
+    this.listaInstrumento.forEach(instrumento => {
+      if (instrumento.nombreInstrumento.includes(texto)) {
+        resp.push(instrumento.nombreInstrumento);
+      }
+    });
+    return resp;
   }
 
-  borrarLinea (evt) {
-    
+  borrarLinea(evt) {
+
     var eliminar = evt.target.parentElement.firstChild.innerHTML;
-    this.instrumentosSeleccionados.forEach( (seleccionado, index) => {
-    
+    this.instrumentosSeleccionados.forEach((seleccionado, index) => {
+
       if (seleccionado === eliminar) {
-        this.instrumentosSeleccionados.splice(index,1);  
-        
+        this.instrumentosSeleccionados.splice(index, 1);
+
       }
     });
   }

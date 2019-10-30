@@ -11,12 +11,12 @@ export class GeneroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public obtenerTodos () : Genero[] {
+  public obtenerTodos(): Genero[] {
 
-    var generos: Genero[] = [];
+    let generos: Genero[] = [];
 
-    var masculino: Genero = new Genero();
-    var femenino: Genero = new Genero();
+    let masculino: Genero = new Genero();
+    let femenino: Genero = new Genero();
 
     masculino.id = 1;
     masculino.nombreGenero = "Masculino";
@@ -27,5 +27,27 @@ export class GeneroService {
     generos.push(femenino);
 
     return generos;
-}
+  }
+
+  public obtenerPorNombre(nombreGenero: String): Genero {
+
+    let generos: Genero[] = this.obtenerTodos();
+    let genero: Genero;
+    let generoEncontrado: Genero;
+    let found: Boolean;
+
+    if (generos.length > 0) {
+      for (let i = 0; i < generos.length; i++) {
+        genero = generos[i];
+        if ((genero.nombreGenero.length == nombreGenero.length) && (genero.nombreGenero.includes(nombreGenero.valueOf()))) {
+          found = true;
+          generoEncontrado = genero;
+        }
+        if (found) {
+          return genero;
+        }
+      }
+
+    }
+  }
 }
