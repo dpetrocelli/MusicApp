@@ -22,13 +22,18 @@ export class InfoPerfilComponent implements OnInit {
   elemString : String[];
   elementos : Elemento[] = [];
   userLogged : LoginDatos;
-  biografia : String;
+  biografia : string[];
   artista : Artista;
   listaDeArtistasEnBanda : Artista[];
   detalleDeLaBanda : Banda;
   isLoaded : boolean = false;
   form: any = {};
   bandaActiva = false;
+  bio : String = null;
+  spotify : string = null;
+  facebook : string = null;
+  haySpotify : boolean = false;
+  hayFacebook : boolean = false;
 
   @HostBinding('class')
   @Input() biografiaComponent: InfoPerfilComponent;
@@ -45,20 +50,72 @@ export class InfoPerfilComponent implements OnInit {
     
           
           this.userLogged = this.usuarioService.getUserLoggedIn();
-          this.perfilService.obtenerbiografia(this.userLogged).subscribe(data => {
-          this.biografia = data.mensaje;
-          },
-          (err: any) => {
-              console.log(err);
-              this.biografia = "ingrese una descripción";
-          });
+          this.obtenerBio();
+             
           
-          this.obtenerDatosUsuario();
+         
           
               
             
   }
 
+  abrirSpotify(){
+    window.open(this.spotify, '_blank');
+  }
+
+  abrirFacebook(){
+    window.open(this.facebook, '_blank');
+  }
+
+  async editarSpotify(){
+    //BVACIO
+  }
+  async editarFacebook(){
+    const { value: text } = await Swal.fire({
+      input: 'text',
+      inputPlaceholder: this.facebook
+    })
+    
+    if (text) {
+      let inp : string = text;
+      if (inp.includes ("facebook")){
+        this.facebook = text;
+        this.actualizar();
+        Swal.fire('Se actualizó facebook ');
+      }else{
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'direccion no valida!'
+          
+        })
+      }
+     
+      
+    }
+  }
+  async obtenerBio(){
+    this.biografia = await this.perfilService.obtenerbiografia(this.userLogged).toPromise();
+           
+    console.log (" LLEGO ESTO, ", this.biografia);
+          if (this.biografia[0]!= null){
+            this.bio = this.biografia[0];
+            console.log ("PIBe - BIO, ", this.bio);
+          }
+
+          if (this.biografia[1]!= null){
+            this.spotify = this.biografia[1];
+            this.haySpotify = true;
+            console.log ("PIBe - SPOT, ", this.spotify);
+          }
+
+          if (this.biografia[2]!= null){
+            this.facebook = this.biografia[2];
+            this.hayFacebook = true;
+            console.log ("PIBe - FB, ", this.facebook);
+          }
+          this.obtenerDatosUsuario();
+  }
   async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista){
     let header = "Estás seguro de eliminar a: ";
     header+= integrante.usuario.username;
@@ -149,8 +206,9 @@ export class InfoPerfilComponent implements OnInit {
 
   }
   actualizar(){
-    this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia).subscribe(data => {
-      //console.log (data);         
+    this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia, this.form.spotify, this.form.facebook).subscribe(data => {
+      //console.log (data);   
+      this.obtenerBio();      
     },
     (err: any) => {
       console.log(err);

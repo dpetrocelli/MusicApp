@@ -10,7 +10,7 @@
     <span> Zona Geográfica: {{artista.zona.nombreZona}}</span> 
     <span> Fecha de Nacimiento: {{artista.fechaNacimiento | date: "dd-MM-yyyy"}}</span>
     <span><button class="btn btn-warning" routerLink="/usuario/editar/{{artista.id}}">Editar</button></span>
-  
+    
   </div>
   <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva else elseBlock"> 
     
@@ -40,11 +40,45 @@
               [(ngModel)]="form.biografia"
               required
               autocomplete="off"
-              value = "{{biografia}}">
+              value = "{{bio}}">
       </div>
       
+      <div class="float-md-center" *ngIf="haySpotify; else noSpotify">
+        <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" height="50" width="50" (click)="abrirSpotify()"/>
+        <img src="https://icon-library.net/images/icon-edit/icon-edit-29.jpg" height="50" width="50" (click)="editarSpotify()"/>
+        
+      </div>
+      
+      <ng-template #noSpotify>
+        <label for="spotify">Spotify Link </label>
+        <input type="textarea"
+                class="form-control"
+                name="spotify"
+                id="spotify"
+                [(ngModel)]="form.spotify"
+                required
+                autocomplete="off"
+                >
+      </ng-template>
  
-    
+      
+      <div class="float-md-center" *ngIf="hayFacebook; else noFacebook">
+        <img src="https://i.pinimg.com/originals/58/f4/72/58f4723d8f23906bdcb058604075ad2a.png" height="50" width="50" (click)="abrirFacebook()"/>
+        <img src="https://icon-library.net/images/icon-edit/icon-edit-29.jpg" height="50" width="50" (click)="editarFacebook()"/>
+      </div>
+      
+      <ng-template #noFacebook>
+        <label for="facebook">Facebook Link </label>
+        <input type="textarea"
+                class="form-control"
+                name="facebook"
+                id="facebook"
+                [(ngModel)]="form.facebook"
+                required
+                autocomplete="off"
+                >
+      </ng-template>
+ 
   </form>
   
   <button class="btn btn-primary mr-3" (click)="actualizar()"> Actualizar Biografia </button>

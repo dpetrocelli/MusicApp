@@ -20,6 +20,9 @@ public class Biografia {
 
 
     private String biografiaBasica;
+    private String facebook;
+    private String spotify;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "biografia")
     private List<Post> posts;
@@ -87,5 +90,21 @@ public class Biografia {
 
     public void setPathImagenPortada(String pathImagenPortada) {
         this.pathImagenPortada = pathImagenPortada;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getSpotify() {
+        return spotify;
+    }
+
+    public void setSpotify(String spotify) {
+        this.spotify = spotify;
     }
 }

@@ -96,7 +96,12 @@ public class PostControlador {
                 Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
                 Artista artista = this.artistaServicio.obtenerPorUsuario(u);
                 Biografia b =  this.biografiaServicio.obtener(artista);
-                return new ResponseEntity (new Mensaje(b.getBiografiaBasica()), HttpStatus.OK);
+                ArrayList<String> respuesta = new ArrayList<String>();
+                respuesta.add(b.getBiografiaBasica());
+                respuesta.add(b.getSpotify());
+                respuesta.add(b.getFacebook());
+
+                return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
             }
@@ -116,7 +121,6 @@ public class PostControlador {
             log.info ("siendo: "+payload.toString());
 
             LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
-            String biografia = json.get("biografia").getAsString();
 
             log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
             boolean result = this.usuarioServicio.validarTokenUsuario(ld);
@@ -127,7 +131,28 @@ public class PostControlador {
                 // ES UN ARTISTA VALIDO
                 if (artista.getId()!=null){
                     Biografia bio = this.biografiaServicio.obtener(artista);
-                    bio.setBiografiaBasica(biografia);
+                    try{
+                        String biografia = json.get("biografia").getAsString();
+                        bio.setBiografiaBasica(biografia);
+                    }catch (Exception e){
+
+                    }
+                    try{
+                        String spotify = json.get("spotify").getAsString();
+                        bio.setSpotify(spotify);
+                    }catch (Exception e){
+
+                    }
+                    try{
+                        String facebook = json.get("facebook").getAsString();
+                        bio.setFacebook(facebook);
+                    }catch (Exception e){
+
+                    }
+
+
+
+
                     bio.setArtista(artista);
                     this.biografiaServicio.guardar (bio);
                 }

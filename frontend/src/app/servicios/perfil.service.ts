@@ -70,8 +70,8 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'borrarPost/', {login : login, post : post}, cabecera);
   }
 
-  public actualizarbiografia (login : LoginDatos, biografia : String ): Observable<any> {
-    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
+  public actualizarbiografia (login : LoginDatos, biografia : String, spotify : String, facebook : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia, spotify : spotify, facebook : facebook}, cabecera);
   }
 
   public lista(login : LoginDatos): Observable<any> {
