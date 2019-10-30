@@ -23,6 +23,11 @@
     </div>
 
     <div class="form-group">
+      <label for="uploadfiles"> Subir Imagenes: </label>
+      <input type="file" name="uploadfiles" (change)="cargandoImagen($event.target.files)" multiple enctype="multipart/form-data">     
+    </div>
+
+    <div class="form-group">
       <label for="telefono">Telefono: </label>
       <input type="text"
              class="form-control"

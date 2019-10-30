@@ -6,6 +6,7 @@ import { Lugar } from '../modelos/lugar';
 import { LugarService } from '../servicios/lugar.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { LoginDatos } from '../modelos/logindatos';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-lista-lugar',
@@ -28,12 +29,24 @@ export class ListaLugarComponent implements OnInit {
     this.lugarService.listarLosMios(this.userLogged).subscribe(data => {
     //this.lugarService.lista().subscribe(data => {
       this.lugares = data;
+      this.lugares.forEach(lugar => {
+        lugar.foto = environment.urlApiBackend + 'api/archivo/descargar?path=' + lugar.foto;      
+      });
     },
       (err: any) => {
         console.log(err);
       });
   }
 
+  agrandar(photo : string, nombre : string, descripcion : string){
+    Swal.fire({
+      text: "INFO: "+nombre + " / Desc: "+descripcion,
+      imageUrl: photo,
+      imageHeight: 500,
+      imageWidth: 500,
+      imageAlt: 'A tall image'
+    })
+  }
   onDelete(id: number): void {
     Swal.fire({
       title: '¿Estás seguro?',

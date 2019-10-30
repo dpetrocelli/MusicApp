@@ -53,4 +53,18 @@ export class LugarService {
     
     return this.httpClient.post<any>(this.baseURL+"/buscarLike", formdata);
   }
+
+  public buscarimagen (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerImagen',login, cabecera);
+  }
+
+
+  public enviarimagen (imagenParaSubir: File, login : LoginDatos): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('file', imagenParaSubir);
+    formdata.append('login',JSON.stringify(login) )
+    console.log (" ESTAMOS ENVIANDO", formdata);
+    return this.httpClient.post<any>(this.baseURL + 'subirImagenLugar', formdata);
+	
+  }
 }

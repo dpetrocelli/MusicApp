@@ -14,13 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/lugar/")
 public class LugarControlador {
+    final String UPLOAD_FOLDER = "src/images/";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     LugarServicio LugarServicio;
@@ -74,6 +80,55 @@ public class LugarControlador {
         lugar.setComercio(comercio);
         LugarServicio.guardar(lugar);
         return new ResponseEntity(new Mensaje("Lugar guardado"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("subirImagenLugar")
+    public ResponseEntity<?> subirImagenLugar (@RequestParam("file") MultipartFile file, @RequestParam("login") String login){
+        log.info( " LLLEGA SUBIR");
+        try{
+            // [STEP 0] - Obtener las estructuras
+
+            LoginDatos eled = new Gson().fromJson(login, LoginDatos.class);
+
+
+            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(eled.getIdUsuario()));
+            Comercio comercio = this.comercioServicio.obtener(usuario);
+
+
+
+            // [STEP 1] Preparo para guardar el binario en el folder del usuario
+
+            String folder = this.UPLOAD_FOLDER+usuario.getUsername()+"/comerciolugar/"+file.getSize()+"/";
+            File directory = new File(folder);
+            if (!(directory).exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directorio creado"+directory.getAbsolutePath());
+                }
+            }else{
+                String[] files = directory.list();
+                for (String f: files) {
+                    File remove = new File(directory.getAbsolutePath() + f);
+                    remove.delete();
+                    remove.deleteOnExit();
+                }
+            }
+
+
+            System.out.println("Eliminé imágenes actuales (para dejar 1 sola");
+
+            // [STEP 3] - subir img de perfil
+
+            String pathFile = folder +file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+
+
+            return new ResponseEntity(new Mensaje(pathFile), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
     }
 /*
     @PutMapping("actualizar/{id}")

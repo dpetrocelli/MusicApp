@@ -20,6 +20,8 @@ export class NuevoLugarComponent implements OnInit {
   msjFallo = '';
   msjOK = '';
   zonas: Zona[];
+  foto : String ;
+  files : FileList;
 
   constructor(private lugarService: LugarService, private zonaService : ZonaService, private usuarioService: UsuarioService) { }
 
@@ -32,16 +34,38 @@ export class NuevoLugarComponent implements OnInit {
     this.zonas = await this.zonaService.lista().toPromise();
   }
 
+  public cargandoImagen(files: FileList){
+    this.files = files;
+    console.log ("FILES: ",this.files);
+    if (this.files != null){
+      
+      Array.from (this.files).forEach(file => {
+        this.lugarService.enviarimagen(file, this.userLogged).subscribe(data => {
+          console.log (" Pude guardar imagen", file.name);
+          this.foto = data.mensaje;
+        },
+        (err: any) => {
+          console.log (err);
+          this.msjFallo = err.error.mensaje;
+          this.creado = false;
+          this.falloCreacion = true;
+        });
+      });
+    }
+         
+  }
+
   onCreate(): void {
     this.lugar = new Lugar;
     this.lugar = this.form;
+    this.lugar.foto = this.foto;
     this.zonas.forEach(zonita => {
       if (zonita.id==this.form.zona){
         this.lugar.zona=zonita;
       }
     });
     
-    this.lugar.foto = "nada";
+    
     console.log (" VOY A GUARDAR EL OBJ ", this.lugar);
     
     this.lugarService.crear(this.userLogged, this.lugar).subscribe(data => {

@@ -20,12 +20,10 @@
    <div *ngIf="hayLugares" >
     <span></span>
     <div class="post row d-flex justify-content-center" *ngFor="let lugar of lugares">
-      <div class="info col-12"> Nombre: {{lugar.nombre}}</div>
-      <div class="info col-12"> Foto: {{lugar.foto}}</div>
-      <div class="info col-12"> Descripcion: {{lugar.descripcion}}</div>
-      <div class="info col-12"> Telefono: {{lugar.telefono}}</div>
-      <div class="info col-12"> direccion: {{lugar.direccion}}</div>
-      <div class="info col-12"> Zona: {{lugar.zona.nombreZona}}</div>
+      <div class="info col-12"> <img id="icon" class="cercle icon" [src]="(lugar.foto)" alt="" height="100" width="100" (click)="agrandar(lugar.foto, lugar.nombre, lugar.descripcion)"> </div>
+      <div class="info col-12"> <strong> Comercio:  </strong>  {{lugar.comercio.usuario.username}} <strong> Nombre:  </strong>  {{lugar.nombre}}  <strong> Descripcion:  </strong>  {{lugar.descripcion}} </div>
+      <div class="info col-12"> <strong> Telefono: </strong> {{lugar.telefono}} <strong> Direccion: </strong> {{lugar.direccion}} <strong> Zona:  </strong> {{lugar.zona.nombreZona}} </div>
+      
      
       
     </div>

@@ -91,6 +91,9 @@ export class ComercioSiteComponent implements OnInit {
     textolibre = (<HTMLInputElement>document.getElementById('buscar')).value;
 
     this.lugares = await this.lugaresServicio.buscar(this.userLogged, zona, textolibre).toPromise();
+    this.lugares.forEach(lugar => {
+      lugar.foto = environment.urlApiBackend + 'api/archivo/descargar?path=' + lugar.foto;      
+    });
     if ((this.lugares != null) && (this.lugares.length > 0)) {
 
       this.hayLugares = true;
@@ -107,7 +110,15 @@ export class ComercioSiteComponent implements OnInit {
       
   
     
- 
+  agrandar(photo : string, nombre : string, descripcion : string){
+    Swal.fire({
+      text: "INFO: "+nombre + " / Desc: "+descripcion,
+      imageUrl: photo,
+      imageHeight: 500,
+      imageWidth: 500,
+      imageAlt: 'A tall image'
+    })
+  }
 
 
 verImagen(post: Post) {
