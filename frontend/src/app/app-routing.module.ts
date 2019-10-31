@@ -36,6 +36,7 @@ import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
 import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
+import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 
 
 
@@ -58,6 +59,8 @@ const routes: Routes = [
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    
+   // Perfil de una banda
+   {path: 'bandaRedSocial/:nombre', component: BandaRedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

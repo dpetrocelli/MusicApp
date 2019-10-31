@@ -73,6 +73,45 @@ public class BandaControlador {
 
     }
 
+
+    @PostMapping("buscarArtistas")
+    public ResponseEntity<?> buscarArtistas (@RequestParam("login") String login, @RequestParam("banda") String bandax) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Banda banda = new Gson().fromJson(bandax, Banda.class);
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+
+                //List<Artista> la = this.bandaServicio.obtenerTodosArtistasDeBanda(b);
+
+                List<Artista> listaArtista = this.artistaServicio.obtenerTodos();
+                ArrayList<Artista> artistasRespuesta = new ArrayList<Artista>();
+                for (Artista art : listaArtista) {
+                    Set<Banda> ba = art.getBanda();
+
+                    for (Banda bandaInterna: ba) {
+                        if (bandaInterna.getNombre().equals(banda.getNombre())) {
+                            artistasRespuesta.add(art);
+                        }
+                    }
+
+                }
+                log.info(" LISTA DE ARTISTAS DE BANDA " + artistasRespuesta);
+
+                return new ResponseEntity<ArrayList<Artista>>(artistasRespuesta, HttpStatus.OK);
+
+
+            } else {
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @PostMapping("obtenerArtistasDeBanda")
     public ResponseEntity<?> obtenerArtistasDeBanda (@RequestParam("login") String login, @RequestParam("artista") String artista) {
         // [STEP 0] - Validar usuario y contraseña

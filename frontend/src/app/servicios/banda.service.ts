@@ -40,6 +40,14 @@ public obtenerArtistasDeBanda (ld : LoginDatos, artista: Artista) : Observable <
   return this.httpClient.post<any>(this.baseURL + 'obtenerArtistasDeBanda', formdata);
 }
 
+public buscarArtistas (ld : LoginDatos, banda: Banda) : Observable <any> {
+  var formdata: FormData = new FormData();
+  formdata.append('login', JSON.stringify(ld));
+  formdata.append('banda', JSON.stringify(banda) );
+  
+  return this.httpClient.post<any>(this.baseURL + 'buscarArtistas', formdata);
+}
+
   public SoyDuenioBanda (ld : LoginDatos, artista: Artista) : Observable <any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(ld));

@@ -57,7 +57,7 @@ import { EditarZonaComponent } from './zonas/editar-zona.component';
 import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
-
+import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 
 
 
@@ -87,7 +87,7 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
       EditarPostComponent,
       PerfilComponent,
       PostComponent,
-      
+      BandaRedSocialComponent,
       ImagenPerfilComponent,
       ListaLugarComponent,
       InfoPerfilComponent,
