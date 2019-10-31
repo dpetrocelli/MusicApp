@@ -35,6 +35,7 @@ import { EditarZonaComponent } from './zonas/editar-zona.component';
 import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
 import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
+import { EditarLugarComponent } from './lugares/editar-lugar.component';
 
 
 
@@ -68,7 +69,8 @@ const routes: Routes = [
     // Promociones/
    {path: 'lugares', component: ListaLugarComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'lugares/nuevo', component: NuevoLugarComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
-
+   {path: 'lugares/editar/:id', component: EditarLugarComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
+   
    {path: 'promociones', component: ListarpromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/nuevo', component: AltapromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},
    {path: 'promociones/editar/:id', component: EditarpromocionComponent, canActivate: [seguridad], data: { expectedRol: ['comercio']}},

@@ -66,6 +66,7 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
       AppComponent,
       ListaInstrumentoComponent,
       HomeComponent,
+      EditarLugarComponent,
       DetalleInstrumentoComponent,
       NuevoInstrumentoComponent,
       EditarInstrumentoComponent,
@@ -86,6 +87,7 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
       EditarPostComponent,
       PerfilComponent,
       PostComponent,
+      
       ImagenPerfilComponent,
       ListaLugarComponent,
       InfoPerfilComponent,

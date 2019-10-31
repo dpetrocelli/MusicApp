@@ -5,6 +5,7 @@ import { ZonaService } from '../servicios/zona.service';
 import { Zona } from '../modelos/zona';
 import { LoginDatos } from '../modelos/logindatos';
 import { UsuarioService } from '../servicios/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nuevo-lugar',
@@ -72,6 +73,7 @@ export class NuevoLugarComponent implements OnInit {
         this.msjOK = data.mensaje;
         this.creado = true;
         this.falloCreacion = false;
+       
       },
       (err: any) => {
         this.msjFallo = err.error.mensaje;

@@ -130,24 +130,30 @@ public class LugarControlador {
             return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
         }
     }
-/*
+
     @PutMapping("actualizar/{id}")
     public ResponseEntity<?> update(@RequestBody Lugar Lugar, @PathVariable("id") Long id){
         log.info(" Actualizar Lugar: "+id);
         if(!LugarServicio.existePorId(id))
             return new ResponseEntity(new Mensaje("no existe el Lugar "+LugarServicio.obtenerPorId(id)), HttpStatus.NOT_FOUND);
-        if(StringUtils.isBlank(lugar.getNombreLugar()))
+        if(StringUtils.isBlank(Lugar.getNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 
 
 
         Lugar baseLugar = LugarServicio.obtenerPorId(id).get();
-        baselugar.setNombreProducto(lugar.getNombreLugar());
-        baselugar.setTipoLugar(lugar.getTipoLugar());
+        baseLugar.setZona(Lugar.getZona());
+        baseLugar.setDescripcion(Lugar.getDescripcion());
+        baseLugar.setDireccion(Lugar.getDireccion());
+        baseLugar.setFoto(Lugar.getFoto());
+        baseLugar.setNombre(Lugar.getNombre());
+        baseLugar.setTelefono(Lugar.getTelefono());
+
+
         LugarServicio.guardar(baseLugar);
         return new ResponseEntity(new Mensaje("Lugar actualizado"), HttpStatus.CREATED);
     }
-    */
+
     @DeleteMapping("borrar/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         log.info(" Borrando Lugar: "+id);
