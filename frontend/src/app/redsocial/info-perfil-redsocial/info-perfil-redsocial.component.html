@@ -35,10 +35,24 @@
               required
               autocomplete="off"
               disabled=yes
-              value = "{{biografia}}">
+              value = "{{bio}}">
       </div>
       
+      <div class="float-md-center" *ngIf="haySpotify">
+        <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" height="50" width="50" (click)="abrirSpotify()"/>
+        
+        
+      </div>
+      
+    
  
+      
+      <div class="float-md-center" *ngIf="hayFacebook">
+        <img src="https://i.pinimg.com/originals/58/f4/72/58f4723d8f23906bdcb058604075ad2a.png" height="50" width="50" (click)="abrirFacebook()"/>
+        
+      </div>
+      
+      
     
   </form>
   

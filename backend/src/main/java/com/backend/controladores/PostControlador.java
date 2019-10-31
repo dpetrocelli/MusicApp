@@ -78,7 +78,11 @@ public class PostControlador {
                 Usuario u = this.usuarioServicio.obtenerPorNombre(nombre);
                 Artista artista = this.artistaServicio.obtenerPorUsuario(u);
                 Biografia b =  this.biografiaServicio.obtener(artista);
-                return new ResponseEntity (new Mensaje(b.getBiografiaBasica()), HttpStatus.OK);
+                ArrayList<String> respuesta = new ArrayList<String>();
+                respuesta.add(b.getBiografiaBasica());
+                respuesta.add(b.getSpotify());
+                respuesta.add(b.getFacebook());
+                return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
             }

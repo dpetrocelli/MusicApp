@@ -68,7 +68,29 @@ export class InfoPerfilComponent implements OnInit {
   }
 
   async editarSpotify(){
-    //BVACIO
+    const { value: text } = await Swal.fire({
+      input: 'text',
+      inputPlaceholder: this.spotify
+    })
+    
+    if (text) {
+      let inp : string = text;
+      if (inp.includes ("https://spotify.com")){
+        this.form.spotify = text;
+        console.log (" VAMOS A ACTUALIAR CON", this.form.spotify);
+        this.actualizar();
+        Swal.fire('Se actualizó link spotify ');
+      }else{
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'direccion no valida!'
+          
+        })
+      }
+     
+      
+    }
   }
   async editarFacebook(){
     const { value: text } = await Swal.fire({
@@ -78,8 +100,9 @@ export class InfoPerfilComponent implements OnInit {
     
     if (text) {
       let inp : string = text;
-      if (inp.includes ("facebook")){
-        this.facebook = text;
+      if (inp.includes ("https://facebook.com")){
+        this.form.facebook = text;
+        console.log (" VAMOS A ACTUALIAR CON", this.form.facebook);
         this.actualizar();
         Swal.fire('Se actualizó facebook ');
       }else{
@@ -206,14 +229,42 @@ export class InfoPerfilComponent implements OnInit {
 
   }
   actualizar(){
-    this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia, this.form.spotify, this.form.facebook).subscribe(data => {
-      //console.log (data);   
-      this.obtenerBio();      
-    },
-    (err: any) => {
-      console.log(err);
-      this.router.navigate(['/accesodenegado']);
-    });
+    let error = false;
+    if ((this.form.facebook!="") && (!(this.form.facebook.includes ("https://facebook.com")))){
+        
+        Swal.fire({
+          type: 'error',
+          title: 'Facebook...',
+          text: 'direccion no valida!, ajuste para actualizar'
+          
+        })
+        this.form.facebook = "";
+        error = true;
+    }
+
+    if ( (this.form.spotify!="") && ((!this.form.spotify.includes ("https://spotify.com")))){
+        
+        Swal.fire({
+          type: 'error',
+          title: 'Spotify...',
+          text: 'direccion no valida!, ajuste para actualizar'
+          
+        })
+        this.form.spotify = "";
+        error = true;
+    }
+
+    if (!error){
+      this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia, this.form.spotify, this.form.facebook).subscribe(data => {
+        //console.log (data);   
+        this.obtenerBio();      
+      },
+      (err: any) => {
+        console.log(err);
+        this.router.navigate(['/accesodenegado']);
+      });
+    }
+    
   }
  
   

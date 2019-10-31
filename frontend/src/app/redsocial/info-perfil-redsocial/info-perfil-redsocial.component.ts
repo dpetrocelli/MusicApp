@@ -16,13 +16,18 @@ export class InfoPerfilRedsocialComponent implements OnInit {
 
   loginDatos: LoginDatos;
   artista : Artista;
-  biografia : String;
+  biografia : string[];
+  bio : String = null;
   nombreUsuario : string;
   isLoaded : boolean = false;
   form: any = {};
   listaDeArtistasEnBanda : Artista[];
   detalleDeLaBanda : Banda; 
   bandaActiva : boolean ; 
+  spotify : string = null;
+  facebook : string = null;
+  haySpotify : boolean = false;
+  hayFacebook : boolean = false;
   //@HostBinding('class')
   //@Input() biografiaComponent: InfoPerfilComponent;
   constructor(private usuarioService: UsuarioService,
@@ -38,18 +43,44 @@ export class InfoPerfilRedsocialComponent implements OnInit {
           
           this.loginDatos = this.usuarioService.getUserLoggedIn();
           
-          this.perfilService.obtenerbiografiaRedSocial(this.loginDatos,this.nombreUsuario).subscribe(data => {
-          this.biografia = data.mensaje;
-          },
-          (err: any) => {
-              console.log(err);
-              this.router.navigate(['/accesodenegado']);
-          });
-          this.obtenerDatosUsuario();
-          
+          this.obtenerbiografia();
           
   }
 
+  async obtenerbiografia(){
+    
+      this.biografia = await this.perfilService.obtenerbiografiaRedSocial(this.loginDatos,this.nombreUsuario).toPromise();
+           
+    console.log (" LLEGO ESTO, ", this.biografia);
+          if (this.biografia[0]!= null){
+            this.bio = this.biografia[0];
+            console.log ("PIBe - BIO, ", this.bio);
+          }
+
+          if (this.biografia[1]!= null){
+            this.spotify = this.biografia[1];
+            this.haySpotify = true;
+            console.log ("PIBe - SPOT, ", this.spotify);
+          }
+
+          if (this.biografia[2]!= null){
+            this.facebook = this.biografia[2];
+            this.hayFacebook = true;
+            console.log ("PIBe - FB, ", this.facebook);
+          }
+         
+  
+      this.obtenerDatosUsuario();
+      
+  }
+  abrirSpotify(){
+    window.open(this.spotify, '_blank');
+  }
+
+  abrirFacebook(){
+    window.open(this.facebook, '_blank');
+  }
+  
   async obtenerDatosUsuario(){
     this.artista = await this.usuarioService.obtenerDatosUsuarioRedSocial (this.loginDatos,this.nombreUsuario).toPromise();     
     this.isLoaded = true;
