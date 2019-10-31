@@ -36,7 +36,7 @@ import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
 import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
-import { ListaTotalizador } from './totalizador/lista-totalizador.component';
+
 
 
 
