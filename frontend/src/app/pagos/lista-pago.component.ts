@@ -14,7 +14,8 @@ export class ListaPagoComponent implements OnInit {
 
   pagos: Pago[] = [];
   userLogged : LoginDatos;
-
+  totalizadorCargado : boolean = false;
+  totalizador : number = 0;
   constructor(
     private pagoService: PagoService,
     private usuarioService: UsuarioService,
@@ -32,6 +33,15 @@ export class ListaPagoComponent implements OnInit {
             pago.fechaPago = new Date(pago.fechaPago).toLocaleDateString('es-AR');
           });
           this.pagos = data;
+
+          this.pagos.forEach(pago => {
+            if (pago.estado=="approved"){
+              this.totalizador+=pago.importe;
+            }else{
+              this.totalizador-=pago.importe;
+            }
+          });
+          this.totalizadorCargado = true;
       },
       (err: any) => {
         console.log(err);
