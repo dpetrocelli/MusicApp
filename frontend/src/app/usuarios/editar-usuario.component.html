@@ -66,7 +66,7 @@
             <div class="form-group">
                 <label for="fc_fechanacimiento"> Fecha Nacimiento: </label>
                 <input type="date" class="form-control" name="frm_fechanacimiento" id="fc_fechanacimiento"
-                    [(ngModel)]="frm_fechanacimiento" value="{{artista.fechaNacimiento | date: 'yyyy-MM-dd'}}" required autocomplete="off" (blur)="revisarFecha()">
+                    [(ngModel)]="frm_fechanacimiento" required autocomplete="off" (blur)="revisarFecha()">
                 <div class="aler alert-danger" [hidden]="fechaValida">
                     No es una fecha de nacimiento válida
                 </div>
