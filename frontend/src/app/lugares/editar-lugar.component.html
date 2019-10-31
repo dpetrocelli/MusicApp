@@ -51,7 +51,7 @@
 
     <div>
       <label for="zona"> Zona de Trabajo: </label>
-      <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona" [compareWith]="compararZona" (blur)="habilitarONoFormulario()">
+      <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona" [compareWith]="compararZona">
           <option *ngFor="let itemZona of zonas" [ngValue]="itemZona">{{itemZona.nombreZona}}
           </option>
       </select>
@@ -66,10 +66,5 @@
   </div>
   <br>
   <br>
-  <div *ngIf="falloCreacion" class="float-left">
-    <p class="p-3 bg-danger text-white rounded">Error: {{msjFallo}}</p>
-  </div>
-  <div *ngIf="creado" class="float-left">
-    <p class="p-3 bg-success text-white rounded">OK: {{msjOK}}</p>
-  </div>
+
 </div>
