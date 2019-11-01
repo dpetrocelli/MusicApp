@@ -229,6 +229,63 @@ public class BandaControlador {
 
     }
 
+    @PostMapping("soyDuenioBandaLogin")
+    public ResponseEntity<?> soyDuenioBandaLogin (@RequestParam("login") String login) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+            Artista a = this.artistaServicio.obtenerPorUsuario(u);
+
+                ArrayList<Banda> rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
+                // por ahora vamos a tener una sola banda duenio
+                if (rest.size()>0) {
+                    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+                }
+
+
+
+
+
+            
+
+        } catch (Exception e) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping("datosBanda")
+    public ResponseEntity<?> datosBanda (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+        log.info(" DATOS BANDA");
+        try {
+            //LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+            Artista a = this.artistaServicio.obtenerPorUsuario(u);
+
+            ArrayList<Banda> rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a);
+            // por ahora vamos a tener una sola banda duenio
+            if (rest.size()>0) {
+                return new ResponseEntity<Banda>(rest.get(0), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+            }
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
     @PostMapping("eliminarArtistaDeBanda")
     public ResponseEntity<?> eliminarArtistaDeBanda (@RequestParam("login") String login, @RequestParam("banda") String banda, @RequestParam("artista") String artista) {
@@ -257,6 +314,32 @@ public class BandaControlador {
 
         } catch (Exception e) {
             return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
+    @PostMapping("nueva")
+    public ResponseEntity<?> nueva (@RequestParam("login") String login, @RequestParam("banda") String banda) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Banda b = new Gson().fromJson(banda, Banda.class);
+            Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+            Artista a = this.artistaServicio.obtenerPorUsuario(u);
+
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                b.setArtistaLider(a);
+                this.bandaServicio.guardar (b);
+                return new ResponseEntity<Boolean>( true, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<Boolean>( true, HttpStatus.OK);
         }
 
     }

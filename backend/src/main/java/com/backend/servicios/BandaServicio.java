@@ -119,4 +119,8 @@ public class BandaServicio {
     public List<Artista> obtenerTodosArtistasDeBanda(Set<Banda> banda) {
        return this.bandaRepositorio.obtenerTodosArtistasDeBanda(banda);
     }
+
+    public void guardar(Banda b) {
+        this.bandaRepositorio.save(b);
+    }
 }

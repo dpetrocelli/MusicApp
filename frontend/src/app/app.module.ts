@@ -58,7 +58,7 @@ import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
 import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
-
+import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.component';
 
 
 @NgModule({
@@ -72,6 +72,7 @@ import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.compon
       EditarInstrumentoComponent,
       NuevaConfiguracionComponent,
       VerConfiguracionComponent,
+      NuevaBandaComponent, 
       ModificarConfiguracionComponent,
       EliminarConfiguracionComponent,
       ActivarComercioComponent,

@@ -16,7 +16,7 @@
     
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
     <!--<span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>-->
-    <span> Género Musical: {{detalleDeLaBanda.generoMusical}}</span>
+    <span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>
     <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}</span>
     Artistas Integrantes:
     <div *ngFor="let integrante of listaDeArtistasEnBanda"> 
@@ -29,7 +29,10 @@
     
     <p></p>
   </div>
-  <ng-template #elseBlock><button class="btn btn-primary" routerLink="/banda/buscar/"> Buscar Banda </button></ng-template>
+  <ng-template #elseBlock>
+      <button class="btn btn-primary" routerLink="/banda/nueva/"> Crear Banda </button>
+    <button class="btn btn-primary" routerLink="/banda/buscar/"> Buscar Banda </button>
+  </ng-template>
 
   <form #f="ngForm" novalidate>
       <div class="form-group">
