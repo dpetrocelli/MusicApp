@@ -30,8 +30,8 @@ export class EditarUsuarioComponent implements OnInit {
   submitted = false;
   isChecked = false;
 
-  listaInstrumento: Instrumento[]=[];
-  listaInstrumentoSeleccionado: Instrumento[]=[];
+  listaInstrumento: Instrumento[] = [];
+  listaInstrumentoSeleccionado: Instrumento[] = [];
   zonas: Zona[];
   instrumentosSeleccionados = [];
   respuesta: [];
@@ -82,18 +82,20 @@ export class EditarUsuarioComponent implements OnInit {
         this.fallaInit = true;
       }
     );
+    /*
+        this.instrumentoService.lista().subscribe(data => {
+          this.listaInstrumento = data;
+        },
+          (err: any) => {
+            this.msjFallo = err.error.mensaje;
+            this.actualizado = false;
+            this.falloActualizacion = true;
+            this.fallaInit = true;
+          }
+        );
+    */
 
-    this.instrumentoService.lista().subscribe(data => {
-      this.listaInstrumento = data;
-    },
-      (err: any) => {
-        this.msjFallo = err.error.mensaje;
-        this.actualizado = false;
-        this.falloActualizacion = true;
-        this.fallaInit = true;
-      }
-    );
-    console.log("listaInstrumento", this.listaInstrumento);
+    this.obtenerInstrumentos();
 
     this.generos = this.generoService.obtenerTodos();
 
@@ -104,6 +106,11 @@ export class EditarUsuarioComponent implements OnInit {
 
     this.fallaInit = false;
 
+  }
+
+  async obtenerInstrumentos() {
+    this.listaInstrumento = await this.instrumentoService.lista().toPromise();
+    console.log("listaInstrumento", this.listaInstrumento);
   }
 
   async obtenerDatosUsuario() {
@@ -252,8 +259,9 @@ export class EditarUsuarioComponent implements OnInit {
 
   }
 
-  guardarEnLista(texto: string) {
-    var found = false;
+  async guardarEnLista(texto: string) {
+    let found: boolean = false;
+    let estaEnSeleccionado: boolean = false;
     let instrumentoSeleccionado: Instrumento;
 
     // Si el texto que pasé está permitido por lo que habia en la base de datos
@@ -261,31 +269,30 @@ export class EditarUsuarioComponent implements OnInit {
     console.log("listaInstrumento", this.listaInstrumento);
     if (this.listaInstrumento) {
       this.listaInstrumento.forEach(instrumento => {
-        if ((instrumento.nombreInstrumento.length == texto.length) && (instrumento.nombreInstrumento === texto)) {
-
+        if ((instrumento.nombreInstrumento.length == texto.length) && (instrumento.nombreInstrumento.includes(texto))) {
           found = true;
           instrumentoSeleccionado = instrumento;
         }
       });
       console.log("instrumento seleccionado", instrumentoSeleccionado);
+      console.log("found", found);
+
       if (found) {
-        var estaEnSeleccionado = false;
         if (this.instrumentosSeleccionados.length > 0) {
           this.instrumentosSeleccionados.forEach(seleccionado => {
 
-            if ((seleccionado === texto)) {
+            if ((seleccionado.includes(texto))) {
               estaEnSeleccionado = true;
+              console.log("existe en lista!", texto);
             }
           });
+        }
 
-          if (!estaEnSeleccionado) {
-            console.log("Se agrega", texto);
-            this.instrumentosSeleccionados.push(texto);
-            this.listaInstrumentoSeleccionado.push(instrumentoSeleccionado);
-            console.log("listaInstrumentoSeleccionado:", this.listaInstrumentoSeleccionado);
-          }
-        } else {
+        if (this.instrumentosSeleccionados.length == 0 || (this.instrumentosSeleccionados.length > 0 && !estaEnSeleccionado)) {
+          console.log("Se agrega", texto);
           this.instrumentosSeleccionados.push(texto);
+          this.listaInstrumentoSeleccionado.push(instrumentoSeleccionado);
+          console.log("listaInstrumentoSeleccionado:", instrumentoSeleccionado);
         }
 
       } else {
