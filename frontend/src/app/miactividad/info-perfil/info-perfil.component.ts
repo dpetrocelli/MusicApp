@@ -34,7 +34,7 @@ export class InfoPerfilComponent implements OnInit {
   facebook : string = null;
   haySpotify : boolean = false;
   hayFacebook : boolean = false;
-
+  soyIntegrante : boolean = false;
   @HostBinding('class')
   @Input() biografiaComponent: InfoPerfilComponent;
   constructor(private usuarioService: UsuarioService,
@@ -140,9 +140,16 @@ export class InfoPerfilComponent implements OnInit {
           this.obtenerDatosUsuario();
   }
 
-  async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista){
-    let header = "Estás seguro de eliminar a: ";
-    header+= integrante.usuario.username;
+  async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista, quienfue : String){
+    let header = "";
+    if (quienfue.startsWith("soyint")){
+      header = "Estás seguro de salir de la banda: ";
+      header+=this.detalleDeLaBanda.nombre;
+    }else{
+      header = "Estás seguro de eliminar a: ";
+      header+= integrante.usuario.username;
+    }
+    
     Swal.fire({
       title: header ,
       text: "No podrás revertir esto",
@@ -155,8 +162,12 @@ export class InfoPerfilComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.bandaService.eliminarArtistaDeBanda(this.userLogged, detalleDeLaBanda, integrante).toPromise();
-        
-        this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Te he eliminado de mi banda", integrante, "msg").toPromise();
+        if (quienfue.startsWith("soyint")){
+          this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Salí de tu banda", this.detalleDeLaBanda.artistaLider, "msg").toPromise();  
+        }else{
+          this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Te he eliminado de mi banda", integrante, "msg").toPromise();
+        }
+       
         Swal.fire(
           'Eliminado corretamente!',
           '',
@@ -194,6 +205,7 @@ export class InfoPerfilComponent implements OnInit {
       //this.listaDeArtistasEnBanda.push(this.artista);
       this.detalleDeLaBanda = this.listaDeArtistasEnBanda[0].banda[0];
       this.bandaActiva = true;
+      this.soyIntegrante = true;
             
         },
 
@@ -260,9 +272,7 @@ export class InfoPerfilComponent implements OnInit {
 
   }
 
-  async fullbanda(){
-    this.detalleDeLaBanda = await this.bandaService.datosBanda(this.userLogged).toPromise();  
-  }
+  
   actualizar(){
     let error = false;
     if ((this.form.facebook!="") && (!(this.form.facebook.includes ("https://facebook.com")))){

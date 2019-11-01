@@ -306,7 +306,7 @@ public class BandaControlador {
                 this.artistaServicio.guardar(a);
 
 
-                return new ResponseEntity<String>(" ELIMINADO ", HttpStatus.OK);
+                return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 
             }else{
                 return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
