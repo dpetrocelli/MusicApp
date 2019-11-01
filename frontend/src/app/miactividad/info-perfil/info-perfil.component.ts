@@ -75,10 +75,10 @@ export class InfoPerfilComponent implements OnInit {
     
     if (text) {
       let inp : string = text;
-      if (inp.includes ("https://spotify.com")){
+      if ((inp.includes ("https://spotify.com")) || (inp.includes ("https://open.spotify.com"))){
         this.form.spotify = text;
-        console.log (" VAMOS A ACTUALIAR CON", this.form.spotify);
-        this.actualizar();
+        //console.log (" VAMOS A ACTUALIAR CON", this.form.spotify);
+        this.actualizar("sp");
         Swal.fire('Se actualizó link spotify ');
       }else{
         Swal.fire({
@@ -100,10 +100,10 @@ export class InfoPerfilComponent implements OnInit {
     
     if (text) {
       let inp : string = text;
-      if (inp.includes ("https://facebook.com")){
-        this.form.facebook = text;
+      if (inp.includes ("https://www.facebook.com")){
+        this.form.facebook = inp;
         console.log (" VAMOS A ACTUALIAR CON", this.form.facebook);
-        this.actualizar();
+        this.actualizar("fb");
         Swal.fire('Se actualizó facebook ');
       }else{
         Swal.fire({
@@ -273,10 +273,11 @@ export class InfoPerfilComponent implements OnInit {
   }
 
   
-  actualizar(){
+  actualizar(opcion : String){
     let error = false;
-    if ((this.form.facebook!="") && (!(this.form.facebook.includes ("https://facebook.com")))){
-        
+    if (opcion.startsWith("fb")){
+      if ((!(this.form.facebook.startsWith ("https://www.facebook.com")))){
+      console.log ("FB ES", this.form.facebook);
         Swal.fire({
           type: 'error',
           title: 'Facebook...',
@@ -286,20 +287,32 @@ export class InfoPerfilComponent implements OnInit {
         this.form.facebook = "";
         error = true;
     }
-
-    if ( (this.form.spotify!="") && ((!this.form.spotify.includes ("https://spotify.com")))){
+    console.log ( " ES FB BIEN", this.form.facebook);
+    }
+   
+    if (opcion.startsWith("sp")){
+      
+      if ((!(this.form.spotify.startsWith ("https://open.spotify.com/")))){
+        if ((!(this.form.spotify.startsWith ("https://spotify.com/")))){
+          console.log ( " TODO MAL", this.form.spotify);
+          Swal.fire({
+            type: 'error',
+            title: 'Spotify...',
+            text: 'direccion no valida!, ajuste para actualizar'
+            
+          })
+          this.form.spotify = "";
+          error = true;
+          }
         
-        Swal.fire({
-          type: 'error',
-          title: 'Spotify...',
-          text: 'direccion no valida!, ajuste para actualizar'
-          
-        })
-        this.form.spotify = "";
-        error = true;
+      }
+      
     }
 
+    
+    console.log (" HAY ERROR?", error);
     if (!error){
+      console.log( " sPITIFY ACTU",this.form.spotify);
       this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia, this.form.spotify, this.form.facebook).subscribe(data => {
         //console.log (data);   
         this.obtenerBio();      

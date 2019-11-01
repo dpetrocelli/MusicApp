@@ -41,7 +41,7 @@
   </div>
   <ng-template #elseBlock>
       <button class="btn btn-primary" routerLink="/banda/nueva/"> Crear Banda </button>
-    <button class="btn btn-primary" routerLink="/banda/buscar/"> Buscar Banda </button>
+    <button class="btn btn-primary" routerLink="/homesite/banda"> Buscar Banda </button>
   </ng-template>
 
   <form #f="ngForm" novalidate>
@@ -56,6 +56,7 @@
               autocomplete="off"
               value = "{{bio}}">
       </div>
+      <button class="btn btn-primary mr-3" (click)="actualizar()"> Actualizar Biografia </button>
       
       <div class="float-md-center" *ngIf="haySpotify; else noSpotify">
         <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" height="50" width="50" (click)="abrirSpotify()"/>
@@ -95,7 +96,7 @@
  
   </form>
   
-  <button class="btn btn-primary mr-3" (click)="actualizar()"> Actualizar Biografia </button>
+  
   
   
   

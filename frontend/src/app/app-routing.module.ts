@@ -53,7 +53,7 @@ const routes: Routes = [
 
   // Opciones de Artista
       // Home RedSocial
-   {path: 'homesite', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'homesite/:opcion', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (otro) RedSocial
    {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial

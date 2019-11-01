@@ -74,6 +74,11 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia, spotify : spotify, facebook : facebook}, cabecera);
   }
 
+/*
+public actualizarbiografia (login : LoginDatos, biografia : String): Observable<any> {
+  return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
+}*/
+
   public lista(login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'listar',login, cabecera);
   }

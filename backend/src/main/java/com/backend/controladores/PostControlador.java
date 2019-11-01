@@ -119,7 +119,7 @@ public class PostControlador {
     public ResponseEntity<?> actualizar (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
         // esto aplica a cualquier tipo de mensaje
-
+        log.info (" BACKI");
         JsonObject json = new Gson().fromJson(payload, JsonObject.class);
         try{
             log.info ("siendo: "+payload.toString());

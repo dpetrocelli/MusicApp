@@ -1,7 +1,7 @@
 import { Component, OnInit, ComponentFactoryResolver, NgModule } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginDatos } from '../modelos/logindatos';
 import { HomeSiteService } from '../servicios/homesite.service';
 import { UsuarioService } from '../servicios/usuario.service';
@@ -61,7 +61,7 @@ export class HomesiteComponent implements OnInit {
   listaPuntuacion : PuntuacionArtista[] = [];
   promedio : number = 0;
   promedioCargado : boolean = false;
-
+  vinoPedidoBanda : boolean = true;
 
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
@@ -71,6 +71,7 @@ export class HomesiteComponent implements OnInit {
               private generoMusicalService : GeneroMusicalService,
               private instrumentoService: InstrumentoService,
               private router: Router,
+              private routersnap: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private puntuacionService : PuntuacionService,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -78,6 +79,16 @@ export class HomesiteComponent implements OnInit {
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
+
+    this.optionSelected = this.routersnap.snapshot.paramMap.get("opcion");
+    if (this.optionSelected.startsWith("banda")){
+      
+      (<HTMLSelectElement>document.getElementById('instrumento')).disabled = true;
+      (<HTMLSelectElement>document.getElementById('zona')).disabled = false;
+      (<HTMLInputElement>document.getElementById('buscar')).disabled = false;
+      (<HTMLSelectElement>document.getElementById('generomusical')).disabled = false;
+      this.vinoPedidoBanda = true;
+    }
 
     this.loadInfo();
 

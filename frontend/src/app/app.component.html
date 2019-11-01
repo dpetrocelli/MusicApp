@@ -13,7 +13,7 @@
     <ul class="navbar-nav mr-auto">
       <div *ngIf="isArtista">
         <li class="nav-item active">
-          <a class="nav-link" routerLink="homesite">Inicio</a>
+          <a class="nav-link" routerLink="homesite/nada">Inicio</a>
         </li>
       </div>
       <div *ngIf="isArtista">
@@ -26,11 +26,7 @@
           <a class="nav-link" routerLink="banda/nueva"> Crear Banda </a>
         </li>
       </div>
-      <div *ngIf="isArtista">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="puntuacion/nuevo">Puntuar </a>
-        </li>
-      </div>
+     
       <div *ngIf="isArtista">
         <li class="nav-item">
           <a class="nav-link" routerLink="promociones/comprar">Promociones</a>
