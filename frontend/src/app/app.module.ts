@@ -62,6 +62,7 @@ import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.comp
 
 import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
+import { InfoPerfilBandaComponent } from './miActividadBanda/info-perfil-banda/info-perfil-banda.component';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -117,6 +118,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       NuevoLugarComponent,
       NuevaZonaComponent,
       EditarZonaComponent,
+      InfoPerfilBandaComponent,
       
      
    ],
