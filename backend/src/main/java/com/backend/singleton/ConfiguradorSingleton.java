@@ -81,6 +81,14 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             log.info("YA HAY DATOS");
         }
 
+        if ((this.instrumentoServicio.obtenerTodos()).size()==0){
+            this.instrumentoServicio.guardar(new Instrumento("guitarra", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("guitapoca", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("bajo", "cuerdas"));
+            this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
+            this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
+        }
+
         if (usuarioRepositorio.count()==0){
 
             log.info("HAY QUE AGREGAR USUARIO ADMIN ");
@@ -166,10 +174,7 @@ public class ConfiguradorSingleton implements CommandLineRunner {
             artistaRepositorio.save(artista);
             usuarioRepositorio.save(usuarioArtista);
 
-
-
             log.info("Usuario artista almacenado con exito");
-
 
         }else{
             log.info("ADMIN USER LOADED");
@@ -189,13 +194,6 @@ public class ConfiguradorSingleton implements CommandLineRunner {
         r = this.rolServicio.obtener("artista");
         this.permisosDelArtista = new ArrayList<String>(Arrays.asList(r.getOpcioneshabilitadas().split(",")));
 
-        if ((this.instrumentoServicio.obtenerTodos()).size()==0){
-            this.instrumentoServicio.guardar(new Instrumento("guitarra", "cuerdas"));
-            this.instrumentoServicio.guardar(new Instrumento("guitapoca", "cuerdas"));
-            this.instrumentoServicio.guardar(new Instrumento("bajo", "cuerdas"));
-            this.instrumentoServicio.guardar(new Instrumento("siku", "viento"));
-            this.instrumentoServicio.guardar(new Instrumento("flauta", "viento"));
-        }
 
 
         /*

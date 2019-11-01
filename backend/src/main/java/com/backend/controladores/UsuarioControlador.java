@@ -14,6 +14,7 @@ import com.backend.servicios.ArtistaServicio;
 import com.backend.servicios.ComercioServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.backend.singleton.ConfiguradorSingleton;
+import com.backend.wrappers.ArtistaRequest;
 import com.backend.wrappers.RegistrarUsuarioRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -78,9 +79,21 @@ public class UsuarioControlador {
     }
 
     @PostMapping("actualizarArtista")
-    public ResponseEntity<?> actualizarArtista(@RequestBody String payload) {
+    public ResponseEntity<?> actualizarArtista(@RequestBody ArtistaRequest request) {
 
-        return new ResponseEntity(new Mensaje("rer"), HttpStatus.BAD_REQUEST);
+        try {
+
+            LoginDatos ld = request.getLoginDatos();
+            Artista artista = request.getArtista();
+
+                this.usuarioServicio.actualizarArtista(artista);
+                log.info(" TERMINE DE EDITAR y GUARDE");
+                return new ResponseEntity<Mensaje>(new Mensaje("Editado correctamente"), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.info("Estamos saliendo por except " + e.getMessage());
+            return new ResponseEntity<Object>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("actualizarComercio")

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +60,10 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
 import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.component';
 
+import localeEsAr from '@angular/common/locales/es-AR';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeEsAr, 'es-Ar');
 
 @NgModule({
    declarations: [
@@ -125,7 +129,7 @@ import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.comp
       NgbModule,
       NgImageSliderModule
    ],
-   providers: [],
+   providers: [ { provide: LOCALE_ID, useValue: 'es-Ar' } ],
    bootstrap: [
       AppComponent
    ],

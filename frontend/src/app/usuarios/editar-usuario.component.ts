@@ -1,4 +1,4 @@
-import { LOCALE_ID, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UsuarioService } from '../servicios/usuario.service';
 import { ZonaService } from '../servicios/zona.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,8 +29,7 @@ export class EditarUsuarioComponent implements OnInit {
   falloActualizacion = false;
   submitted = false;
   isChecked = false;
-  isArtista = false;
-  isComercio = false;
+
   listaInstrumento: Instrumento[];
   zonas: Zona[];
   instrumentosSeleccionados = [];
@@ -51,7 +50,7 @@ export class EditarUsuarioComponent implements OnInit {
   frm_apellido: String;
   frm_nickname: String;
   frm_documento: number;
-  frm_fechanacimiento: Date;
+  frm_fechanacimiento: string;
   frm_genero: Genero;
   frm_zona: Zona;
 
@@ -73,8 +72,6 @@ export class EditarUsuarioComponent implements OnInit {
 
     this.obtenerDatosUsuario();
 
-    this.datePipe = new DatePipe('en-US');
-
     // [STEP 0] - Voy a buscar al backend la lista de los instrumentos que tengo almacenados
     this.zonaService.lista().subscribe(data => {
       this.zonas = data;
@@ -83,6 +80,7 @@ export class EditarUsuarioComponent implements OnInit {
         this.msjFallo = err.error.mensaje;
         this.actualizado = false;
         this.falloActualizacion = true;
+        this.fallaInit = true;
       }
     );
     this.instrumentoService.lista().subscribe(data => {
@@ -92,10 +90,14 @@ export class EditarUsuarioComponent implements OnInit {
         this.msjFallo = err.error.mensaje;
         this.actualizado = false;
         this.falloActualizacion = true;
+        this.fallaInit = true;
       }
     );
 
     this.generos = this.generoService.obtenerTodos();
+
+    this.fallaInit = false;
+
   }
 
   async obtenerDatosUsuario() {
@@ -108,6 +110,8 @@ export class EditarUsuarioComponent implements OnInit {
     this.frm_apellido = this.artista.apellido;
     this.frm_nickname = this.artista.nickname;
     this.frm_documento = this.artista.documentoIdentidad;
+    this.frm_fechanacimiento = formatDate(this.artista.fechaNacimiento, 'yyyy-MM-dd', 'es-AR');
+
 
     if (this.artista.instrumento.length > 0) {
       let instrumentoDeArtista: Instrumento;
@@ -137,51 +141,67 @@ export class EditarUsuarioComponent implements OnInit {
 
 
   actualizarUsuario() {
-    this.form.isArtista = this.isArtista;
-    console.log(this.form);
 
-    this.submitted = true;
+    this.artista.nombre = this.frm_nombre;
+    this.artista.apellido = this.frm_apellido;
+    this.artista.nickname = this.frm_nickname;
+    this.artista.documentoIdentidad = this.frm_documento;
+    this.artista.fechaNacimiento = new Date(this.frm_fechanacimiento);
 
-    //this.usuarioService.registrar(this.form, this.isArtista, this.instrumentosSeleccionados).subscribe(data => {
-    //  this.msjOK = data.msg ;
-    //  this.actualizado = true;
-    //  this.falloActualizacion = false;
+    console.log("fecha de nacimiento:", this.frm_fechanacimiento);
 
-    //  Swal.fire({
-    //    type: 'success',
-    //    title: 'Buenísimo...',
-    //    text: "se actualizó el usuario exitosamente"        
-    //  });
-    //  this.router.navigate(['']);
-    //},
-    //  (err: any) => {
-    //    this.msjFallo = err.error.mensaje;
-    //    Swal.fire({
-    //      type: 'error',
-    //      title: 'Oops...',
-    //      text: "hay problemas "+err.error.mensaje        
-    //    });
-    //    this.actualizado = false;
-    //    this.falloActualizacion = true;
-    //  }
-    //);
-  }
+    console.log("instrumentos seleccionados", this.instrumentosSeleccionados);
 
-  verificarMail() {
-    let email = this.form.email;
-    let pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-
-    if (email.match(pattern) === null) {
-      this.mailValido = false;
-    } else {
-      this.mailValido = true;
-      this.habilitarONoFormulario();
+    /*
+    if (this.artista.instrumento.length > 0) {
+      let instrumentoDeArtista: Instrumento;
+      for (let i = 0; i < this.artista.instrumento.length; i++) {
+        instrumentoDeArtista = this.artista.instrumento[i];
+        console.log(" agregue en la lista el instrumento: ", instrumentoDeArtista.nombreInstrumento)
+        this.guardarEnLista(instrumentoDeArtista.nombreInstrumento);
+      }
     }
+    */
+
+    this.artista.genero = this.frm_genero.nombreGenero;
+    this.artista.zona = this.frm_zona;
+    let instrumentossss:Instrumento [];
+    //instrumentossss = this.artista.instrumento;
+
+    //console.log("instrumentosss",instrumentossss);
+    //instrumentossss = instrumentossss.slice(0,2);
+    //console.log("instrumentosss despues",instrumentossss);
+    this.artista.instrumento = instrumentossss;
+
+    this.usuarioService.actualizarArtista(this.artista, this.userLogged).subscribe(data => {
+      this.msjOK = data.msg ;
+      this.actualizado = true;
+      this.falloActualizacion = false;
+
+      Swal.fire({
+        type: 'success',
+        title: 'Buenísimo...',
+        text: "se actualizó el usuario exitosamente"        
+      });
+      this.router.navigate(['']);
+    },
+      (err: any) => {
+        this.msjFallo = err.error.mensaje;
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: "hay problemas "+err.error.mensaje        
+        });
+        this.actualizado = false;
+        this.falloActualizacion = true;
+      }
+    );
+
   }
 
   validarDNI() {
     this.dniValido = true;
-    let dni: String = new String(this.form.documento);
+    let dni: String = new String(this.frm_documento);
 
     if (dni.length != 8) {
       this.formularioValido = false;
@@ -191,45 +211,27 @@ export class EditarUsuarioComponent implements OnInit {
     }
   }
 
-  revisarNombreUsuario() {
-    this.usuarioValido = true;
-
-    this.usuarioService.existeUsuario(this.form.username).subscribe(data => {
-
-      let result = data;
-      if (result) {
-        this.usuarioValido = false;
-        this.formularioValido = false;
-      }
-    },
-    );
-    this.habilitarONoFormulario();
-  }
-
   revisarFecha() {
     this.fechaValida = true;
     try {
       let currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
-      let fechanac = formatDate(this.form.fechanacimiento, 'yyyy-MM-dd', 'en');
+
+      let fechanac = this.frm_fechanacimiento;
       if (fechanac > currentDate) {
         this.fechaValida = false;
       }
     } catch{
       this.fechaValida = false;
+
     }
     this.habilitarONoFormulario();
+
   }
 
   habilitarONoFormulario() {
-    if (this.isArtista) {
-      if (this.dniValido && this.mailValido && this.fechaValida && this.usuarioValido && this.fechaValida) {
+    if (this.dniValido && this.fechaValida) {
         this.formularioValido = true;
       }
-    } else {
-      if (this.dniValido && this.mailValido) {
-        this.formularioValido = true;
-      }
-    }
   }
 
   predictivo(evt) {

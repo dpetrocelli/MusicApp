@@ -34,7 +34,7 @@ public class UsuarioServicio {
     @Autowired RolRepositorio rolRepositorio;
     @Autowired TokenUsuarioServicio tokenUsuarioServicio;
     @Autowired ComercioServicio comercioServicio;
-    @Autowired ComercioServicio artistaServicio;
+    @Autowired ArtistaServicio artistaServicio;
     @Autowired InstrumentoServicio instrumentoServicio;
     @Autowired GeneroMusicalServicio generoMusicalServicio;
     @Autowired ConfiguradorSingleton configuradorSingleton;
@@ -56,9 +56,10 @@ public class UsuarioServicio {
         return this.usuarioRepositorio.existsByUsername(nombreUsuario);
     }
 
-    public boolean guardarArtista (Usuario usuarioFrontEnd, JsonObject formulario, String instrumentos){
-        log.info( " ENTRAMOS ");
-        if (this.usuarioRepositorio.existsByUsername(usuarioFrontEnd.getUsername())) return false; else {
+    public boolean guardarArtista (Usuario usuarioFrontEnd, JsonObject formulario, String instrumentos) {
+        log.info(" ENTRAMOS ");
+        if (this.usuarioRepositorio.existsByUsername(usuarioFrontEnd.getUsername())) return false;
+        else {
             // PARTE DE USUARIO BASICO, OK
             // Obtengo el rol que me dice
             Rol rol = rolRepositorio.findByNombre("Artista");
@@ -76,15 +77,15 @@ public class UsuarioServicio {
             artista.setGenero(formulario.get("genero").getAsString());
             Zona zona = new Gson().fromJson(formulario.get("zona"), Zona.class);
             artista.setZona(zona);
-            try{
+            try {
                 artista.setDocumentoIdentidad(Integer.parseInt(formulario.get("documento").getAsString()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 artista.setDocumentoIdentidad(0);
             }
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                Date fechanacimiento = format.parse ( formulario.get("fechanacimiento").getAsString() );
+                Date fechanacimiento = format.parse(formulario.get("fechanacimiento").getAsString());
                 artista.setFechaNacimiento(fechanacimiento);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -94,19 +95,19 @@ public class UsuarioServicio {
             ArrayList<String> listaInstrumentos = new ArrayList<String>();
             Set<Instrumento> setInstrumento = new HashSet<Instrumento>();
 
-            try{
+            try {
                 String[] splitter = instrumentos.split(Pattern.quote(","));
                 listaInstrumentos = new ArrayList<String>(Arrays.asList(splitter));
-            }catch (Exception e){
+            } catch (Exception e) {
                 listaInstrumentos.add(instrumentos);
             }
 
-            for (String inst : listaInstrumentos){
-                try{
+            for (String inst : listaInstrumentos) {
+                try {
                     Instrumento instrumentoBD = this.instrumentoServicio.obtenerPorNombre(inst).get();
                     setInstrumento.add(instrumentoBD);
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -123,18 +124,32 @@ public class UsuarioServicio {
             artista.setUsuario(usuarioFrontEnd);
             Biografia biografia = new Biografia();
             biografia.setArtista(artista);
-            try{
+            try {
                 this.biografiaServicio.guardar(biografia);
                 this.usuarioRepositorio.save(usuarioFrontEnd);
                 this.artistaRepositorio.save(artista);
                 return true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error(" NO PUDE GUARDAR ALGO ");
                 return false;
             }
 
         }
     }
+
+    public boolean actualizarArtista (Artista artista) {
+
+        try {
+            //this.biografiaServicio.guardar(biografia);
+            //this.usuarioRepositorio.save(usuarioFrontEnd);
+            this.artistaRepositorio.save(artista);
+            return true;
+        } catch (Exception e) {
+            log.error(" NO PUDE GUARDAR ALGO ");
+            return false;
+        }
+    }
+
 
     public boolean guardarComercio(Usuario usuario, JsonObject formulario) {
         if (this.usuarioRepositorio.existsByUsername(usuario.getUsername())) return false; else {

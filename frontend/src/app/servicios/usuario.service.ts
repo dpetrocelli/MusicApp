@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../modelos/usuario';
+import { Artista } from '../modelos/artista';
 import { LoginDatos } from '../modelos/logindatos';
 import { Mensaje } from '../modelos/mensaje';
 import { environment } from '../../environments/environment';
@@ -12,7 +13,6 @@ const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})
   providedIn: 'root'
 })
 export class UsuarioService {
- 
 
   private isUserLoggedIn = false;
   usuarioFrontEnd: Usuario = new Usuario();
@@ -76,6 +76,13 @@ export class UsuarioService {
 
     return this.httpClient.post<any>(this.baseURL + `registrar`, {usuario : this.usuarioFrontEnd, formulario: form, instrumentos: instrumentosSeleccionados.toString()}, cabecera); 
     
+  }
+
+  actualizarArtista(artista: Artista, ld : LoginDatos): Observable<any> {
+    
+    console.log("actualizando artista:", artista);
+    console.log("de usuario:", ld);
+    return this.httpClient.post<any>(this.baseURL + 'actualizarArtista', {artista, ld}, cabecera);
   }
 
   public verificarComercioActivado(ld : LoginDatos): Observable<any>{
