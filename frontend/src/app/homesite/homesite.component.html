@@ -126,14 +126,20 @@
     <div class="info col-12"> Zona Geográfica: {{banda.zona.nombreZona}}</div>
     <div class="info col-12"> Integrantes</div>
      <div class="info col-12" *ngFor="let integrante of integrantes">
-          <span> {{integrante.nombre}} - {{integrante.instrumento}}</span>
+          <span> Artista: {{integrante.nombre}} 
+            <div *ngIf="integrante.instrumento"> 
+              <div *ngFor="let int of integrante.instrumento">
+                  Instrumento: {{int.nombreInstrumento}}
+              </div>
+            </div>
+          </span>
     </div>
     <div class="info col-12">
             
         Puntuacion: {{banda.promedio}}
     </div>
      <div>
-       <button class="btn btn-success" routerLink="/banda/{{banda.nombre}}">Ver Perfil</button>
+       <button class="btn btn-success" routerLink="/bandaRedSocial/{{banda.nombre}}">Ver Perfil</button>
      </div>
      <div>
         <button class="btn btn-success" (click)="bandaEnviarMensaje()"> Enviar Mensaje</button>

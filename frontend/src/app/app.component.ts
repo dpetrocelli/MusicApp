@@ -5,6 +5,7 @@ import { LoginDatos } from './modelos/logindatos';
 import { NotificacionBandaUsuario } from './modelos/notificacionbandausuario';
 import { Observable } from 'rxjs';
 import {NotificacionService} from './servicios/notificacion.service';
+import { BandaService } from './servicios/banda.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   isComercio = false;
   isComercioVinculadoMP = false;
   isAdmin = false;
+  isOwnerBand = false;
   isLoggedIn = false;
   userLogged : LoginDatos;
   notificacionesCargadas = false;
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
               private notificacionService: NotificacionService,
               private activatedRoute: ActivatedRoute,
+              private bandaService : BandaService,
               private router: Router) { }
               
   ngOnInit(): void {
@@ -99,6 +102,18 @@ export class AppComponent implements OnInit {
         }else {
           if (this.userLogged.roles = "artista"){
             this.isArtista = true;
+            
+            this.bandaService.SoyDuenioBandaLogin(this.userLogged).subscribe(data => {
+              console.log ("DUENIO BANDA:", data);
+              this.isOwnerBand = data;
+               
+                
+              },
+              (err: any) => {
+                //console.log(" NO DuENIO BANDA");
+                
+              }
+            ); 
             this.obtener();
           }
         }

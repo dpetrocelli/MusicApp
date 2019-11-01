@@ -226,14 +226,16 @@ export class HomesiteComponent implements OnInit {
     
             this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
             if ((this.bandas != null) && (this.bandas.length>0)){
-              
+              this.hayBandas = true;
               for (const banda of this.bandas){
-                
+                console.log (banda.artistaLider);
+                this.integrantes = await this.bandaServicio.buscarArtistas(this.userLogged, banda).toPromise();
+                console.log (" INTEGRANTES ", this.integrantes);
                 this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged, banda.nombre).toPromise();
                 //this.promedio = 0;
                 let promedio = 0;
                 let contador = 0;
-            
+                
                 if (this.listaPuntuacion.length> 0){
                   this.listaPuntuacion.forEach(puntuacion => {
                   
@@ -252,8 +254,8 @@ export class HomesiteComponent implements OnInit {
                 
               };
               
-
-              this.hayBandas = true;
+              
+             
             }else{
               Swal.fire({
                 type: 'error',

@@ -120,25 +120,26 @@ export class InfoPerfilComponent implements OnInit {
   async obtenerBio(){
     this.biografia = await this.perfilService.obtenerbiografia(this.userLogged).toPromise();
            
-    console.log (" LLEGO ESTO, ", this.biografia);
+    
           if (this.biografia[0]!= null){
             this.bio = this.biografia[0];
-            console.log ("PIBe - BIO, ", this.bio);
+            
           }
 
           if (this.biografia[1]!= null){
             this.spotify = this.biografia[1];
             this.haySpotify = true;
-            console.log ("PIBe - SPOT, ", this.spotify);
+            
           }
 
           if (this.biografia[2]!= null){
             this.facebook = this.biografia[2];
             this.hayFacebook = true;
-            console.log ("PIBe - FB, ", this.facebook);
+            
           }
           this.obtenerDatosUsuario();
   }
+
   async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista){
     let header = "Estás seguro de eliminar a: ";
     header+= integrante.usuario.username;
@@ -203,14 +204,42 @@ export class InfoPerfilComponent implements OnInit {
       
     }else{
       // puedo ser de tipo B o C
+      //this.fullbanda();
+      
+      this.bandaService.datosBanda(this.userLogged).subscribe (data => {
+        this.detalleDeLaBanda = data;
+        console.log ("DATOS DE MI BANDA", this.detalleDeLaBanda);
+        
+        //this.listaDeArtistasEnBanda = data; 
+        this.bandaService.SoyDuenioBanda(this.userLogged, null).subscribe (data => {
+          console.log ( " MIS INTEGRANTES", data);
+          this.listaDeArtistasEnBanda = data; 
+          //let index = this.listaDeArtistasEnBanda.indexOf(this.artista);
+          //this.listaDeArtistasEnBanda.splice(index, 1);
+          
+          },
+          (err: any) => {
+            console.log (" caso C, no soy duenio ni pertenezco de banda");
+            console.log(err);
+            //this.router.navigate(['/accesodenegado']);
+          });
+          this.bandaActiva=true;
+        },
+        (err: any) => {
+          console.log ("ERROR GATO");
+          console.log(err);
+          //this.router.navigate(['/accesodenegado']);
+        });
+        
+        /*
       
       this.bandaService.SoyDuenioBanda(this.userLogged, null).subscribe (data => {
-      console.log ("  caso B, soy duenio de banda ", data);
+      
       this.listaDeArtistasEnBanda = data; 
       //let index = this.listaDeArtistasEnBanda.indexOf(this.artista);
       //this.listaDeArtistasEnBanda.splice(index, 1);
       if (this.listaDeArtistasEnBanda.length>0){
-          
+        console.log ("  caso B, soy duenio de banda ", data);
         // es por que soy caso B
           this.detalleDeLaBanda = this.listaDeArtistasEnBanda[0].banda[0];
          
@@ -218,15 +247,21 @@ export class InfoPerfilComponent implements OnInit {
           this.bandaActiva = true;
       }else{
         // caso C, no soy duenio ni tampoco estoy en una banda
-        console.log (" caso C, soy duenio ni pertenezco de banda");
-      }         
+       
+      }        
       },
       (err: any) => {
+        console.log (" caso C, no soy duenio ni pertenezco de banda");
         console.log(err);
         //this.router.navigate(['/accesodenegado']);
       });
+      */ 
     }
 
+  }
+
+  async fullbanda(){
+    this.detalleDeLaBanda = await this.bandaService.datosBanda(this.userLogged).toPromise();  
   }
   actualizar(){
     let error = false;

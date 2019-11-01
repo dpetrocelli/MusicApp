@@ -36,6 +36,9 @@ import { ComercioSiteComponent } from './comerciosite/comerciosite.component';
 import { ListaLugarComponent } from './lugares/lista-lugar.component';
 import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
+import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
+import { NuevaBandaComponent } from './redSocialBanda/crearBanda/nueva-banda.component';
+
 
 
 
@@ -56,6 +59,10 @@ const routes: Routes = [
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   
+   // Perfil de una banda
+   {path: 'bandaRedSocial/:nombre', component: BandaRedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'banda/nueva', component: NuevaBandaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    
       // mis posts
    {path: 'posts', component: PostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
@@ -106,6 +113,8 @@ const routes: Routes = [
     // Pago
    {path: 'notificacion', component: ListaNotificacionComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
    {path: 'pago', component: ListaPagoComponent, canActivate: [seguridad], data: { expectedRol: ['admin']}},
+  
+
    {path: '**', redirectTo: 'home', pathMatch: 'full'}
 
 ];
