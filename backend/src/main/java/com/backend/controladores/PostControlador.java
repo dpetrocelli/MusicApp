@@ -141,22 +141,7 @@ public class PostControlador {
                     }catch (Exception e){
 
                     }
-                    try{
-                        String spotify = json.get("spotify").getAsString();
-                        bio.setSpotify(spotify);
-                    }catch (Exception e){
-
-                    }
-                    try{
-                        String facebook = json.get("facebook").getAsString();
-                        bio.setFacebook(facebook);
-                    }catch (Exception e){
-
-                    }
-
-
-
-
+                     
                     bio.setArtista(artista);
                     this.biografiaServicio.guardar (bio);
                 }
@@ -172,6 +157,86 @@ public class PostControlador {
     }
 
 
+
+    @PostMapping("actualizarBiografiaSpotify")
+    public ResponseEntity<?> actualizarBiografiaSpotify (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    Biografia bio = this.biografiaServicio.obtener(artista);
+                    try{
+                        String spotify = json.get("spotify").getAsString();
+                        bio.setSpotify(spotify);
+                    }catch (Exception e){
+
+                    }
+                    bio.setArtista(artista);
+                    this.biografiaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("actualizarBiografiaFacebook")
+    public ResponseEntity<?> actualizarBiografiaFacebook (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    Biografia bio = this.biografiaServicio.obtener(artista);
+                    try{
+                        String facebook = json.get("facebook").getAsString();
+                        bio.setFacebook(facebook);
+                    }catch (Exception e){
+
+                    }
+                    bio.setArtista(artista);
+                    this.biografiaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
 
     @PostMapping("RedSocialObtenerPost")
     public ResponseEntity<?> RedSocialObtenerPost (@RequestParam("login") String login, @RequestParam("nombre") String nombre){

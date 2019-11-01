@@ -65,15 +65,9 @@
       </div>
       
       <ng-template #noSpotify>
-        <label for="spotify">Spotify Link </label>
-        <input type="textarea"
-                class="form-control"
-                name="spotify"
-                id="spotify"
-                [(ngModel)]="form.spotify"
-                required
-                autocomplete="off"
-                >
+          <br>
+        
+                <button class="btn btn-primary mr-3" (click)="editarSpotify()"> Cargar Spotify </button>
       </ng-template>
  
       
@@ -83,15 +77,8 @@
       </div>
       
       <ng-template #noFacebook>
-        <label for="facebook">Facebook Link </label>
-        <input type="textarea"
-                class="form-control"
-                name="facebook"
-                id="facebook"
-                [(ngModel)]="form.facebook"
-                required
-                autocomplete="off"
-                >
+         <br>
+         <button class="btn btn-primary mr-3" (click)="editarFacebook()"> Cargar Facebook </button>
       </ng-template>
  
   </form>

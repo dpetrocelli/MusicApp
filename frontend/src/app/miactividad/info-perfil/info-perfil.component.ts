@@ -78,7 +78,7 @@ export class InfoPerfilComponent implements OnInit {
       if ((inp.includes ("https://spotify.com")) || (inp.includes ("https://open.spotify.com"))){
         this.form.spotify = text;
         //console.log (" VAMOS A ACTUALIAR CON", this.form.spotify);
-        this.actualizar("sp");
+        this.actualizarSpotify();
         Swal.fire('Se actualizó link spotify ');
       }else{
         Swal.fire({
@@ -103,7 +103,7 @@ export class InfoPerfilComponent implements OnInit {
       if (inp.includes ("https://www.facebook.com")){
         this.form.facebook = inp;
         console.log (" VAMOS A ACTUALIAR CON", this.form.facebook);
-        this.actualizar("fb");
+        this.actualizarFacebook();
         Swal.fire('Se actualizó facebook ');
       }else{
         Swal.fire({
@@ -272,27 +272,9 @@ export class InfoPerfilComponent implements OnInit {
 
   }
 
-  
-  actualizar(opcion : String){
+  actualizarSpotify(){
     let error = false;
-    if (opcion.startsWith("fb")){
-      if ((!(this.form.facebook.startsWith ("https://www.facebook.com")))){
-      console.log ("FB ES", this.form.facebook);
-        Swal.fire({
-          type: 'error',
-          title: 'Facebook...',
-          text: 'direccion no valida!, ajuste para actualizar'
-          
-        })
-        this.form.facebook = "";
-        error = true;
-    }
-    console.log ( " ES FB BIEN", this.form.facebook);
-    }
-   
-    if (opcion.startsWith("sp")){
-      
-      if ((!(this.form.spotify.startsWith ("https://open.spotify.com/")))){
+    if ((!(this.form.spotify.startsWith ("https://open.spotify.com/")))){
         if ((!(this.form.spotify.startsWith ("https://spotify.com/")))){
           console.log ( " TODO MAL", this.form.spotify);
           Swal.fire({
@@ -306,15 +288,51 @@ export class InfoPerfilComponent implements OnInit {
           }
         
       }
-      
-    }
+      if (!error){
+        console.log( " sPITIFY ACTU",this.form.spotify);
+        this.perfilService.actualizarbiografiaSpotify(this.userLogged, this.form.spotify).subscribe(data => {
+          //console.log (data);   
+          this.obtenerBio();      
+        },
+        (err: any) => {
+          console.log(err);
+          this.router.navigate(['/accesodenegado']);
+        });
+      }
 
-    
-    console.log (" HAY ERROR?", error);
+  }
+
+  actualizarFacebook(){
+    let error = false;
+   
+      if ((!(this.form.facebook.startsWith ("https://www.facebook.com")))){
+      console.log ("FB ES", this.form.facebook);
+        Swal.fire({
+          type: 'error',
+          title: 'Facebook...',
+          text: 'direccion no valida!, ajuste para actualizar'
+          
+        })
+        this.form.facebook = "";
+        error = true;
+    }
     if (!error){
-      console.log( " sPITIFY ACTU",this.form.spotify);
-      this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia, this.form.spotify, this.form.facebook).subscribe(data => {
-        //console.log (data);   
+        console.log( " sPITIFY ACTU",this.form.spotify);
+        this.perfilService.actualizarbiografiaFacebook(this.userLogged, this.form.facebook).subscribe(data => {
+          //console.log (data);   
+          this.obtenerBio();      
+        },
+        (err: any) => {
+          console.log(err);
+          this.router.navigate(['/accesodenegado']);
+        });
+      }
+
+  }
+  actualizar(){
+      this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia).subscribe(data => {
+        //console.log (data); 
+        Swal.fire('Se actualizó la biografia ');  
         this.obtenerBio();      
       },
       (err: any) => {
@@ -323,7 +341,7 @@ export class InfoPerfilComponent implements OnInit {
       });
     }
     
-  }
+  
  
   
 }

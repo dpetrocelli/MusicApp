@@ -70,10 +70,17 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'borrarPost/', {login : login, post : post}, cabecera);
   }
 
-  public actualizarbiografia (login : LoginDatos, biografia : String, spotify : String, facebook : String): Observable<any> {
-    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia, spotify : spotify, facebook : facebook}, cabecera);
+  public actualizarbiografia (login : LoginDatos, biografia : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
   }
 
+  public actualizarbiografiaFacebook (login : LoginDatos, facebook : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaFacebook',{login : login, facebook : facebook}, cabecera);
+  }
+
+  public actualizarbiografiaSpotify (login : LoginDatos, spotify : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaSpotify',{login : login, spotify : spotify}, cabecera);
+  }
 /*
 public actualizarbiografia (login : LoginDatos, biografia : String): Observable<any> {
   return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
