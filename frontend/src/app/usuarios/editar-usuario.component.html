@@ -29,13 +29,16 @@
 
             <div class="form-group">
                 <!-- USING HTML 5 DATALIST-->
-                <label for="dl_instrumento"> Instrumento que toca: </label>
+                <label for="instrumento"> Instrumento que toca: </label>
                 <input #instrumento class="form-control" type="text" (keyup)="predictivo($event)" autocomplete="off"
-                    name="dl_instrumento" id="dl_instrumento" list="dinamicInstrumento" />
+                    name="instrumento" id="instrumento" list="dinamicInstrumento" />
                 <datalist id="dinamicInstrumento">
-                    <option *ngFor="let instrumento of respuesta" [value]="instrumento">{{instrumento}}</option>
+                    <option *ngFor="let instrumento of respuesta"
+                        selected="guardarEnLista(instrumento.nombreInstrumento)" [value]="instrumento">{{instrumento}}
+                    </option>
                 </datalist>
                 <table>
+
                     <thead>
                         <tr>
                             <th scope="col">Instrumento</th>
@@ -56,7 +59,7 @@
             <div class="form-group">
                 <label for="documento"> Nro Documento: </label>
                 <input class="form-control" type="number" id="nu_documento" [(ngModel)]="frm_documento"
-                    name="frm_documento" required autocomplete="off" (blur)="validarDNI()" min="0"
+                    name="frm_documento" required autocomplete="off" (blur)="validarDNI()" maxlength="8" min="0"
                     oninput="validity.valid||(value='');" autocomplete="off">
                 <div class="aler alert-danger" [hidden]="dniValido">
                     El dni debe tener de 8 números
@@ -74,7 +77,8 @@
 
             <div class="form-group">
                 <label for="genero"> Género: </label>
-                <select class="form-control" id="sl_genero" name="frm_genero" [(ngModel)]="frm_genero" [compareWith]="compararGenero">
+                <select class="form-control" id="sl_genero" name="frm_genero" [(ngModel)]="frm_genero"
+                    [compareWith]="compararGenero">
                     <option *ngFor="let itemGenero of generos" [ngValue]="itemGenero">
                         {{itemGenero.nombreGenero}}</option>
                 </select>
@@ -82,7 +86,8 @@
 
             <div class="form-group">
                 <label for="zona"> Zona de Trabajo: </label>
-                <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona" [compareWith]="compararZona" (blur)="habilitarONoFormulario()">
+                <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona"
+                    [compareWith]="compararZona" (blur)="habilitarONoFormulario()">
                     <option *ngFor="let itemZona of zonas" [ngValue]="itemZona">{{itemZona.nombreZona}}
                     </option>
                 </select>

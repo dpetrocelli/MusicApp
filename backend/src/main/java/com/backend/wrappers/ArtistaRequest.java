@@ -10,13 +10,17 @@ public class ArtistaRequest {
     @JsonProperty("artista")
     private Artista artista;
 
-    public ArtistaRequest(LoginDatos loginDatos, Artista artista) {
+    public ArtistaRequest() {
+
+    };
+
+    public ArtistaRequest(Artista artista, LoginDatos loginDatos) {
         this.loginDatos = loginDatos;
         this.artista = artista;
     }
 
 
-   public LoginDatos getLoginDatos() {
+    public LoginDatos getLoginDatos() {
         return loginDatos;
     }
 
