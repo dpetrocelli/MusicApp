@@ -22,6 +22,10 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerImagenPerfil',login, cabecera);
   }
 
+
+  public buscarimagenperfilBanda (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerImagenPerfilBanda',login, cabecera);
+  }
   public buscarimagenperfilRedSocial (login : LoginDatos, nombre : string): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
@@ -36,6 +40,12 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'subirImagenPerfil', formdata);
   }
 
+  public subirImagenPerfilBanda (imagenParaSubir: File, login : LoginDatos): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('file', imagenParaSubir);
+    formdata.append('login', JSON.stringify(login));
+    return this.httpClient.post<any>(this.baseURL + 'subirImagenPerfilBanda', formdata);
+  }
   
   public obtenerbiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);

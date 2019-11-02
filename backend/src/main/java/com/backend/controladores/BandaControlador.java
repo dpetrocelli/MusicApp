@@ -3,10 +3,7 @@ package com.backend.controladores;
 import com.backend.dto.Mensaje;
 import com.backend.entidades.*;
 import com.backend.recursos.LoginDatos;
-import com.backend.servicios.ArtistaServicio;
-import com.backend.servicios.BandaServicio;
-import com.backend.servicios.ComercioServicio;
-import com.backend.servicios.UsuarioServicio;
+import com.backend.servicios.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +31,8 @@ public class BandaControlador {
 
     @Autowired
     BandaServicio bandaServicio;
+    @Autowired
+    BiografiaBandaServicio biografiaBandaServicio;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -367,6 +366,9 @@ public class BandaControlador {
             if (this.usuarioServicio.validarTokenUsuario(ld)) {
                 b.setArtistaLider(a);
                 this.bandaServicio.guardar (b);
+                BiografiaBanda bb = new BiografiaBanda();
+                bb.setBanda(b);
+                this.biografiaBandaServicio.guardar(bb);
                 return new ResponseEntity<Boolean>( true, HttpStatus.OK);
 
             }else{

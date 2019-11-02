@@ -34,7 +34,7 @@ export class ImagenPerfilComponentBanda implements OnInit {
     this.files = files;
    
 
-    let data = await this.perfilService.subirImagenPerfil(this.files[0], this.loginDatos).toPromise();
+    let data = await this.perfilService.subirImagenPerfilBanda(this.files[0], this.loginDatos).toPromise();
       console.log (" Pude guardar imagen", files[0].name);
       
     this.cargarImagenPerfil();
@@ -42,7 +42,7 @@ export class ImagenPerfilComponentBanda implements OnInit {
   }
 
   cargarImagenPerfil(){
-    this.perfilService.buscarimagenperfil (this.loginDatos).subscribe(data => {
+    this.perfilService.buscarimagenperfilBanda (this.loginDatos).subscribe(data => {
       this.img = environment.urlApiBackend + "api/archivo/descargar?path=";
       this.img+= data.mensaje;
 

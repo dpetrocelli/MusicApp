@@ -36,6 +36,8 @@ public class PostControlador {
     @Autowired PostServicio postServicio;
     @Autowired ElementoServicio elementoServicio;
     @Autowired ConfiguradorSingleton configuradorSingleton;
+    @Autowired BandaServicio bandaServicio;
+    @Autowired BiografiaBandaServicio biografiaBandaServicio;
 
     /*
         En post controlador voy a tener varias cosas que van a estar disponibles para el usuario
@@ -391,6 +393,29 @@ public class PostControlador {
         }
     }
 
+    @PostMapping("obtenerImagenPerfilBanda")
+    public ResponseEntity<?> obtenerImagenPerfilBanda (@RequestBody LoginDatos ld){
+        try{
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Banda b = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                BiografiaBanda bb = this.biografiaBandaServicio.obtener(b);
+
+                String pathImagenPerfil = bb.getPathImagenPerfil();
+
+                return new ResponseEntity(new Mensaje(pathImagenPerfil), HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener la imagen de perfil "), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("obtenerImagenPortada")
     public ResponseEntity<?> obtenerimagenportada(@RequestBody LoginDatos ld){
         try{
@@ -551,6 +576,55 @@ public class PostControlador {
         }
     }
 
+
+    @PostMapping("subirImagenPerfilBanda")
+    public ResponseEntity<?> subirImagenPerfilBanda (@RequestParam("file") MultipartFile file, @RequestParam("login") String login){
+        try{
+            // [STEP 0] - Obtener las estructuras
+
+            LoginDatos eled = new Gson().fromJson(login, LoginDatos.class);
+
+
+            Usuario usuario = this.usuarioServicio.obtener(Long.valueOf(eled.getIdUsuario()));
+            Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+            Banda b = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+            BiografiaBanda  bio = this.biografiaBandaServicio.obtener(b);
+
+
+            // [STEP 1] Preparo para guardar el binario en el folder del usuario
+            String folder = this.UPLOAD_FOLDER+usuario.getUsername()+"/banda/";
+            File directory = new File(folder);
+            if (!(directory).exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Directorio creado"+directory.getAbsolutePath());
+                }
+            }else{
+                String[] files = directory.list();
+                for (String f: files) {
+                    File remove = new File(directory.getAbsolutePath() + f);
+                    remove.delete();
+                    remove.deleteOnExit();
+                }
+            }
+
+
+            System.out.println("Eliminé imágenes actuales (para dejar 1 sola");
+
+            // [STEP 3] - subir img de perfil
+
+            String pathFile = folder +file.getOriginalFilename();
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(pathFile);
+            Files.write(path, bytes);
+            // creo el elemento vacio
+
+            bio.setPathImagenPerfil(pathFile);
+            this.biografiaBandaServicio.guardar(bio);
+            return new ResponseEntity(new Mensaje("Se guardo la imagen de perfil "), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("No hay posts"), HttpStatus.OK);
+        }
+    }
 
     @PostMapping("obtenerHomeSite")
     public ResponseEntity<?> obtenerHomeSite (@RequestParam("login") String login, @RequestParam("inicio") String inicio, @RequestParam("fin") String fin){
