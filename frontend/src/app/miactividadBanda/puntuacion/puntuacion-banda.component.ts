@@ -34,11 +34,11 @@ export class PuntuacionBandaComponent implements OnInit {
   }
 
   async obtenerPuntuacion(){
-    let band : Banda[] = (await this.bandaService.datosBanda(this.userLogged).toPromise());
+    /*let band : Banda = (await this.bandaService.datosBandaUna(this.userLogged).toPromise());
     
     
-    console.log("OBtUVIMOS BANDA, ", band.nombre);
-    /*this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged, band.nombre).toPromise();
+    console.log("OBtUVIMOS BANDA, ", band.nombre);*/
+    this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionMiBanda(this.userLogged).toPromise();
     if (this.listaPuntuacion.length> 0){
       this.listaPuntuacion.forEach(puntuacion => {
         this.buscarUsuario(puntuacion);
@@ -52,7 +52,7 @@ export class PuntuacionBandaComponent implements OnInit {
     }else{
       this.promedio = 0;
       
-    }*/
+    }
     
   }
   async buscarUsuario (puntuacion : PuntuacionArtista){

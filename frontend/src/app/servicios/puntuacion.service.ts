@@ -30,6 +30,10 @@ export class PuntuacionService {
     return this.httpClient.post<any>(this.baseURL + 'obtenerPuntuacion', login, cabecera);
   }
 
+  public obtenerPuntuacionMiBanda(login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerPuntuacionMiBanda', login, cabecera);
+  }
+
   public verificarSiPuntuee(login : LoginDatos, nombre : string): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
@@ -50,6 +54,7 @@ export class PuntuacionService {
     formdata.append('nombre', nombre.toString());
     return this.httpClient.post<any>(this.baseURL + 'ObtenerPuntuacionBanda',formdata);
   }
+  
   
 /*
   public editar(instrumento: Instrumento, id: number): Observable<any> {

@@ -95,6 +95,13 @@ public class PuntuacionControlador {
         return new ResponseEntity<List<PuntuacionArtista>>(lista, HttpStatus.OK);
     }
 
+
+    @PostMapping("obtenerPuntuacionMiBanda")
+    public ResponseEntity<?> obtenerPuntuacionMiBanda (@RequestBody LoginDatos loginDatos){
+        List<PuntuacionBanda> lista = this.puntuacionServicio.obtenerPuntuacionBandaByLoginDatos(loginDatos);
+
+        return new ResponseEntity<List<PuntuacionBanda>>(lista, HttpStatus.OK);
+    }
     @PostMapping("verificarSiPuntuee")
     public ResponseEntity<?>  verificarSiPuntuee (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
         LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
@@ -122,6 +129,9 @@ public class PuntuacionControlador {
         log.info(" Obteniendo lista de puntuaciones");
         return new ResponseEntity<List<PuntuacionBanda>>(lista, HttpStatus.OK);
     }
+
+
+
 
 
 

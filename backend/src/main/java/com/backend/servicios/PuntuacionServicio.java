@@ -35,6 +35,8 @@ public class PuntuacionServicio {
     ComercioServicio comercioServicio;
     @Autowired
     MarketPlaceServicio marketPlaceServicio;
+    @Autowired
+    BandaServicio bandaServicio;
 
 
     public boolean validarSiYaPuntuee(LoginDatos ld, String art){
@@ -82,6 +84,16 @@ public class PuntuacionServicio {
         Artista artistaPuntuado = this.artistaServicio.obtenerPorUsuario(usuarioPuntuado);
 
         return this.puntuacionRepositorio.findAllByArtistaPuntuado(artistaPuntuado.getId());
+
+
+    }
+
+    public List<PuntuacionBanda> obtenerPuntuacionBandaByLoginDatos(LoginDatos ld) {
+        Usuario usuarioPuntuado = this.usuarioServicio.obtener(ld.getIdUsuario());
+        Artista artistaPuntuado = this.artistaServicio.obtenerPorUsuario(usuarioPuntuado);
+        Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artistaPuntuado).get(0);
+
+        return this.puntuacionRepositorioBanda.findAllByBandaPuntuada(banda.getId());
 
 
     }
