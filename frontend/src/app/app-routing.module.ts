@@ -39,7 +39,7 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
 import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 import { NuevaBandaComponent } from './redSocialBanda/crearBanda/nueva-banda.component';
 import { ModificarBandaComponent } from './redSocialBanda/modificarBanda/modificar-banda.component';
-
+import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
 
 
 
@@ -59,7 +59,7 @@ const routes: Routes = [
    {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
-   {path: 'mibanda', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'mibanda', component: PerfilBandaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    
    // Perfil de una banda
