@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { PuntuacionRedsocialComponent } from './puntuacion-redsocial.component';
+import { PuntuacionRedsocialBandaComponent } from './puntuacion-redsocial-banda.component';
 
-describe('PuntuacionRedsocialComponent', () => {
-  let component: PuntuacionRedsocialComponent;
-  let fixture: ComponentFixture<PuntuacionRedsocialComponent>;
+describe('PuntuacionRedsocialBandaComponent', () => {
+  let component: PuntuacionRedsocialBandaComponent;
+  let fixture: ComponentFixture<PuntuacionRedsocialBandaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PuntuacionRedsocialComponent ]
+      declarations: [ PuntuacionRedsocialBandaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PuntuacionRedsocialComponent);
+    fixture = TestBed.createComponent(PuntuacionRedsocialBandaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
