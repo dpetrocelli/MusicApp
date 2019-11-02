@@ -26,16 +26,16 @@ export class ImagenPerfilRedsocialBandaComponent implements OnInit {
     this.cargarImagenPerfil();
   }
 
-  cargarImagenPerfil(){
-    this.perfilService.buscarimagenperfilBanda (this.loginDatos).subscribe(data => {
+  cargarImagenPerfil() {
+    this.perfilService.buscarimagenperfilRedSocialBanda(this.loginDatos, this.nombreUsuario).subscribe(data => {
       this.img = environment.urlApiBackend + "api/archivo/descargar?path=";
-      this.img+= data.mensaje;
+      this.img += data.mensaje;
 
       //console.log ("Img Backend loaded: ",this.img);
     },
-    (err: any) => {
-      console.log(" TENEMOS UN ERROR ", err);
-      //this.router.navigate(['/accesodenegado']);
-    });
+      (err: any) => {
+        console.log(" TENEMOS UN ERROR ", err);
+        //this.router.navigate(['/accesodenegado']);
+      });
   }
 }

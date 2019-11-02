@@ -26,6 +26,14 @@ export class PerfilService {
   public buscarimagenperfilBanda (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerImagenPerfilBanda',login, cabecera);
   }
+
+  public buscarimagenperfilRedSocialBanda (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerImagenPerfilBanda', formdata);
+  }
+
   public buscarimagenperfilRedSocial (login : LoginDatos, nombre : string): Observable<any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
