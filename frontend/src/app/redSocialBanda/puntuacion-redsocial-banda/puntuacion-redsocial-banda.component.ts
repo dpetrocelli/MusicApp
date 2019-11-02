@@ -36,7 +36,6 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
           
         },
         (err: any) => {
-          
          
         });
       }
@@ -79,7 +78,6 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
       this.router.navigate(['puntuacion/nuevo/'+this.nombreUsuario]);
 
     }
-   
   
     async delay(ms: number) {
       return await new Promise( resolve => setTimeout(resolve, ms) );

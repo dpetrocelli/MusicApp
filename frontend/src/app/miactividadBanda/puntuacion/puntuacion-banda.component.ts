@@ -37,7 +37,7 @@ export class PuntuacionBandaComponent implements OnInit {
     let band : Banda[] = (await this.bandaService.datosBanda(this.userLogged).toPromise());
     
     
-    console.log("OBtUVIMOS BANDA, ", band.nombre);
+    //console.log("OBtUVIMOS BANDA, ", band.nombre);
     /*this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged, band.nombre).toPromise();
     if (this.listaPuntuacion.length> 0){
       this.listaPuntuacion.forEach(puntuacion => {
