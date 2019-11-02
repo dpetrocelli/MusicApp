@@ -35,8 +35,8 @@ export class InfoPerfilBandaComponent implements OnInit {
   haySpotify : boolean = false;
   hayFacebook : boolean = false;
   soyIntegrante : boolean = false;
-  //@HostBinding('class')
-  //@Input() biografiaComponent: InfoPerfilComponent;
+  @HostBinding('class')
+  @Input() biografiaComponent: InfoPerfilBandaComponent;
   constructor(private usuarioService: UsuarioService,
             private notificacionService : NotificacionService,
               private bandaService: BandaService,
