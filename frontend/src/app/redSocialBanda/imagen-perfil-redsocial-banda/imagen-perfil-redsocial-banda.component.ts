@@ -12,22 +12,22 @@ import { environment } from '../../../environments/environment';
 })
 export class ImagenPerfilRedsocialBandaComponent implements OnInit {
   loginDatos: LoginDatos = new LoginDatos();
-  nombreUsuario : string;
-  img : String;
-  constructor(private perfilService : PerfilService,
+  nombreUsuario: string;
+  img: String;
+  constructor(private perfilService: PerfilService,
     private usuarioService: UsuarioService,
     private router: ActivatedRoute) { }
 
   ngOnInit() {
-    
+
     this.nombreUsuario = this.router.snapshot.paramMap.get("nombre");
-    console.log (this.nombreUsuario);
+    console.log(this.nombreUsuario);
     this.loginDatos = this.usuarioService.getUserLoggedIn();
     this.cargarImagenPerfil();
   }
 
   cargarImagenPerfil(){
-    this.perfilService.buscarimagenperfilRedSocial (this.loginDatos, this.nombreUsuario).subscribe(data => {
+    this.perfilService.buscarimagenperfilBanda (this.loginDatos).subscribe(data => {
       this.img = environment.urlApiBackend + "api/archivo/descargar?path=";
       this.img+= data.mensaje;
 
