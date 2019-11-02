@@ -125,14 +125,18 @@ export class AppComponent implements OnInit {
   async aceptar(itemForm: any) {
     
     // si acepta depende el tipo de operación
-    if (itemForm.tipo!="moderacionArtista"){
+    let itemTipo = new String(itemForm.tipo);
+    if (itemTipo.startsWith("moderacionBan")){
       // hago una cosa
-
+      console.log ("MODERACION-BANDA", itemForm);
+      
+      await this.notificacionService.incluirABanda(this.userLogged, itemForm.origen, itemForm.destino , itemForm.id, "moderacionbanda").toPromise();
+      this.obtener();
     }else{
       // hago otra cosa
       
-      console.log ("aceptar e incluir a banda");
-      await this.notificacionService.incluirABanda(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
+      console.log ("MODERACION-ARTISTA", itemForm);
+      await this.notificacionService.incluirABanda(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id, "moderacionartista").toPromise();
       this.obtener();
     }
   }

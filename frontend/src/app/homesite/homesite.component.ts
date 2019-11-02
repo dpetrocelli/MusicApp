@@ -35,6 +35,7 @@ export class HomesiteComponent implements OnInit {
   userLogged : LoginDatos;
   hayPosts : boolean = false;
   hayArtistas : boolean = false;
+  soyAdmin : boolean = false;
   soyDuenioBanda : boolean;
   hayBandas : boolean = false;
   posts : Post[] = [];
@@ -188,7 +189,8 @@ export class HomesiteComponent implements OnInit {
           
           try{
             this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged, null).toPromise();
-            console.log ("LISTA DE ARTISTAS", this.artistasQueSonDeMiBanda);
+            
+                this.soyAdmin=true;
             
           }catch {
             console.log (" No pude verificar si soy dueño banda");
@@ -460,8 +462,8 @@ export class HomesiteComponent implements OnInit {
    }
  }
 
-  async artistaInvitarAMiBanda(artista){
-    
+  async artistaInvitarAMiBanda(artista : Artista){
+    console.log ("voy a invitar a artista: ", artista);
     const { value: msg } = await Swal.fire({
      title: 'Ingrese el mensaje de invitación',
      input: 'text',
@@ -492,6 +494,38 @@ export class HomesiteComponent implements OnInit {
    }
  }
 
+
+ async artistaSolicitaAccesoABanda(banda : Banda){
+    
+  const { value: msg } = await Swal.fire({
+   title: 'Ingrese el mensaje de solicitud de acceso a banda',
+   input: 'text',
+   inputValue: "Hola, quiero ingresar a tu banda "+banda.nombre,
+   showCancelButton: true,
+   inputValidator: (value) => {
+     if (!value) {
+       return 'Debes ingresar un mensaje!'
+     }
+   }
+ })
+
+ if (msg) {
+   let artistax : Artista = await this.usuarioService.obtenerDatosUsuario(this.userLogged).toPromise();
+   this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, banda.artistaLider , "moderacionBanda").subscribe(data => {
+     console.log ("RESPUESTA:", data);
+     
+       });      
+      
+       //console.log (" CARTEL ", data);
+     
+     (err: any) => {
+       console.log(err.error.mensaje);
+       
+     }
+   
+   Swal.fire('Invitación enviada a la banda '+new String (banda.nombre));
+ }
+}
  
 
   ocultarImagen(){

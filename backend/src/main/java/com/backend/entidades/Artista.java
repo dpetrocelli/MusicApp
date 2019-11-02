@@ -34,7 +34,7 @@ public class Artista implements Serializable {
     private Set<Banda> banda = new HashSet<>();
 
     @ManyToOne (optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = true)
     private GeneroMusical generoMusical;
 
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
@@ -42,7 +42,7 @@ public class Artista implements Serializable {
     private Set<Instrumento> instrumento = new HashSet<>();
 
     @ManyToOne (optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_zona", nullable = false, updatable = true)
 
     private Zona zona;
 

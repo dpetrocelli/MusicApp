@@ -55,8 +55,14 @@ public class ArtistaServicio {
         return this.artistaRepositorio.findAll();
     }
     public boolean guardar (Artista artista) {
-        this.artistaRepositorio.save(artista);
-        return true;
+        try{
+            this.artistaRepositorio.save(artista);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();return false;
+        }
+
+
     }
 
 

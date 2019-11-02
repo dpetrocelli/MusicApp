@@ -118,6 +118,8 @@ public class NotificacionBandaUsuarioControlador {
         }
     }
 
+
+
     @PostMapping("descartar")
     public ResponseEntity<?> Descartar (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
         try{
@@ -138,12 +140,12 @@ public class NotificacionBandaUsuarioControlador {
     }
 
     @PostMapping("incluirABanda")
-    public ResponseEntity<?> incluirABanda (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
+    public ResponseEntity<?> incluirABanda (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id, @RequestParam("moderacion") String moderacion){
         try{
             LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
             if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
 
-                boolean result = this.notificacionBandaUsuarioServicio.incluirABanda(id, nombreOrigen, nombreDestino);
+                boolean result = this.notificacionBandaUsuarioServicio.incluirABanda(id, nombreOrigen, nombreDestino, moderacion);
                 if (result){
                     return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
                 }else {

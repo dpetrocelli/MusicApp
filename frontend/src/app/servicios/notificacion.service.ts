@@ -6,6 +6,7 @@ import { LoginDatos } from '../modelos/logindatos';
 import { Mensaje } from '../modelos/mensaje';
 import { environment } from '../../environments/environment';
 import { Artista } from '../modelos/artista';
+import { Banda } from '../modelos/banda';
 
 const cabecera = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -52,12 +53,13 @@ export class NotificacionService {
     return this.httpClient.post<any>(this.baseURL + 'descartar', formdata);
   }
   
-  public incluirABanda (login: LoginDatos, nombreOrigen: string, nombreDestino: string, id: string) : Observable <any> {
+  public incluirABanda (login: LoginDatos, nombreOrigen: string, nombreDestino: string, id: string, moderacion: string) : Observable <any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
     formdata.append('nombreOrigen', nombreOrigen);
     formdata.append('nombreDestino', nombreDestino);
     formdata.append('id', id);
+    formdata.append('moderacion', moderacion);
     return this.httpClient.post<any>(this.baseURL + 'incluirABanda', formdata);
   }
 
@@ -69,6 +71,8 @@ export class NotificacionService {
     formdata.append('tipomsg', tipomsg);
     return this.httpClient.post<any>(this.urlUsuario + 'nuevoMensaje', formdata);
   }
+
+  
   
 }
 

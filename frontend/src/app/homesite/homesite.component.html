@@ -105,7 +105,7 @@
      <div>
         <button class="btn btn-success" (click)="artistaEnviarMensaje(artista)"> Enviar Mensaje</button>
       </div>
-      <div *ngIf="!revisionEnBanda(artista)">
+      <div *ngIf="!revisionEnBanda(artista) && soyAdmin">
         <button class="btn btn-warning" (click)="artistaInvitarAMiBanda(artista)"> Invitar a Banda</button>
       </div>
    
@@ -144,6 +144,11 @@
      <div>
         <button class="btn btn-success" (click)="bandaEnviarMensaje(banda)"> Enviar Mensaje</button>
       </div>
+
+      
+        <button class="btn btn-warning" (click)="artistaSolicitaAccesoABanda(banda)"> Solicitar Acceso a Banda</button>
+      
+
    </div>
    
  </div>
