@@ -321,6 +321,33 @@ public class BandaControlador {
 
     }
 
+    @PostMapping("datosBandaUna")
+    public ResponseEntity<?> datosBandaUna (@RequestBody LoginDatos ld) {
+        // [STEP 0] - Validar usuario y contraseña
+        log.info(" DATOS BANDA");
+        try {
+            //LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+            Artista a = this.artistaServicio.obtenerPorUsuario(u);
+
+            Banda rest = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(a).get(0);
+            // por ahora vamos a tener una sola banda duenio
+
+                return new ResponseEntity<Banda>(rest, HttpStatus.OK);
+
+
+
+
+
+
+
+
+        } catch (Exception e) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
     @PostMapping("eliminarArtistaDeBanda")
     public ResponseEntity<?> eliminarArtistaDeBanda (@RequestParam("login") String login, @RequestParam("banda") String banda, @RequestParam("artista") String artista) {
         // [STEP 0] - Validar usuario y contraseña

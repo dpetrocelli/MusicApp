@@ -36,6 +36,10 @@ export class BandaService {
 public datosBanda (login : LoginDatos) : Observable <any> {
   return this.httpClient.post<any>(this.baseURL + 'datosBanda', login, cabecera);
 }
+
+public datosBandaUna(login : LoginDatos) : Observable <any> {
+  return this.httpClient.post<any>(this.baseURL + 'datosBandaUna', login, cabecera);
+}
 public obtenerArtistasDeBanda (ld : LoginDatos, artista: Artista) : Observable <any> {
   var formdata: FormData = new FormData();
   formdata.append('login', JSON.stringify(ld));
@@ -43,6 +47,8 @@ public obtenerArtistasDeBanda (ld : LoginDatos, artista: Artista) : Observable <
   
   return this.httpClient.post<any>(this.baseURL + 'obtenerArtistasDeBanda', formdata);
 }
+
+
 
 public buscarArtistas (ld : LoginDatos, banda: Banda) : Observable <any> {
   var formdata: FormData = new FormData();

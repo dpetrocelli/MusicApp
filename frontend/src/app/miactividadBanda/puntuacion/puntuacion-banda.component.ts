@@ -5,6 +5,9 @@ import { PuntuacionService } from '../../servicios/puntuacion.service';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { Router } from '@angular/router';
 import { findSafariExecutable } from 'selenium-webdriver/safari';
+import { Artista } from 'src/app/modelos/artista';
+import { BandaService } from 'src/app/servicios/banda.service';
+import { Banda } from 'src/app/modelos/banda';
 
 @Component({
   selector: 'app-puntuacion-banda',
@@ -20,7 +23,7 @@ export class PuntuacionBandaComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
               private router: Router,
-              private puntuacionService : PuntuacionService) { }
+              private puntuacionService : PuntuacionService, private bandaService : BandaService) { }
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
@@ -31,7 +34,11 @@ export class PuntuacionBandaComponent implements OnInit {
   }
 
   async obtenerPuntuacion(){
-    this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacion(this.userLogged).toPromise();
+    let band : Banda[] = (await this.bandaService.datosBanda(this.userLogged).toPromise());
+    
+    
+    console.log("OBtUVIMOS BANDA, ", band.nombre);
+    /*this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged, band.nombre).toPromise();
     if (this.listaPuntuacion.length> 0){
       this.listaPuntuacion.forEach(puntuacion => {
         this.buscarUsuario(puntuacion);
@@ -45,7 +52,7 @@ export class PuntuacionBandaComponent implements OnInit {
     }else{
       this.promedio = 0;
       
-    }
+    }*/
     
   }
   async buscarUsuario (puntuacion : PuntuacionArtista){
