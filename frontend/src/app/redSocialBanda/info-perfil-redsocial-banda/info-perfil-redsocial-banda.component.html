@@ -1,0 +1,60 @@
+<div class="container text-center">
+  
+  <div class="d-flex flex-column puntuacion" *ngIf="isLoaded"> 
+    
+    <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
+    <span> NickName: {{artista.nickname}}</span>
+    <span> Sexo: {{artista.genero}}</span>
+    
+    <span> Género Musical: {{artista.generoMusical.nombre}}</span> 
+    <span> Zona Geográfica: {{artista.zona.nombreZona}}</span> 
+    <span> Fecha de Nacimiento: {{artista.fechaNacimiento | date: "dd-MM-yyyy"}}</span>
+    <p></p>
+  </div>
+  <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva"> 
+    
+    <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
+    <span> Género Musical: {{detalleDeLaBanda.generoMusical}}</span>
+    <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}</span>
+    Artistas Integrantes:
+    <div *ngFor="let integrante of listaDeArtistasEnBanda"> 
+      <span> {{integrante.nombre}}</span>
+    </div>
+    
+    <p></p>
+  </div>
+
+  <form #f="ngForm" novalidate>
+      <div class="form-group">
+      <label for="biografia">Biografia </label>
+      <input type="textarea"
+              class="form-control"
+              name="biografia"
+              id="biografia"
+              [(ngModel)]="form.biografia"
+              required
+              autocomplete="off"
+              disabled=yes
+              value = "{{bio}}">
+      </div>
+      
+      <div class="float-md-center" *ngIf="haySpotify">
+        <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" height="50" width="50" (click)="abrirSpotify()"/>
+        
+        
+      </div>
+      
+    
+ 
+      
+      <div class="float-md-center" *ngIf="hayFacebook">
+        <img src="https://i.pinimg.com/originals/58/f4/72/58f4723d8f23906bdcb058604075ad2a.png" height="50" width="50" (click)="abrirFacebook()"/>
+        
+      </div>
+      
+      
+    
+  </form>
+  
+  
+</div>
