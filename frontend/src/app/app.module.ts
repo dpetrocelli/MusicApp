@@ -61,6 +61,8 @@ import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.compon
 import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.component';
 import { ModificarBandaComponent} from './redSocialBanda/modificarBanda/modificar-banda.component';
 import { ImagenPerfilComponentBanda} from './miactividadBanda/imagen-perfil-banda/imagen-perfil-banda.component';
+import { InfoPerfilBandaComponent} from './miactividadBanda/info-perfil-banda/info-perfil-banda.component';
+
 import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
 import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
@@ -75,6 +77,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       EditarLugarComponent,
       DetalleInstrumentoComponent,
       NuevoInstrumentoComponent,
+      InfoPerfilBandaComponent,
       EditarInstrumentoComponent,
       NuevaConfiguracionComponent,
       VerConfiguracionComponent,
