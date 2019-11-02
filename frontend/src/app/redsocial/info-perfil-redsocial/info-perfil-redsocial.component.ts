@@ -46,7 +46,7 @@ export class InfoPerfilRedsocialComponent implements OnInit {
           this.obtenerbiografia();
           
   }
-
+ 
   async obtenerbiografia(){
     
       this.biografia = await this.perfilService.obtenerbiografiaRedSocial(this.loginDatos,this.nombreUsuario).toPromise();
@@ -80,7 +80,7 @@ export class InfoPerfilRedsocialComponent implements OnInit {
   abrirFacebook(){
     window.open(this.facebook, '_blank');
   }
-  
+   
   async obtenerDatosUsuario(){
     this.artista = await this.usuarioService.obtenerDatosUsuarioRedSocial (this.loginDatos,this.nombreUsuario).toPromise();     
     this.isLoaded = true;

@@ -70,6 +70,13 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerBiografia', formdata);
   }
   
+  public obtenerbiografiaRedSocialBanda (login : LoginDatos, nombre : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombre);
+    return this.httpClient.post<any>(this.baseURL + 'RedSocialObtenerBiografiaBanda', formdata);
+  }
+
   public existebiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'existeBiografia',login, cabecera);
   }

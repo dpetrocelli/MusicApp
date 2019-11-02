@@ -10,30 +10,31 @@ import { Post } from 'src/app/modelos/post';
 import { Elemento } from 'src/app/modelos/elemento';
 
 @Component({
-  
+
   selector: 'app-info-perfil-redsocial-banda',
   templateUrl: './info-perfil-redsocial-banda.component.html',
   styleUrls: ['./info-perfil-redsocial-banda.component.css']
 })
 export class InfoPerfilRedsocialBandaComponent implements OnInit {
 
-  posts : Post[] = [];
-  elemString : String[];
-  elementos : Elemento[] = [];
-  userLogged : LoginDatos;
-  biografia : string[];
-  artista : Artista;
-  listaDeArtistasEnBanda : Artista[];
-  detalleDeLaBanda : Banda;
-  isLoaded : boolean = false;
+  posts: Post[] = [];
+  elemString: String[];
+  elementos: Elemento[] = [];
+  userLogged: LoginDatos;
+  biografia: string[];
+  nombreUsuario: string;
+  artista: Artista;
+  listaDeArtistasEnBanda: Artista[];
+  detalleDeLaBanda: Banda;
+  isLoaded: boolean = false;
   form: any = {};
   bandaActiva = false;
-  bio : String = null;
-  spotify : string = null;
-  facebook : string = null;
-  haySpotify : boolean = false;
-  hayFacebook : boolean = false;
-  soyIntegrante : boolean = false;
+  bio: String = null;
+  spotify: string = null;
+  facebook: string = null;
+  haySpotify: boolean = false;
+  hayFacebook: boolean = false;
+  soyIntegrante: boolean = false;
 
   @HostBinding('class')
   @Input() biografiaComponent: InfoPerfilRedsocialBandaComponent;
@@ -45,7 +46,7 @@ export class InfoPerfilRedsocialBandaComponent implements OnInit {
 
   ngOnInit() {
     // buscar en la base de datos la biografia
-          
+    this.nombreUsuario = this.activatedRoute.snapshot.paramMap.get("nombre");
     this.userLogged = this.usuarioService.getUserLoggedIn();
     this.obtenerBio();
 
@@ -60,7 +61,7 @@ export class InfoPerfilRedsocialBandaComponent implements OnInit {
   }
 
   async obtenerBio() {
-    this.biografia = await this.perfilService.obtenerbiografiaBanda(this.userLogged).toPromise();
+    this.biografia = await this.perfilService.obtenerbiografiaRedSocialBanda(this.userLogged, this.nombreUsuario).toPromise();
 
 
     if (this.biografia[0] != null) {

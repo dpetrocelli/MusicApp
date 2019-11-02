@@ -94,6 +94,30 @@ public class PostControlador {
         }
     }
 
+    @PostMapping("RedSocialObtenerBiografiaBanda")
+    public ResponseEntity<?> RedSocialObtenerBiografiaBanda (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        try{
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+
+                Banda banda = this.bandaServicio.obtenerBandaPorNombre(nombre);
+                BiografiaBanda biografiaBanda = this.biografiaBandaServicio.obtener(banda);
+                ArrayList<String> respuesta = new ArrayList<String>();
+                respuesta.add(biografiaBanda.getBiografiaBasica());
+                respuesta.add(biografiaBanda.getSpotify());
+                respuesta.add(biografiaBanda.getFacebook());
+
+                return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener biografia"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("obtenerBiografia")
     public ResponseEntity<?> obtener (@RequestBody LoginDatos ld){
         try{
