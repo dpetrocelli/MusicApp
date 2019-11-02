@@ -15,7 +15,7 @@ public class Banda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "artista_id", referencedColumnName = "id")
     private Artista artistaLider;
 

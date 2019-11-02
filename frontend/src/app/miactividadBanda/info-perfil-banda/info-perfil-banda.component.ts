@@ -158,12 +158,14 @@ export class InfoPerfilBandaComponent implements OnInit {
         this.listaDeArtistasEnBanda.forEach(artistaAEliminar => {
           this.borrarIntegranteSilencioso(this.detalleDeLaBanda, artistaAEliminar);
         });
-        this.bandaService.borrarBanda(this.userLogged, this.detalleDeLaBanda);
-        /*Swal.fire(
+        
+        this.bandaService.borrarBanda(this.userLogged, this.detalleDeLaBanda).toPromise();
+        Swal.fire(
           'Banda!',
           'Eliminada.',
           'success'
-        )*/
+        )
+        this.router.navigate(['']);
         
       }
     })
@@ -209,9 +211,9 @@ export class InfoPerfilBandaComponent implements OnInit {
           'success'
         )
         //this.obtenerDatosUsuario();
-        this.router.navigateByUrl('menu', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['perfil']);
-      });
+        
+          this.router.navigate(['homesite/nada']);
+      
       }
     })
   }
@@ -312,19 +314,22 @@ export class InfoPerfilBandaComponent implements OnInit {
 
   actualizarSpotify(){
     let error = false;
-    if ((!(this.form.spotify.startsWith ("https://open.spotify.com/")))){
-        if ((!(this.form.spotify.startsWith ("https://spotify.com/")))){
-          console.log ( " TODO MAL", this.form.spotify);
-          Swal.fire({
-            type: 'error',
-            title: 'Spotify...',
-            text: 'direccion no valida!, ajuste para actualizar'
-            
-          })
-          this.form.spotify = "";
-          error = true;
-          }
+    console.log (" SPOT LINK", this.form.spotify);
+    if ((this.form.spotify.startsWith ("https://open.spotify.com/")) || ((this.form.spotify.startsWith ("https://www.spotify.com/")))){
+        //if ((!(this.form.spotify.startsWith ("https://")))){
+          console.log ( " TODO OK", this.form.spotify);
         
+        //  }
+        
+      }else{
+        error = true;
+        this.form.spotify = "";
+        Swal.fire({
+          type: 'error',
+          title: 'Spotify...',
+          text: 'direccion no valida!, ajuste para actualizar'
+          
+        })
       }
       if (!error){
         console.log( " sPITIFY ACTU",this.form.spotify);

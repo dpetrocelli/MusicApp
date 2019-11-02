@@ -41,6 +41,7 @@
     </div>
     <div *ngIf="!soyIntegrante">
       <button class="btn btn-primary" routerLink="/banda/editar/{{detalleDeLaBanda.id}}"> Editar Banda </button>
+      <button class="btn btn-success" (click)="verperfilbanda()"> Ver Perfil Banda </button>
     </div>
   </div>
   <ng-template #elseBlock>

@@ -50,11 +50,11 @@ public obtenerArtistasDeBanda (ld : LoginDatos, artista: Artista) : Observable <
 
 
 public borrarBanda (ld : LoginDatos, banda: Banda) : Observable <any> {
-  console.log( " VINE A BORARAR BANDA", banda);
+
   var formdata: FormData = new FormData();
   formdata.append('login', JSON.stringify(ld));
   formdata.append('banda',JSON.stringify(banda));
-  console.log( " VINE A BORARAR BANDA arme form", banda);
+
   return this.httpClient.post<any>(this.baseURL + 'borrarBandaTotal', formdata);
 }
 

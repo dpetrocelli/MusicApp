@@ -117,6 +117,10 @@ export class InfoPerfilComponent implements OnInit {
       
     }
   }
+
+  verperfilbanda(){
+    this.router.navigate(['mibanda']);
+  }
   async obtenerBio(){
     this.biografia = await this.perfilService.obtenerbiografia(this.userLogged).toPromise();
            
@@ -275,7 +279,7 @@ export class InfoPerfilComponent implements OnInit {
   actualizarSpotify(){
     let error = false;
     if ((!(this.form.spotify.startsWith ("https://open.spotify.com/")))){
-        if ((!(this.form.spotify.startsWith ("https://spotify.com/")))){
+        if ((!(this.form.spotify.startsWith ("https://")))){
           console.log ( " TODO MAL", this.form.spotify);
           Swal.fire({
             type: 'error',

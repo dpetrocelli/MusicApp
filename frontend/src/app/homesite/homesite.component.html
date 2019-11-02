@@ -102,7 +102,7 @@
         
        <button class="btn btn-success" routerLink="/redsocial/{{artista.usuario.username}}">Ver Perfil</button>
      </div>
-     <div>
+     <div *ngIf="userLogged.nombreUsuario!=artista.usuario.username">
         <button class="btn btn-success" (click)="artistaEnviarMensaje(artista)"> Enviar Mensaje</button>
       </div>
       <div *ngIf="!revisionEnBanda(artista) && soyAdmin">
