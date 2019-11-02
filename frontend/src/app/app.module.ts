@@ -67,6 +67,9 @@ import { PuntuacionBandaComponent} from './miactividadBanda/puntuacion/puntuacio
 import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
 import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
+import { ImagenPerfilRedsocialBandaComponent } from './redSocialBanda/imagen-perfil-redsocial-banda/imagen-perfil-redsocial-banda.component';
+import { InfoPerfilRedsocialBandaComponent } from './redSocialBanda/info-perfil-redsocial-banda/info-perfil-redsocial-banda.component';
+import { PuntuacionRedsocialBandaComponent } from './redSocialBanda/puntuacion-redsocial-banda/puntuacion-redsocial-banda.component';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -127,6 +130,9 @@ registerLocaleData(localeEsAr, 'es-Ar');
       NuevoLugarComponent,
       NuevaZonaComponent,
       EditarZonaComponent,
+      ImagenPerfilRedsocialBandaComponent,
+      InfoPerfilRedsocialBandaComponent,
+      PuntuacionRedsocialBandaComponent,
    ],
    imports: [
       BrowserModule,
