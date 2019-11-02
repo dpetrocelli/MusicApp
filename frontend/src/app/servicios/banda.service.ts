@@ -52,6 +52,15 @@ public buscarArtistas (ld : LoginDatos, banda: Banda) : Observable <any> {
   return this.httpClient.post<any>(this.baseURL + 'buscarArtistas', formdata);
 }
 
+public detalle(id: number): Observable<Banda> {
+  return this.httpClient.get<Banda>(this.baseURL + `detalle/${id}`, cabecera);
+}
+
+
+public editar(banda: Banda, id: number): Observable<any> {
+  return this.httpClient.put<any>(this.baseURL + `actualizar/${id}`, banda, cabecera);
+}
+
   public SoyDuenioBanda (ld : LoginDatos, artista: Artista) : Observable <any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(ld));

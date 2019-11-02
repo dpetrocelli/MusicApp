@@ -12,10 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -121,6 +118,15 @@ public class BandaServicio {
     }
 
     public void guardar(Banda b) {
+
         this.bandaRepositorio.save(b);
+    }
+
+    public boolean existePorId(Long id) {
+        return this.bandaRepositorio.existsById(id);
+    }
+
+    public Banda obtenerPorId(Long id) {
+        return this.bandaRepositorio.findById(id).get();
     }
 }

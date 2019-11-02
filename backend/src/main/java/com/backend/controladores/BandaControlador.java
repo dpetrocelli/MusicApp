@@ -9,6 +9,7 @@ import com.backend.servicios.ComercioServicio;
 import com.backend.servicios.UsuarioServicio;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,6 +180,40 @@ public class BandaControlador {
         }
 
     }
+
+    @GetMapping("detalle/{id}")
+    public ResponseEntity<Banda> getOne(@PathVariable Long id){
+        log.info(" Obteniendo detalle de Lugar: "+id);
+
+        if(!bandaServicio.existePorId(id))
+            return new ResponseEntity(new Mensaje("no existe ese producto"), HttpStatus.NOT_FOUND);
+        Banda banda = this.bandaServicio.obtenerPorId(id);
+        return new ResponseEntity<Banda>(banda, HttpStatus.OK);
+    }
+
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<?> update(@RequestBody Banda banda, @PathVariable("id") Long id){
+        log.info(" Actualizar Lugar: "+id);
+        if(!this.bandaServicio.existePorId(id))
+            return new ResponseEntity(new Mensaje("no existe el Lugar "+this.bandaServicio.obtenerPorId(id)), HttpStatus.NOT_FOUND);
+        if(StringUtils.isBlank(banda.getNombre()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+
+
+
+        Banda baseBanda = this.bandaServicio.obtenerPorId(id);
+
+        baseBanda.setGeneroMusical(banda.getGeneroMusical());
+        baseBanda.setNombre(banda.getNombre());
+        baseBanda.setZona(banda.getZona());
+
+
+        this.bandaServicio.guardar(baseBanda);
+
+
+        return new ResponseEntity(new Mensaje("banda actualizado"), HttpStatus.CREATED);
+    }
+
 
     @PostMapping("soyDuenioBanda")
     public ResponseEntity<?> soyDuenioBanda (@RequestParam("login") String login, @RequestParam("artista") String artista) {

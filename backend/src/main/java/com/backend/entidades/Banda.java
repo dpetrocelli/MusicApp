@@ -24,14 +24,14 @@ public class Banda implements Serializable {
     private String nombre;
 
     @ManyToOne (optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_generoMusical", nullable = false, updatable = true)
     private GeneroMusical generoMusical;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puntuacion")
     private List<PuntuacionArtista> puntuacionesRecibidas;
 
     @ManyToOne (optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "fk_zona", nullable = false, updatable = false)
+    @JoinColumn(name = "fk_zona", nullable = false, updatable = true)
 
     private Zona zona;
 

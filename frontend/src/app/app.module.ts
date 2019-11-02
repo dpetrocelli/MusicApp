@@ -59,6 +59,7 @@ import { NuevoLugarComponent } from './lugares/nuevo-lugar.component';
 import { EditarLugarComponent } from './lugares/editar-lugar.component';
 import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.component';
+import { ModificarBandaComponent} from './redSocialBanda/modificarBanda/modificar-banda.component';
 
 import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
@@ -96,6 +97,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       BandaRedSocialComponent,
       ImagenPerfilComponent,
       ListaLugarComponent,
+      ModificarBandaComponent,
       InfoPerfilComponent,
       PuntuacionComponent,
       ImgSliderComponent,

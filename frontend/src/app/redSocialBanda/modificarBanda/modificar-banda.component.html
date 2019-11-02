@@ -1,0 +1,47 @@
+<div class="container">
+    <h5>Modificar Banda</h5>
+    <form (ngSubmit)="onUpdate()" #f="ngForm" novalidate>
+      
+      <div class="form-group">
+        <label for="nombre">Nombre: </label>
+        <input type="text"
+               class="form-control"
+               name="nombre"
+               id="nombre"
+               [(ngModel)]="form.nombre"
+               required
+               autocomplete="off">
+      </div>
+      
+  
+  <div class="form-group">
+    <label for="genero"> Género Musical: </label>
+    <select class="form-control" id="sl_genero" name="frm_genero" [(ngModel)]="frm_genero"
+        [compareWith]="compararGenero">
+        <option *ngFor="let itemGenero of generoMusicales" [ngValue]="itemGenero">
+            {{itemGenero.nombre}}</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="zona"> Zona de Trabajo: </label>
+    <select class="form-control" id="sl_zona" name="frm_zona" [(ngModel)]="frm_zona"
+        [compareWith]="compararZona" >
+        <option *ngFor="let itemZona of zonas" [ngValue]="itemZona">{{itemZona.nombreZona}}
+        </option>
+    </select>
+</div>
+
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-success" [disabled]="!f.valid">Editar</button>
+          </div>
+        </form>
+        <div>
+          <button class="btn btn-primary float-left mr-3" (click)="volver()">Volver</button>
+        </div>
+        <br>
+        <br>
+       
+      </div>
+      
