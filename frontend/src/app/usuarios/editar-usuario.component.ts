@@ -82,18 +82,6 @@ export class EditarUsuarioComponent implements OnInit {
         this.fallaInit = true;
       }
     );
-    /*
-        this.instrumentoService.lista().subscribe(data => {
-          this.listaInstrumento = data;
-        },
-          (err: any) => {
-            this.msjFallo = err.error.mensaje;
-            this.actualizado = false;
-            this.falloActualizacion = true;
-            this.fallaInit = true;
-          }
-        );
-    */
 
     this.obtenerInstrumentos();
 
@@ -177,7 +165,8 @@ export class EditarUsuarioComponent implements OnInit {
         title: 'Buenísimo...',
         text: "se actualizó el usuario exitosamente"
       });
-      this.router.navigate(['']);
+      this.volver();
+      //this.router.navigate(['perfil']);
     },
       (err: any) => {
         this.msjFallo = err.error.mensaje;
@@ -330,4 +319,10 @@ export class EditarUsuarioComponent implements OnInit {
       }
     });
   }
+
+  volver(): void {
+    window.history.back();
+    //this.router.navigate(['']);
+  }
+
 }
