@@ -59,6 +59,7 @@ const routes: Routes = [
    {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'mibanda', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'comercioSite', component: ComercioSiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    
    // Perfil de una banda

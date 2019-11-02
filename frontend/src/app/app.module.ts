@@ -60,7 +60,8 @@ import { EditarLugarComponent } from './lugares/editar-lugar.component';
 import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.component';
 import { NuevaBandaComponent} from './redSocialBanda/crearBanda/nueva-banda.component';
 import { ModificarBandaComponent} from './redSocialBanda/modificarBanda/modificar-banda.component';
-
+import { ImagenPerfilComponentBanda} from './miactividadBanda/imagen-perfil-banda/imagen-perfil-banda.component';
+import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
 import localeEsAr from '@angular/common/locales/es-AR';
 import { registerLocaleData } from '@angular/common';
 
@@ -78,6 +79,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       NuevaConfiguracionComponent,
       VerConfiguracionComponent,
       NuevaBandaComponent, 
+      PerfilBandaComponent,
       ModificarConfiguracionComponent,
       EliminarConfiguracionComponent,
       ActivarComercioComponent,
@@ -98,6 +100,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       ListaLugarComponent,
       ModificarBandaComponent,
       InfoPerfilComponent,
+      ImagenPerfilComponentBanda,
       PuntuacionComponent,
       ImgSliderComponent,
       YoutubePopupComponent,
