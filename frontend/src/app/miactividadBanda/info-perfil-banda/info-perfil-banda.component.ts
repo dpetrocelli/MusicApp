@@ -140,6 +140,41 @@ export class InfoPerfilBandaComponent implements OnInit {
           this.obtenerDatosUsuario();
   }
 
+  async borrarBanda(){
+    let header = "Estás seguro de eliminar la banda: ";
+    Swal.fire({
+      title: header ,
+      text: "no podrás revertir esto!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si quiero!',
+      background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
+    }).then((result) => {
+      if (result.value) {
+        this.detalleDeLaBanda;
+        this.listaDeArtistasEnBanda;
+        this.listaDeArtistasEnBanda.forEach(artistaAEliminar => {
+          this.borrarIntegranteSilencioso(this.detalleDeLaBanda, artistaAEliminar);
+        });
+        this.bandaService.borrarBanda(this.userLogged, this.detalleDeLaBanda);
+        /*Swal.fire(
+          'Banda!',
+          'Eliminada.',
+          'success'
+        )*/
+        
+      }
+    })
+
+    
+  }
+
+  async borrarIntegranteSilencioso (detalleDeLaBanda : Banda, integrante : Artista){
+    this.bandaService.eliminarArtistaDeBanda(this.userLogged, detalleDeLaBanda, integrante).toPromise();
+    this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "La banda se ha disuelto ", integrante, "msg").toPromise();
+  }
   async borrarIntegranteBanda(detalleDeLaBanda : Banda, integrante : Artista, quienfue : String){
     let header = "";
     if (quienfue.startsWith("soyint")){
@@ -173,7 +208,10 @@ export class InfoPerfilBandaComponent implements OnInit {
           '',
           'success'
         )
-        this.obtenerDatosUsuario();
+        //this.obtenerDatosUsuario();
+        this.router.navigateByUrl('menu', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['perfil']);
+      });
       }
     })
   }

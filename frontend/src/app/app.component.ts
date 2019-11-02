@@ -6,6 +6,7 @@ import { NotificacionBandaUsuario } from './modelos/notificacionbandausuario';
 import { Observable } from 'rxjs';
 import {NotificacionService} from './servicios/notificacion.service';
 import { BandaService } from './servicios/banda.service';
+import { Artista } from './modelos/artista';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
   isComercioVinculadoMP = false;
   isAdmin = false;
   isOwnerBand = false;
+  isIntegrante = false;
   isLoggedIn = false;
   userLogged : LoginDatos;
   notificacionesCargadas = false;
@@ -106,6 +108,21 @@ export class AppComponent implements OnInit {
             this.bandaService.SoyDuenioBandaLogin(this.userLogged).subscribe(data => {
               console.log ("DUENIO BANDA:", data);
               this.isOwnerBand = data;
+               
+                
+              },
+              (err: any) => {
+                //console.log(" NO DuENIO BANDA");
+                
+              }
+            ); 
+
+            this.usuarioService.obtenerDatosUsuario(this.userLogged).subscribe(data => {
+              let artista : Artista = data;
+              if (artista.banda.length>0){
+                this.isIntegrante = true;
+              }
+              
                
                 
               },

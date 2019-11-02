@@ -22,13 +22,13 @@
         </li>
       </div>
 
-      <div *ngIf="isArtista">
+      <div *ngIf="isArtista && isOwnerBand">
         <li class="nav-item">
           <a class="nav-link" routerLink="mibanda">Mi Banda</a>
         </li>
       </div>
 
-      <div *ngIf="isArtista && !isOwnerBand">
+      <div *ngIf="isArtista && !isOwnerBand && !isIntegrante">
         <li class="nav-item">
           <a class="nav-link" routerLink="banda/nueva"> Crear Banda </a>
         </li>

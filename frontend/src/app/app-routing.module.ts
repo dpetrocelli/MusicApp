@@ -40,12 +40,14 @@ import { BandaRedSocialComponent } from './redSocialBanda/redsocial-banda.compon
 import { NuevaBandaComponent } from './redSocialBanda/crearBanda/nueva-banda.component';
 import { ModificarBandaComponent } from './redSocialBanda/modificarBanda/modificar-banda.component';
 import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
+import { AppComponent } from './app.component';
 
 
 
 const routes: Routes = [
 
   // Lista de acceso base para todos
+  {path: 'menu', component: AppComponent},
   {path: '', component: HomeComponent},
   {path: 'crearusuario', component: NuevousuarioComponent},
   {path: 'accesodenegado', component: AccesodenegadoComponent},

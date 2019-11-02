@@ -53,6 +53,7 @@ export class NuevaBandaComponent implements OnInit {
   }
 
   volver(): void {
+    
     window.history.back();
     //this.router.navigate(['']);
   }

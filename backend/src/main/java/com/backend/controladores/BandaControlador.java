@@ -156,6 +156,27 @@ public class BandaControlador {
 
     }
 
+
+    @PostMapping("borrarBandaTotal")
+    public ResponseEntity<?> borrarBanda (@RequestParam("login") String login, @RequestParam("banda") String banda) {
+        // [STEP 0] - Validar usuario y contraseña
+        log.info(" ESTAMOS ACA");
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            Banda b = new Gson().fromJson(banda, Banda.class);
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+
+                this.bandaServicio.borrar(b);
+                return new ResponseEntity<String>(" OK", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
     @PostMapping("obtenerTodos")
     public ResponseEntity<?> obtenerTodos (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña

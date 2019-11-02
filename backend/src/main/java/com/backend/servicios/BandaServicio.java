@@ -122,6 +122,16 @@ public class BandaServicio {
         this.bandaRepositorio.save(b);
     }
 
+    public boolean borrar(Banda b) {
+        try{
+            this.bandaRepositorio.delete(b);
+            return true;
+        }catch (Exception e ){
+            return false;
+        }
+
+    }
+
     public boolean existePorId(Long id) {
         return this.bandaRepositorio.existsById(id);
     }
