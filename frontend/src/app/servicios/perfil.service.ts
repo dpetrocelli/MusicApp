@@ -50,6 +50,10 @@ export class PerfilService {
   public obtenerbiografia (login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerBiografia',login, cabecera);
   }
+
+  public obtenerbiografiaBanda (login : LoginDatos): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'obtenerBiografiaBanda',login, cabecera);
+  }
   
    public obtenerbiografiaRedSocial (login : LoginDatos, nombre : string): Observable<any> {
     var formdata: FormData = new FormData();
@@ -84,12 +88,23 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
   }
 
+  public actualizarbiografiaBanda (login : LoginDatos, biografia : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaBanda',{login : login, biografia : biografia}, cabecera);
+  }
   public actualizarbiografiaFacebook (login : LoginDatos, facebook : String): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaFacebook',{login : login, facebook : facebook}, cabecera);
   }
 
+  public actualizarbiografiaFacebookBanda (login : LoginDatos, facebook : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaFacebookBanda',{login : login, facebook : facebook}, cabecera);
+  }
+
   public actualizarbiografiaSpotify (login : LoginDatos, spotify : String): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaSpotify',{login : login, spotify : spotify}, cabecera);
+  }
+
+  public actualizarbiografiaSpotifyBanda (login : LoginDatos, spotify : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaSpotifyBanda',{login : login, spotify : spotify}, cabecera);
   }
 /*
 public actualizarbiografia (login : LoginDatos, biografia : String): Observable<any> {

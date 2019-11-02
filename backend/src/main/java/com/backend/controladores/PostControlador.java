@@ -117,6 +117,30 @@ public class PostControlador {
         }
     }
 
+    @PostMapping("obtenerBiografiaBanda")
+    public ResponseEntity<?> obtenerbiografiaBanda (@RequestBody LoginDatos ld){
+        try{
+
+            if (promocionServicio.validarTokenUsuario(ld)){
+                Usuario u = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(u);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                BiografiaBanda b =  this.biografiaBandaServicio.obtener(banda);
+                ArrayList<String> respuesta = new ArrayList<String>();
+                respuesta.add(b.getBiografiaBasica());
+                respuesta.add(b.getSpotify());
+                respuesta.add(b.getFacebook());
+
+                return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude obtener biografia"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("actualizarBiografia")
     public ResponseEntity<?> actualizar (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -146,6 +170,48 @@ public class PostControlador {
                      
                     bio.setArtista(artista);
                     this.biografiaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("actualizarBiografiaBanda")
+    public ResponseEntity<?> actualizarBanda (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
+                    try{
+                        String biografia = json.get("biografia").getAsString();
+                        bio.setBiografiaBasica(biografia);
+                    }catch (Exception e){
+
+                    }
+
+                    bio.setBanda(banda);
+                    this.biografiaBandaServicio.guardar (bio);
                 }
                 return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
             }else{
@@ -200,6 +266,47 @@ public class PostControlador {
         }
     }
 
+
+    @PostMapping("actualizarBiografiaSpotifyBanda")
+    public ResponseEntity<?> actualizarBiografiaSpotifyBanda (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
+                    try{
+                        String spotify = json.get("spotify").getAsString();
+                        bio.setSpotify(spotify);
+                    }catch (Exception e){
+
+                    }
+                    bio.setBanda(banda);
+                    this.biografiaBandaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
     @PostMapping("actualizarBiografiaFacebook")
     public ResponseEntity<?> actualizarBiografiaFacebook (@RequestBody String payload){
         // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
@@ -239,6 +346,48 @@ public class PostControlador {
             return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
         }
     }
+
+    @PostMapping("actualizarBiografiaFacebookBanda")
+    public ResponseEntity<?> actualizarBiografiaFacebookBanda (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
+                    try{
+                        String facebook = json.get("facebook").getAsString();
+                        bio.setFacebook(facebook);
+                    }catch (Exception e){
+
+                    }
+                    bio.setBanda(banda);
+                    this.biografiaBandaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
+
 
     @PostMapping("RedSocialObtenerPost")
     public ResponseEntity<?> RedSocialObtenerPost (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
@@ -592,7 +741,7 @@ public class PostControlador {
 
 
             // [STEP 1] Preparo para guardar el binario en el folder del usuario
-            String folder = this.UPLOAD_FOLDER+usuario.getUsername()+"/banda/";
+            String folder = this.UPLOAD_FOLDER+b.getNombre()+"/banda/";
             File directory = new File(folder);
             if (!(directory).exists()) {
                 if (directory.mkdirs()) {

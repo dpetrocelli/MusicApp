@@ -118,7 +118,7 @@ export class InfoPerfilBandaComponent implements OnInit {
     }
   }
   async obtenerBio(){
-    this.biografia = await this.perfilService.obtenerbiografia(this.userLogged).toPromise();
+    this.biografia = await this.perfilService.obtenerbiografiaBanda(this.userLogged).toPromise();
            
     
           if (this.biografia[0]!= null){
@@ -290,7 +290,7 @@ export class InfoPerfilBandaComponent implements OnInit {
       }
       if (!error){
         console.log( " sPITIFY ACTU",this.form.spotify);
-        this.perfilService.actualizarbiografiaSpotify(this.userLogged, this.form.spotify).subscribe(data => {
+        this.perfilService.actualizarbiografiaSpotifyBanda(this.userLogged, this.form.spotify).subscribe(data => {
           //console.log (data);   
           this.obtenerBio();      
         },
@@ -318,7 +318,7 @@ export class InfoPerfilBandaComponent implements OnInit {
     }
     if (!error){
         console.log( " sPITIFY ACTU",this.form.spotify);
-        this.perfilService.actualizarbiografiaFacebook(this.userLogged, this.form.facebook).subscribe(data => {
+        this.perfilService.actualizarbiografiaFacebookBanda(this.userLogged, this.form.facebook).subscribe(data => {
           //console.log (data);   
           this.obtenerBio();      
         },
@@ -330,7 +330,7 @@ export class InfoPerfilBandaComponent implements OnInit {
 
   }
   actualizar(){
-      this.perfilService.actualizarbiografia(this.userLogged, this.form.biografia).subscribe(data => {
+      this.perfilService.actualizarbiografiaBanda(this.userLogged, this.form.biografia).subscribe(data => {
         //console.log (data); 
         Swal.fire('Se actualizó la biografia ');  
         this.obtenerBio();      
