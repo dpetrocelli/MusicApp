@@ -1,18 +1,6 @@
 <div class="container text-center">
 
-  <div class="d-flex flex-column puntuacion" *ngIf="isLoaded">
-    <p></p>
-
-    <span id="usuario"> Usuario: {{artista.usuario.username}}</span>
-    <span> NickName: {{artista.nickname}}</span>
-    <span> Sexo: {{artista.genero}}</span>
-
-    <span> Género Musical: {{artista.generoMusical.nombre}}</span>
-    <span> Zona Geográfica: {{artista.zona.nombreZona}}</span>
-    <span> Fecha de Nacimiento: {{artista.fechaNacimiento | date: "dd-MM-yyyy"}}</span>
-    <span><button class="btn btn-warning" routerLink="/usuario/editar/{{artista.id}}">Editar</button></span>
-
-  </div>
+ 
   <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva else elseBlock">
     <p></p>
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
