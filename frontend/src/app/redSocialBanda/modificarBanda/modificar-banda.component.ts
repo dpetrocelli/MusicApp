@@ -88,7 +88,8 @@ export class ModificarBandaComponent implements OnInit {
   }
 
   volver(): void {
-    this.router.navigate(['']);
+    window.history.back();
+    //this.router.navigate(['']);
   }
 
 }

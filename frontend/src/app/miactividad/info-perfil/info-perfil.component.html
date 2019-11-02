@@ -13,7 +13,9 @@
     
   </div>
   <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva else elseBlock"> 
-    
+    <div *ngIf="!soyIntegrante">
+      <button class="btn btn-primary" routerLink="/banda/editar/{{detalleDeLaBanda.id}}"> Editar Banda </button>
+    </div>
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
     <!--<span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>-->
     <span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>
@@ -22,6 +24,7 @@
     <div *ngFor="let integrante of listaDeArtistasEnBanda"> 
       <span> {{integrante.nombre}}
           <div *ngIf="!soyIntegrante; else SoyIntegrante">
+              <!-- Es decir que soy admin-->
               
             <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25"
             (click)="borrarIntegranteBanda(detalleDeLaBanda, integrante, 'soyadmin')" />

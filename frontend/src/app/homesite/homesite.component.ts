@@ -428,6 +428,38 @@ export class HomesiteComponent implements OnInit {
     }
   }
 
+  async bandaEnviarMensaje(banda){
+    
+    const { value: msg } = await Swal.fire({
+     title: 'Ingrese el mensaje',
+     input: 'text',
+     inputValue: "msg",
+     showCancelButton: true,
+     inputValidator: (value) => {
+       if (!value) {
+         return 'Debes ingresar un mensaje!'
+       }
+     }
+   })
+
+   if (msg) {
+     
+     this.notificacionService.nuevoMensajeNotificacion(this.userLogged, msg, banda.artistaLider, "msg").subscribe(data => {
+       console.log ("RESPUESTA:", data);
+       
+         });      
+        
+         //console.log (" CARTEL ", data);
+       
+       (err: any) => {
+         console.log(err.error.mensaje);
+         
+       }
+     
+     Swal.fire('Mensaje enviado al destinatario '+new String (banda.nombre));
+   }
+ }
+
   async artistaInvitarAMiBanda(artista){
     
     const { value: msg } = await Swal.fire({
@@ -460,9 +492,7 @@ export class HomesiteComponent implements OnInit {
    }
  }
 
-  bandaEnviarMensaje(){
-
-  }
+ 
 
   ocultarImagen(){
     var contenedor : HTMLElement = document.getElementById('post'+this.idImagenAbierta);
