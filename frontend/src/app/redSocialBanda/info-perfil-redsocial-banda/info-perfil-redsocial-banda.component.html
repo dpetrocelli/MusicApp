@@ -1,7 +1,7 @@
 <div class="container text-center">
 
 
-  <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva else elseBlock">
+  <div class="d-flex flex-column puntuacion">
     <p></p>
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
     <!--<span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>-->
@@ -9,22 +9,7 @@
     <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}</span>
     Artistas Integrantes:
     <div *ngFor="let integrante of listaDeArtistasEnBanda">
-      <span> {{integrante.nombre}}
-        <div *ngIf="!soyIntegrante; else SoyIntegrante">
-          <!-- Es decir que soy admin-->
-
-          <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25"
-            (click)="borrarIntegranteBanda(detalleDeLaBanda, integrante, 'soyadmin')" />
-        </div>
-
-      </span>
-      <ng-template #SoyIntegrante>
-
-        <div *ngIf="artista.nombre==integrante.nombre">
-          <img src="https://www.freeiconspng.com/uploads/red-delete-button-png-5.png" height="25" width="25"
-            (click)="borrarIntegranteBanda(detalleDeLaBanda, integrante, 'soyintegrante')" />
-        </div>
-      </ng-template>
+      <span> {{integrante.nombre}}</span>
     </div>
   </div>
 
@@ -35,13 +20,13 @@
         autocomplete="off" disabled=yes value="{{bio}}">
     </div>
 
-    <div class="float-md-center" *ngIf="haySpotify; else noSpotify">
+    <div class="float-md-center" *ngIf="haySpotify">
       <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/image-gallery-spotify-logo-21.png" height="50"
         width="50" (click)="abrirSpotify()" />
 
     </div>
 
-    <div class="float-md-center" *ngIf="hayFacebook; else noFacebook">
+    <div class="float-md-center" *ngIf="hayFacebook">
       <img src="https://i.pinimg.com/originals/58/f4/72/58f4723d8f23906bdcb058604075ad2a.png" height="50" width="50"
         (click)="abrirFacebook()" />
     </div>
