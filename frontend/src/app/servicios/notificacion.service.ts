@@ -44,12 +44,13 @@ export class NotificacionService {
     return this.httpClient.post<any>(this.baseURL + 'actualizar', formdata);
   }
   
-  public descartarNotificacion (login: LoginDatos, nombreOrigen: string, nombreDestino: string, id: string) : Observable <any> {
+  public descartarNotificacion (login: LoginDatos, nombreOrigen: string, nombreDestino: string, id: string, moderacion : string) : Observable <any> {
     var formdata: FormData = new FormData();
     formdata.append('login', JSON.stringify(login));
     formdata.append('nombreOrigen', nombreOrigen);
     formdata.append('nombreDestino', nombreDestino);
     formdata.append('id', id);
+    formdata.append('moderacion', moderacion);
     return this.httpClient.post<any>(this.baseURL + 'descartar', formdata);
   }
   

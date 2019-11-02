@@ -117,15 +117,16 @@ public class NotificacionBandaUsuarioServicio {
     }
 
 
-    public void descartar(String id, String nombreOrigen, String nombreDestino) {
+    public void descartar(String id, String nombreOrigen, String nombreDestino, String moderacion) {
         NotificacionBandaUsuario notificacionBandaUsuario = this.notificacionBandaUsuarioRepositorio.findById(Long.parseLong(id)).get();
         notificacionBandaUsuario.setEstado("procesado");
         this.notificacionBandaUsuarioRepositorio.save(notificacionBandaUsuario);
+
         NotificacionBandaUsuario avisoASolicitante = new NotificacionBandaUsuario();
         avisoASolicitante.setEstado("nueva");
         avisoASolicitante.setMensaje(" Se rechazó su solcitud de acceso a banda");
-        avisoASolicitante.setTipoOrigen(2);
-        avisoASolicitante.setTipoDestino(1);
+        avisoASolicitante.setTipoOrigen(1);
+        avisoASolicitante.setTipoDestino(2);
         avisoASolicitante.setTipoDeOperacion("info");
         avisoASolicitante.setNombreOrigen(nombreDestino);
         avisoASolicitante.setNombreDestino(nombreOrigen);

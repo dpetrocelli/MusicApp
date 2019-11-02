@@ -144,10 +144,10 @@
      <div>
         <button class="btn btn-success" (click)="bandaEnviarMensaje(banda)"> Enviar Mensaje</button>
       </div>
-
       
+      <div *ngIf="!soyAdmin && !soyIntegrante">
         <button class="btn btn-warning" (click)="artistaSolicitaAccesoABanda(banda)"> Solicitar Acceso a Banda</button>
-      
+      </div>
 
    </div>
    

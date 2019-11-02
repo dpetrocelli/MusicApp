@@ -142,13 +142,15 @@ export class AppComponent implements OnInit {
   }
   
   async descartar(itemForm: any){
-    
-    if (itemForm.tipoDeOperacion==="moderacionArtista"){
+    let itemTipo = new String(itemForm.tipo);
+    if (itemTipo.startsWith("moderacionBan")){
+      console.log ("DESCARTE-BANDA", itemForm);
       // si es un usuario
+      await this.notificacionService.descartarNotificacion(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id, "moderacionbanda").toPromise();
     }else{
       // Banda <- recibe solicitud <- artista
-      console.log ("descartar");
-      await this.notificacionService.descartarNotificacion(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id).toPromise();
+      console.log ("DESCARTE-ARTISTA", itemForm);
+      await this.notificacionService.descartarNotificacion(this.userLogged, itemForm.origen, itemForm.destino, itemForm.id, "moderacionartista").toPromise();
       this.obtener();
       
 

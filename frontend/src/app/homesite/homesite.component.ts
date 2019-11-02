@@ -36,6 +36,7 @@ export class HomesiteComponent implements OnInit {
   hayPosts : boolean = false;
   hayArtistas : boolean = false;
   soyAdmin : boolean = false;
+  soyIntegrante : boolean = false;
   soyDuenioBanda : boolean;
   hayBandas : boolean = false;
   posts : Post[] = [];
@@ -90,12 +91,23 @@ export class HomesiteComponent implements OnInit {
       (<HTMLSelectElement>document.getElementById('generomusical')).disabled = false;
       this.vinoPedidoBanda = true;
     }
-
+    
     this.loadInfo();
 
   }
 
   async loadInfo (){
+    try{
+      this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged, null).toPromise();
+    this.soyAdmin=true;
+    }catch{
+
+    }
+    let arti : Artista = await this.usuarioService.obtenerDatosUsuario(this.userLogged).toPromise();
+    if (arti.banda.length>0){
+      this.soyIntegrante = true;
+    }
+    
     let inicio = 0;
     let fin = 10;
     this.zonas = await this.zonaService.lista().toPromise();
@@ -188,9 +200,7 @@ export class HomesiteComponent implements OnInit {
           console.log (" ARTISTA");
           
           try{
-            this.artistasQueSonDeMiBanda = await this.bandaServicio.SoyDuenioBanda(this.userLogged, null).toPromise();
             
-                this.soyAdmin=true;
             
           }catch {
             console.log (" No pude verificar si soy dueño banda");
@@ -236,7 +246,7 @@ export class HomesiteComponent implements OnInit {
         }else{
           if (this.optionSelected.startsWith ("band")){
             this.hayBandas = false;
-    
+            
             this.bandas = await this.homeSiteService.buscar(this.userLogged, "banda",textolibre, zona, instrumento, genero).toPromise();
             if ((this.bandas != null) && (this.bandas.length>0)){
               this.hayBandas = true;

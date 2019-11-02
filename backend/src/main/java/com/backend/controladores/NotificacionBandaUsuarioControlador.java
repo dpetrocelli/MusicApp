@@ -121,12 +121,12 @@ public class NotificacionBandaUsuarioControlador {
 
 
     @PostMapping("descartar")
-    public ResponseEntity<?> Descartar (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id){
+    public ResponseEntity<?> Descartar (@RequestParam("login") String login, @RequestParam("nombreOrigen") String nombreOrigen,@RequestParam("nombreDestino") String nombreDestino,  @RequestParam("id") String id, @RequestParam("moderacion") String moderacion){
         try{
             LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
             if (this.notificacionBandaUsuarioServicio.validarTokenUsuario(ld)){
 
-                this.notificacionBandaUsuarioServicio.descartar(id, nombreOrigen, nombreDestino);
+                this.notificacionBandaUsuarioServicio.descartar(id, nombreOrigen, nombreDestino, moderacion);
                 return new ResponseEntity(new Mensaje("OK"), HttpStatus.OK);
             }
 

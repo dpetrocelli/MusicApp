@@ -109,7 +109,7 @@
                   <div class="botones">
                     <div *ngIf="item.tipo==='moderacionArtista' || item.tipo==='moderacionBanda'; else tipomsg">
                       <!-- Si es msg, solo puedo poner reply-->
-                      <div class="noprocesado" *ngIf="item.estado!='moderado'; else moderacionprocesada">
+                      <div class="noprocesado" *ngIf="item.estado!='moderado' && item.estado!='procesado'; else moderacionprocesada">
                         <img src="http://pngimg.com/uploads/like/like_PNG39.png" height="42" width="42"
                           (click)="aceptar(item)">
                         <img
