@@ -12,6 +12,8 @@ import { Artista } from '../modelos/artista';
 import { Genero } from '../modelos/genero';
 import { GeneroService } from '../servicios/genero.service';
 import { Usuario } from '../modelos/usuario';
+import { GeneroMusical } from '../modelos/generoMusical';
+import { GeneroMusicalService } from '../servicios/generoMusical.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -36,6 +38,7 @@ export class EditarUsuarioComponent implements OnInit {
   instrumentosSeleccionados = [];
   respuesta: [];
   generos: Genero[];
+  generoMusicales: GeneroMusical[];
   fechaValida = true;
   usuarioValido = true;
   formularioValido = false;
@@ -53,6 +56,7 @@ export class EditarUsuarioComponent implements OnInit {
   frm_documento: number;
   frm_fechanacimiento: string;
   frm_genero: Genero;
+  frm_generoMusical: GeneroMusical;
   frm_zona: Zona;
 
   fallaInit = false;
@@ -64,6 +68,7 @@ export class EditarUsuarioComponent implements OnInit {
     private zonaService: ZonaService,
     private generoService: GeneroService,
     private activatedRoute: ActivatedRoute,
+    private generoMusicalService : GeneroMusicalService,
     private router: Router) { }
 
   ngOnInit() {
@@ -83,9 +88,7 @@ export class EditarUsuarioComponent implements OnInit {
       }
     );
 
-    this.obtenerInstrumentos();
-
-    this.generos = this.generoService.obtenerTodos();
+    this.loadInfo();
 
     //HAY QUE OBTENER LOS DATOS DE USUARIO DESPUES DE CARGAR LAS ENTIDADES
     //PORQUE SI TIENE INSTRUMENTOS VA A AGREGARLOS EN LA LISTA DE SELECCIONADOS
@@ -96,9 +99,11 @@ export class EditarUsuarioComponent implements OnInit {
 
   }
 
-  async obtenerInstrumentos() {
+  async loadInfo() {
     this.listaInstrumento = await this.instrumentoService.lista().toPromise();
     console.log("listaInstrumento", this.listaInstrumento);
+    this.generoMusicales = await this.generoMusicalService.lista().toPromise();
+    this.generos = this.generoService.obtenerTodos();
   }
 
   async obtenerDatosUsuario() {
@@ -125,6 +130,7 @@ export class EditarUsuarioComponent implements OnInit {
 
     this.frm_genero = this.generoService.obtenerPorNombre(this.artista.genero);
     this.frm_zona = this.artista.zona;
+    this.frm_generoMusical = this.artista.generoMusical;
 
   }
 
@@ -134,6 +140,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   compararZona(optionOne: Zona, optionTwo: Zona): boolean {
     return optionOne && optionTwo ? optionOne.id === optionTwo.id : optionOne === optionTwo;
+  }
+
+  compararGeneroMusical(optionOne: GeneroMusical, optionTwo: GeneroMusical): boolean {
+    return optionOne && optionTwo ? optionOne.nombre === optionTwo.nombre : optionOne === optionTwo;
   }
 
   get fval() {
@@ -150,6 +160,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.artista.fechaNacimiento = new Date(this.frm_fechanacimiento);
     this.artista.genero = this.frm_genero.nombreGenero;
     this.artista.zona = this.frm_zona;
+    this.artista.generoMusical = this.frm_generoMusical;
 
     console.log("instrumentos seleccionados", this.listaInstrumentoSeleccionado);
 
