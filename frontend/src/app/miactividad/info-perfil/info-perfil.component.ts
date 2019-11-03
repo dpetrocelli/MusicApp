@@ -163,13 +163,13 @@ export class InfoPerfilComponent implements OnInit {
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si quiero!',
       background: 'url(./assets/img/guitar_music_strings_musical_instrument_111863_1920x1080.jpg)'
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.value) {
-        this.bandaService.eliminarArtistaDeBanda(this.userLogged, detalleDeLaBanda, integrante).toPromise();
+        await this.bandaService.eliminarArtistaDeBanda(this.userLogged, detalleDeLaBanda, integrante).toPromise();
         if (quienfue.startsWith("soyint")){
-          this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Salí de tu banda", this.detalleDeLaBanda.artistaLider, "msg").toPromise();  
+          await this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Salí de tu banda", this.detalleDeLaBanda.artistaLider, "msg").toPromise();  
         }else{
-          this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Te he eliminado de mi banda", integrante, "msg").toPromise();
+          await this.notificacionService.nuevoMensajeNotificacion(this.userLogged, "Te he eliminado de mi banda", integrante, "msg").toPromise();
         }
        
         Swal.fire(
@@ -177,13 +177,19 @@ export class InfoPerfilComponent implements OnInit {
           '',
           'success'
         )
-        this.obtenerDatosUsuario();
+        
+        this.router.navigate(['']);
+        setTimeout(() => {
+          this.router.navigate(['perfil']);
+      }, 100);  //5s
       }
     })
   }
 
+ 
 
   async obtenerDatosUsuario(){
+    console.log (" Obteniendo datos de usuario");
     this.artista = await this.usuarioService.obtenerDatosUsuario (this.userLogged).toPromise();
     
     console.log (" ARTISTA logueado -> IUPU",this.artista);
@@ -242,8 +248,8 @@ export class InfoPerfilComponent implements OnInit {
           this.bandaActiva=true;
         },
         (err: any) => {
-          console.log ("ERROR GATO");
-          console.log(err);
+          //console.log ("ERROR GATO");
+          //console.log(err);
           //this.router.navigate(['/accesodenegado']);
         });
         

@@ -166,6 +166,9 @@ export class InfoPerfilBandaComponent implements OnInit {
           'success'
         )
         this.router.navigate(['']);
+        setTimeout(() => {
+          this.router.navigate(['perfil']);
+      }, 100);  //5s
         
       }
     })
@@ -212,7 +215,10 @@ export class InfoPerfilBandaComponent implements OnInit {
         )
         //this.obtenerDatosUsuario();
         
-          this.router.navigate(['homesite/nada']);
+        this.router.navigate(['']);
+        setTimeout(() => {
+          this.router.navigate(['mibanda']);
+      }, 100);  //5s
       
       }
     })
