@@ -53,6 +53,30 @@ public class BandaControlador {
 
     }
 
+    @PostMapping("obtenerBandaPorNombre")
+    public ResponseEntity<?> obtenerBandaPorNombre (@RequestParam("login") String login, @RequestParam("nombreBanda") String nombre) {
+        // [STEP 0] - Validar usuario y contraseña
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            String nombreBanda = new Gson().fromJson(nombre, String.class);
+
+            if (this.usuarioServicio.validarTokenUsuario(ld)) {
+                Banda banda= this.bandaServicio.obtenerBandaPorNombre(nombreBanda);
+
+                return new ResponseEntity<Banda>(banda, HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<String>(" No autorizado", HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>(" ERROR ", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+
     @PostMapping("obtenerDatosBanda")
     public ResponseEntity<?> obtenerDatosBanda (@RequestBody LoginDatos ld) {
         // [STEP 0] - Validar usuario y contraseña

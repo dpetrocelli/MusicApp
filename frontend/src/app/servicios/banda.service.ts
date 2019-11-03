@@ -37,6 +37,13 @@ public datosBanda (login : LoginDatos) : Observable <any> {
   return this.httpClient.post<any>(this.baseURL + 'datosBanda', login, cabecera);
 }
 
+public obtenerBandaPorNombre (login : LoginDatos, nombreBanda: string) : Observable <any> {
+  var formdata: FormData = new FormData();
+  formdata.append('login', JSON.stringify(login));
+  formdata.append('nombreBanda', JSON.stringify(nombreBanda));
+  return this.httpClient.post<any>(this.baseURL + 'obtenerBandaPorNombre', formdata);
+}
+
 public datosBandaUna(login : LoginDatos) : Observable <any> {
   return this.httpClient.post<any>(this.baseURL + 'datosBandaUna', login, cabecera);
 }

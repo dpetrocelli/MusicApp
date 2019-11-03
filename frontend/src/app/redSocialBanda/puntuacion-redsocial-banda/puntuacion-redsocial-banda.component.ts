@@ -17,6 +17,7 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
   promedio: number = 0;
   contador: number = 0;
   isReady: boolean = false;
+  isPunctuated : boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router,

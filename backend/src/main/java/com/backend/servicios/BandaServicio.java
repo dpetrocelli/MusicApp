@@ -43,8 +43,8 @@ public class BandaServicio {
         return this.bandaRepositorio.existsByArtistaLider(artista);
     }
 
-    public Banda obtenerBandaPorNombre(String nombreDestino) {
-        return this.bandaRepositorio.findByNombre(nombreDestino).get();
+    public Banda obtenerBandaPorNombre(String nombreBanda) {
+        return this.bandaRepositorio.findByNombre(nombreBanda).get();
     }
 
     public ArrayList<Banda> buscarLike(String busqueda, String zona, String genero) {
