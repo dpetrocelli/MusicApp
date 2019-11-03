@@ -26,6 +26,15 @@ export class PuntuacionService {
     return this.httpClient.post<any>(this.baseURL + 'nuevo', formdata);
   }
 
+  crearPuntuacionBanda(ld : LoginDatos, bandaPuntuada: string, comentario: any, puntuacion: any) {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(ld));
+    formdata.append('bandaPuntuada', bandaPuntuada);
+    formdata.append('comentario', comentario);
+    formdata.append('puntuacion', puntuacion);
+    return this.httpClient.post<any>(this.baseURL + 'nuevaPuntuacionBanda', formdata);
+  }
+
   public obtenerPuntuacion(login : LoginDatos): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'obtenerPuntuacion', login, cabecera);
   }
@@ -39,6 +48,13 @@ export class PuntuacionService {
     formdata.append('login', JSON.stringify(login));
     formdata.append('nombre', nombre);
     return this.httpClient.post<any>(this.baseURL + 'verificarSiPuntuee',formdata);
+  }
+
+  public verificarSiPuntueeBanda(login : LoginDatos, nombreBanda : string): Observable<any> {
+    var formdata: FormData = new FormData();
+    formdata.append('login', JSON.stringify(login));
+    formdata.append('nombre', nombreBanda);
+    return this.httpClient.post<any>(this.baseURL + 'verificarSiPuntueeBanda',formdata);
   }
 
   public obtenerPuntuacionRedSocial(login : LoginDatos, nombre : string): Observable<any> {

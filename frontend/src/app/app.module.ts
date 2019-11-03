@@ -70,6 +70,7 @@ import { registerLocaleData } from '@angular/common';
 import { ImagenPerfilRedsocialBandaComponent } from './redSocialBanda/imagen-perfil-redsocial-banda/imagen-perfil-redsocial-banda.component';
 import { InfoPerfilRedsocialBandaComponent } from './redSocialBanda/info-perfil-redsocial-banda/info-perfil-redsocial-banda.component';
 import { PuntuacionRedsocialBandaComponent } from './redSocialBanda/puntuacion-redsocial-banda/puntuacion-redsocial-banda.component';
+import { CrearPuntuacionBandaComponent } from './puntuacionBanda/crear-puntuacion-banda.component';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -114,6 +115,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       YoutubePopupComponent,
       ComprarPromocionesComponent,
       CrearPuntuacionComponent,
+      CrearPuntuacionBandaComponent,
       EditarLugarComponent,
       PuntuacionRedsocialComponent,
       PostRedsocialComponent,

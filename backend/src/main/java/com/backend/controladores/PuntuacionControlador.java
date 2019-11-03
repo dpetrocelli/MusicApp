@@ -60,6 +60,37 @@ public class PuntuacionControlador {
         }
     }
 
+    @PostMapping("nuevaPuntuacionBanda")
+    public ResponseEntity<?> nuevaPuntuacionBanda(@RequestParam("login") String login, @RequestParam("bandaPuntuada") String nombreBanda, @RequestParam("comentario") String comentario, @RequestParam("puntuacion") String puntuacion) {
+
+        try {
+            LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                boolean yaPuntue = this.puntuacionServicio.validarSiYaPuntueeBanda(ld, nombreBanda);
+                //yaPuntue = false;
+                if (!yaPuntue){
+                    boolean guardado = this.puntuacionServicio.guardarPuntuacionBanda(ld, nombreBanda, comentario,puntuacion);
+                    if (guardado){
+                        return new ResponseEntity(new Mensaje(" HOLA "), HttpStatus.OK);
+                    }else{
+                        return new ResponseEntity(new Mensaje(" REVENTO "), HttpStatus.BAD_REQUEST);
+                    }
+                }else{
+                    return new ResponseEntity(new Mensaje(" Ya puntuaste a ese usuario "), HttpStatus.BAD_REQUEST);
+                }
+
+
+
+            }else return new ResponseEntity(new Mensaje(" ERROR no autorizado"), HttpStatus.UNAUTHORIZED);
+
+        } catch (Exception e) {
+            return new ResponseEntity(new Mensaje("no pude crear post"), HttpStatus.OK);
+        }
+    }
+
     @PostMapping("obtenerPuntuacion")
     public ResponseEntity<?> validar (@RequestBody LoginDatos loginDatos){
         List<PuntuacionArtista> lista = this.puntuacionServicio.obtenerPuntuacionArtistaByLoginDatos(loginDatos);
@@ -130,9 +161,14 @@ public class PuntuacionControlador {
         return new ResponseEntity<List<PuntuacionBanda>>(lista, HttpStatus.OK);
     }
 
+    @PostMapping("verificarSiPuntueeBanda")
+    public ResponseEntity<?>  verificarSiPuntueeBanda (@RequestParam("login") String login, @RequestParam("nombre") String nombre){
+        LoginDatos ld = new Gson().fromJson(login, LoginDatos.class);
+        String nombreBanda = new Gson().fromJson(nombre, String.class);
 
+        boolean yaPuntue = this.puntuacionServicio.validarSiYaPuntueeBanda(ld, nombreBanda);
 
-
-
+        return new ResponseEntity<Boolean>(yaPuntue, HttpStatus.OK);
+    }
 
 }

@@ -39,30 +39,31 @@ public class PuntuacionServicio {
     BandaServicio bandaServicio;
 
 
-    public boolean validarSiYaPuntuee(LoginDatos ld, String art){
+    public boolean validarSiYaPuntuee(LoginDatos ld, String art) {
         Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
         Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
         Usuario usuario = this.usuarioServicio.obtenerPorNombre(art);
         Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
         boolean found = false;
-        try{
+        try {
             List<PuntuacionArtista> listaPuntos = this.puntuacionRepositorio.findAllByArtistaPuntuado(artista.getId());
 
 
-            for (PuntuacionArtista puntuacion: listaPuntos) {
-                if (puntuacion.getArtistaPuntuador() == artistaPuntuador.getId()){
+            for (PuntuacionArtista puntuacion : listaPuntos) {
+                if (puntuacion.getArtistaPuntuador() == artistaPuntuador.getId()) {
                     found = true;
                     break;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
 
         return found;
     }
-    public boolean guardarPuntuacionArtista(LoginDatos ld, String art, String comentario, String puntuacion){
+
+    public boolean guardarPuntuacionArtista(LoginDatos ld, String art, String comentario, String puntuacion) {
         Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
         Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
 
@@ -76,6 +77,22 @@ public class PuntuacionServicio {
         puntuacionArtista.setArtistaPuntuado(artista.getId());
         puntuacionArtista.setFechaPuntuacion(new Date());
         this.puntuacionRepositorio.save(puntuacionArtista);
+        return true;
+    }
+
+    public boolean guardarPuntuacionBanda(LoginDatos ld, String nombreBanda, String comentario, String puntuacion) {
+        Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
+        Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
+
+        PuntuacionBanda puntuacionBanda = new PuntuacionBanda();
+        Banda banda = this.bandaServicio.obtenerBandaPorNombre(nombreBanda);
+
+        puntuacionBanda.setComentario(comentario);
+        puntuacionBanda.setPuntuacion(Double.parseDouble(puntuacion));
+        puntuacionBanda.setArtistaPuntuador(artistaPuntuador.getId());
+        puntuacionBanda.setBandaPuntuada(banda.getId());
+        puntuacionBanda.setFechaPuntuacion(new Date());
+        this.puntuacionRepositorioBanda.save(puntuacionBanda);
         return true;
     }
 
@@ -98,7 +115,7 @@ public class PuntuacionServicio {
 
     }
 
-    public List<PuntuacionArtista> obtenerPuntuacionArtistaByArtista (Artista art){
+    public List<PuntuacionArtista> obtenerPuntuacionArtistaByArtista(Artista art) {
         return this.puntuacionRepositorio.findAllByArtistaPuntuado(art.getId());
     }
 
@@ -106,4 +123,27 @@ public class PuntuacionServicio {
         return this.puntuacionRepositorioBanda.findAllByBandaPuntuada(banda.getId());
 
     }
+
+    public boolean validarSiYaPuntueeBanda(LoginDatos ld, String nombreBanda) {
+        Usuario usuarioPuntuador = this.usuarioServicio.obtener(ld.getIdUsuario());
+        Artista artistaPuntuador = this.artistaServicio.obtenerPorUsuario(usuarioPuntuador);
+
+        Banda banda = this.bandaServicio.obtenerBandaPorNombre(nombreBanda);
+
+        boolean found = false;
+        try {
+            List<PuntuacionBanda> listaPuntos = this.puntuacionRepositorioBanda.findAllByBandaPuntuada(banda.getId());
+
+            for (PuntuacionBanda puntuacion : listaPuntos) {
+                if (puntuacion.getArtistaPuntuador() == artistaPuntuador.getId()) {
+                    found = true;
+                    break;
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return found;
+    }
+
 }

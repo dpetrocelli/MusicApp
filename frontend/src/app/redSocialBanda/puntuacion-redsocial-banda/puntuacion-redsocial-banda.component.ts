@@ -18,12 +18,32 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
   contador: number = 0;
   isReady: boolean = false;
   isPunctuated : boolean = false;
+  nombreBanda : string;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router,
-    private puntuacionService: PuntuacionService, private bandaService: BandaService) { }
+    private puntuacionService: PuntuacionService, 
+    private activatedRoute: ActivatedRoute,
+    private bandaService: BandaService) { }
 
   ngOnInit() {
+
+    this.userLogged = this.usuarioService.getUserLoggedIn();
+    this.nombreBanda = this.activatedRoute.snapshot.paramMap.get("nombre");
+    if (this.userLogged.nombreUsuario==this.nombreBanda){
+      this.isPunctuated = true;
+    }else{
+      this.puntuacionService.verificarSiPuntueeBanda(this.userLogged, this.nombreBanda).subscribe(data => {
+      
+        this.isPunctuated = data;
+        
+      },
+      (err: any) => {
+        
+       
+      });
+    }
+
     this.userLogged = this.usuarioService.getUserLoggedIn();
     this.obtenerPuntuacion();
     this.delay(3000);
@@ -36,7 +56,7 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
     
     
     console.log("OBtUVIMOS BANDA, ", band.nombre);*/
-    this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionMiBanda(this.userLogged).toPromise();
+    this.listaPuntuacion = await this.puntuacionService.obtenerPuntuacionBanda(this.userLogged,this.nombreBanda).toPromise();
     if (this.listaPuntuacion.length > 0) {
       this.listaPuntuacion.forEach(puntuacion => {
         this.buscarUsuario(puntuacion);
@@ -72,7 +92,7 @@ export class PuntuacionRedsocialBandaComponent implements OnInit {
     // quien puntuador -> sesion
     // a quien puntuar -> 
     //alert (this.nombreUsuario);
-    //this.router.navigate(['puntuacion/nuevo/' + this.nombreUsuario]);
+    this.router.navigate(['puntuacionBanda/nuevo/' + this.nombreBanda]);
 
   }
 

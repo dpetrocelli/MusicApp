@@ -41,6 +41,7 @@ import { NuevaBandaComponent } from './redSocialBanda/crearBanda/nueva-banda.com
 import { ModificarBandaComponent } from './redSocialBanda/modificarBanda/modificar-banda.component';
 import {PerfilBandaComponent} from './miactividadBanda/perfil-banda.component';
 import { AppComponent } from './app.component';
+import { CrearPuntuacionBandaComponent } from './puntuacionBanda/crear-puntuacion-banda.component';
 
 
 
@@ -74,6 +75,7 @@ const routes: Routes = [
    {path: 'posts/nuevo', component: NuevoPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'posts/editar/:id', component: EditarPostComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'puntuacion/nuevo/:usuario', component: CrearPuntuacionComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'puntuacionBanda/nuevo/:banda', component: CrearPuntuacionBandaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'promociones/comprar', component: ComprarPromocionesComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'usuario/editar/:id', component: EditarUsuarioComponent},
    
