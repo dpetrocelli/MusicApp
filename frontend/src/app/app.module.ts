@@ -72,6 +72,7 @@ import { InfoPerfilRedsocialBandaComponent } from './redSocialBanda/info-perfil-
 import { PuntuacionRedsocialBandaComponent } from './redSocialBanda/puntuacion-redsocial-banda/puntuacion-redsocial-banda.component';
 import { CrearPuntuacionBandaComponent } from './puntuacionBanda/crear-puntuacion-banda.component';
 import { VideoComponentComponent } from './miactividadBanda/videoComponent/videoComponent.component';
+import { VideoComponentComponentRedSocial } from './redSocialBanda/videoComponent/videoComponentRedSocial.component';
 
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -80,6 +81,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
       AppComponent,
       ListaInstrumentoComponent,
       VideoComponentComponent,
+      VideoComponentComponentRedSocial,
       HomeComponent,
       EditarLugarComponent,
       DetalleInstrumentoComponent,

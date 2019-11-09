@@ -11,10 +11,10 @@
   <div *ngIf="listaYoutube"> 
         <br><br>
         <div>
-                <img src="https://raw.githubusercontent.com/CodeDotJS/youtube-playlist/master/media/logo.png" style="width:500px;height:150px;" (click)="abrirYoutube()">
+                <img src="https://raw.githubusercontent.com/CodeDotJS/youtube-playlist/master/media/logo.png" style="width:500px;height:180px;" (click)="abrirYoutube()">
         </div>
         <div>
-                <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Cambiar Lista de Reproducción  </button>
+                <br> <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Cambiar Lista / Canal  </button>
         </div>
         
             
@@ -28,7 +28,7 @@
       </div>
 
       <div *ngIf="!listaYoutube">
-            <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Agregar Lista de Reproducción  </button>
+            <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Agregar  Lista / Canal  </button>
       </div>
   
   

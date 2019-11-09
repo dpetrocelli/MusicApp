@@ -84,6 +84,7 @@ public class PostControlador {
                 respuesta.add(b.getBiografiaBasica());
                 respuesta.add(b.getSpotify());
                 respuesta.add(b.getFacebook());
+
                 return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
             }else{
                 return new ResponseEntity(new Mensaje("no pude validar token"), HttpStatus.UNAUTHORIZED);
@@ -107,6 +108,8 @@ public class PostControlador {
                 respuesta.add(biografiaBanda.getBiografiaBasica());
                 respuesta.add(biografiaBanda.getSpotify());
                 respuesta.add(biografiaBanda.getFacebook());
+                respuesta.add(biografiaBanda.getVideoBasico());
+                respuesta.add(biografiaBanda.getListaYoutube());
 
                 return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
             }else{
@@ -318,10 +321,11 @@ public class PostControlador {
                     BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
                     try{
                         String youtube = json.get("listaYoutube").getAsString();
-                        youtube = youtube.split(Pattern.quote("?"))[0];
-                        /*youtube = youtube.replace("watch?v=", "embed/");
+                        if (!(youtube.startsWith("https://www.youtube.com/watch?v="))){
+                            youtube = youtube.split(Pattern.quote("?"))[0];
+                        }
 
-                        youtube = youtube.split(Pattern.quote("&"))[0];*/
+
                         bio.setListaYoutube(youtube);
                     }catch (Exception e){
 
