@@ -121,13 +121,7 @@
    <div class="post row d-flex justify-content-center" *ngFor="let banda of bandas">
     
     <div class="info col-12"> Banda: {{banda.nombre}}</div>
-    <div>
-        <iframe width="160" height="115" [src]="getVideoIframe(banda)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
-    </div>
-    <div>
-        <img src="https://www.stickpng.com/assets/images/580b57fcd9996e24bc43c548.png" style="width:500px;height:180px;" (click)="abrirYoutube()">
-    </div> 
-
+    
     <div class="info col-12"> Artista Lider: {{banda.artistaLider.nombre}}</div>
     <div class="info col-12"> Genero Musical: {{banda.generoMusical.nombre}}</div>
     <div class="info col-12"> Zona Geográfica: {{banda.zona.nombreZona}}</div>
@@ -145,6 +139,7 @@
             
         Puntuacion: {{banda.promedio}}
     </div>
+    
      <div>
        <button class="btn btn-success" routerLink="/bandaRedSocial/{{banda.nombre}}">Ver Perfil</button>
      </div>

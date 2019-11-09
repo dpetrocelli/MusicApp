@@ -25,6 +25,7 @@ import { Instrumento } from '../modelos/instrumento';
 import { GeneroMusicalService } from '../servicios/generoMusical.service';
 import { GeneroMusical } from '../modelos/generoMusical';
 import { PuntuacionService } from '../servicios/puntuacion.service';
+import { PerfilService } from '../servicios/perfil.service';
 
 @Component({
   selector: 'app-homesite',
@@ -68,6 +69,7 @@ export class HomesiteComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
               private homeSiteService: HomeSiteService,
               private bandaServicio: BandaService,
+              private _sanitizer: DomSanitizer, 
               private notificacionService: NotificacionService,
               private zonaService: ZonaService,
               private generoMusicalService : GeneroMusicalService,
@@ -77,7 +79,8 @@ export class HomesiteComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private puntuacionService : PuntuacionService,
               private componentFactoryResolver: ComponentFactoryResolver,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private perfilService : PerfilService) { }
 
   ngOnInit() {
     this.userLogged = this.usuarioService.getUserLoggedIn();
@@ -315,6 +318,7 @@ export class HomesiteComponent implements OnInit {
     
   }
 
+  
   tieneInstrumentos(artista : Artista){
     if (artista.instrumento.length>0){
       return true;
