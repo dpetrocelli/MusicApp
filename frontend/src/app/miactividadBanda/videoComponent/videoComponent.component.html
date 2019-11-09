@@ -1,0 +1,31 @@
+
+  <div *ngIf="videoYoutube">
+      <div>
+          <iframe width="860" height="315" [src]="getVideoIframe(videoYoutube)" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+      </div>
+      <div>
+        <button type="button" id="btnadd" class="btn btn-success" (click)="editarVideoYoutube()"> Cambiar video </button>
+      </div>
+  </div>  
+  
+  <div *ngIf="listaYoutube"> 
+        <br><br>
+        <img src="https://raw.githubusercontent.com/CodeDotJS/youtube-playlist/master/media/logo.png" style="width:500px;height:150px;" (click)="abrirYoutube()">
+        <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Cambiar Lista de Reproducción  </button>
+            
+            
+        
+  </div>
+    
+      <div *ngIf="!videoYoutube">
+          <button type="button" id="btnadd" class="btn btn-success" (click)="editarVideoYoutube()"> Agregar Video Básico Youtube </button>
+          
+      </div>
+
+      <div *ngIf="!listaYoutube">
+            <button type="button" class="btn btn-warning" (click)="editarListaYoutube()"> Agregar Lista de Reproducción  </button>
+      </div>
+  
+  
+
+  

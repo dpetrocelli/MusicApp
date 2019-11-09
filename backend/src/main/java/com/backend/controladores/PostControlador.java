@@ -141,6 +141,8 @@ public class PostControlador {
         }
     }
 
+
+
     @PostMapping("obtenerBiografiaBanda")
     public ResponseEntity<?> obtenerbiografiaBanda (@RequestBody LoginDatos ld){
         try{
@@ -154,6 +156,8 @@ public class PostControlador {
                 respuesta.add(b.getBiografiaBasica());
                 respuesta.add(b.getSpotify());
                 respuesta.add(b.getFacebook());
+                respuesta.add(b.getVideoBasico());
+                respuesta.add(b.getListaYoutube());
 
                 return new ResponseEntity<ArrayList<String>> (respuesta, HttpStatus.OK);
             }else{
@@ -278,6 +282,96 @@ public class PostControlador {
                     }
                     bio.setArtista(artista);
                     this.biografiaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
+
+
+    @PostMapping("actualizarListaYoutube")
+    public ResponseEntity<?> actualizarlistaYoutube (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
+                    try{
+                        String youtube = json.get("listaYoutube").getAsString();
+                        youtube = youtube.split(Pattern.quote("?"))[0];
+                        /*youtube = youtube.replace("watch?v=", "embed/");
+
+                        youtube = youtube.split(Pattern.quote("&"))[0];*/
+                        bio.setListaYoutube(youtube);
+                    }catch (Exception e){
+
+                    }
+                    bio.setBanda(banda);
+                    this.biografiaBandaServicio.guardar (bio);
+                }
+                return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
+            }else{
+                return new ResponseEntity(new Mensaje("credenciales no válidas"), HttpStatus.UNAUTHORIZED);
+            }
+
+
+        }catch (Exception e){
+            return new ResponseEntity(new Mensaje("no pude actualizar biografia"), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("actualizarVideoYoutube")
+    public ResponseEntity<?> actualizarVideoYoutube (@RequestBody String payload){
+        // Lo que hago es generar un objeto general JSON con la carga que me viene en el mensaje
+        // esto aplica a cualquier tipo de mensaje
+        log.info (" BACKI");
+        JsonObject json = new Gson().fromJson(payload, JsonObject.class);
+        try{
+            log.info ("siendo: "+payload.toString());
+
+            LoginDatos ld = new Gson().fromJson(json.get("login"), LoginDatos.class);
+
+            log.info(" VALIDANDO CREDENCIALES USUARIO " + ld.getNombreUsuario());
+            boolean result = this.usuarioServicio.validarTokenUsuario(ld);
+
+            if (result){
+                Usuario usuario = this.usuarioServicio.obtener(ld.getIdUsuario());
+                Artista artista = this.artistaServicio.obtenerPorUsuario(usuario);
+                Banda banda = this.bandaServicio.obtenerBandasDeLasQueSoyAdmin(artista).get(0);
+                // ES UN ARTISTA VALIDO
+                if (artista.getId()!=null){
+                    BiografiaBanda bio = this.biografiaBandaServicio.obtener(banda);
+                    try{
+                        String youtube = json.get("videoYoutube").getAsString();
+                        youtube = youtube.replace("watch?v=", "embed/");
+
+                        youtube = youtube.split(Pattern.quote("&"))[0];
+                        bio.setVideoBasico(youtube);
+                    }catch (Exception e){
+
+                    }
+                    bio.setBanda(banda);
+                    this.biografiaBandaServicio.guardar (bio);
                 }
                 return new ResponseEntity(new Mensaje("REALIZADO"), HttpStatus.OK);
             }else{

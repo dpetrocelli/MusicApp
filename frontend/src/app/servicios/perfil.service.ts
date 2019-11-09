@@ -103,6 +103,16 @@ export class PerfilService {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografia',{login : login, biografia : biografia}, cabecera);
   }
 
+  
+
+  public actualizarVideoYoutube (login : LoginDatos, videoYoutube : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarVideoYoutube',{login : login, videoYoutube : videoYoutube}, cabecera);
+  }
+
+  public actualizarListaYoutube (login : LoginDatos, listaYoutube : String): Observable<any> {
+    return this.httpClient.post<any>(this.baseURL + 'actualizarListaYoutube',{login : login, listaYoutube : listaYoutube}, cabecera);
+  }
+
   public actualizarbiografiaBanda (login : LoginDatos, biografia : String): Observable<any> {
     return this.httpClient.post<any>(this.baseURL + 'actualizarBiografiaBanda',{login : login, biografia : biografia}, cabecera);
   }

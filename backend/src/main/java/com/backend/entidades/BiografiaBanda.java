@@ -17,6 +17,8 @@ public class BiografiaBanda {
     @JoinColumn(name = "banda_id", referencedColumnName = "id")
     private Banda banda;
 
+    private String videoBasico;
+    private String listaYoutube;
 
     private String biografiaBasica;
     private String facebook;
@@ -83,5 +85,21 @@ public class BiografiaBanda {
 
     public void setPathImagenPortada(String pathImagenPortada) {
         this.pathImagenPortada = pathImagenPortada;
+    }
+
+    public String getVideoBasico() {
+        return videoBasico;
+    }
+
+    public void setVideoBasico(String videoBasico) {
+        this.videoBasico = videoBasico;
+    }
+
+    public String getListaYoutube() {
+        return listaYoutube;
+    }
+
+    public void setListaYoutube(String listaYoutube) {
+        this.listaYoutube = listaYoutube;
     }
 }

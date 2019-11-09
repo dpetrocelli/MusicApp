@@ -10,4 +10,6 @@ export class Banda {
   puntuacionesRecibidas : PuntuacionArtista[];
   zona : Zona;
   promedio : number;
+  videoBasico : String;
+  listaYoutube : String;
 }
