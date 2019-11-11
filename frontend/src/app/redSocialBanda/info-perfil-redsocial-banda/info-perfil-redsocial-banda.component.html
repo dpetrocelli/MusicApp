@@ -4,12 +4,15 @@
   <div class="d-flex flex-column puntuacion">
     <p></p>
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}</span>
-    <!--<span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>-->
     <span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>
-    <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}</span>
+    <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}
+        <button class="btn btn-success btn-xs bottom-three" routerLink="/redsocial/{{detalleDeLaBanda.artistaLider.usuario.username}}">perfil</button>
+    </span>
     Artistas Integrantes:
     <div *ngFor="let integrante of listaDeArtistasEnBanda">
-      <span> {{integrante.nombre}}</span>
+      <span> {{integrante.nombre}}
+        <button class="btn btn-success btn-xs bottom-three" routerLink="/redsocial/{{integrante.usuario.username}}">perfil</button>
+      </span>
     </div>
   </div>
 

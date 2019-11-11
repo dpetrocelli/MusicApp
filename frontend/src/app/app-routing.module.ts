@@ -59,7 +59,7 @@ const routes: Routes = [
       // Home RedSocial
    {path: 'homesite/:opcion', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (otro) RedSocial
-   {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
+   {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], runGuardsAndResolvers: 'always', data: { expectedRol: ['artista']}},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'mibanda', component: PerfilBandaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
@@ -127,7 +127,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
