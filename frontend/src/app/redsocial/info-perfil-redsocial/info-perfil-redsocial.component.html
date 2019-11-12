@@ -14,19 +14,19 @@
   <div class="d-flex flex-column puntuacion" *ngIf="bandaActiva">
 
     <span id="usuario"> Banda: {{detalleDeLaBanda.nombre}}
-      <button class="btn btn-success btn-xs bottom-three" routerLink="/bandaRedSocial/{{detalleDeLaBanda.nombre}}">perfil</button>
+      <button class="btn-xs btn-success bottom-three" style="font-size: xx-small;" routerLink="/bandaRedSocial/{{detalleDeLaBanda.nombre}}">ver</button>
     </span>
     <span> Género Musical: {{detalleDeLaBanda.generoMusical.nombre}}</span>
     <span> Artista Lider: {{detalleDeLaBanda.artistaLider.nombre}}
-        <button class="btn btn-success btn-xs bottom-three"
-          routerLink="/redsocial/{{detalleDeLaBanda.artistaLider.usuario.username}}">perfil</button>
+        <button class="btn-xs btn-success bottom-three" style="font-size: xx-small;" 
+          routerLink="/redsocial/{{detalleDeLaBanda.artistaLider.usuario.username}}">ver</button>
     </span>
     Artistas Integrantes:
     <div *ngFor="let integrante of listaDeArtistasEnBanda">
       <span>
         {{integrante.nombre}}
-        <button class="btn btn-success btn-xs bottom-three"
-          routerLink="/redsocial/{{integrante.usuario.username}}">perfil</button>
+        <button class="btn-xs btn-success bottom-three" style="font-size: xx-small;" 
+          routerLink="/redsocial/{{integrante.usuario.username}}">ver</button>
       </span>
     </div>
 
