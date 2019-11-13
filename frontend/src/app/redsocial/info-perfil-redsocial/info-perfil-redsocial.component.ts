@@ -151,9 +151,4 @@ export class InfoPerfilRedsocialComponent implements OnInit {
 
   }
 
-  buscarPerfil(nombrePerfil: any) {
-    //console.log("estamos en :" + this.router.getCurrentNavigation.);
-    this.router.navigate(['/redsocial/' + nombrePerfil]);
-
-  }
 }
