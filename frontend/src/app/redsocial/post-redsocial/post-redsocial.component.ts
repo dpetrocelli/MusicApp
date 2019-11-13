@@ -44,12 +44,16 @@ export class PostRedsocialComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.userLogged = this.usuarioService.getUserLoggedIn();
-    this.nombreUsuario = this.activatedRoute.snapshot.paramMap.get("nombre");
-    this.obtenerPosts();
-    this.hayBiografia = true;
-    
-    
+    this.activatedRoute.params.subscribe(routeParams => {
+
+      console.log("parametros: ", routeParams);
+
+      this.userLogged = this.usuarioService.getUserLoggedIn();
+      this.nombreUsuario = routeParams.nombre;
+      this.obtenerPosts();
+      this.hayBiografia = true;
+  
+    });
 
   }
 

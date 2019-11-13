@@ -19,11 +19,15 @@ export class ImagenPerfilRedsocialComponent implements OnInit {
     private router: ActivatedRoute) { }
 
   ngOnInit() {
-    
-    this.nombreUsuario = this.router.snapshot.paramMap.get("nombre");
-    console.log (this.nombreUsuario);
-    this.loginDatos = this.usuarioService.getUserLoggedIn();
-    this.cargarImagenPerfil();
+    this.router.params.subscribe(routeParams => {
+      // buscar en la base de datos la biografia
+      console.log("parametros: ", routeParams);
+      this.nombreUsuario = routeParams.nombre;
+      console.log (this.nombreUsuario);
+      this.loginDatos = this.usuarioService.getUserLoggedIn();
+      this.cargarImagenPerfil();
+  
+    });    
   }
 
   cargarImagenPerfil(){

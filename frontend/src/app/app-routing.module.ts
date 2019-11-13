@@ -59,7 +59,7 @@ const routes: Routes = [
       // Home RedSocial
    {path: 'homesite/:opcion', component: HomesiteComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
       // Perfil (otro) RedSocial
-   {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], runGuardsAndResolvers: 'always', data: { expectedRol: ['artista']}},
+   {path: 'redsocial/:nombre', component: RedSocialComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}, runGuardsAndResolvers: 'always'},
       // Perfil (usuario) RedSocial
    {path: 'perfil', component: PerfilComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},
    {path: 'mibanda', component: PerfilBandaComponent, canActivate: [seguridad], data: { expectedRol: ['artista']}},

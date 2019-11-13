@@ -25,25 +25,34 @@ export class PuntuacionRedsocialComponent implements OnInit {
     private puntuacionService : PuntuacionService) { }
 
     ngOnInit() {
-      this.userLogged = this.usuarioService.getUserLoggedIn();
-      this.nombreUsuario = this.activatedRoute.snapshot.paramMap.get("nombre");
-      if (this.userLogged.nombreUsuario==this.nombreUsuario){
-        this.isPunctuated = true;
-      }else{
-        this.puntuacionService.verificarSiPuntuee(this.userLogged, this.nombreUsuario).subscribe(data => {
+      this.activatedRoute.params.subscribe(routeParams => {
+
+        console.log("parametros: ", routeParams);
+  
+        this.promedio = 0;
+        this.contador = 0;
         
-          this.isPunctuated = data;
+        this.userLogged = this.usuarioService.getUserLoggedIn();
+        this.nombreUsuario = routeParams.nombre;
+        if (this.userLogged.nombreUsuario==this.nombreUsuario){
+          this.isPunctuated = true;
+        }else{
+          this.puntuacionService.verificarSiPuntuee(this.userLogged, this.nombreUsuario).subscribe(data => {
           
-        },
-        (err: any) => {
-          
-         
-        });
-      }
-      
-      this.obtenerPuntuacion(this.nombreUsuario);
-      this.delay(3000);
-      this.isReady = true;
+            this.isPunctuated = data;
+            
+          },
+          (err: any) => {
+            
+           
+          });
+        }
+        
+        this.obtenerPuntuacion(this.nombreUsuario);
+        this.delay(3000);
+        this.isReady = true;
+    
+      });
     }
 
     async obtenerPuntuacion(nombreUsuario : string){
