@@ -57,6 +57,12 @@ Una vez generada la promoción, será publicada en el área de “Promociones”
 Otra de las secciones de “MiusicApp” son las salas de ensayo donde los músicos  y bandas pueden realizar búsquedas filtrando por ubicación. Cada sala de ensayo posee una breve descripción de la misma, una foto de la sala, la ubicación y el contacto.  En esta instancia, no se permitirá reservar lugares físicos para las reuniones, cobrar o pagar por servicios musicales, shows o canciones, se podrán incorporar dichas funcionalidades en futuros releases.
 
 
+## 3 - Tecnologías utilizadas  🛠️
 
+_Para desarrollar el proyecto se utilizaron diversas tecnologías de desarrollo, implementación y automatización_
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
+* [Maven](https://maven.apache.org/) - Manejador de dependencias
+* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
 
 
