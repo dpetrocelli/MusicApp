@@ -25,7 +25,7 @@ A su vez, para garantizar la reputación, compromiso y profesionalidad del artis
 Por su parte, los perfiles de cada banda son administrados por los usuarios participantes de la misma. El perfil de cada banda, al igual que el de un artista, incluye una breve descripción de la misma, género musical y si la banda lo desea y dispone, vínculo a material en Youtube,  Spotify o página oficial de Facebook, Instagram, sumado a imágenes y comentarios que puede subir a la plataforma. Con respecto a los videos, al igual que en el caso de los músicos un video se ve en nuestra aplicación y se puede incluir un link a Youtube con una lista de videos 
 Cada músico logueado al sistema puede realizar búsquedas de artistas y/o bandas utilizando filtros por instrumento que toca, estilo musical o  ubicación geográfica.  Las bandas pueden contactarse con algún músico en caso de que desee incorporarlo al grupo y los músicos pueden postularse a las bandas si desean formar parte de ella. Ambos procesos requieren de un proceso de moderación por la respectiva parte (banda o músico) para permitir el ingreso a la banda o para aceptar la vinculación a una banda.
 
-### 2.3 Subsistema de Modelo de Negocio (Cuenta Corriente)
+### 2.3 - Subsistema de Modelo de Negocio (Cuenta Corriente)
 Para que el sistema diseñado tenga la capacidad de proporcionar ganancias, beneficios económicos y sea sustentable en el tiempo, se definió un modelo de negocio que permita que la plataforma pueda mantener sus costos de mantenimiento básicos (recursos IaaS Cloud en Amazon, registro de nombre DNS, etc), costos de crecimiento y escalabilidad (recursos elásticos en la nube, correcciones y nuevas funcionalidades) y obtención de ganancias, se definieron dos aristas principales. 
 * a) **Suscripciones**.  A través de abonos mensuales que deben abonar las entidades relacionadas con la plataforma (salas de ensayo, locales de artículos musicales, etc) que serán publicitadas en el sistema en el apartado de “Salas de ensayo” y “Auspiciantes”.  
 * b) **Promociones**. Cada entidad externa que tenga abono mensual puede generar promociones (set de cupones) de descuento o beneficios para los artistas registrados. 
@@ -44,7 +44,7 @@ Por su parte, los Artistas registrados, para acceder a un cupón deberán realiz
 3) Luego, deriva transferencia del dinero al ente emisor del cupón por la diferencia entre el valor del cupón y las ganancias propias del sistema, manteniendo solo en la cuenta corriente local el porcentaje correspondiente a la ganancia
 4) Usuario obtiene el cupón de beneficio (en ese momento o a demanda)
 
-### 2.4 Subsistema de Gestión de Promociones
+### 2.4 - Subsistema de Gestión de Promociones
 Relacionado con el apartado anterior, las entidades externas podrán definir promociones económicas y cupones de canje asociados. Para ello, el sistema le permitirá, a través de la GUI, definir:
 * Monto de la promoción (ej. 1000$)
 * Valor del ahorro obtenido por el usuario (ej, $100)
