@@ -81,3 +81,4 @@ _Para desarrollar el proyecto se utilizaron diversas tecnologías de desarrollo,
 * [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
 
 
+⌨️ con ❤️ por [David Petrocelli](https://github.com/dpetrocelli) 😊
